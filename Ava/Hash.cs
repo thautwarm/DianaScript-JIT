@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+
 namespace Ava
 {
     public partial struct DInt
@@ -33,7 +34,7 @@ namespace Ava
             unchecked
             {
                 int hash = 17;
-                for(var i = 0; i < elts.Length; i++)
+                for (var i = 0; i < elts.Length; i++)
                     hash = hash * 23 + elts[i].GetHashCode();
                 return hash;
             }

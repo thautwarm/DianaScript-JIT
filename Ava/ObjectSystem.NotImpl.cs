@@ -35,15 +35,16 @@ namespace Ava
 
     public partial struct DFloat : DObj
     {
-
         public DObj __inv__()
         {
             throw new NotImplementedException();
         }
+
         public DObj __call__(DObj[] objs)
         {
             throw new NotImplementedException();
         }
+
         public DObj __get__(DObj s)
         {
             throw new NotImplementedException();
@@ -93,7 +94,6 @@ namespace Ava
 
     public partial struct DNone : DObj
     {
-        
         public DObj __neg__()
         {
             throw new NotImplementedException();
@@ -103,10 +103,12 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
+
         public DObj __call__(DObj[] objs)
         {
             throw new NotImplementedException();
         }
+
         public DObj __get__(DObj s)
         {
             throw new NotImplementedException();
@@ -204,6 +206,7 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
+
         public DObj __call__(DObj[] objs)
         {
             throw new NotImplementedException();
@@ -278,15 +281,11 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-
-
     }
 
 
     public partial class DDict : DObj
     {
-
-
         public DObj __neg__()
         {
             throw new NotImplementedException();
@@ -296,17 +295,16 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-        
+
         public DObj __call__(DObj[] objs)
         {
             throw new NotImplementedException();
         }
-       
+
         public bool __lt__(DObj o)
         {
             throw new NotImplementedException();
         }
-
 
 
         public DObj __add__(DObj a)
@@ -368,16 +366,11 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-
-
     }
 
 
-    public partial class DTuple: DObj
+    public partial class DTuple : DObj
     {
-
-        
-
         public DObj __neg__()
         {
             throw new NotImplementedException();
@@ -387,7 +380,7 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-        
+
         public DObj __call__(DObj[] objs)
         {
             throw new NotImplementedException();
@@ -452,14 +445,10 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-
     }
 
     public partial class DList : DObj
     {
-
-        
-
         public DObj __neg__()
         {
             throw new NotImplementedException();
@@ -470,7 +459,6 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        
 
         public DObj __call__(DObj[] objs)
         {
@@ -536,14 +524,10 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-
-
     }
 
-    public partial class DNative: DObj
+    public partial class DNative : DObj
     {
-
-
         public bool Equals(DObj other)
         {
             throw new NotImplementedException();
@@ -659,11 +643,9 @@ namespace Ava
             throw new NotImplementedException();
         }
     }
+
     public partial class DFunc : DObj
     {
-
-
-        
         public DObj __neg__()
         {
             throw new NotImplementedException();
@@ -673,7 +655,7 @@ namespace Ava
         {
             throw new NotImplementedException();
         }
-        
+
         public bool __lt__(DObj o)
         {
             throw new NotImplementedException();
@@ -857,6 +839,7 @@ namespace Ava
             throw new NotImplementedException();
         }
     }
+
     public partial class StrType : DObj
     {
         public DObj __add__(DObj a)
@@ -954,6 +937,7 @@ namespace Ava
             throw new NotImplementedException();
         }
     }
+
     public partial class IntType : DObj
     {
         public DObj __add__(DObj a)
@@ -1051,5 +1035,4 @@ namespace Ava
             throw new NotImplementedException();
         }
     }
-
 }

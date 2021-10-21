@@ -1,19 +1,17 @@
 using System;
-
 using int_t = System.Int64;
 using uint_t = System.UInt64;
 
 namespace Ava
 {
-
 #if NUNITY
     using static System.MathF;
+
 #else
     using static UnityEngine.Mathf;
 #endif
     public static class NumberMethods
     {
-
         static int_t s_intmod(int_t a, int_t b)
         {
             int_t r = a % b;
@@ -27,9 +25,9 @@ namespace Ava
         }
 
 
-
         public static Exception unsupported_ops(DObj lhs, string op, DObj rhs) =>
-             new InvalidOperationException($"'unsupported operation: '{lhs.Classname}' {op} '{rhs.Classname}'.");
+            new InvalidOperationException($"'unsupported operation: '{lhs.Classname}' {op} '{rhs.Classname}'.");
+
         public static DObj int_t_add(DInt self, DObj other)
         {
             switch (other)
@@ -51,6 +49,7 @@ namespace Ava
                     throw unsupported_ops(self, "+", other);
             }
         }
+
         public static DObj int_t_sub(DInt self, DObj other)
         {
             switch (other)
@@ -72,6 +71,7 @@ namespace Ava
                     throw unsupported_ops(self, "-", other);
             }
         }
+
         public static DObj int_t_mul(DInt self, DObj other)
         {
             switch (other)
@@ -98,7 +98,7 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return MK.Int((int_t)(self.value / v.value));
+                case DFloat v: return MK.Int((int_t) (self.value / v.value));
                 case DInt v: return MK.Int(self.value / v.value);
                 default:
                     throw unsupported_ops(self, "/", other);
@@ -109,18 +109,19 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return MK.Int((int_t)(self.value / v.value));
+                case DFloat v: return MK.Int((int_t) (self.value / v.value));
                 case DInt v: return MK.Int((int_t) (self.value / v.value));
                 default:
                     throw unsupported_ops(self, "/", other);
             }
         }
+
         public static DObj int_t_truediv(DInt self, DObj other)
         {
             switch (other)
             {
                 case DFloat v: return MK.Float(self.value / v.value);
-                case DInt v: return MK.Float(((float)self.value) / v.value);
+                case DInt v: return MK.Float(((float) self.value) / v.value);
                 default:
                     throw unsupported_ops(self, "/", other);
             }
@@ -142,7 +143,7 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return MK.Float(s_floatmod(((float)self.value), v.value));
+                case DFloat v: return MK.Float(s_floatmod(((float) self.value), v.value));
                 case DInt v: return MK.Int(s_intmod(self.value, v.value));
                 default:
                     throw unsupported_ops(self, "%", other);
@@ -163,28 +164,36 @@ namespace Ava
 
         static int_t s_intpow(int_t b, int_t pow)
         {
-                int_t result = 1; 
-                while (pow > 0) {
-                    if ((pow & 1) != 0) { 
-                        result *= b;
-                    } 
-                    pow >>= 1; 
-                    b *= b; 
+            int_t result = 1;
+            while (pow > 0)
+            {
+                if ((pow & 1) != 0)
+                {
+                    result *= b;
                 }
-                return result; 
+
+                pow >>= 1;
+                b *= b;
+            }
+
+            return result;
         }
 
         static float f_intpow(float b, int_t pow)
         {
-            float result = 1; 
-            while (pow > 0) {
-                if ((pow & 1) != 0) { 
+            float result = 1;
+            while (pow > 0)
+            {
+                if ((pow & 1) != 0)
+                {
                     result *= b;
-                } 
-                pow >>= 1; 
-                b *= b; 
+                }
+
+                pow >>= 1;
+                b *= b;
             }
-            return result; 
+
+            return result;
         }
 
         public static DObj int_t_pow(DInt self, DObj other)
@@ -217,13 +226,14 @@ namespace Ava
                     throw unsupported_ops(self, "**", other);
             }
         }
+
         public static DObj int_t_lshift(DInt self, DObj other)
         {
             switch (other)
             {
                 case DFloat v: throw unsupported_ops(self, "<<", other);
                 case DInt v:
-                    return MK.Int(unchecked((uint_t)self.value <<  (int)v.value));
+                    return MK.Int(unchecked((uint_t) self.value << (int) v.value));
 
 
                 default:
@@ -237,7 +247,7 @@ namespace Ava
             {
                 case DFloat v: throw unsupported_ops(self, ">>", other);
                 case DInt v:
-                    return MK.Int(unchecked((uint_t)self.value >> (int)v.value));
+                    return MK.Int(unchecked((uint_t) self.value >> (int) v.value));
                 default:
                     throw unsupported_ops(self, ">>", other);
             }
@@ -276,12 +286,12 @@ namespace Ava
             }
         }
 
-        
+
         public static bool int_t_lt(DInt self, DObj other)
         {
             switch (other)
             {
-                case DFloat v: return (float)self.value < v.value;
+                case DFloat v: return (float) self.value < v.value;
                 case DInt v: return self.value < v.value;
                 default:
                     throw unsupported_ops(self, "<", other);
@@ -292,7 +302,7 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return (float)self.value <= v.value;
+                case DFloat v: return (float) self.value <= v.value;
                 case DInt v: return self.value <= v.value;
                 default:
                     throw unsupported_ops(self, "<=", other);
@@ -303,7 +313,7 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return (float)self.value > v.value;
+                case DFloat v: return (float) self.value > v.value;
                 case DInt v: return self.value > v.value;
                 default:
                     throw unsupported_ops(self, ">", other);
@@ -314,7 +324,7 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return (float)self.value >= v.value;
+                case DFloat v: return (float) self.value >= v.value;
                 case DInt v: return self.value >= v.value;
                 default:
                     throw unsupported_ops(self, ">=", other);
@@ -343,7 +353,7 @@ namespace Ava
             }
         }
     }
-    
+
     public partial struct DFloat
     {
         public DObj __add__(DObj o) => NumberMethods.float_add(this, o);
@@ -357,11 +367,10 @@ namespace Ava
         public DObj __mod__(DObj o) => NumberMethods.float_mod(this, o);
 
         public DObj __pow__(DObj o) => NumberMethods.float_pow(this, o);
-
     }
+
     public partial struct DInt
     {
-
         public DObj __add__(DObj o) => NumberMethods.int_t_add(this, o);
         public DObj __sub__(DObj o) => NumberMethods.int_t_sub(this, o);
 
@@ -393,7 +402,5 @@ namespace Ava
         public DObj __bitand__(DObj o) => NumberMethods.int_t_bitand(this, o);
         public DObj __bitor__(DObj o) => NumberMethods.int_t_bitor(this, o);
         public DObj __bitxor__(DObj o) => NumberMethods.int_t_bitxor(this, o);
-}
-
-
+    }
 }

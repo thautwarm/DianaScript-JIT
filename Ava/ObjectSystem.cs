@@ -6,13 +6,11 @@ using System.Linq;
 
 namespace Ava
 {
-
     using int_t = System.Int64;
     using uint_t = System.UInt64;
 
     public interface DObj : IEquatable<DObj>
     {
-
         public string Classname { get; }
         public bool __bool__();
         public bool __eq__(DObj o);
@@ -37,7 +35,6 @@ namespace Ava
         public DObj __inv__();
         public string __str__();
         public IEnumerable<DObj> __iter__();
-
     }
 
     public partial struct DInt : DObj
@@ -46,7 +43,8 @@ namespace Ava
 
         public string __str__() => value.ToString();
         public string Classname => "int";
-        public bool Equals( DObj other)
+
+        public bool Equals(DObj other)
         {
             return this.__eq__(other);
         }
@@ -66,15 +64,14 @@ namespace Ava
         {
             return MK.Int(-value);
         }
-
     }
 
     public partial struct DFloat : DObj
     {
-
         public string __str__() => value.ToString();
         public string Classname => "float";
-        public bool Equals( DObj other)
+
+        public bool Equals(DObj other)
         {
             return this.__eq__(other);
         }
@@ -103,6 +100,7 @@ namespace Ava
             {
                 return value == f.value;
             }
+
             throw new NotImplementedException();
         }
 
@@ -116,16 +114,16 @@ namespace Ava
             {
                 return value < f.value;
             }
+
             throw new NotImplementedException();
         }
-
     }
 
     public partial struct DNone : DObj
     {
-
         public string __str__() => "None";
         public string Classname => "none";
+
         public bool Equals(DObj other)
         {
             return this.__eq__(other);
@@ -142,8 +140,6 @@ namespace Ava
         {
             return (o is DNone);
         }
-
-
     }
 
     public partial struct DString : DObj
@@ -179,11 +175,12 @@ namespace Ava
         {
             return MK.String(value + other.__str__());
         }
+
         public IEnumerable<DObj> __iter__()
         {
             foreach (var c in value)
             {
-                yield return MK.String(new String(new char[] { c }));
+                yield return MK.String(new String(new char[] {c}));
             }
         }
     }
@@ -191,13 +188,12 @@ namespace Ava
 
     public partial class DDict : DObj
     {
-
-
         public string __str__()
         {
             return "{" + String.Join(", ", dict.Select(x =>
                 $"{x.Key.__str__()}: {x.Value.__str__()}")) + "}";
         }
+
         public string Classname => "dict";
         public Dictionary<DObj, DObj> dict;
 
@@ -206,7 +202,6 @@ namespace Ava
         {
             return dict.Count != 0;
         }
-
 
 
         public bool __eq__(DObj o)
@@ -220,11 +215,11 @@ namespace Ava
         }
 
 
-
         public void __set__(DObj s, DObj value)
         {
             dict[s] = value;
         }
+
         public bool Equals(DObj other)
         {
             return this.__eq__(other);
@@ -240,7 +235,7 @@ namespace Ava
         {
             foreach (var obj in dict)
             {
-                yield return MK.Tuple(new[] { obj.Key, obj.Value });
+                yield return MK.Tuple(new[] {obj.Key, obj.Value});
             }
         }
     }
@@ -248,11 +243,11 @@ namespace Ava
 
     public partial class DTuple : DObj
     {
-
         public string __str__()
         {
             return "(" + String.Join(",", elts.Select(x => x.__str__())) + ",)";
         }
+
         public string Classname => "tuple";
         public DObj[] elts;
 
@@ -276,10 +271,12 @@ namespace Ava
         {
             if (s is DInt i)
             {
-                return elts[(int)i.value];
+                return elts[(int) i.value];
             }
+
             throw new NotImplementedException();
         }
+
         public bool __lt__(DObj o)
         {
             if (o is DTuple a)
@@ -299,8 +296,10 @@ namespace Ava
                         return false;
                     }
                 }
+
                 return true;
             }
+
             throw new NotFiniteNumberException();
         }
 
@@ -312,7 +311,6 @@ namespace Ava
             }
 
             throw new NotFiniteNumberException();
-
         }
 
         public bool __contains__(DObj a)
@@ -328,8 +326,6 @@ namespace Ava
 
     public partial class DList : DObj
     {
-
-
         public string __str__()
         {
             return "[" + String.Join(",", elts.Select(x => x.__str__())) + "]";
@@ -353,19 +349,20 @@ namespace Ava
         {
             if (s is DInt i)
             {
-                return elts[(int)i.value];
+                return elts[(int) i.value];
             }
+
             throw new NotImplementedException();
         }
-
 
 
         public void __set__(DObj s, DObj value)
         {
             if (s is DInt i)
             {
-                elts[(int)i.value] = value;
+                elts[(int) i.value] = value;
             }
+
             throw new NotImplementedException();
         }
 
@@ -382,7 +379,6 @@ namespace Ava
             }
 
             throw new NotImplementedException();
-
         }
 
 
@@ -404,21 +400,19 @@ namespace Ava
         public string Classname => "native";
 
 
-
         public string __str__()
         {
             return value.ToString();
         }
-
-
     }
+
     public partial class DFunc : DObj
     {
-
         public string __str__()
         {
             return name;
         }
+
         public Func<DObj[], DObj> func;
 
         public string name;
@@ -434,7 +428,7 @@ namespace Ava
 
         public bool __eq__(DObj o)
         {
-            return ReferenceEquals(this, o);            
+            return ReferenceEquals(this, o);
         }
 
 
@@ -456,10 +450,12 @@ namespace Ava
         {
             return true;
         }
+
         public bool __eq__(DObj o)
         {
             return ReferenceEquals(this, o);
         }
+
         public bool Equals(DObj other)
         {
             return __eq__(other);
@@ -473,7 +469,7 @@ namespace Ava
             switch (x)
             {
                 case DInt i:
-                    return MK.Float((float)i.value);
+                    return MK.Float((float) i.value);
                 case DFloat _:
                     return x;
                 case DString s:
@@ -483,6 +479,7 @@ namespace Ava
             }
         }
     }
+
     public partial class StrType
     {
         public static StrType unique = new StrType { };
@@ -495,10 +492,12 @@ namespace Ava
         {
             return true;
         }
+
         public bool __eq__(DObj o)
         {
             return ReferenceEquals(this, o);
         }
+
         public bool Equals(DObj other)
         {
             return __eq__(other);
@@ -518,18 +517,22 @@ namespace Ava
         public static IntType unique = new IntType { };
         public string __str__() => "int";
         public string Classname => "type";
+
         public bool __bool__()
         {
             return true;
         }
+
         public bool __eq__(DObj o)
         {
             return ReferenceEquals(this, o);
         }
+
         public bool Equals(DObj other)
         {
             return __eq__(other);
         }
+
         public DObj __call__(DObj[] args)
         {
             if (args.Length == 0) return MK.Int(0);
@@ -540,7 +543,7 @@ namespace Ava
                 case DInt _:
                     return x;
                 case DFloat f:
-                    return MK.Int((int_t)f.value);
+                    return MK.Int((int_t) f.value);
                 case DString s:
                     return MK.Int(int_t.Parse(s.value));
                 default:
@@ -548,5 +551,4 @@ namespace Ava
             }
         }
     }
-
 }

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace Ava
 {
-
-
     public struct THint<A>
     {
         public static THint<A> val;
@@ -36,8 +34,8 @@ namespace Ava
         public Parser(FileStream fs)
         {
             binaryReader = new BinaryReader(fs);
-
         }
+
         public Parser(string path)
         {
             var fs = File.Open(path, FileMode.Open);
@@ -45,7 +43,7 @@ namespace Ava
         }
 
         public (ImmediateAST, ImmediateAST) Read(THint<(ImmediateAST, ImmediateAST)> _) =>
-        (ReadImmediateAST(), ReadImmediateAST());
+            (ReadImmediateAST(), ReadImmediateAST());
 
         public (int, int) Read(THint<(int, int)> _)
         {
@@ -62,6 +60,7 @@ namespace Ava
         public Int64 Read(THint<Int64> _) => ReadInt();
 
         public int ReadTag() => binaryReader.ReadByte();
+
         public int ReadInt()
         {
             var i = binaryReader.ReadInt32();
@@ -72,6 +71,7 @@ namespace Ava
         }
 
         public float Read(THint<float> _) => ReadFloat();
+
         public float ReadFloat()
         {
             var f = binaryReader.ReadSingle();
@@ -84,6 +84,7 @@ namespace Ava
         // public InternString Read(THint<InternString> _) => ReadInternString();
 
         public string Readstring() => ReadStr();
+
         public string ReadStr()
         {
             var s = binaryReader.ReadString();
@@ -94,10 +95,10 @@ namespace Ava
         }
 
         public bool Read(THint<bool> _) => ReadBool();
+
         public bool ReadBool()
         {
             return ReadInt() == 0 ? false : true;
         }
     }
-
 }
