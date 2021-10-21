@@ -1,0 +1,86 @@
+   
+                                  
+  
+
+
+name : TNAME -> name_0                        
+
+list{e} : e -> list_0                    
+        | list{e} e -> list_1                                        
+
+seplist{sep, e} : e -> seplist_0                            
+                | seplist{sep, e} sep e -> seplist_1                                                           
+                
+nullable{seq} : -> nullable_0                          
+              | seq -> nullable_1                          
+            
+
+  
+
+                                          
+                                       
+
+                    
+                  
+               
+
+                       
+           
+                 
+
+                       
+           
+                           
+
+                       
+            
+             
+
+
+                       
+            
+              
+             
+
+                          
+    
+                       
+          
+             
+                                        
+                 
+
+                       
+                              
+                      
+                               
+
+                 
+
+               
+                      
+                       
+            
+  
+
+type : "(" seplist{",", type} ")" -> type_0                                                       
+     | type "[" "]" -> type_1                                              
+     | name -> type_2                                               
+
+field : name ":" type -> field_0                                       
+      | type name -> field_1                                       
+
+topl : name "(" nullable{seplist{",", field}}  ")" -> topl_0                                                 
+
+start : list{topl} -> start_0                         
+
+
+%import common.WS
+%import common.ESCAPED_STRING
+%import common.LETTER
+%import common.DIGIT
+%ignore WS
+%ignore COMMENT
+COMMENT: /\s*/ "//" /[^\n]/*
+TNAME: ("_"|"$"|LETTER) ("_"|"$"|LETTER|DIGIT)*
+ESCAPED_CODE : /\[%[^%]*?%\]/

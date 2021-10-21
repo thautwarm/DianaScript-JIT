@@ -1,0 +1,26 @@
+from __future__ import annotations
+from dataclasses import dataclass
+from dina.serialize import serialize_, Int64
+import struct
+
+{% for defi in defs %}
+@dataclass(frozen=True)
+class {{defi.name}}:
+    {% for field in defi %}
+    {{field.name}}: {{field.type | PY}}
+    {% endfor %}
+    TAG = {{defi.tag}}
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        {% for field in defi %}
+        serialize_(self.{{field.name}}, buf)
+        {% endfor %}
+{% endfor %}
+
+ImmediateAST = (
+    object
+    {% for defi in defs %}
+    | {{defi.name}}
+    {% endfor %}
+)

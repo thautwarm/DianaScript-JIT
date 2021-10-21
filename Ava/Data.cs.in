@@ -1,0 +1,87 @@
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+
+
+namespace Ava
+{
+
+{% for defi in defs %}
+public partial class {{defi.name}}
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "{{defi.name}}";
+
+{% for field in defi %}
+    public {{field.type | NET}} {{field.name}};
+{% endfor %}
+}
+{% endfor %}
+
+public partial class Parser
+{
+    
+    private ImmediateAST Read(THint<ImmediateAST> _) => ReadImmediateAST();
+
+    public ImmediateAST ReadImmediateAST()
+    {
+        var code = (int) ReadTag();
+        switch (code)
+        {
+        {% for defi in defs %}
+            case {{defi.tag}}:
+            {
+                return new {{defi.name}}
+                {
+            {% for field in defi %}
+                {% if isinstance(field.type, TArr) %}
+                    {% do ARR_TYPES.add(field.type.eltype) %}
+                    {{field.name}} = Read(THint<{{field.type | NET }}>.val),
+                {%else %}
+                    {{field.name}} = Read(THint<{{field.type | NET }}>.val),
+                {% endif %}
+            {% endfor %}
+                };
+            }
+        {% endfor %}
+            default:
+                throw new InvalidDataException($"invalid code {code}");
+        }
+        
+    }
+
+    {% for defi in defs %}
+
+    private {{defi.name}} Read(THint<{{ defi.name }}> _) => Read{{defi.name}}();
+
+    public {{defi.name}} Read{{ defi.name }}() => new {{ defi.name }}
+    {
+        {% for field in defi %}
+        {% if isinstance(field.type, TArr) %}
+            {% do ARR_TYPES.add(field.type.eltype) %}
+        {% endif %}
+        {{field.name}} = Read(THint<{{field.type|NET}}>.val),
+        {% endfor %}
+    };
+
+    {% endfor %}
+
+    private static readonly object _loaderSync = new object();
+
+    {% for type in ARR_TYPES %}
+    public {{ type | NET }}[] Read(THint<{{type | NET}}[]> _)
+    {
+        var arr = new {{type | NET }}[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<{{type | NET }}>.val);
+        }
+        return arr;
+    }
+    {% endfor %}
+
+} // loader class
+} // aworld

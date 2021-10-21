@@ -1,0 +1,14 @@
+data EVal val:object;
+data EVar var:str;
+data EApp f:Chexpr args:list[Chexpr];
+data EIt value:Chexpr item:Chexpr;
+data EAttr value:Chexpr attr:str;
+data EPar elts:list[Chexpr] trailer:bool;
+data EDict pairs:list[tuple[Chexpr, Chexpr]];
+data EList elts:list[Chexpr];
+data ENot expr:Chexpr;
+data ENeg expr:Chexpr;
+data EInv expr:Chexpr;
+data EAnd left:Chexpr right:Chexpr;
+data EOr left:Chexpr right:Chexpr;
+data EOp left:Chexpr op:str right:Chexpr;

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Optimize>true</Optimize>
+    <DefineConstants>NUNITY</DefineConstants>
+  </PropertyGroup>
+
+</Project>
