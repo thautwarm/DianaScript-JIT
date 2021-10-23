@@ -16,3 +16,23 @@ if 5 in d then
 else
     log("我似楞啊?(success)")
 end
+
+
+if 5 not in {1: 2, "5": []} then
+    log("正确的")
+elif 2 ** 4 in [17] then
+    log("错误的")
+end
+
+z = if 10 in {1: 2, "5": []} then
+    log("错误的")
+elif 2 ** 4 in [17] then
+    log("错误的")
+end
+
+if (z == None) then
+    log("正确的")
+else
+    log("错误的")
+end
+
