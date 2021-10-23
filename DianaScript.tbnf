@@ -35,7 +35,7 @@ val mkBlock: (token, List[ast]) -> ast
 val mkContinue: (token) -> ast
 val mkBreak: (token) -> ast
 val mkReturn: (token, ast) -> ast
-val mkint: (str) -> DObj
+val mkint: (str, int) -> DObj
 val mkfloat: (str) -> DObj
 val mkstr: (str) -> DObj
 val mknone: () -> DObj
@@ -62,7 +62,7 @@ optional[a] :   { null }
 
 expr_opt :      { null }
          | expr { $1 }
-         
+
 
 lhs_seq : { empty()  }
         | lhs_seq lhs "="
@@ -76,23 +76,24 @@ name : <NAME> { $1.Text }
 stmt :
     lhs_seq expr { mkStoreMany($1, $2)  }
     | "loop" block "end"
-        { mkLoop($1, mkBlock($1, $2))  } 
+        { mkLoop($1, mkBlock($1, $2))  }
     | "for" <NAME> "in" expr blockOf[do] "end"
         { mkFor($1, $2.Text, $4, $5) }
     | "break"         { mkBreak($1) }
     | "continue"      { mkContinue($1) }
-    | "return"        { mkReturn($1, null) }
     | "return" expr   { mkReturn($1, $2) }
-       
+    | "return"        { mkReturn($1, null) }
+
+
 
 
 then: optional[<NEWLINE>] "then" { $2 }
 do: optional[<NEWLINE>] "do" { $2 }
 
 lhs : <NAME>  { mkVar($1, $1.Text) }
-    | atom "." "[" expr "]" 
+    | atom "." "[" expr "]"
         { mkOGet($2, $1, $4) }
-    | atom "." <NAME>  
+    | atom "." <NAME>
         { mkOGet($2, $1, mkVal($3, mkstr($3.Text))) }
 
 block : filter[stmt, <NEWLINE>] { $1 }
@@ -110,18 +111,19 @@ or_expr : or_expr "or" and_expr
             { mkAnd($2, $1, $3)  }
          | and_expr { $1 }
 
-and_expr : and_expr "and" not 
+and_expr : and_expr "and" not
             { mkAnd($2, $1, $3)  }
          | not { $1 }
 not : "not" bin { mkNot($1, $2) }
     | bin       { $1 }
-    
+
 
 
 binop : <SINGLE_BINOP> { mkop($1, $1.Text) }
       | "not" "in"     { mkop($1, "notin") }
+      | "in"           { mkop($1, "in") }
       | "-"            { mkop($1, "-") }
-       
+
 binseq  : atom    { append(empty(), to_obj($1)) }
         | binseq binop atom   {
            append($1, $2);
@@ -142,19 +144,22 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
      | "(" nullable[seplist[",", expr]] trailer ")" { mkTuple($1, $2, $3) }
      | "{" nullable[seplist[",", pair]] trailer "}" { mkDict($1, $2) }
      | <STR> { mkVal($1, mkstr($1.Text)) }
-     | <INT> { mkVal($1, mkint($1.Text)) }
+     | <INT> { mkVal($1, mkint($1.Text, 0)) }
+     | <HEX> { mkVal($1, mkint($1.Text, 16)) }
+     | <OCT> { mkVal($1, mkint($1.Text, 8)) }
+     | <BIN> { mkVal($1, mkint($1.Text, 2)) }
      | <FLOAT> { mkVal($1, mkfloat($1.Text)) }
      | "None"  { mkVal($1, mknone()) }
      | <NAME>  { mkVar($1, $1.Text) }
      | "-" atom  { mkNeg($1, $2) }
-     | "~" atom  { mkInv($1, $2) }        
+     | "~" atom  { mkInv($1, $2) }
      | "if" expr then block "end"
         { mkIfThen($1, $2, mkBlock($3, $4)) }
      | "if" expr then block
         nullable[list[snd["elif", elifBlock]]]
         optional[blockOf["else"]]
-       "end" 
-        { 
+       "end"
+        {
             let elif = ($2, mkBlock($3, $4)) in
             let elifs = append(empty(), elif) in
             let elifs = extend(elifs, $5) in
@@ -167,14 +172,17 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
 %ignore <COMMENT>, <WS_INLINE>
 
 <COMMENT> : "#" (!"\n")*
-<SINGLE_BINOP> : ("<" | ">" |">=" | "<=" | "==" | "!=" | "in" | 
-          "+" | "*" | "**" | "/" | "//" | "%" |
-          "&" | "|" | "<<" | ">>")
+<SINGLE_BINOP> : ("<" | ">" |">=" | "<=" | "==" | "!=" | "+" | "*" |                 "**" | "/" | "//" | "%" |  "&" | "|" | "<<" | ">>")
 <ESCAPED_QUOTE> : "\\\""
 <STR> :   "\"" ( ESCAPED_QUOTE | !"\"")* "\""
 <WS> : ("\r" | "\t" | "\n" | " ")
-<INT> : DIGIT+
-<DIGIT> : [0 .. 9]
+
+<INT> : (DIGIT+ | HEX | OCT | BIN)
+<HEX>: "0x" ([0-9] | [a-f])*
+<OCT>: "0o" [0-7]*
+<BIN>: "0b" [0-1]*
+
+<DIGIT> : [0-9]
 <FLOAT> : INT "." INT
 <UCODE> : [a-z] | [A-Z] | "_" | [\u4e00-\u9fa5]
 <NAME>  : UCODE (DIGIT | UCODE)*
@@ -182,3 +190,4 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
 <CR> : "\r"
 <LF> : "\n"
 <NEWLINE>: (CR? LF)+
+

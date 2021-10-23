@@ -1,3 +1,7 @@
+/*
+C# implementation of "operator bubbling".
+The original works of this algorithm is made by Taine Zhao(twshere@outlook.com) and this file is licensed under MPL-2.0.
+*/
 using System;
 using System.Collections.Generic;
 using System.Linq;

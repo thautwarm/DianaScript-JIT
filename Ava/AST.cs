@@ -123,6 +123,9 @@ namespace Ava
         {
             var frame = (self.Lineno, self.Colno, self.description);
             var callable = self.compile_impl(ctx);
+#if MAX_PERFORMANCE
+            return callable;
+#endif
             return (ExecContext ctx) =>
             {
                 try

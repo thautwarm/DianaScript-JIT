@@ -48,7 +48,7 @@ namespace Ava.Frontend
 
         public static object to_obj<A>(A o) => o;
         public static string unesc(string s) =>
-        Regex.Unescape(s.Substring(1, s.Length - 1));
+        Regex.Unescape(s.Substring(1, s.Length - 2));
 
         public static Pos posOfToken(CommonToken token) => new Pos { lineno = token.Line, colno = token.Column, filename = token.TokenSource.SourceName };
         public static ast mkOGet(CommonToken token, ast ast1, ast ast2)
@@ -93,8 +93,20 @@ namespace Ava.Frontend
         public static ast mkOr(CommonToken token, ast ast1, ast ast2)
         => Or.make(ast1, ast2, token.Line, token.Column);
 
-        public static DObj mkint(string s) =>
-             MK.Int(long.Parse(s));
+        public static DObj mkint(string s, int bit)
+        {
+            if (s.Length > 2)
+            {
+                return MK.Int(s.Substring(0, 2) switch
+                {
+                    "0x" => Convert.ToInt64(s.Substring(2), 16),
+                    "0o" => Convert.ToInt64(s.Substring(2), 8),
+                    "0b" => Convert.ToInt64(s.Substring(2), 2),
+                    _ => long.Parse(s)
+                });
+            }
+            return MK.Int(long.Parse(s));
+        }
 
         public static DObj mkfloat(string s) =>
             MK.Float(float.Parse(s));

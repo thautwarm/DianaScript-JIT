@@ -81,9 +81,30 @@ public static class DianaScriptAPIs
         };
     }
 
-    public static void Main(string[] _)
+    public static void ExecuteSourceFiles(string[] paths)
     {
-        
+        var globals = InitGlobals();
+        foreach(var path in paths)
+        {
+            ICharStream stream = CharStreams.fromPath(path);
+            ITokenSource lexer = new DianaScriptLexer(stream);
+
+            ITokenStream tokens = new CommonTokenStream(lexer);
+
+            var parser = new DianaScriptParser(tokens);
+            var result = parser.start().result.ToArray();
+            var cps = Block.make(result, 0, 0).compile(MetaContext.Create());
+            var res = CPSExecutor.Exec(globals, cps, path);
+        }
+    }
+    public static void Main(string[] args)
+    {
+
+        if (args.Length != 0)
+        {
+            ExecuteSourceFiles(args);
+            return;            
+        }
         var globals = InitGlobals();
         while (true)
         {
