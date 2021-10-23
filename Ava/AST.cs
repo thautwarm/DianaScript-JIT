@@ -21,7 +21,6 @@ namespace Ava
         public Dictionary<string, EncodedVar> ctx;
         public List<(int parentSlot, int mySlot)> freevars;
         public MetaContext parent = null;
-        public DObj Returned = null;
 
         public static MetaContext Create()
         {
@@ -35,27 +34,27 @@ namespace Ava
 
         public static MetaContext Create(MetaContext p, Dictionary<string, EncodedVar> ctx)
         {
-            return new MetaContext {ctx = ctx, parent = p, freevars = new List<(EncodedVar parentSlot, EncodedVar mySlot)>()};
+            return new MetaContext { ctx = ctx, parent = p, freevars = new List<(EncodedVar parentSlot, EncodedVar mySlot)>() };
         }
 
         public MetaContext create(Dictionary<string, EncodedVar> ctx)
         {
             return new MetaContext
-                {ctx = ctx, parent = this, freevars = new List<(EncodedVar parentSlot, EncodedVar mySlot)>()};
+            { ctx = ctx, parent = this, freevars = new List<(EncodedVar parentSlot, EncodedVar mySlot)>() };
         }
 
         public EncodedVar search(string s)
         {
             if (parent == null)
                 return -1;
-            
+
             if (ctx.TryGetValue(s, out var ret))
             {
                 return ret;
             }
 
             var x = parent.search(s);
-            if (x > 0)
+            if (x >= 0)
             {
                 var i = ctx.Count;
                 ctx[s] = i;
@@ -436,6 +435,76 @@ namespace Ava
         }
     }
 
+    public partial class NestedIf : ImmediateAST
+    {
+        // public ImmediateAST cond { get; set; }
+        // public ImmediateAST then { get; set; }
+        // public ImmediateAST orelse { get; set; }
+
+        // public int lineno { get; set; }
+
+        // public int colno { get; set; }
+
+        public ExecType compile_impl(MetaContext ctx)
+        {
+
+            var elifs_ = elifs.Select(x => (x.Item1.compile(ctx), x.Item2.compile(ctx))).ToArray();
+            ExecType orelse_ = orelse?.compile(ctx);
+
+            return (ExecContext ctx) =>
+            {
+                for (var i = 0; i < elifs.Length; i++)
+                {
+                    var (cond_, then_) = elifs_[i];
+                    if (cond_(ctx).__bool__())
+                        return then_(ctx);
+                }
+                if (orelse_ == null)
+                    return MK.None();
+                return orelse_(ctx);
+            };
+        }
+    }
+
+    public partial class Loop : ImmediateAST
+    {
+        // public ImmediateAST cond { get; set; }
+        // public ImmediateAST then { get; set; }
+
+        // public int lineno { get; set; }
+
+        // public int colno { get; set; }
+
+        public ExecType compile_impl(MetaContext ctx)
+        {
+
+            var body_ = body.compile(ctx);
+
+            return (ExecContext ctx) =>
+            {
+                DObj ret = DNone.unique;
+                while (true)
+                {
+                    ret = body_(ctx);
+                    var eLoop = ctx.exitingLoop;
+                    switch (eLoop)
+                    {
+                        case 0:
+                            continue;
+                        case 1:
+                            ctx.exitingLoop = 0;
+                            continue;
+                        case 2:
+                            ctx.exitingLoop = 0;
+                            return ret;
+                        default:
+                            return ret;
+                    }
+                }
+            };
+        }
+    }
+
     public partial class While : ImmediateAST
     {
         // public ImmediateAST cond { get; set; }
@@ -598,6 +667,14 @@ namespace Ava
     {
         public ExecType compile_impl(MetaContext ctx)
         {
+            if (value == null)
+            {
+                return (ExecContext ctx) =>
+                {
+                    ctx.exitingLoop = 3;
+                    return MK.None();
+                };
+            }
             var value_ = value.compile(ctx);
 
             return (ExecContext ctx) =>
@@ -722,7 +799,6 @@ namespace Ava
 
             // ctx.create()
             var body_ = body.compile(subctx);
-
             var free = subctx.freevars.ToArray();
 
             var nlocal = subctx.ctx.Count;
@@ -758,7 +834,7 @@ namespace Ava
                     return body_(newctx);
                 }
 
-                var f = new DFunc {name = name, func = call};
+                var f = new DFunc { name = name, func = call };
                 if (name_i < 0)
                 {
                     ctx.globals[name_str] = f;
@@ -768,11 +844,19 @@ namespace Ava
                     ctx.locals[name_i] = f;
                 }
 
-                return DNone.unique;
+                return f;
             };
         }
     }
 
+    public partial class CVal : ImmediateAST
+    {
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            var o = obj;
+            return (_) => o;
+        }
+    }
     public partial class CStr : ImmediateAST
     {
         public ExecType compile_impl(MetaContext ctx)

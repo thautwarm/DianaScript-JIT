@@ -18,10 +18,21 @@ public partial class {{defi.name}}
 {% for field in defi %}
     public {{field.type | NET}} {{field.name}};
 {% endfor %}
+    public static {{defi.name}} make(
+{% for field in defi if field.name not in ("lineno", "colno") %}
+        {{field.type | NET}} {{field.name}},
+{% endfor %}
+        int lineno,
+        int colno
+    ) => new  {{defi.name}} {
+{% for field in defi %}
+        {{field.name}} = {{field.name}},
+{% endfor %}
+    };
 }
 {% endfor %}
 
-public partial class Parser
+public partial class ByteASTLoader
 {
     
     private ImmediateAST Read(THint<ImmediateAST> _) => ReadImmediateAST();

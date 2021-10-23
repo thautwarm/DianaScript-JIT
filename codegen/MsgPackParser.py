@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
-def _get_location(token):
-    return (token.line, token.column)
+if '_get_location' not in globals(): 
+    def _get_location(token):
+        return (token.line, token.column)
 
-def _get_value(token):
-    return token.value
+if '_get_value' not in globals(): 
+    def _get_value(token):
+        return token.value
 
 
 

@@ -1,7 +1,13 @@
 ## dina
 
-```bash
-python -m dina xxx.ch --out xxx.out && dotnet run xxx.out
-```
+Now we have .NET native parser for dianascript:
 
-See `test.ch` for the syntax.
+```bash
+dotnet run
+> func fix(f, x) f(func self(x) fix(f, x) end, x) end
+fix
+> func fact(self, x) if x < 1 then 1 else self(x - 1) * x end end
+fact
+> fix(fact, 10)
+3628800
+```

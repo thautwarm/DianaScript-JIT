@@ -25,22 +25,25 @@ namespace Ava
     }
 
 
-    public partial class Parser
+    public partial class ByteASTLoader
     {
         private BinaryReader binaryReader;
         private byte[] cache_4byte = new byte[4];
         private byte[] cache_32byte = new byte[32];
 
-        public Parser(FileStream fs)
+        public ByteASTLoader(FileStream fs)
         {
             binaryReader = new BinaryReader(fs);
         }
 
-        public Parser(string path)
+        public ByteASTLoader(string path)
         {
             var fs = File.Open(path, FileMode.Open);
             binaryReader = new BinaryReader(fs);
         }
+
+
+        private DObj Read(THint<DObj> _) => throw new NotImplementedException("cannot deserialize external dobjects!");
 
         public (ImmediateAST, ImmediateAST) Read(THint<(ImmediateAST, ImmediateAST)> _) =>
             (ReadImmediateAST(), ReadImmediateAST());

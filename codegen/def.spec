@@ -26,12 +26,25 @@ IfThenElse(
     ImmediateAST then,
     ImmediateAST orelse)
 
+NestedIf(
+    int lineno,
+    int colno,
+    (ImmediateAST, ImmediateAST)[] elifs,
+    ImmediateAST orelse)
+
 
 While(
     int lineno,
     int colno,
     ImmediateAST cond,
     ImmediateAST then
+)
+
+
+Loop(
+    int lineno,
+    int colno,
+    ImmediateAST body
 )
 
 For(
@@ -84,6 +97,12 @@ CStr(
     int lineno,
     int colno,
     string str
+)
+
+CVal(
+    int lineno,
+    int colno,
+    DObj obj
 )
 
 CInt(

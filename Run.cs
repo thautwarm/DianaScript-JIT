@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Ava;
+using Ava.Frontend;
+using Antlr4.Runtime;
 
 
 
@@ -48,7 +50,7 @@ public static class DianaScriptAPIs
 
     public static DObj assert(DObj[] args)
     {
-        switch(args.Length)
+        switch (args.Length)
         {
             case 1:
                 if (!args[0].__bool__())
@@ -60,7 +62,7 @@ public static class DianaScriptAPIs
                 break;
             default:
                 throw new ArgumentException($"assert accepts only 2 arguments.");
-            
+
         }
         return DNone.unique;
     }
@@ -79,12 +81,35 @@ public static class DianaScriptAPIs
         };
     }
 
-    public static void Main(string[] paths)
+    public static void Main(string[] _)
     {
-        foreach(var path in paths)
+        
+        var globals = InitGlobals();
+        while (true)
         {
-            var parser = new Parser(path);
-            var block = parser.ReadImmediateAST() as Block;
+            Console.Write("> ");
+            String input = Console.ReadLine(); ;
+            ICharStream stream = CharStreams.fromString(input);
+
+            ITokenSource lexer = new DianaScriptLexer(stream);
+
+            ITokenStream tokens = new CommonTokenStream(lexer);
+
+            var parser = new DianaScriptParser(tokens);
+            var result = parser.start().result.ToArray();
+            var cps = Block.make(result, 0, 0).compile(MetaContext.Create());
+            var res = CPSExecutor.Exec(globals, cps, "xxx");
+
+            Console.WriteLine(res.__str__());
+        }
+    }
+    public static void Main_back(string[] paths)
+    {
+        foreach (var path in paths)
+        {
+            var loader = new ByteASTLoader(path);
+            var block = loader.ReadImmediateAST() as Block;
+
             var meta_ctx = MetaContext.Create();
             var cps = block.compile(meta_ctx);
             var globals = InitGlobals();

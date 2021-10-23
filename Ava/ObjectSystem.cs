@@ -302,7 +302,6 @@ namespace Ava
 
             throw new NotFiniteNumberException();
         }
-
         public DObj __add__(DObj a)
         {
             if (a is DList b)

@@ -76,12 +76,26 @@ class IfThenElse:
         serialize_(self.then, buf)
         serialize_(self.orelse, buf)
 @dataclass(frozen=True)
+class NestedIf:
+    lineno: int
+    colno: int
+    elifs: list[tuple[ImmediateAST, ImmediateAST]]
+    orelse: ImmediateAST
+    TAG = 5
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        serialize_(self.lineno, buf)
+        serialize_(self.colno, buf)
+        serialize_(self.elifs, buf)
+        serialize_(self.orelse, buf)
+@dataclass(frozen=True)
 class While:
     lineno: int
     colno: int
     cond: ImmediateAST
     then: ImmediateAST
-    TAG = 5
+    TAG = 6
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -90,13 +104,25 @@ class While:
         serialize_(self.cond, buf)
         serialize_(self.then, buf)
 @dataclass(frozen=True)
+class Loop:
+    lineno: int
+    colno: int
+    body: ImmediateAST
+    TAG = 7
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        serialize_(self.lineno, buf)
+        serialize_(self.colno, buf)
+        serialize_(self.body, buf)
+@dataclass(frozen=True)
 class For:
     lineno: int
     colno: int
     target: str
     iter: ImmediateAST
     body: ImmediateAST
-    TAG = 6
+    TAG = 8
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -111,7 +137,7 @@ class OGet:
     colno: int
     target: ImmediateAST
     item: ImmediateAST
-    TAG = 7
+    TAG = 9
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -126,7 +152,7 @@ class OSet:
     target: ImmediateAST
     item: ImmediateAST
     value: ImmediateAST
-    TAG = 8
+    TAG = 10
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -140,7 +166,7 @@ class Block:
     lineno: int
     colno: int
     suite: list[ImmediateAST]
-    TAG = 9
+    TAG = 11
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -153,7 +179,7 @@ class Call:
     colno: int
     f: ImmediateAST
     args: list[ImmediateAST]
-    TAG = 10
+    TAG = 12
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -168,7 +194,7 @@ class Function:
     name: str
     args: list[str]
     body: ImmediateAST
-    TAG = 11
+    TAG = 13
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -182,7 +208,7 @@ class CStr:
     lineno: int
     colno: int
     str: str
-    TAG = 12
+    TAG = 14
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -190,11 +216,23 @@ class CStr:
         serialize_(self.colno, buf)
         serialize_(self.str, buf)
 @dataclass(frozen=True)
+class CVal:
+    lineno: int
+    colno: int
+    obj: DObj
+    TAG = 15
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        serialize_(self.lineno, buf)
+        serialize_(self.colno, buf)
+        serialize_(self.obj, buf)
+@dataclass(frozen=True)
 class CInt:
     lineno: int
     colno: int
     value: Int64
-    TAG = 13
+    TAG = 16
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -206,7 +244,7 @@ class CFloat:
     lineno: int
     colno: int
     value: float
-    TAG = 14
+    TAG = 17
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -217,7 +255,7 @@ class CFloat:
 class CNone:
     lineno: int
     colno: int
-    TAG = 15
+    TAG = 18
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -228,7 +266,7 @@ class CList:
     lineno: int
     colno: int
     elts: list[ImmediateAST]
-    TAG = 16
+    TAG = 19
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -240,7 +278,7 @@ class CTuple:
     lineno: int
     colno: int
     elts: list[ImmediateAST]
-    TAG = 17
+    TAG = 20
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -252,7 +290,7 @@ class CDict:
     lineno: int
     colno: int
     pairs: list[tuple[ImmediateAST, ImmediateAST]]
-    TAG = 18
+    TAG = 21
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -263,7 +301,7 @@ class CDict:
 class Break:
     lineno: int
     colno: int
-    TAG = 19
+    TAG = 22
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -273,7 +311,7 @@ class Break:
 class Continue:
     lineno: int
     colno: int
-    TAG = 20
+    TAG = 23
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -284,7 +322,7 @@ class Return:
     lineno: int
     colno: int
     value: ImmediateAST
-    TAG = 21
+    TAG = 24
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -297,7 +335,7 @@ class And:
     colno: int
     left: ImmediateAST
     right: ImmediateAST
-    TAG = 22
+    TAG = 25
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -311,7 +349,7 @@ class Or:
     colno: int
     left: ImmediateAST
     right: ImmediateAST
-    TAG = 23
+    TAG = 26
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -324,7 +362,7 @@ class Not:
     lineno: int
     colno: int
     value: ImmediateAST
-    TAG = 24
+    TAG = 27
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -336,7 +374,7 @@ class Neg:
     lineno: int
     colno: int
     value: ImmediateAST
-    TAG = 25
+    TAG = 28
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -348,7 +386,7 @@ class Inv:
     lineno: int
     colno: int
     value: ImmediateAST
-    TAG = 26
+    TAG = 29
     
     def serialize_(self, buf: bytearray):
         buf.append(self.TAG)
@@ -363,7 +401,9 @@ ImmediateAST = (
     | Bin
     | Load
     | IfThenElse
+    | NestedIf
     | While
+    | Loop
     | For
     | OGet
     | OSet
@@ -371,6 +411,7 @@ ImmediateAST = (
     | Call
     | Function
     | CStr
+    | CVal
     | CInt
     | CFloat
     | CNone

@@ -4,6 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # generated ran code
+*.tokens
+*.interp
 *.ran
 .vscode/
 runtests/mylang_raw.py

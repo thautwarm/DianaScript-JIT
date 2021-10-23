@@ -18,6 +18,17 @@ public partial class Store
     public int colno;
     public string lhs;
     public ImmediateAST rhs;
+    public static Store make(
+        string lhs,
+        ImmediateAST rhs,
+        int lineno,
+        int colno
+    ) => new  Store {
+        lineno = lineno,
+        colno = colno,
+        lhs = lhs,
+        rhs = rhs,
+    };
 }
 public partial class StoreMany
 {
@@ -30,6 +41,17 @@ public partial class StoreMany
     public int colno;
     public ImmediateAST[] lhs;
     public ImmediateAST rhs;
+    public static StoreMany make(
+        ImmediateAST[] lhs,
+        ImmediateAST rhs,
+        int lineno,
+        int colno
+    ) => new  StoreMany {
+        lineno = lineno,
+        colno = colno,
+        lhs = lhs,
+        rhs = rhs,
+    };
 }
 public partial class Bin
 {
@@ -43,6 +65,19 @@ public partial class Bin
     public ImmediateAST left;
     public string op;
     public ImmediateAST right;
+    public static Bin make(
+        ImmediateAST left,
+        string op,
+        ImmediateAST right,
+        int lineno,
+        int colno
+    ) => new  Bin {
+        lineno = lineno,
+        colno = colno,
+        left = left,
+        op = op,
+        right = right,
+    };
 }
 public partial class Load
 {
@@ -54,6 +89,15 @@ public partial class Load
     public int lineno;
     public int colno;
     public string n;
+    public static Load make(
+        string n,
+        int lineno,
+        int colno
+    ) => new  Load {
+        lineno = lineno,
+        colno = colno,
+        n = n,
+    };
 }
 public partial class IfThenElse
 {
@@ -67,6 +111,42 @@ public partial class IfThenElse
     public ImmediateAST cond;
     public ImmediateAST then;
     public ImmediateAST orelse;
+    public static IfThenElse make(
+        ImmediateAST cond,
+        ImmediateAST then,
+        ImmediateAST orelse,
+        int lineno,
+        int colno
+    ) => new  IfThenElse {
+        lineno = lineno,
+        colno = colno,
+        cond = cond,
+        then = then,
+        orelse = orelse,
+    };
+}
+public partial class NestedIf
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "NestedIf";
+
+    public int lineno;
+    public int colno;
+    public (ImmediateAST, ImmediateAST)[] elifs;
+    public ImmediateAST orelse;
+    public static NestedIf make(
+        (ImmediateAST, ImmediateAST)[] elifs,
+        ImmediateAST orelse,
+        int lineno,
+        int colno
+    ) => new  NestedIf {
+        lineno = lineno,
+        colno = colno,
+        elifs = elifs,
+        orelse = orelse,
+    };
 }
 public partial class While
 {
@@ -79,6 +159,37 @@ public partial class While
     public int colno;
     public ImmediateAST cond;
     public ImmediateAST then;
+    public static While make(
+        ImmediateAST cond,
+        ImmediateAST then,
+        int lineno,
+        int colno
+    ) => new  While {
+        lineno = lineno,
+        colno = colno,
+        cond = cond,
+        then = then,
+    };
+}
+public partial class Loop
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "Loop";
+
+    public int lineno;
+    public int colno;
+    public ImmediateAST body;
+    public static Loop make(
+        ImmediateAST body,
+        int lineno,
+        int colno
+    ) => new  Loop {
+        lineno = lineno,
+        colno = colno,
+        body = body,
+    };
 }
 public partial class For
 {
@@ -92,6 +203,19 @@ public partial class For
     public string target;
     public ImmediateAST iter;
     public ImmediateAST body;
+    public static For make(
+        string target,
+        ImmediateAST iter,
+        ImmediateAST body,
+        int lineno,
+        int colno
+    ) => new  For {
+        lineno = lineno,
+        colno = colno,
+        target = target,
+        iter = iter,
+        body = body,
+    };
 }
 public partial class OGet
 {
@@ -104,6 +228,17 @@ public partial class OGet
     public int colno;
     public ImmediateAST target;
     public ImmediateAST item;
+    public static OGet make(
+        ImmediateAST target,
+        ImmediateAST item,
+        int lineno,
+        int colno
+    ) => new  OGet {
+        lineno = lineno,
+        colno = colno,
+        target = target,
+        item = item,
+    };
 }
 public partial class OSet
 {
@@ -117,6 +252,19 @@ public partial class OSet
     public ImmediateAST target;
     public ImmediateAST item;
     public ImmediateAST value;
+    public static OSet make(
+        ImmediateAST target,
+        ImmediateAST item,
+        ImmediateAST value,
+        int lineno,
+        int colno
+    ) => new  OSet {
+        lineno = lineno,
+        colno = colno,
+        target = target,
+        item = item,
+        value = value,
+    };
 }
 public partial class Block
 {
@@ -128,6 +276,15 @@ public partial class Block
     public int lineno;
     public int colno;
     public ImmediateAST[] suite;
+    public static Block make(
+        ImmediateAST[] suite,
+        int lineno,
+        int colno
+    ) => new  Block {
+        lineno = lineno,
+        colno = colno,
+        suite = suite,
+    };
 }
 public partial class Call
 {
@@ -140,6 +297,17 @@ public partial class Call
     public int colno;
     public ImmediateAST f;
     public ImmediateAST[] args;
+    public static Call make(
+        ImmediateAST f,
+        ImmediateAST[] args,
+        int lineno,
+        int colno
+    ) => new  Call {
+        lineno = lineno,
+        colno = colno,
+        f = f,
+        args = args,
+    };
 }
 public partial class Function
 {
@@ -153,6 +321,19 @@ public partial class Function
     public string name;
     public string[] args;
     public ImmediateAST body;
+    public static Function make(
+        string name,
+        string[] args,
+        ImmediateAST body,
+        int lineno,
+        int colno
+    ) => new  Function {
+        lineno = lineno,
+        colno = colno,
+        name = name,
+        args = args,
+        body = body,
+    };
 }
 public partial class CStr
 {
@@ -164,6 +345,35 @@ public partial class CStr
     public int lineno;
     public int colno;
     public string str;
+    public static CStr make(
+        string str,
+        int lineno,
+        int colno
+    ) => new  CStr {
+        lineno = lineno,
+        colno = colno,
+        str = str,
+    };
+}
+public partial class CVal
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "CVal";
+
+    public int lineno;
+    public int colno;
+    public DObj obj;
+    public static CVal make(
+        DObj obj,
+        int lineno,
+        int colno
+    ) => new  CVal {
+        lineno = lineno,
+        colno = colno,
+        obj = obj,
+    };
 }
 public partial class CInt
 {
@@ -175,6 +385,15 @@ public partial class CInt
     public int lineno;
     public int colno;
     public Int64 value;
+    public static CInt make(
+        Int64 value,
+        int lineno,
+        int colno
+    ) => new  CInt {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 public partial class CFloat
 {
@@ -186,6 +405,15 @@ public partial class CFloat
     public int lineno;
     public int colno;
     public float value;
+    public static CFloat make(
+        float value,
+        int lineno,
+        int colno
+    ) => new  CFloat {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 public partial class CNone
 {
@@ -196,6 +424,13 @@ public partial class CNone
 
     public int lineno;
     public int colno;
+    public static CNone make(
+        int lineno,
+        int colno
+    ) => new  CNone {
+        lineno = lineno,
+        colno = colno,
+    };
 }
 public partial class CList
 {
@@ -207,6 +442,15 @@ public partial class CList
     public int lineno;
     public int colno;
     public ImmediateAST[] elts;
+    public static CList make(
+        ImmediateAST[] elts,
+        int lineno,
+        int colno
+    ) => new  CList {
+        lineno = lineno,
+        colno = colno,
+        elts = elts,
+    };
 }
 public partial class CTuple
 {
@@ -218,6 +462,15 @@ public partial class CTuple
     public int lineno;
     public int colno;
     public ImmediateAST[] elts;
+    public static CTuple make(
+        ImmediateAST[] elts,
+        int lineno,
+        int colno
+    ) => new  CTuple {
+        lineno = lineno,
+        colno = colno,
+        elts = elts,
+    };
 }
 public partial class CDict
 {
@@ -229,6 +482,15 @@ public partial class CDict
     public int lineno;
     public int colno;
     public (ImmediateAST, ImmediateAST)[] pairs;
+    public static CDict make(
+        (ImmediateAST, ImmediateAST)[] pairs,
+        int lineno,
+        int colno
+    ) => new  CDict {
+        lineno = lineno,
+        colno = colno,
+        pairs = pairs,
+    };
 }
 public partial class Break
 {
@@ -239,6 +501,13 @@ public partial class Break
 
     public int lineno;
     public int colno;
+    public static Break make(
+        int lineno,
+        int colno
+    ) => new  Break {
+        lineno = lineno,
+        colno = colno,
+    };
 }
 public partial class Continue
 {
@@ -249,6 +518,13 @@ public partial class Continue
 
     public int lineno;
     public int colno;
+    public static Continue make(
+        int lineno,
+        int colno
+    ) => new  Continue {
+        lineno = lineno,
+        colno = colno,
+    };
 }
 public partial class Return
 {
@@ -260,6 +536,15 @@ public partial class Return
     public int lineno;
     public int colno;
     public ImmediateAST value;
+    public static Return make(
+        ImmediateAST value,
+        int lineno,
+        int colno
+    ) => new  Return {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 public partial class And
 {
@@ -272,6 +557,17 @@ public partial class And
     public int colno;
     public ImmediateAST left;
     public ImmediateAST right;
+    public static And make(
+        ImmediateAST left,
+        ImmediateAST right,
+        int lineno,
+        int colno
+    ) => new  And {
+        lineno = lineno,
+        colno = colno,
+        left = left,
+        right = right,
+    };
 }
 public partial class Or
 {
@@ -284,6 +580,17 @@ public partial class Or
     public int colno;
     public ImmediateAST left;
     public ImmediateAST right;
+    public static Or make(
+        ImmediateAST left,
+        ImmediateAST right,
+        int lineno,
+        int colno
+    ) => new  Or {
+        lineno = lineno,
+        colno = colno,
+        left = left,
+        right = right,
+    };
 }
 public partial class Not
 {
@@ -295,6 +602,15 @@ public partial class Not
     public int lineno;
     public int colno;
     public ImmediateAST value;
+    public static Not make(
+        ImmediateAST value,
+        int lineno,
+        int colno
+    ) => new  Not {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 public partial class Neg
 {
@@ -306,6 +622,15 @@ public partial class Neg
     public int lineno;
     public int colno;
     public ImmediateAST value;
+    public static Neg make(
+        ImmediateAST value,
+        int lineno,
+        int colno
+    ) => new  Neg {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 public partial class Inv
 {
@@ -317,9 +642,18 @@ public partial class Inv
     public int lineno;
     public int colno;
     public ImmediateAST value;
+    public static Inv make(
+        ImmediateAST value,
+        int lineno,
+        int colno
+    ) => new  Inv {
+        lineno = lineno,
+        colno = colno,
+        value = value,
+    };
 }
 
-public partial class Parser
+public partial class ByteASTLoader
 {
     
     private ImmediateAST Read(THint<ImmediateAST> _) => ReadImmediateAST();
@@ -382,6 +716,16 @@ public partial class Parser
             }
             case 5:
             {
+                return new NestedIf
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    elifs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
+                    orelse = Read(THint<ImmediateAST>.val),
+                };
+            }
+            case 6:
+            {
                 return new While
                 {
                     lineno = Read(THint<int>.val),
@@ -390,7 +734,16 @@ public partial class Parser
                     then = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 6:
+            case 7:
+            {
+                return new Loop
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    body = Read(THint<ImmediateAST>.val),
+                };
+            }
+            case 8:
             {
                 return new For
                 {
@@ -401,7 +754,7 @@ public partial class Parser
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 7:
+            case 9:
             {
                 return new OGet
                 {
@@ -411,7 +764,7 @@ public partial class Parser
                     item = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 8:
+            case 10:
             {
                 return new OSet
                 {
@@ -422,7 +775,7 @@ public partial class Parser
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 9:
+            case 11:
             {
                 return new Block
                 {
@@ -431,7 +784,7 @@ public partial class Parser
                     suite = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 10:
+            case 12:
             {
                 return new Call
                 {
@@ -441,7 +794,7 @@ public partial class Parser
                     args = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 11:
+            case 13:
             {
                 return new Function
                 {
@@ -452,7 +805,7 @@ public partial class Parser
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 12:
+            case 14:
             {
                 return new CStr
                 {
@@ -461,7 +814,16 @@ public partial class Parser
                     str = Read(THint<string>.val),
                 };
             }
-            case 13:
+            case 15:
+            {
+                return new CVal
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    obj = Read(THint<DObj>.val),
+                };
+            }
+            case 16:
             {
                 return new CInt
                 {
@@ -470,7 +832,7 @@ public partial class Parser
                     value = Read(THint<Int64>.val),
                 };
             }
-            case 14:
+            case 17:
             {
                 return new CFloat
                 {
@@ -479,7 +841,7 @@ public partial class Parser
                     value = Read(THint<float>.val),
                 };
             }
-            case 15:
+            case 18:
             {
                 return new CNone
                 {
@@ -487,7 +849,7 @@ public partial class Parser
                     colno = Read(THint<int>.val),
                 };
             }
-            case 16:
+            case 19:
             {
                 return new CList
                 {
@@ -496,7 +858,7 @@ public partial class Parser
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 17:
+            case 20:
             {
                 return new CTuple
                 {
@@ -505,7 +867,7 @@ public partial class Parser
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 18:
+            case 21:
             {
                 return new CDict
                 {
@@ -514,7 +876,7 @@ public partial class Parser
                     pairs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
                 };
             }
-            case 19:
+            case 22:
             {
                 return new Break
                 {
@@ -522,7 +884,7 @@ public partial class Parser
                     colno = Read(THint<int>.val),
                 };
             }
-            case 20:
+            case 23:
             {
                 return new Continue
                 {
@@ -530,7 +892,7 @@ public partial class Parser
                     colno = Read(THint<int>.val),
                 };
             }
-            case 21:
+            case 24:
             {
                 return new Return
                 {
@@ -539,7 +901,7 @@ public partial class Parser
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 22:
+            case 25:
             {
                 return new And
                 {
@@ -549,7 +911,7 @@ public partial class Parser
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 23:
+            case 26:
             {
                 return new Or
                 {
@@ -559,7 +921,7 @@ public partial class Parser
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 24:
+            case 27:
             {
                 return new Not
                 {
@@ -568,7 +930,7 @@ public partial class Parser
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 25:
+            case 28:
             {
                 return new Neg
                 {
@@ -577,7 +939,7 @@ public partial class Parser
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 26:
+            case 29:
             {
                 return new Inv
                 {
@@ -649,6 +1011,17 @@ public partial class Parser
     };
 
 
+    private NestedIf Read(THint<NestedIf> _) => ReadNestedIf();
+
+    public NestedIf ReadNestedIf() => new NestedIf
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        elifs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
+        orelse = Read(THint<ImmediateAST>.val),
+    };
+
+
     private While Read(THint<While> _) => ReadWhile();
 
     public While ReadWhile() => new While
@@ -657,6 +1030,16 @@ public partial class Parser
         colno = Read(THint<int>.val),
         cond = Read(THint<ImmediateAST>.val),
         then = Read(THint<ImmediateAST>.val),
+    };
+
+
+    private Loop Read(THint<Loop> _) => ReadLoop();
+
+    public Loop ReadLoop() => new Loop
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        body = Read(THint<ImmediateAST>.val),
     };
 
 
@@ -735,6 +1118,16 @@ public partial class Parser
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
         str = Read(THint<string>.val),
+    };
+
+
+    private CVal Read(THint<CVal> _) => ReadCVal();
+
+    public CVal ReadCVal() => new CVal
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        obj = Read(THint<DObj>.val),
     };
 
 
@@ -879,12 +1272,12 @@ public partial class Parser
 
     private static readonly object _loaderSync = new object();
 
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
-        var arr = new ImmediateAST[ReadInt()];
+        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
-            arr[i] = Read(THint<ImmediateAST>.val);
+            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
         }
         return arr;
     }
@@ -897,12 +1290,12 @@ public partial class Parser
         }
         return arr;
     }
-    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
     {
-        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
+        var arr = new ImmediateAST[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
-            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
+            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }
