@@ -95,18 +95,18 @@ namespace Ava
             DFloat.classobject.methods["__call__"] = MK.FuncN("float", FloatType.__call__);
             DString.classobject.methods["__call__"] = MK.FuncN("str", StrType.__call__);
             return new Dictionary<string, DObj>
-        {
-            {"log", MK.FuncN("log", log)},
-            {"classname", MK.Func1("classname", classname)},
-            {"time", MK.Func0("time", time)},
-            {"assert",  MK.FuncN("assert", assert)},
-            {"int", DInt.classobject},
-            {"float", DFloat.classobject},
-            {"str", DString.classobject},
-            {"list", DList.classobject},
-            {"dict", DDict.classobject},
-            {"keys", MK.Func1("keys", keys)}
-        };
+            {
+                {"log", MK.FuncN("log", log)},
+                {"classname", MK.Func1("classname", classname)},
+                {"time", MK.Func0("time", time)},
+                {"assert",  MK.FuncN("assert", assert)},
+                {"int", DInt.classobject},
+                {"float", DFloat.classobject},
+                {"str", DString.classobject},
+                {"list", DList.classobject},
+                {"dict", DDict.classobject},
+                {"keys", MK.Func1("keys", keys)}
+            };
         }
 
 #if NUNITY
