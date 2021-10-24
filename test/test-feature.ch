@@ -70,3 +70,13 @@ builder {
     yield 2
 }
 
+
+
+k = {1 : 2}
+z = [None]
+dict.search(k, 1, z)
+log(z)
+
+z = [None]
+log(dict.search(k, 10, z))
+log(z)

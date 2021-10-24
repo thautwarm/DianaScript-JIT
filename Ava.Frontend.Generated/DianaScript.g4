@@ -937,21 +937,41 @@ lhs_seq returns [System.Collections.Generic.List<ImmediateAST> result] :
         $result = tmp__280; 
       } 
 ; 
-expr_opt returns [ImmediateAST result] :
-      { 
-        $result = null; 
-      } 
-    | local__1_expr_opt_case1=expr { 
-        ImmediateAST tmp__281 ; 
-        tmp__281 = ( ImmediateAST ) _localctx.local__1_expr_opt_case1.result ; 
+start returns [System.Collections.Generic.List<ImmediateAST> result] :
+      gen__optional_NEWLINE local__2_start_case0=gen__nullable_gen__seplist_NEWLINE__stmt gen__optional_NEWLINE EOF { 
+        System.Collections.Generic.List<ImmediateAST> tmp__281 ; 
+        tmp__281 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_start_case0.result ; 
         $result = tmp__281; 
       } 
 ; 
-start returns [System.Collections.Generic.List<ImmediateAST> result] :
-      local__1_start_case0=gen__filter_stmt__NEWLINE { 
+gen__nullable_gen__seplist_NEWLINE__stmt returns [System.Collections.Generic.List<ImmediateAST> result] :
+      { 
         System.Collections.Generic.List<ImmediateAST> tmp__282 ; 
-        tmp__282 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_start_case0.result ; 
+        tmp__282 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
         $result = tmp__282; 
+      } 
+    | local__1_gen__nullable_gen__seplist_NEWLINE__stmt_case1=gen__seplist_NEWLINE__stmt { 
+        System.Collections.Generic.List<ImmediateAST> tmp__283 ; 
+        tmp__283 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__nullable_gen__seplist_NEWLINE__stmt_case1.result ; 
+        $result = tmp__283; 
+      } 
+; 
+gen__seplist_NEWLINE__stmt returns [System.Collections.Generic.List<ImmediateAST> result] :
+      local__1_gen__seplist_NEWLINE__stmt_case0=stmt { 
+        ImmediateAST tmp__285 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__284 ; 
+        tmp__285 = ( ImmediateAST ) _localctx.local__1_gen__seplist_NEWLINE__stmt_case0.result ; 
+        tmp__284 = new System.Collections.Generic.List<ImmediateAST> { tmp__285 }; 
+        $result = tmp__284; 
+      } 
+    | local__1_gen__seplist_NEWLINE__stmt_case1=gen__seplist_NEWLINE__stmt NEWLINE_17 local__3_gen__seplist_NEWLINE__stmt_case1=stmt { 
+        System.Collections.Generic.List<ImmediateAST> tmp__288 ; 
+        ImmediateAST tmp__287 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__286 ; 
+        tmp__286 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__seplist_NEWLINE__stmt_case1.result ; 
+        tmp__287 = ( ImmediateAST ) _localctx.local__3_gen__seplist_NEWLINE__stmt_case1.result ; 
+        tmp__288 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__286, tmp__287 ); 
+        $result = tmp__288; 
       } 
 ; 
 

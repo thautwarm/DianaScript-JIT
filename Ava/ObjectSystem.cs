@@ -12,6 +12,8 @@ namespace Ava
     public interface DObj : IEquatable<DObj>
     {
         public string Classname { get; }
+
+        public object Native { get; }
         public bool __bool__();
         public bool __eq__(DObj o);
         public bool __lt__(DObj o);
@@ -34,12 +36,15 @@ namespace Ava
         public DObj __neg__();
         public DObj __inv__();
         public string __str__();
+        public int __len__();
         public IEnumerable<DObj> __iter__();
     }
 
-    public partial struct DInt : DObj
+    public partial class DInt
     {
         public Int64 value;
+
+        public object Native => value;
 
         public string __str__() => value.ToString();
         public string Classname => "int";
@@ -66,9 +71,11 @@ namespace Ava
         }
     }
 
-    public partial struct DFloat : DObj
+    public partial class DFloat
     {
         public string __str__() => value.ToString();
+
+        public object Native => value;
         public string Classname => "float";
 
         public bool Equals(DObj other)
@@ -119,17 +126,19 @@ namespace Ava
         }
     }
 
-    public partial struct DNone : DObj
+    public partial class DNone
     {
         public string __str__() => "None";
         public string Classname => "none";
+
+        public object Native => this;
 
         public bool Equals(DObj other)
         {
             return this.__eq__(other);
         }
 
-        public static DNone unique;
+        public static DNone unique = new DNone();
 
         public bool __bool__()
         {
@@ -142,8 +151,14 @@ namespace Ava
         }
     }
 
-    public partial struct DString : DObj
+    public partial class DString
     {
+        public object Native => value;
+
+        public bool __contains__(DObj o)
+        {
+            return (o is DString s) && value.Contains(s.value);
+        }
         public string __str__() => value;
         public string Classname => "str";
         public string value;
@@ -152,8 +167,6 @@ namespace Ava
         {
             return value != "";
         }
-
-
         public bool __eq__(DObj o)
         {
             return (o is DString a) && a.value == value;
@@ -162,13 +175,6 @@ namespace Ava
         public bool Equals(DObj other)
         {
             return this.__eq__(other);
-        }
-
-        public bool __contains__(DObj a)
-        {
-            if (a is DString o)
-                return value.Contains(o.value);
-            throw new NotImplementedException();
         }
 
         public DObj __add__(DObj other)
@@ -183,11 +189,17 @@ namespace Ava
                 yield return MK.String(new String(new char[] {c}));
             }
         }
+
+        public int __len__() => value.Length;
     }
 
 
-    public partial class DDict : DObj
+    public partial class DDict
     {
+
+        public object Native => dict;
+        public int __len__() => dict.Count;
+    
         public string __str__()
         {
             return "{" + String.Join(", ", dict.Select(x =>
@@ -241,8 +253,9 @@ namespace Ava
     }
 
 
-    public partial class DTuple : DObj
+    public partial class DTuple
     {
+        public object Native => elts;
         public string __str__()
         {
             return "(" + String.Join(",", elts.Select(x => x.__str__())) + ",)";
@@ -260,6 +273,13 @@ namespace Ava
         {
             return (o is DTuple a) && a.elts.Length == elts.Length && a.elts.SequenceEqual(elts);
         }
+
+        public bool __contains__(DObj o)
+        {
+            return elts.Contains(o);
+        }
+
+        public int __len__() => elts.Length;
 
 
         public bool Equals(DObj other)
@@ -312,19 +332,23 @@ namespace Ava
             throw new NotFiniteNumberException();
         }
 
-        public bool __contains__(DObj a)
-        {
-            return elts.Contains(a);
-        }
-
         public IEnumerable<DObj> __iter__()
         {
             return elts;
         }
     }
 
-    public partial class DList : DObj
+    public interface Ref: DObj
     {
+        public void SetContents(DObj v);
+        public DObj GetContents();
+    }
+
+    public partial class DList: Ref
+    {
+
+        public object Native => elts;
+        public int __len__() => elts.Count;
         public string __str__()
         {
             return "[" + String.Join(",", elts.Select(x => x.__str__())) + "]";
@@ -338,19 +362,25 @@ namespace Ava
             return elts.Count != 0;
         }
 
+        public bool __contains__(DObj o)
+        {
+            return elts.Contains(o);
+        }
 
         public bool __eq__(DObj o)
         {
             return (o is DList a) && a.elts.Count == elts.Count && a.elts.SequenceEqual(elts);
         }
 
-        public DObj __get__(DObj s)
+        public DObj __get__(DObj o)
         {
-            if (s is DInt i)
+            switch(o)
             {
+            case DInt i:
                 return elts[(int) i.value];
+            case DString s:
+                throw new NotImplementedException();
             }
-
             throw new NotImplementedException();
         }
 
@@ -380,22 +410,28 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-
-        public bool __contains__(DObj a)
-        {
-            return elts.Contains(a);
-        }
-
         public IEnumerable<DObj> __iter__()
         {
             return elts;
         }
+
+        public void SetContents(DObj v)
+        {
+            if (v == null) return;
+            elts[0] = v;
+        }
+
+        public DObj GetContents()
+        {
+            return elts[0];
+        }
     }
 
-    public partial class DNative : DObj
+    public partial class DNative 
     {
         public object value;
 
+        public object Native => value;
         public string Classname => "native";
 
 
@@ -405,12 +441,14 @@ namespace Ava
         }
     }
 
-    public partial class DFunc : DObj
+    public partial class DFunc
     {
         public string __str__()
         {
             return name;
         }
+
+        public object Native => func;
 
         public Func<DObj[], DObj> func;
 
@@ -437,18 +475,26 @@ namespace Ava
         }
     }
 
-    public partial class FloatType
+    // TODO: After C# 8.0 default interface gets adopted by Unity, we introduce small-talk OOP system
+    public partial class TypeObject_v1
     {
-        public static FloatType unique = new FloatType { };
 
-        public string __str__() => "float";
+        public object Native => this;
 
-        public string Classname => "type";
+        public string typename;
+        public Dictionary<string, DObj> methods;
 
+        public TypeObject_v1(string typename)
+        {
+            this.typename = typename;
+            this.methods = new Dictionary<string, DObj>();
+        }
         public bool __bool__()
         {
             return true;
         }
+        public string __str__() => typename;
+        public string Classname => "type";
 
         public bool __eq__(DObj o)
         {
@@ -460,10 +506,29 @@ namespace Ava
             return __eq__(other);
         }
 
-        public DObj __call__(DObj[] args)
+        public DObj __get__(DObj attr)
+        {
+            if(attr is DString s && methods.TryGetValue(s.value, out var field))
+            {
+                return field;
+            }
+            throw new AttributeError(attr.__str__());
+        }
+        public DObj __call__(DObj[] objs)
+        {
+            if(methods.TryGetValue("__call__", out var field))
+            {
+                return field.__call__(objs);
+            }
+            throw new NotImplementedException();
+        }
+    }
+    public static class FloatType
+    {
+        public static DObj __call__(DObj[] args)
         {
             if (args.Length == 0) return MK.Int(0);
-            if (args.Length != 1) throw new InvalidCastException($"object {__str__()} is not callable.");
+            if (args.Length != 1) throw new InvalidCastException($"float object is not callable.");
             var x = args[0];
             switch (x)
             {
@@ -474,68 +539,30 @@ namespace Ava
                 case DString s:
                     return MK.Float(float.Parse(s.value));
                 default:
-                    throw new InvalidCastException($"cannot cast {x.Classname} objects to {__str__()}");
+                    throw new InvalidCastException($"cannot cast {x.Classname} objects to float");
             }
         }
     }
 
-    public partial class StrType
+    public static partial class StrType
     {
-        public static StrType unique = new StrType { };
 
-        public string __str__() => "str";
-
-        public string Classname => "type";
-
-        public bool __bool__()
-        {
-            return true;
-        }
-
-        public bool __eq__(DObj o)
-        {
-            return ReferenceEquals(this, o);
-        }
-
-        public bool Equals(DObj other)
-        {
-            return __eq__(other);
-        }
-
-        public DObj __call__(DObj[] args)
+        public static DObj __call__(DObj[] args)
         {
             if (args.Length == 0) return MK.Int(0);
-            if (args.Length != 1) throw new InvalidCastException($"object {__str__()} is not callable.");
+            // TODO
+            if (args.Length != 1) throw new InvalidCastException($"str object is not callable.");
             var x = args[0];
             return MK.String(x.__str__());
         }
     }
 
-    public partial class IntType
+    public static partial class IntType
     {
-        public static IntType unique = new IntType { };
-        public string __str__() => "int";
-        public string Classname => "type";
-
-        public bool __bool__()
-        {
-            return true;
-        }
-
-        public bool __eq__(DObj o)
-        {
-            return ReferenceEquals(this, o);
-        }
-
-        public bool Equals(DObj other)
-        {
-            return __eq__(other);
-        }
-
-        public DObj __call__(DObj[] args)
+        public static DObj __call__(DObj[] args)
         {
             if (args.Length == 0) return MK.Int(0);
-            if (args.Length != 1) throw new InvalidCastException($"object {this.__str__()} is not callable.");
+            if (args.Length != 1) throw new InvalidCastException($"integer object is not callable.");
             var x = args[0];
             switch (x)
             {
@@ -546,7 +573,7 @@ namespace Ava
                 case DString s:
                     return MK.Int(int_t.Parse(s.value));
                 default:
-                    throw new InvalidCastException($"cannot cast {x.Classname} objects to {__str__()}");
+                    throw new InvalidCastException($"cannot cast {x.Classname} objects to int");
             }
         }
     }

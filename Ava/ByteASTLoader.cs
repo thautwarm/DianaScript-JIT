@@ -4,11 +4,6 @@ using System.Collections.Generic;
 
 namespace Ava
 {
-    public struct THint<A>
-    {
-        public static THint<A> val;
-    }
-
     public static class ConstPoolTag
     {
         public const byte SpecialTag = 0b01 << 7;

@@ -43,7 +43,8 @@ val mkop: (token, str) -> object
 val true: bool
 val false: bool
 
-start   : filter[stmt, <NEWLINE>] { $1 }
+start   : optional[<NEWLINE>] nullable[seplist[<NEWLINE>, stmt]] optional[<NEWLINE>] <EOF>
+          { $2 }
 
 list[e] : e  { [$1] }
         | list[e] e  { append($1, $2) }
@@ -74,10 +75,6 @@ nullable[seq] : { empty() }
 
 optional[a] :   { null }
             | a { $1 }
-
-expr_opt :      { null }
-         | expr { $1 }
-
 
 lhs_seq : { empty()  }
         | lhs_seq lhs "="

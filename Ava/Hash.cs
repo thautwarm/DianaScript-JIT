@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ava
 {
-    public partial struct DInt
+    public partial class DInt
     {
         public override int GetHashCode()
         {
@@ -11,7 +11,7 @@ namespace Ava
         }
     }
 
-    public partial struct DFloat
+    public partial class DFloat
     {
         public override int GetHashCode()
         {
@@ -19,7 +19,7 @@ namespace Ava
         }
     }
 
-    public partial struct DString
+    public partial class DString
     {
         public override int GetHashCode()
         {
@@ -46,7 +46,7 @@ namespace Ava
         }
     }
 
-    public partial struct DNone
+    public partial class DNone
     {
         public override int GetHashCode()
         {

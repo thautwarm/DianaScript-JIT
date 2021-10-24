@@ -45,6 +45,27 @@ namespace Ava
         }
     }
 
+    public class AttributeError : Exception
+    {
+        public AttributeError(string s) : base(s)
+        {
+        }
+    }
+
+    public class ValueError : Exception
+    {
+        public ValueError(string s) : base(s)
+        {
+        }
+    }
+
+    public class TypeError: Exception
+    {
+        public TypeError(string s) : base(s)
+        {
+        }
+    }
+
     public class AssertionError : Exception
     {
         public AssertionError(string s) : base(s)

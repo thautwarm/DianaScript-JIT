@@ -354,7 +354,7 @@ namespace Ava
         }
     }
 
-    public partial struct DFloat
+    public partial class DFloat
     {
         public DObj __add__(DObj o) => NumberMethods.float_add(this, o);
         public DObj __sub__(DObj o) => NumberMethods.float_sub(this, o);
@@ -369,7 +369,7 @@ namespace Ava
         public DObj __pow__(DObj o) => NumberMethods.float_pow(this, o);
     }
 
-    public partial struct DInt
+    public partial class DInt
     {
         public DObj __add__(DObj o) => NumberMethods.int_t_add(this, o);
         public DObj __sub__(DObj o) => NumberMethods.int_t_sub(this, o);
