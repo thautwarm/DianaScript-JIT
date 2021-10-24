@@ -46,6 +46,10 @@ namespace Ava
             return DNone.unique;
         }
 
+        public static DObj len(DObj arg)
+        {
+            return MK.Int(arg.__len__());
+        }
 
         public static DObj keys(DObj o)
         {
@@ -97,15 +101,17 @@ namespace Ava
             return new Dictionary<string, DObj>
             {
                 {"log", MK.FuncN("log", log)},
-                {"classname", MK.Func1("classname", classname)},
+                {"typeof", MK.Func1("typeof", classname)},
                 {"time", MK.Func0("time", time)},
                 {"assert",  MK.FuncN("assert", assert)},
+                {"keys", MK.Func1("keys", keys)},
+                {"len", MK.Func1("len", len)},
                 {"int", DInt.classobject},
                 {"float", DFloat.classobject},
                 {"str", DString.classobject},
                 {"list", DList.classobject},
                 {"dict", DDict.classobject},
-                {"keys", MK.Func1("keys", keys)}
+                
             };
         }
 
