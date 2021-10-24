@@ -2,12 +2,14 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using ast = Ava.ImmediateAST;
 namespace Ava.Frontend
 {
 
+    using Option = ValueTuple<int, int, string, List<ImmediateAST>>;
     public struct Pos
     {
         public int lineno;
@@ -112,7 +114,10 @@ namespace Ava.Frontend
             MK.Float(float.Parse(s));
 
         public static DObj mkstr(string s) =>
-            MK.String(unesc(s));
+            MK.String(s);
+
+        
+        
 
         public static DObj mknone() => MK.None();
 
@@ -180,6 +185,40 @@ namespace Ava.Frontend
         {
             return For.make(target, iter, body, token.Line, token.Column);
         }
+
+        public static Option mkOption0(CommonToken token)
+        {
+            return (token.Line, token.Column, token.Text, new List<ast>{
+                CVal.make(MK.Int(1), token.Line, token.Column)
+            });
+        }
+
+        public static Option mkOptionN(CommonToken token, List<ast> args)
+        {
+            return (token.Line, token.Column, token.Text, args);
+        }
+
+        public static ast mkLet(CommonToken token, string name, ast expr)
+        {
+            return Let.make(name, expr, token.Line, token.Column);
+        }
+
+        public static ast mkWorkflow(CommonToken token, ast a, List<(int lineno, int colno, string attr, List<ast> args)> args)
+        {
+            return Workflow.make(
+                a,
+                args.Select(x => (x.lineno, x.colno, x.attr, x.args.ToArray())).ToArray(),
+                token.Line,
+                token.Column
+
+            );
+        }
+
+        public static Option mkDoOption(ast expr)
+        {
+            return (expr.Lineno, expr.Colno, "do", new List<ast> { expr });
+        }
+
     }
 
 }

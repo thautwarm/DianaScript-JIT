@@ -8,6 +8,18 @@ namespace Ava
     using EncodedVar = System.Int32;
     using ExecType = Func<ExecContext, DObj>;
 
+    public static partial class CollectionExts
+    {
+        public static Dictionary<K, V> ShallowCopy<K, V>(this Dictionary<K, V> self)
+        {
+            var res = new Dictionary<K, V>();
+            foreach (var kv in self)
+            {
+                res[kv.Key] = kv.Value;
+            }
+            return res;
+        }
+    }
     public enum VarKind
     {
         local,
@@ -18,6 +30,7 @@ namespace Ava
 
     public class MetaContext
     {
+        public int nlocal = 0;
         public Dictionary<string, EncodedVar> ctx;
         public List<(int parentSlot, int mySlot)> freevars;
         public MetaContext parent = null;
@@ -56,7 +69,7 @@ namespace Ava
             var x = parent.search(s);
             if (x >= 0)
             {
-                var i = ctx.Count;
+                var i = nlocal++;
                 ctx[s] = i;
                 freevars.Add((x, i));
                 x = i;
@@ -72,12 +85,7 @@ namespace Ava
                 return -1;
             }
 
-            if (ctx.TryGetValue(s, out var ret))
-            {
-                return ret;
-            }
-
-            int i = ctx.Count;
+            int i = nlocal++;
             ctx[s] = i;
             return i;
         }
@@ -152,7 +160,7 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
-            int lhs_ = ctx.enter(lhs);
+            int lhs_ = ctx.search(lhs);
             var lhs_string = lhs;
             var rhs_ = rhs.compile(ctx);
             if (lhs_ < 0)
@@ -179,7 +187,6 @@ namespace Ava
         }
     }
 
-
     public partial class StoreMany : ImmediateAST
     {
         // public string lhs { get; set; }
@@ -197,7 +204,7 @@ namespace Ava
                 var each = lhs[i];
                 if (each is Load load)
                 {
-                    var n_i = ctx.enter(load.n);
+                    var n_i = ctx.search(load.n);
                     var lhs_string = load.n;
                     if (n_i < 0)
                     {
@@ -797,14 +804,16 @@ namespace Ava
                 subctx_dict[args[i]] = i;
             }
 
+
             var subctx = MetaContext.Create(ctx, subctx_dict);
+            subctx.nlocal = args.Length;
 
 
             // ctx.create()
             var body_ = body.compile(subctx);
             var free = subctx.freevars.ToArray();
 
-            var nlocal = subctx.ctx.Count;
+            var nlocal = subctx.nlocal;
             var narg = args.Length;
             var argstrs = args.Select(x => x).ToArray();
 
@@ -1003,5 +1012,95 @@ namespace Ava
                 return MK.Dict(xs);
             };
         }
+    }
+
+    public partial class Let : ImmediateAST
+    {
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            int lhs_ = ctx.enter(name);
+            var lhs_string = name;
+            var rhs_ = expr.compile(ctx);
+            if (lhs_ >= 0)
+            {
+                var new_ctx = new Dictionary<string, int>();
+                foreach (var kv in ctx.ctx)
+                {
+                    new_ctx[kv.Key] = kv.Value;
+                }
+                new_ctx[lhs_string] = lhs_;
+                ctx.ctx = new_ctx;
+            }
+            if (lhs_ < 0)
+                return (ExecContext ctx) =>
+                    {
+                        try
+                        {
+                            ctx.globals[lhs_string] = rhs_(ctx);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            throw new NameError($"global variable {lhs_string} not found");
+                        }
+
+                        return DNone.unique;
+                    }
+                    ;
+            else
+                return (ExecContext ctx) =>
+                {
+                    ctx.locals[lhs_] = rhs_(ctx);
+                    return DNone.unique;
+                };
+        }
+    }
+    public partial class Workflow : ImmediateAST
+    {
+
+        public ExecType compile_impl(MetaContext ctx)
+        {
+
+
+            (int lineno, int colno, string desc, DString attr, ExecType[] args)[] fs = new (int, int, string, DString, ExecType[])[options.Length];
+
+
+            ExecType builder_ = builder.compile(ctx);
+
+            int i = 0;
+            foreach (var (l, c, task, args) in options)
+            {
+                fs[i++] = (l, c, task, MK.String(task), args.Select(x => x.compile(ctx)).ToArray());
+            }
+
+            int n = options.Length + 2;
+            var start = MK.String("start");
+            var finish = MK.String("finish");
+            return (ExecContext ctx) =>
+            {
+
+                DObj ret = builder_(ctx);
+                ret = ret.__get__(start).__call__(new DObj[0]);
+                foreach (var (l, c, desc, attr, args) in fs)
+                {
+                    DObj[] argobjs = new DObj[args.Length];
+                    try
+                    {
+                        for (var i = 0; i < args.Length; i++)
+                        {
+                            argobjs[i] = args[i](ctx);
+                        }
+                        ret.__get__(attr).__call__(argobjs);
+                    }
+                    catch
+                    {
+                        ctx.frames.Add((l, c, ret.__str__() + "." + desc));
+                        throw;
+                    }
+                }
+                ret.__get__(finish).__call__(new DObj[0]);
+                return ret;
+            };
+        }
+
     }
 }

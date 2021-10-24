@@ -5,20 +5,20 @@ shape token
 
 typealias ast = ImmediateAST
 
-val append : forall 'a. (List['a], 'a) -> List['a]
-val extend : forall 'a. (List['a], List['a]) -> List['a]
-val empty : forall 'a. () -> List['a]
-val resolve_binop : (List[object]) -> ImmediateAST
+val append : forall 'a. (list['a], 'a) -> list['a]
+val extend : forall 'a. (list['a], list['a]) -> list['a]
+val empty : forall 'a. () -> list['a]
+val resolve_binop : (list[object]) -> ImmediateAST
 val to_obj : forall 'a. ('a) -> object
 val unesc : (str) -> str
 val null : forall 'a. 'a
 val mkOGet: (token, ast, ast) -> ast
 val mkOSet: (token, ast, ast, ast) -> ast
 val mkVal: (token, DObj) -> ast
-val mkApp: (token, ast, List[ast]) -> ast
-val mkList: (token, List[ast]) -> ast
-val mkTuple: (token, List[ast], bool) -> ast
-val mkDict: (token, List[(ast, ast)]) -> ast
+val mkApp: (token, ast, list[ast]) -> ast
+val mkList: (token, list[ast]) -> ast
+val mkTuple: (token, list[ast], bool) -> ast
+val mkDict: (token, list[(ast, ast)]) -> ast
 val mkVar: (token, str) -> ast
 val mkInv: (token, ast) -> ast
 val mkNeg: (token, ast) -> ast
@@ -26,33 +26,49 @@ val mkNot: (token, ast) -> ast
 val mkAnd: (token, ast, ast) -> ast
 val mkOr: (token, ast, ast) -> ast
 val mkIfThen: (token, ast, ast) -> ast
-val mkStoreMany: (List[ast], ast) -> ast
-val mkNestedIf: (token, List[(ast, ast)], ast) -> ast
-val mkFunc: (token, str, List[str], List[ast]) -> ast
+val mkStoreMany: (list[ast], ast) -> ast
+val mkNestedIf: (token, list[(ast, ast)], ast) -> ast
+val mkFunc: (token, str, list[str], list[ast]) -> ast
 val mkLoop: (token, ast) -> ast
 val mkFor: (token, str, ast, ast) -> ast
-val mkBlock: (token, List[ast]) -> ast
+val mkBlock: (token, list[ast]) -> ast
 val mkContinue: (token) -> ast
 val mkBreak: (token) -> ast
 val mkReturn: (token, ast) -> ast
+val mkLet : (token, str, ast) -> ast
 val mkint: (str, int) -> DObj
 val mkfloat: (str) -> DObj
 val mkstr: (str) -> DObj
 val mknone: () -> DObj
 val mkop: (token, str) -> object
-
 val true: bool
 val false: bool
 
-start: block <EOF>  { $1 }
+start   : filter[stmt, <NEWLINE>] { $1 }
 
-list[e] : e  { append(empty(), $1) }
+list[e] : e  { [$1] }
         | list[e] e  { append($1, $2) }
 
 
 seplist[sep, e]:
-      e { append(empty(), $1) }
+      e { [$1] }
     | seplist[sep, e] sep e  { append($1, $3) }
+
+line_wrap[e] : optional[<NEWLINE>] e optional[<NEWLINE>] { $2 }
+
+
+// comsume all newlines inside the quote
+_closelist[sep, e]:
+      _closelist[sep, e] <NEWLINE> { $1 }
+    | _closelist[sep, e] sep <NEWLINE> e
+        { append($1, $4) }
+    | _closelist[sep, e] sep e
+        { append($1, $3) }
+    | e { [$1] }
+    |   { [] }
+
+closelist[sep, e]: optional[<NEWLINE>] _closelist[sep, e] { $2 }
+
 
 nullable[seq] : { empty() }
               | seq { $1 }
@@ -75,6 +91,7 @@ snd[a, b] : a b { $2 }
 name : <NAME> { $1.Text }
 stmt :
     lhs_seq expr { mkStoreMany($1, $2)  }
+    | "let" <NAME> "=" expr { mkLet($1, $2.Text, $4)  }
     | "loop" block "end"
         { mkLoop($1, mkBlock($1, $2))  }
     | "for" <NAME> "in" expr blockOf[do] "end"
@@ -83,8 +100,6 @@ stmt :
     | "continue"      { mkContinue($1) }
     | "return" expr   { mkReturn($1, $2) }
     | "return"        { mkReturn($1, null) }
-
-
 
 
 then: optional[<NEWLINE>] "then" { $2 }
@@ -136,14 +151,14 @@ trailer : "," { true }
 
 blockOf[a] : a block { mkBlock($1, $2) }
 
-pair : expr ":" expr  { ($1, $3) }
+pair : expr line_wrap[":"] expr  { ($1, $3) }
 atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
      | atom "." <NAME>        { mkOGet($2, $1, mkVal($3, mkstr($3.Text))) }
-     | atom "(" nullable[seplist[",", expr]] ")" { mkApp($2, $1, $3) }
-     | "[" nullable[seplist[",", expr]] "]" { mkList($1, $2) }
-     | "(" nullable[seplist[",", expr]] trailer ")" { mkTuple($1, $2, $3) }
-     | "{" nullable[seplist[",", pair]] trailer "}" { mkDict($1, $2) }
-     | <STR> { mkVal($1, mkstr($1.Text)) }
+     | atom "(" closelist[",", expr] ")" { mkApp($2, $1, $3) }
+     | "[" closelist[",", expr] "]" { mkList($1, $2) }
+     | "(" closelist[",", expr] trailer ")" { mkTuple($1, $2, $3) }
+     | "{" closelist[",", pair] trailer "}" { mkDict($1, $2) }
+     | <STR> { mkVal($1, mkstr(unesc($1.Text))) }
      | <INT> { mkVal($1, mkint($1.Text, 0)) }
      | <HEX> { mkVal($1, mkint($1.Text, 16)) }
      | <OCT> { mkVal($1, mkint($1.Text, 8)) }
@@ -165,9 +180,16 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
             let elifs = extend(elifs, $5) in
             mkNestedIf($1, elifs, $6)
         }
-      | "func" name "("  nullable[seplist[",", name]] ")"
+      | "fun" name "("  nullable[seplist[",", name]] ")"
             block
         "end" { mkFunc($1, $2, $4, $6) }
+      | "fun" "("  nullable[seplist[",", name]] ")"
+            block
+        "end" { mkFunc($1, "ans", $3, $5) }
+      | "("  nullable[seplist[",", name]] ")" "->" line_wrap[expr]
+         { mkFunc($1, "ans", $2, [$5]) }
+      | <NAME> "->" line_wrap[expr]
+         { mkFunc($1, "ans", [$1.Text], [$3]) }
 
 %ignore <COMMENT>, <WS_INLINE>
 

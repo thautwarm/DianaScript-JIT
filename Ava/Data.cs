@@ -652,6 +652,52 @@ public partial class Inv
         value = value,
     };
 }
+public partial class Workflow
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "Workflow";
+
+    public int lineno;
+    public int colno;
+    public ImmediateAST builder;
+    public (int, int, string, ImmediateAST[])[] options;
+    public static Workflow make(
+        ImmediateAST builder,
+        (int, int, string, ImmediateAST[])[] options,
+        int lineno,
+        int colno
+    ) => new  Workflow {
+        lineno = lineno,
+        colno = colno,
+        builder = builder,
+        options = options,
+    };
+}
+public partial class Let
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "Let";
+
+    public int lineno;
+    public int colno;
+    public string name;
+    public ImmediateAST expr;
+    public static Let make(
+        string name,
+        ImmediateAST expr,
+        int lineno,
+        int colno
+    ) => new  Let {
+        lineno = lineno,
+        colno = colno,
+        name = name,
+        expr = expr,
+    };
+}
 
 public partial class ByteASTLoader
 {
@@ -946,6 +992,26 @@ public partial class ByteASTLoader
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
                     value = Read(THint<ImmediateAST>.val),
+                };
+            }
+            case 30:
+            {
+                return new Workflow
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    builder = Read(THint<ImmediateAST>.val),
+                    options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
+                };
+            }
+            case 31:
+            {
+                return new Let
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    name = Read(THint<string>.val),
+                    expr = Read(THint<ImmediateAST>.val),
                 };
             }
             default:
@@ -1270,6 +1336,28 @@ public partial class ByteASTLoader
     };
 
 
+    private Workflow Read(THint<Workflow> _) => ReadWorkflow();
+
+    public Workflow ReadWorkflow() => new Workflow
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        builder = Read(THint<ImmediateAST>.val),
+        options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
+    };
+
+
+    private Let Read(THint<Let> _) => ReadLet();
+
+    public Let ReadLet() => new Let
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        name = Read(THint<string>.val),
+        expr = Read(THint<ImmediateAST>.val),
+    };
+
+
     private static readonly object _loaderSync = new object();
 
     public ImmediateAST[] Read(THint<ImmediateAST[]> _)
@@ -1278,6 +1366,15 @@ public partial class ByteASTLoader
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<ImmediateAST>.val);
+        }
+        return arr;
+    }
+    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
+    {
+        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
         }
         return arr;
     }

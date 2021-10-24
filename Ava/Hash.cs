@@ -25,6 +25,11 @@ namespace Ava
         {
             return value.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return value.ToString();
+        }
     }
 
     public partial class DTuple

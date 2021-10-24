@@ -36,3 +36,37 @@ else
     log("错误的")
 end
 
+
+
+builder = {
+    "start": fun ()
+        log("started!")
+        {
+            "do": (x) -> log("do" + str(x)),
+            "finish": () -> log("finished!")
+        }
+     end
+}
+
+builder {
+    do 1
+    do 2
+    do 3
+}
+
+builder = {
+    "start": fun()
+        let x  = {}
+        x.["yield"] = x -> log("yield " + str(x))
+        x.["finish"] = () -> ()
+        return x
+    end
+}
+
+
+
+builder {
+    yield 1
+    yield 2
+}
+

@@ -45,6 +45,8 @@ namespace Ava
 
         private DObj Read(THint<DObj> _) => throw new NotImplementedException("cannot deserialize external dobjects!");
 
+        private (int, int, string, ImmediateAST[]) Read(THint<(int, int, string, ImmediateAST[])> _) => throw new NotImplementedException();
+
         public (ImmediateAST, ImmediateAST) Read(THint<(ImmediateAST, ImmediateAST)> _) =>
             (ReadImmediateAST(), ReadImmediateAST());
 

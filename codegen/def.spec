@@ -188,3 +188,17 @@ Inv(
     int colno,
     ImmediateAST value
 )
+
+Workflow(
+    int lineno,
+    int colno,
+    ImmediateAST builder,
+    (int, int, string, ImmediateAST[])[] options
+)
+
+Let(
+    int lineno,
+    int colno,
+    string name,
+    ImmediateAST expr
+)

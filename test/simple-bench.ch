@@ -61,7 +61,6 @@ log(int("233"))
 x = time()
 
 func test()
-    
     loop
         if x < 10000000 then
             break
@@ -96,7 +95,6 @@ func test2()
         end
         x = x + 1
     end
-    log("结束了!")
     return x
 end
 

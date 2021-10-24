@@ -40,42 +40,48 @@ public partial class DianaScriptParser : Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, COMMENT_1=30, SINGLE_BINOP_2=31, 
-		STR_4=32, INT_10=33, FLOAT_11=34, NAME_13=35, WS_INLINE_14=36, NEWLINE_17=37;
+		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
+		COMMENT_1=32, SINGLE_BINOP_2=33, STR_4=34, INT_10=35, HEX_7=36, OCT_8=37, 
+		BIN_9=38, FLOAT_11=39, NAME_13=40, WS_INLINE_14=41, NEWLINE_17=42;
 	public const int
-		RULE_atom = 0, RULE_gen__nullable_gen__seplist__L44__name = 1, RULE_gen__seplist__L44__name = 2, 
-		RULE_gen__optional_gen__blockOf_else = 3, RULE_gen__blockOf_else = 4, 
-		RULE_gen__nullable_gen__list_gen__snd_elif__elifBlock = 5, RULE_gen__list_gen__snd_elif__elifBlock = 6, 
-		RULE_gen__snd_elif__elifBlock = 7, RULE_gen__nullable_gen__seplist__L44__pair = 8, 
-		RULE_gen__seplist__L44__pair = 9, RULE_gen__nullable_gen__seplist__L44__expr = 10, 
-		RULE_gen__seplist__L44__expr = 11, RULE_pair = 12, RULE_trailer = 13, 
-		RULE_bin = 14, RULE_binseq = 15, RULE_binop = 16, RULE_not = 17, RULE_and_expr = 18, 
-		RULE_or_expr = 19, RULE_expr = 20, RULE_block = 21, RULE_gen__filter_stmt__NEWLINE = 22, 
-		RULE_lhs = 23, RULE_do = 24, RULE_gen__optional_NEWLINE = 25, RULE_then = 26, 
-		RULE_stmt = 27, RULE_gen__blockOf_do = 28, RULE_name = 29, RULE_elifBlock = 30, 
-		RULE_gen__blockOf_then = 31, RULE_lhs_seq = 32, RULE_expr_opt = 33, RULE_start = 34;
+		RULE_stmt = 0, RULE_gen__filter_option__NEWLINE = 1, RULE_option = 2, 
+		RULE_gen__seplist__L44__expr = 3, RULE_atom = 4, RULE_gen__line_wrap_expr = 5, 
+		RULE_gen__optional_NEWLINE = 6, RULE_gen__nullable_gen__seplist__L44__name = 7, 
+		RULE_gen__seplist__L44__name = 8, RULE_gen__optional_gen__blockOf_else = 9, 
+		RULE_gen__blockOf_else = 10, RULE_gen__nullable_gen__list_gen__snd_elif__elifBlock = 11, 
+		RULE_gen__list_gen__snd_elif__elifBlock = 12, RULE_gen__snd_elif__elifBlock = 13, 
+		RULE_gen__closelist__L44__pair = 14, RULE_gen___closelist__L44__pair = 15, 
+		RULE_gen__closelist__L44__expr = 16, RULE_gen___closelist__L44__expr = 17, 
+		RULE_pair = 18, RULE_gen__line_wrap__L58 = 19, RULE_trailer = 20, RULE_bin = 21, 
+		RULE_binseq = 22, RULE_binop = 23, RULE_not = 24, RULE_and_expr = 25, 
+		RULE_or_expr = 26, RULE_expr = 27, RULE_block = 28, RULE_gen__filter_stmt__NEWLINE = 29, 
+		RULE_lhs = 30, RULE_do = 31, RULE_then = 32, RULE_gen__blockOf_do = 33, 
+		RULE_name = 34, RULE_elifBlock = 35, RULE_gen__blockOf_then = 36, RULE_lhs_seq = 37, 
+		RULE_expr_opt = 38, RULE_start = 39;
 	public static readonly string[] ruleNames = {
-		"atom", "gen__nullable_gen__seplist__L44__name", "gen__seplist__L44__name", 
-		"gen__optional_gen__blockOf_else", "gen__blockOf_else", "gen__nullable_gen__list_gen__snd_elif__elifBlock", 
-		"gen__list_gen__snd_elif__elifBlock", "gen__snd_elif__elifBlock", "gen__nullable_gen__seplist__L44__pair", 
-		"gen__seplist__L44__pair", "gen__nullable_gen__seplist__L44__expr", "gen__seplist__L44__expr", 
-		"pair", "trailer", "bin", "binseq", "binop", "not", "and_expr", "or_expr", 
-		"expr", "block", "gen__filter_stmt__NEWLINE", "lhs", "do", "gen__optional_NEWLINE", 
-		"then", "stmt", "gen__blockOf_do", "name", "elifBlock", "gen__blockOf_then", 
-		"lhs_seq", "expr_opt", "start"
+		"stmt", "gen__filter_option__NEWLINE", "option", "gen__seplist__L44__expr", 
+		"atom", "gen__line_wrap_expr", "gen__optional_NEWLINE", "gen__nullable_gen__seplist__L44__name", 
+		"gen__seplist__L44__name", "gen__optional_gen__blockOf_else", "gen__blockOf_else", 
+		"gen__nullable_gen__list_gen__snd_elif__elifBlock", "gen__list_gen__snd_elif__elifBlock", 
+		"gen__snd_elif__elifBlock", "gen__closelist__L44__pair", "gen___closelist__L44__pair", 
+		"gen__closelist__L44__expr", "gen___closelist__L44__expr", "pair", "gen__line_wrap__L58", 
+		"trailer", "bin", "binseq", "binop", "not", "and_expr", "or_expr", "expr", 
+		"block", "gen__filter_stmt__NEWLINE", "lhs", "do", "then", "gen__blockOf_do", 
+		"name", "elifBlock", "gen__blockOf_then", "lhs_seq", "expr_opt", "start"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'.'", "'['", "']'", "'('", "')'", "'{'", "'}'", "'None'", "'-'", 
-		"'~'", "'if'", "'end'", "'func'", "','", "'else'", "'elif'", "':'", "'not'", 
-		"'in'", "'and'", "'or'", "'do'", "'then'", "'loop'", "'for'", "'break'", 
-		"'continue'", "'return'", "'='"
+		null, "'{'", "'}'", "'let'", "'='", "'loop'", "'end'", "'for'", "'in'", 
+		"'break'", "'continue'", "'return'", "'do'", "','", "'.'", "'['", "']'", 
+		"'('", "')'", "'None'", "'-'", "'~'", "'if'", "'fun'", "'->'", "'else'", 
+		"'elif'", "':'", "'not'", "'and'", "'or'", "'then'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, "COMMENT_1", "SINGLE_BINOP_2", "STR_4", 
-		"INT_10", "FLOAT_11", "NAME_13", "WS_INLINE_14", "NEWLINE_17"
+		null, null, null, null, null, null, null, null, "COMMENT_1", "SINGLE_BINOP_2", 
+		"STR_4", "INT_10", "HEX_7", "OCT_8", "BIN_9", "FLOAT_11", "NAME_13", "WS_INLINE_14", 
+		"NEWLINE_17"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -109,58 +115,645 @@ public partial class DianaScriptParser : Parser {
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
+	public partial class StmtContext : ParserRuleContext {
+		public ImmediateAST result;
+		public IToken local__1_stmt_case0;
+		public Gen__filter_option__NEWLINEContext local__3_stmt_case0;
+		public Lhs_seqContext local__1_stmt_case1;
+		public ExprContext local__2_stmt_case1;
+		public IToken local__1_stmt_case2;
+		public IToken local__2_stmt_case2;
+		public ExprContext local__4_stmt_case2;
+		public IToken local__1_stmt_case3;
+		public BlockContext local__2_stmt_case3;
+		public IToken local__1_stmt_case4;
+		public IToken local__2_stmt_case4;
+		public ExprContext local__4_stmt_case4;
+		public Gen__blockOf_doContext local__5_stmt_case4;
+		public IToken local__1_stmt_case5;
+		public IToken local__1_stmt_case6;
+		public IToken local__1_stmt_case7;
+		public ExprContext local__2_stmt_case7;
+		public IToken local__1_stmt_case8;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NAME_13() { return GetToken(DianaScriptParser.NAME_13, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__filter_option__NEWLINEContext gen__filter_option__NEWLINE() {
+			return GetRuleContext<Gen__filter_option__NEWLINEContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Lhs_seqContext lhs_seq() {
+			return GetRuleContext<Lhs_seqContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
+			return GetRuleContext<BlockContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__blockOf_doContext gen__blockOf_do() {
+			return GetRuleContext<Gen__blockOf_doContext>(0);
+		}
+		public StmtContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_stmt; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterStmt(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitStmt(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public StmtContext stmt() {
+		StmtContext _localctx = new StmtContext(Context, State);
+		EnterRule(_localctx, 0, RULE_stmt);
+		try {
+			State = 119;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 80; _localctx.local__1_stmt_case0 = Match(NAME_13);
+				State = 81; Match(T__0);
+				State = 82; _localctx.local__3_stmt_case0 = gen__filter_option__NEWLINE(0);
+				State = 83; Match(T__1);
+				 
+				        ImmediateAST tmp__6 ; 
+				        System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__5 ; 
+				        ImmediateAST tmp__4 ; 
+				        CommonToken tmp__3 ; 
+				        CommonToken tmp__2 ; 
+				        CommonToken tmp__1 ; 
+				        tmp__1 = ( CommonToken ) _localctx.local__1_stmt_case0 ; 
+				        tmp__2 = ( CommonToken ) _localctx.local__1_stmt_case0 ; 
+				        tmp__3 = ( CommonToken ) _localctx.local__1_stmt_case0 ; 
+				        tmp__4 = (ImmediateAST) mkVar( tmp__2, tmp__3.Text ); 
+				        tmp__5 = ( System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> ) _localctx.local__3_stmt_case0.result ; 
+				        tmp__6 = (ImmediateAST) mkWorkflow( tmp__1, tmp__4, tmp__5 ); 
+				        _localctx.result =  tmp__6; 
+				      
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 86; _localctx.local__1_stmt_case1 = lhs_seq(0);
+				State = 87; _localctx.local__2_stmt_case1 = expr();
+				 
+				        ImmediateAST tmp__9 ; 
+				        ImmediateAST tmp__8 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__7 ; 
+				        tmp__7 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_stmt_case1.result ; 
+				        tmp__8 = ( ImmediateAST ) _localctx.local__2_stmt_case1.result ; 
+				        tmp__9 = (ImmediateAST) mkStoreMany( tmp__7, tmp__8 ); 
+				        _localctx.result =  tmp__9; 
+				      
+				}
+				break;
+			case 3:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 90; _localctx.local__1_stmt_case2 = Match(T__2);
+				State = 91; _localctx.local__2_stmt_case2 = Match(NAME_13);
+				State = 92; Match(T__3);
+				State = 93; _localctx.local__4_stmt_case2 = expr();
+				 
+				        ImmediateAST tmp__13 ; 
+				        ImmediateAST tmp__12 ; 
+				        CommonToken tmp__11 ; 
+				        CommonToken tmp__10 ; 
+				        tmp__10 = ( CommonToken ) _localctx.local__1_stmt_case2 ; 
+				        tmp__11 = ( CommonToken ) _localctx.local__2_stmt_case2 ; 
+				        tmp__12 = ( ImmediateAST ) _localctx.local__4_stmt_case2.result ; 
+				        tmp__13 = (ImmediateAST) mkLet( tmp__10, tmp__11.Text, tmp__12 ); 
+				        _localctx.result =  tmp__13; 
+				      
+				}
+				break;
+			case 4:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 96; _localctx.local__1_stmt_case3 = Match(T__4);
+				State = 97; _localctx.local__2_stmt_case3 = block();
+				State = 98; Match(T__5);
+				 
+				        ImmediateAST tmp__18 ; 
+				        ImmediateAST tmp__17 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__16 ; 
+				        CommonToken tmp__15 ; 
+				        CommonToken tmp__14 ; 
+				        tmp__14 = ( CommonToken ) _localctx.local__1_stmt_case3 ; 
+				        tmp__15 = ( CommonToken ) _localctx.local__1_stmt_case3 ; 
+				        tmp__16 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_stmt_case3.result ; 
+				        tmp__17 = (ImmediateAST) mkBlock( tmp__15, tmp__16 ); 
+				        tmp__18 = (ImmediateAST) mkLoop( tmp__14, tmp__17 ); 
+				        _localctx.result =  tmp__18; 
+				      
+				}
+				break;
+			case 5:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 101; _localctx.local__1_stmt_case4 = Match(T__6);
+				State = 102; _localctx.local__2_stmt_case4 = Match(NAME_13);
+				State = 103; Match(T__7);
+				State = 104; _localctx.local__4_stmt_case4 = expr();
+				State = 105; _localctx.local__5_stmt_case4 = gen__blockOf_do();
+				State = 106; Match(T__5);
+				 
+				        ImmediateAST tmp__23 ; 
+				        ImmediateAST tmp__22 ; 
+				        ImmediateAST tmp__21 ; 
+				        CommonToken tmp__20 ; 
+				        CommonToken tmp__19 ; 
+				        tmp__19 = ( CommonToken ) _localctx.local__1_stmt_case4 ; 
+				        tmp__20 = ( CommonToken ) _localctx.local__2_stmt_case4 ; 
+				        tmp__21 = ( ImmediateAST ) _localctx.local__4_stmt_case4.result ; 
+				        tmp__22 = ( ImmediateAST ) _localctx.local__5_stmt_case4.result ; 
+				        tmp__23 = (ImmediateAST) mkFor( tmp__19, tmp__20.Text, tmp__21, tmp__22 ); 
+				        _localctx.result =  tmp__23; 
+				      
+				}
+				break;
+			case 6:
+				EnterOuterAlt(_localctx, 6);
+				{
+				State = 109; _localctx.local__1_stmt_case5 = Match(T__8);
+				 
+				        ImmediateAST tmp__25 ; 
+				        CommonToken tmp__24 ; 
+				        tmp__24 = ( CommonToken ) _localctx.local__1_stmt_case5 ; 
+				        tmp__25 = (ImmediateAST) mkBreak( tmp__24 ); 
+				        _localctx.result =  tmp__25; 
+				      
+				}
+				break;
+			case 7:
+				EnterOuterAlt(_localctx, 7);
+				{
+				State = 111; _localctx.local__1_stmt_case6 = Match(T__9);
+				 
+				        ImmediateAST tmp__27 ; 
+				        CommonToken tmp__26 ; 
+				        tmp__26 = ( CommonToken ) _localctx.local__1_stmt_case6 ; 
+				        tmp__27 = (ImmediateAST) mkContinue( tmp__26 ); 
+				        _localctx.result =  tmp__27; 
+				      
+				}
+				break;
+			case 8:
+				EnterOuterAlt(_localctx, 8);
+				{
+				State = 113; _localctx.local__1_stmt_case7 = Match(T__10);
+				State = 114; _localctx.local__2_stmt_case7 = expr();
+				 
+				        ImmediateAST tmp__30 ; 
+				        ImmediateAST tmp__29 ; 
+				        CommonToken tmp__28 ; 
+				        tmp__28 = ( CommonToken ) _localctx.local__1_stmt_case7 ; 
+				        tmp__29 = ( ImmediateAST ) _localctx.local__2_stmt_case7.result ; 
+				        tmp__30 = (ImmediateAST) mkReturn( tmp__28, tmp__29 ); 
+				        _localctx.result =  tmp__30; 
+				      
+				}
+				break;
+			case 9:
+				EnterOuterAlt(_localctx, 9);
+				{
+				State = 117; _localctx.local__1_stmt_case8 = Match(T__10);
+				 
+				        ImmediateAST tmp__32 ; 
+				        CommonToken tmp__31 ; 
+				        tmp__31 = ( CommonToken ) _localctx.local__1_stmt_case8 ; 
+				        tmp__32 = (ImmediateAST) mkReturn( tmp__31, null ); 
+				        _localctx.result =  tmp__32; 
+				      
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Gen__filter_option__NEWLINEContext : ParserRuleContext {
+		public System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> result;
+		public Gen__filter_option__NEWLINEContext local__1_gen__filter_option__NEWLINE_case0;
+		public Gen__filter_option__NEWLINEContext local__1_gen__filter_option__NEWLINE_case1;
+		public OptionContext local__1_gen__filter_option__NEWLINE_case2;
+		public OptionContext local__2_gen__filter_option__NEWLINE_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public OptionContext option() {
+			return GetRuleContext<OptionContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE_17() { return GetToken(DianaScriptParser.NEWLINE_17, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__filter_option__NEWLINEContext gen__filter_option__NEWLINE() {
+			return GetRuleContext<Gen__filter_option__NEWLINEContext>(0);
+		}
+		public Gen__filter_option__NEWLINEContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_gen__filter_option__NEWLINE; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterGen__filter_option__NEWLINE(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitGen__filter_option__NEWLINE(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Gen__filter_option__NEWLINEContext gen__filter_option__NEWLINE() {
+		return gen__filter_option__NEWLINE(0);
+	}
+
+	private Gen__filter_option__NEWLINEContext gen__filter_option__NEWLINE(int _p) {
+		ParserRuleContext _parentctx = Context;
+		int _parentState = State;
+		Gen__filter_option__NEWLINEContext _localctx = new Gen__filter_option__NEWLINEContext(Context, _parentState);
+		Gen__filter_option__NEWLINEContext _prevctx = _localctx;
+		int _startState = 2;
+		EnterRecursionRule(_localctx, 2, RULE_gen__filter_option__NEWLINE, _p);
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 127;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__11:
+			case NAME_13:
+				{
+				State = 122; _localctx.local__1_gen__filter_option__NEWLINE_case2 = option();
+				 
+				        System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__39 ; 
+				        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__38 ; 
+				        System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__37 ; 
+				        tmp__37 = (System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>) empty<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>(  ); 
+				        tmp__38 = ( (int, int, string, System.Collections.Generic.List<ImmediateAST>) ) _localctx.local__1_gen__filter_option__NEWLINE_case2.result ; 
+				        tmp__39 = (System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>) append<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>( tmp__37, tmp__38 ); 
+				        _localctx.result =  tmp__39; 
+				      
+				}
+				break;
+			case NEWLINE_17:
+				{
+				State = 125; Match(NEWLINE_17);
+				 
+				        System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__40 ; 
+				        tmp__40 = (System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>) empty<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>(  ); 
+				        _localctx.result =  tmp__40; 
+				      
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			Context.Stop = TokenStream.LT(-1);
+			State = 138;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,3,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( ParseListeners!=null )
+						TriggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					State = 136;
+					ErrorHandler.Sync(this);
+					switch ( Interpreter.AdaptivePredict(TokenStream,2,Context) ) {
+					case 1:
+						{
+						_localctx = new Gen__filter_option__NEWLINEContext(_parentctx, _parentState);
+						_localctx.local__1_gen__filter_option__NEWLINE_case0 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen__filter_option__NEWLINE);
+						State = 129;
+						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
+						State = 130; _localctx.local__2_gen__filter_option__NEWLINE_case0 = option();
+						 
+						                  System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__35 ; 
+						                  (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__34 ; 
+						                  System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__33 ; 
+						                  tmp__33 = ( System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> ) _localctx.local__1_gen__filter_option__NEWLINE_case0.result ; 
+						                  tmp__34 = ( (int, int, string, System.Collections.Generic.List<ImmediateAST>) ) _localctx.local__2_gen__filter_option__NEWLINE_case0.result ; 
+						                  tmp__35 = (System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>) append<(int, int, string, System.Collections.Generic.List<ImmediateAST>)>( tmp__33, tmp__34 ); 
+						                  _localctx.result =  tmp__35; 
+						                
+						}
+						break;
+					case 2:
+						{
+						_localctx = new Gen__filter_option__NEWLINEContext(_parentctx, _parentState);
+						_localctx.local__1_gen__filter_option__NEWLINE_case1 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen__filter_option__NEWLINE);
+						State = 133;
+						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
+						State = 134; Match(NEWLINE_17);
+						 
+						                  System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> tmp__36 ; 
+						                  tmp__36 = ( System.Collections.Generic.List<(int, int, string, System.Collections.Generic.List<ImmediateAST>)> ) _localctx.local__1_gen__filter_option__NEWLINE_case1.result ; 
+						                  _localctx.result =  tmp__36; 
+						                
+						}
+						break;
+					}
+					} 
+				}
+				State = 140;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,3,Context);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			UnrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public partial class OptionContext : ParserRuleContext {
+		public (int, int, string, System.Collections.Generic.List<ImmediateAST>) result;
+		public IToken local__1_option_case0;
+		public IToken local__1_option_case1;
+		public Gen__seplist__L44__exprContext local__2_option_case1;
+		public ExprContext local__2_option_case2;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NAME_13() { return GetToken(DianaScriptParser.NAME_13, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
+			return GetRuleContext<Gen__seplist__L44__exprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public OptionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_option; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterOption(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitOption(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public OptionContext option() {
+		OptionContext _localctx = new OptionContext(Context, State);
+		EnterRule(_localctx, 4, RULE_option);
+		try {
+			State = 151;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 141; _localctx.local__1_option_case0 = Match(NAME_13);
+				 
+				        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__42 ; 
+				        CommonToken tmp__41 ; 
+				        tmp__41 = ( CommonToken ) _localctx.local__1_option_case0 ; 
+				        tmp__42 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkOption0( tmp__41 ); 
+				        _localctx.result =  tmp__42; 
+				      
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 143; _localctx.local__1_option_case1 = Match(NAME_13);
+				State = 144; _localctx.local__2_option_case1 = gen__seplist__L44__expr(0);
+				 
+				        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__45 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__44 ; 
+				        CommonToken tmp__43 ; 
+				        tmp__43 = ( CommonToken ) _localctx.local__1_option_case1 ; 
+				        tmp__44 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_option_case1.result ; 
+				        tmp__45 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkOptionN( tmp__43, tmp__44 ); 
+				        _localctx.result =  tmp__45; 
+				      
+				}
+				break;
+			case 3:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 147; Match(T__11);
+				State = 148; _localctx.local__2_option_case2 = expr();
+				 
+				        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__47 ; 
+				        ImmediateAST tmp__46 ; 
+				        tmp__46 = ( ImmediateAST ) _localctx.local__2_option_case2.result ; 
+				        tmp__47 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkDoOption( tmp__46 ); 
+				        _localctx.result =  tmp__47; 
+				      
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Gen__seplist__L44__exprContext : ParserRuleContext {
+		public System.Collections.Generic.List<ImmediateAST> result;
+		public Gen__seplist__L44__exprContext local__1_gen__seplist__L44__expr_case1;
+		public ExprContext local__1_gen__seplist__L44__expr_case0;
+		public ExprContext local__3_gen__seplist__L44__expr_case1;
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
+			return GetRuleContext<Gen__seplist__L44__exprContext>(0);
+		}
+		public Gen__seplist__L44__exprContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_gen__seplist__L44__expr; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterGen__seplist__L44__expr(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitGen__seplist__L44__expr(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
+		return gen__seplist__L44__expr(0);
+	}
+
+	private Gen__seplist__L44__exprContext gen__seplist__L44__expr(int _p) {
+		ParserRuleContext _parentctx = Context;
+		int _parentState = State;
+		Gen__seplist__L44__exprContext _localctx = new Gen__seplist__L44__exprContext(Context, _parentState);
+		Gen__seplist__L44__exprContext _prevctx = _localctx;
+		int _startState = 6;
+		EnterRecursionRule(_localctx, 6, RULE_gen__seplist__L44__expr, _p);
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			{
+			State = 154; _localctx.local__1_gen__seplist__L44__expr_case0 = expr();
+			 
+			        ImmediateAST tmp__49 ; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__48 ; 
+			        tmp__49 = ( ImmediateAST ) _localctx.local__1_gen__seplist__L44__expr_case0.result ; 
+			        tmp__48 = new System.Collections.Generic.List<ImmediateAST> { tmp__49 }; 
+			        _localctx.result =  tmp__48; 
+			      
+			}
+			Context.Stop = TokenStream.LT(-1);
+			State = 164;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,5,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( ParseListeners!=null )
+						TriggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new Gen__seplist__L44__exprContext(_parentctx, _parentState);
+					_localctx.local__1_gen__seplist__L44__expr_case1 = _prevctx;
+					PushNewRecursionContext(_localctx, _startState, RULE_gen__seplist__L44__expr);
+					State = 157;
+					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
+					State = 158; Match(T__12);
+					State = 159; _localctx.local__3_gen__seplist__L44__expr_case1 = expr();
+					 
+					                  System.Collections.Generic.List<ImmediateAST> tmp__52 ; 
+					                  ImmediateAST tmp__51 ; 
+					                  System.Collections.Generic.List<ImmediateAST> tmp__50 ; 
+					                  tmp__50 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__seplist__L44__expr_case1.result ; 
+					                  tmp__51 = ( ImmediateAST ) _localctx.local__3_gen__seplist__L44__expr_case1.result ; 
+					                  tmp__52 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__50, tmp__51 ); 
+					                  _localctx.result =  tmp__52; 
+					                
+					}
+					} 
+				}
+				State = 166;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,5,Context);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			UnrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
 	public partial class AtomContext : ParserRuleContext {
 		public ImmediateAST result;
 		public AtomContext local__1_atom_case0;
 		public AtomContext local__1_atom_case1;
 		public AtomContext local__1_atom_case2;
 		public IToken local__1_atom_case3;
-		public Gen__nullable_gen__seplist__L44__exprContext local__2_atom_case3;
+		public Gen__closelist__L44__exprContext local__2_atom_case3;
 		public IToken local__1_atom_case4;
-		public Gen__nullable_gen__seplist__L44__exprContext local__2_atom_case4;
+		public Gen__closelist__L44__exprContext local__2_atom_case4;
 		public TrailerContext local__3_atom_case4;
 		public IToken local__1_atom_case5;
-		public Gen__nullable_gen__seplist__L44__pairContext local__2_atom_case5;
+		public Gen__closelist__L44__pairContext local__2_atom_case5;
 		public IToken local__1_atom_case6;
 		public IToken local__1_atom_case7;
 		public IToken local__1_atom_case8;
 		public IToken local__1_atom_case9;
 		public IToken local__1_atom_case10;
 		public IToken local__1_atom_case11;
-		public AtomContext local__2_atom_case11;
 		public IToken local__1_atom_case12;
-		public AtomContext local__2_atom_case12;
 		public IToken local__1_atom_case13;
-		public ExprContext local__2_atom_case13;
-		public ThenContext local__3_atom_case13;
-		public BlockContext local__4_atom_case13;
 		public IToken local__1_atom_case14;
-		public ExprContext local__2_atom_case14;
-		public ThenContext local__3_atom_case14;
-		public BlockContext local__4_atom_case14;
-		public Gen__nullable_gen__list_gen__snd_elif__elifBlockContext local__5_atom_case14;
-		public Gen__optional_gen__blockOf_elseContext local__6_atom_case14;
+		public AtomContext local__2_atom_case14;
 		public IToken local__1_atom_case15;
-		public NameContext local__2_atom_case15;
-		public Gen__nullable_gen__seplist__L44__nameContext local__4_atom_case15;
-		public BlockContext local__6_atom_case15;
+		public AtomContext local__2_atom_case15;
+		public IToken local__1_atom_case16;
+		public ExprContext local__2_atom_case16;
+		public ThenContext local__3_atom_case16;
+		public BlockContext local__4_atom_case16;
+		public IToken local__1_atom_case17;
+		public ExprContext local__2_atom_case17;
+		public ThenContext local__3_atom_case17;
+		public BlockContext local__4_atom_case17;
+		public Gen__nullable_gen__list_gen__snd_elif__elifBlockContext local__5_atom_case17;
+		public Gen__optional_gen__blockOf_elseContext local__6_atom_case17;
+		public IToken local__1_atom_case18;
+		public NameContext local__2_atom_case18;
+		public Gen__nullable_gen__seplist__L44__nameContext local__4_atom_case18;
+		public BlockContext local__6_atom_case18;
+		public IToken local__1_atom_case19;
+		public Gen__nullable_gen__seplist__L44__nameContext local__3_atom_case19;
+		public BlockContext local__5_atom_case19;
+		public IToken local__1_atom_case20;
+		public Gen__nullable_gen__seplist__L44__nameContext local__2_atom_case20;
+		public Gen__line_wrap_exprContext local__5_atom_case20;
+		public IToken local__1_atom_case21;
+		public Gen__line_wrap_exprContext local__3_atom_case21;
 		public IToken local__2_atom_case0;
 		public ExprContext local__4_atom_case0;
 		public IToken local__2_atom_case1;
 		public IToken local__3_atom_case1;
 		public IToken local__2_atom_case2;
-		public Gen__nullable_gen__seplist__L44__exprContext local__3_atom_case2;
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__nullable_gen__seplist__L44__exprContext gen__nullable_gen__seplist__L44__expr() {
-			return GetRuleContext<Gen__nullable_gen__seplist__L44__exprContext>(0);
+		public Gen__closelist__L44__exprContext local__3_atom_case2;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__closelist__L44__exprContext gen__closelist__L44__expr() {
+			return GetRuleContext<Gen__closelist__L44__exprContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public TrailerContext trailer() {
 			return GetRuleContext<TrailerContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__nullable_gen__seplist__L44__pairContext gen__nullable_gen__seplist__L44__pair() {
-			return GetRuleContext<Gen__nullable_gen__seplist__L44__pairContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__closelist__L44__pairContext gen__closelist__L44__pair() {
+			return GetRuleContext<Gen__closelist__L44__pairContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STR_4() { return GetToken(DianaScriptParser.STR_4, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INT_10() { return GetToken(DianaScriptParser.INT_10, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode HEX_7() { return GetToken(DianaScriptParser.HEX_7, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OCT_8() { return GetToken(DianaScriptParser.OCT_8, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode BIN_9() { return GetToken(DianaScriptParser.BIN_9, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode FLOAT_11() { return GetToken(DianaScriptParser.FLOAT_11, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NAME_13() { return GetToken(DianaScriptParser.NAME_13, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public AtomContext atom() {
@@ -186,6 +779,9 @@ public partial class DianaScriptParser : Parser {
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public Gen__nullable_gen__seplist__L44__nameContext gen__nullable_gen__seplist__L44__name() {
 			return GetRuleContext<Gen__nullable_gen__seplist__L44__nameContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__line_wrap_exprContext gen__line_wrap_expr() {
+			return GetRuleContext<Gen__line_wrap_exprContext>(0);
 		}
 		public AtomContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -214,296 +810,423 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		AtomContext _localctx = new AtomContext(Context, _parentState);
 		AtomContext _prevctx = _localctx;
-		int _startState = 0;
-		EnterRecursionRule(_localctx, 0, RULE_atom, _p);
+		int _startState = 8;
+		EnterRecursionRule(_localctx, 8, RULE_atom, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 131;
+			State = 254;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
 			case 1:
 				{
-				State = 71; _localctx.local__1_atom_case3 = Match(T__1);
-				State = 72; _localctx.local__2_atom_case3 = gen__nullable_gen__seplist__L44__expr();
-				State = 73; Match(T__2);
+				State = 168; _localctx.local__1_atom_case3 = Match(T__14);
+				State = 169; _localctx.local__2_atom_case3 = gen__closelist__L44__expr();
+				State = 170; Match(T__15);
 				 
-				        ImmediateAST tmp__18 ; 
-				        List<ImmediateAST> tmp__17 ; 
-				        CommonToken tmp__16 ; 
-				        tmp__16 = ( CommonToken ) _localctx.local__1_atom_case3 ; 
-				        tmp__17 = ( List<ImmediateAST> ) _localctx.local__2_atom_case3.result ; 
-				        tmp__18 = (ImmediateAST) mkList( tmp__16, tmp__17 ); 
-				        _localctx.result =  tmp__18; 
+				        ImmediateAST tmp__70 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__69 ; 
+				        CommonToken tmp__68 ; 
+				        tmp__68 = ( CommonToken ) _localctx.local__1_atom_case3 ; 
+				        tmp__69 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_atom_case3.result ; 
+				        tmp__70 = (ImmediateAST) mkList( tmp__68, tmp__69 ); 
+				        _localctx.result =  tmp__70; 
 				      
 				}
 				break;
 			case 2:
 				{
-				State = 76; _localctx.local__1_atom_case4 = Match(T__3);
-				State = 77; _localctx.local__2_atom_case4 = gen__nullable_gen__seplist__L44__expr();
-				State = 78; _localctx.local__3_atom_case4 = trailer();
-				State = 79; Match(T__4);
+				State = 173; _localctx.local__1_atom_case4 = Match(T__16);
+				State = 174; _localctx.local__2_atom_case4 = gen__closelist__L44__expr();
+				State = 175; _localctx.local__3_atom_case4 = trailer();
+				State = 176; Match(T__17);
 				 
-				        ImmediateAST tmp__22 ; 
-				        bool tmp__21 ; 
-				        List<ImmediateAST> tmp__20 ; 
-				        CommonToken tmp__19 ; 
-				        tmp__19 = ( CommonToken ) _localctx.local__1_atom_case4 ; 
-				        tmp__20 = ( List<ImmediateAST> ) _localctx.local__2_atom_case4.result ; 
-				        tmp__21 = ( bool ) _localctx.local__3_atom_case4.result ; 
-				        tmp__22 = (ImmediateAST) mkTuple( tmp__19, tmp__20, tmp__21 ); 
-				        _localctx.result =  tmp__22; 
+				        ImmediateAST tmp__74 ; 
+				        bool tmp__73 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__72 ; 
+				        CommonToken tmp__71 ; 
+				        tmp__71 = ( CommonToken ) _localctx.local__1_atom_case4 ; 
+				        tmp__72 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_atom_case4.result ; 
+				        tmp__73 = ( bool ) _localctx.local__3_atom_case4.result ; 
+				        tmp__74 = (ImmediateAST) mkTuple( tmp__71, tmp__72, tmp__73 ); 
+				        _localctx.result =  tmp__74; 
 				      
 				}
 				break;
 			case 3:
 				{
-				State = 82; _localctx.local__1_atom_case5 = Match(T__5);
-				State = 83; _localctx.local__2_atom_case5 = gen__nullable_gen__seplist__L44__pair();
-				State = 84; trailer();
-				State = 85; Match(T__6);
+				State = 179; _localctx.local__1_atom_case5 = Match(T__0);
+				State = 180; _localctx.local__2_atom_case5 = gen__closelist__L44__pair();
+				State = 181; trailer();
+				State = 182; Match(T__1);
 				 
-				        ImmediateAST tmp__25 ; 
-				        List<(ImmediateAST, ImmediateAST)> tmp__24 ; 
-				        CommonToken tmp__23 ; 
-				        tmp__23 = ( CommonToken ) _localctx.local__1_atom_case5 ; 
-				        tmp__24 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__2_atom_case5.result ; 
-				        tmp__25 = (ImmediateAST) mkDict( tmp__23, tmp__24 ); 
-				        _localctx.result =  tmp__25; 
+				        ImmediateAST tmp__77 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__76 ; 
+				        CommonToken tmp__75 ; 
+				        tmp__75 = ( CommonToken ) _localctx.local__1_atom_case5 ; 
+				        tmp__76 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__2_atom_case5.result ; 
+				        tmp__77 = (ImmediateAST) mkDict( tmp__75, tmp__76 ); 
+				        _localctx.result =  tmp__77; 
 				      
 				}
 				break;
 			case 4:
 				{
-				State = 88; _localctx.local__1_atom_case6 = Match(STR_4);
+				State = 185; _localctx.local__1_atom_case6 = Match(STR_4);
 				 
-				        ImmediateAST tmp__29 ; 
-				        DObj tmp__28 ; 
-				        CommonToken tmp__27 ; 
-				        CommonToken tmp__26 ; 
-				        tmp__26 = ( CommonToken ) _localctx.local__1_atom_case6 ; 
-				        tmp__27 = ( CommonToken ) _localctx.local__1_atom_case6 ; 
-				        tmp__28 = (DObj) mkstr( tmp__27.Text ); 
-				        tmp__29 = (ImmediateAST) mkVal( tmp__26, tmp__28 ); 
-				        _localctx.result =  tmp__29; 
+				        ImmediateAST tmp__82 ; 
+				        DObj tmp__81 ; 
+				        string tmp__80 ; 
+				        CommonToken tmp__79 ; 
+				        CommonToken tmp__78 ; 
+				        tmp__78 = ( CommonToken ) _localctx.local__1_atom_case6 ; 
+				        tmp__79 = ( CommonToken ) _localctx.local__1_atom_case6 ; 
+				        tmp__80 = (string) unesc( tmp__79.Text ); 
+				        tmp__81 = (DObj) mkstr( tmp__80 ); 
+				        tmp__82 = (ImmediateAST) mkVal( tmp__78, tmp__81 ); 
+				        _localctx.result =  tmp__82; 
 				      
 				}
 				break;
 			case 5:
 				{
-				State = 90; _localctx.local__1_atom_case7 = Match(INT_10);
+				State = 187; _localctx.local__1_atom_case7 = Match(INT_10);
 				 
-				        ImmediateAST tmp__34 ; 
-				        DObj tmp__33 ; 
-				        int tmp__32 ; 
-				        CommonToken tmp__31 ; 
-				        CommonToken tmp__30 ; 
-				        tmp__30 = ( CommonToken ) _localctx.local__1_atom_case7 ; 
-				        tmp__31 = ( CommonToken ) _localctx.local__1_atom_case7 ; 
-				        tmp__32 = 64 ; 
-				        tmp__33 = (DObj) mkint( tmp__31.Text, tmp__32 ); 
-				        tmp__34 = (ImmediateAST) mkVal( tmp__30, tmp__33 ); 
-				        _localctx.result =  tmp__34; 
+				        ImmediateAST tmp__87 ; 
+				        DObj tmp__86 ; 
+				        int tmp__85 ; 
+				        CommonToken tmp__84 ; 
+				        CommonToken tmp__83 ; 
+				        tmp__83 = ( CommonToken ) _localctx.local__1_atom_case7 ; 
+				        tmp__84 = ( CommonToken ) _localctx.local__1_atom_case7 ; 
+				        tmp__85 = 0 ; 
+				        tmp__86 = (DObj) mkint( tmp__84.Text, tmp__85 ); 
+				        tmp__87 = (ImmediateAST) mkVal( tmp__83, tmp__86 ); 
+				        _localctx.result =  tmp__87; 
 				      
 				}
 				break;
 			case 6:
 				{
-				State = 92; _localctx.local__1_atom_case8 = Match(FLOAT_11);
+				State = 189; _localctx.local__1_atom_case8 = Match(HEX_7);
 				 
-				        ImmediateAST tmp__38 ; 
-				        DObj tmp__37 ; 
-				        CommonToken tmp__36 ; 
-				        CommonToken tmp__35 ; 
-				        tmp__35 = ( CommonToken ) _localctx.local__1_atom_case8 ; 
-				        tmp__36 = ( CommonToken ) _localctx.local__1_atom_case8 ; 
-				        tmp__37 = (DObj) mkfloat( tmp__36.Text ); 
-				        tmp__38 = (ImmediateAST) mkVal( tmp__35, tmp__37 ); 
-				        _localctx.result =  tmp__38; 
+				        ImmediateAST tmp__92 ; 
+				        DObj tmp__91 ; 
+				        int tmp__90 ; 
+				        CommonToken tmp__89 ; 
+				        CommonToken tmp__88 ; 
+				        tmp__88 = ( CommonToken ) _localctx.local__1_atom_case8 ; 
+				        tmp__89 = ( CommonToken ) _localctx.local__1_atom_case8 ; 
+				        tmp__90 = 16 ; 
+				        tmp__91 = (DObj) mkint( tmp__89.Text, tmp__90 ); 
+				        tmp__92 = (ImmediateAST) mkVal( tmp__88, tmp__91 ); 
+				        _localctx.result =  tmp__92; 
 				      
 				}
 				break;
 			case 7:
 				{
-				State = 94; _localctx.local__1_atom_case9 = Match(T__7);
+				State = 191; _localctx.local__1_atom_case9 = Match(OCT_8);
 				 
-				        ImmediateAST tmp__41 ; 
-				        DObj tmp__40 ; 
-				        CommonToken tmp__39 ; 
-				        tmp__39 = ( CommonToken ) _localctx.local__1_atom_case9 ; 
-				        tmp__40 = (DObj) mknone(  ); 
-				        tmp__41 = (ImmediateAST) mkVal( tmp__39, tmp__40 ); 
-				        _localctx.result =  tmp__41; 
+				        ImmediateAST tmp__97 ; 
+				        DObj tmp__96 ; 
+				        int tmp__95 ; 
+				        CommonToken tmp__94 ; 
+				        CommonToken tmp__93 ; 
+				        tmp__93 = ( CommonToken ) _localctx.local__1_atom_case9 ; 
+				        tmp__94 = ( CommonToken ) _localctx.local__1_atom_case9 ; 
+				        tmp__95 = 8 ; 
+				        tmp__96 = (DObj) mkint( tmp__94.Text, tmp__95 ); 
+				        tmp__97 = (ImmediateAST) mkVal( tmp__93, tmp__96 ); 
+				        _localctx.result =  tmp__97; 
 				      
 				}
 				break;
 			case 8:
 				{
-				State = 96; _localctx.local__1_atom_case10 = Match(NAME_13);
+				State = 193; _localctx.local__1_atom_case10 = Match(BIN_9);
 				 
-				        ImmediateAST tmp__44 ; 
-				        CommonToken tmp__43 ; 
-				        CommonToken tmp__42 ; 
-				        tmp__42 = ( CommonToken ) _localctx.local__1_atom_case10 ; 
-				        tmp__43 = ( CommonToken ) _localctx.local__1_atom_case10 ; 
-				        tmp__44 = (ImmediateAST) mkVar( tmp__42, tmp__43.Text ); 
-				        _localctx.result =  tmp__44; 
+				        ImmediateAST tmp__102 ; 
+				        DObj tmp__101 ; 
+				        int tmp__100 ; 
+				        CommonToken tmp__99 ; 
+				        CommonToken tmp__98 ; 
+				        tmp__98 = ( CommonToken ) _localctx.local__1_atom_case10 ; 
+				        tmp__99 = ( CommonToken ) _localctx.local__1_atom_case10 ; 
+				        tmp__100 = 2 ; 
+				        tmp__101 = (DObj) mkint( tmp__99.Text, tmp__100 ); 
+				        tmp__102 = (ImmediateAST) mkVal( tmp__98, tmp__101 ); 
+				        _localctx.result =  tmp__102; 
 				      
 				}
 				break;
 			case 9:
 				{
-				State = 98; _localctx.local__1_atom_case11 = Match(T__8);
-				State = 99; _localctx.local__2_atom_case11 = atom(5);
+				State = 195; _localctx.local__1_atom_case11 = Match(FLOAT_11);
 				 
-				        ImmediateAST tmp__47 ; 
-				        ImmediateAST tmp__46 ; 
-				        CommonToken tmp__45 ; 
-				        tmp__45 = ( CommonToken ) _localctx.local__1_atom_case11 ; 
-				        tmp__46 = ( ImmediateAST ) _localctx.local__2_atom_case11.result ; 
-				        tmp__47 = (ImmediateAST) mkNeg( tmp__45, tmp__46 ); 
-				        _localctx.result =  tmp__47; 
+				        ImmediateAST tmp__106 ; 
+				        DObj tmp__105 ; 
+				        CommonToken tmp__104 ; 
+				        CommonToken tmp__103 ; 
+				        tmp__103 = ( CommonToken ) _localctx.local__1_atom_case11 ; 
+				        tmp__104 = ( CommonToken ) _localctx.local__1_atom_case11 ; 
+				        tmp__105 = (DObj) mkfloat( tmp__104.Text ); 
+				        tmp__106 = (ImmediateAST) mkVal( tmp__103, tmp__105 ); 
+				        _localctx.result =  tmp__106; 
 				      
 				}
 				break;
 			case 10:
 				{
-				State = 102; _localctx.local__1_atom_case12 = Match(T__9);
-				State = 103; _localctx.local__2_atom_case12 = atom(4);
+				State = 197; _localctx.local__1_atom_case12 = Match(T__18);
 				 
-				        ImmediateAST tmp__50 ; 
-				        ImmediateAST tmp__49 ; 
-				        CommonToken tmp__48 ; 
-				        tmp__48 = ( CommonToken ) _localctx.local__1_atom_case12 ; 
-				        tmp__49 = ( ImmediateAST ) _localctx.local__2_atom_case12.result ; 
-				        tmp__50 = (ImmediateAST) mkInv( tmp__48, tmp__49 ); 
-				        _localctx.result =  tmp__50; 
+				        ImmediateAST tmp__109 ; 
+				        DObj tmp__108 ; 
+				        CommonToken tmp__107 ; 
+				        tmp__107 = ( CommonToken ) _localctx.local__1_atom_case12 ; 
+				        tmp__108 = (DObj) mknone(  ); 
+				        tmp__109 = (ImmediateAST) mkVal( tmp__107, tmp__108 ); 
+				        _localctx.result =  tmp__109; 
 				      
 				}
 				break;
 			case 11:
 				{
-				State = 106; _localctx.local__1_atom_case13 = Match(T__10);
-				State = 107; _localctx.local__2_atom_case13 = expr();
-				State = 108; _localctx.local__3_atom_case13 = then();
-				State = 109; _localctx.local__4_atom_case13 = block();
-				State = 110; Match(T__11);
+				State = 199; _localctx.local__1_atom_case13 = Match(NAME_13);
 				 
-				        ImmediateAST tmp__56 ; 
-				        ImmediateAST tmp__55 ; 
-				        List<ImmediateAST> tmp__54 ; 
-				        CommonToken tmp__53 ; 
-				        ImmediateAST tmp__52 ; 
-				        CommonToken tmp__51 ; 
-				        tmp__51 = ( CommonToken ) _localctx.local__1_atom_case13 ; 
-				        tmp__52 = ( ImmediateAST ) _localctx.local__2_atom_case13.result ; 
-				        tmp__53 = ( CommonToken ) _localctx.local__3_atom_case13.result ; 
-				        tmp__54 = ( List<ImmediateAST> ) _localctx.local__4_atom_case13.result ; 
-				        tmp__55 = (ImmediateAST) mkBlock( tmp__53, tmp__54 ); 
-				        tmp__56 = (ImmediateAST) mkIfThen( tmp__51, tmp__52, tmp__55 ); 
-				        _localctx.result =  tmp__56; 
+				        ImmediateAST tmp__112 ; 
+				        CommonToken tmp__111 ; 
+				        CommonToken tmp__110 ; 
+				        tmp__110 = ( CommonToken ) _localctx.local__1_atom_case13 ; 
+				        tmp__111 = ( CommonToken ) _localctx.local__1_atom_case13 ; 
+				        tmp__112 = (ImmediateAST) mkVar( tmp__110, tmp__111.Text ); 
+				        _localctx.result =  tmp__112; 
 				      
 				}
 				break;
 			case 12:
 				{
-				State = 113; _localctx.local__1_atom_case14 = Match(T__10);
-				State = 114; _localctx.local__2_atom_case14 = expr();
-				State = 115; _localctx.local__3_atom_case14 = then();
-				State = 116; _localctx.local__4_atom_case14 = block();
-				State = 117; _localctx.local__5_atom_case14 = gen__nullable_gen__list_gen__snd_elif__elifBlock();
-				State = 118; _localctx.local__6_atom_case14 = gen__optional_gen__blockOf_else();
-				State = 119; Match(T__11);
+				State = 201; _localctx.local__1_atom_case14 = Match(T__19);
+				State = 202; _localctx.local__2_atom_case14 = atom(8);
 				 
-				        ImmediateAST tmp__68 ; 
-				        ImmediateAST tmp__67 ; 
-				        CommonToken tmp__66 ; 
-				        List<(ImmediateAST, ImmediateAST)> elifs__64 ; 
-				        List<(ImmediateAST, ImmediateAST)> tmp__65 ; 
-				        List<(ImmediateAST, ImmediateAST)> elifs__62 ; 
-				        List<(ImmediateAST, ImmediateAST)> tmp__63 ; 
-				        ImmediateAST tmp__61 ; 
-				        List<ImmediateAST> tmp__60 ; 
-				        CommonToken tmp__59 ; 
-				        ImmediateAST tmp__58 ; 
-				        (ImmediateAST, ImmediateAST) elif__57 ; 
-				        tmp__58 = ( ImmediateAST ) _localctx.local__2_atom_case14.result ; 
-				        tmp__59 = ( CommonToken ) _localctx.local__3_atom_case14.result ; 
-				        tmp__60 = ( List<ImmediateAST> ) _localctx.local__4_atom_case14.result ; 
-				        tmp__61 = (ImmediateAST) mkBlock( tmp__59, tmp__60 ); 
-				        elif__57 = ( tmp__58 , tmp__61 ); 
-				        tmp__63 = (List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
-				        elifs__62 = (List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__63, elif__57 ); 
-				        tmp__65 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__5_atom_case14.result ; 
-				        elifs__64 = (List<(ImmediateAST, ImmediateAST)>) extend<(ImmediateAST, ImmediateAST)>( elifs__62, tmp__65 ); 
-				        tmp__66 = ( CommonToken ) _localctx.local__1_atom_case14 ; 
-				        tmp__67 = ( ImmediateAST ) _localctx.local__6_atom_case14.result ; 
-				        tmp__68 = (ImmediateAST) mkNestedIf( tmp__66, elifs__62, tmp__67 ); 
-				        _localctx.result =  tmp__68; 
+				        ImmediateAST tmp__115 ; 
+				        ImmediateAST tmp__114 ; 
+				        CommonToken tmp__113 ; 
+				        tmp__113 = ( CommonToken ) _localctx.local__1_atom_case14 ; 
+				        tmp__114 = ( ImmediateAST ) _localctx.local__2_atom_case14.result ; 
+				        tmp__115 = (ImmediateAST) mkNeg( tmp__113, tmp__114 ); 
+				        _localctx.result =  tmp__115; 
 				      
 				}
 				break;
 			case 13:
 				{
-				State = 122; _localctx.local__1_atom_case15 = Match(T__12);
-				State = 123; _localctx.local__2_atom_case15 = name();
-				State = 124; Match(T__3);
-				State = 125; _localctx.local__4_atom_case15 = gen__nullable_gen__seplist__L44__name();
-				State = 126; Match(T__4);
-				State = 127; _localctx.local__6_atom_case15 = block();
-				State = 128; Match(T__11);
+				State = 205; _localctx.local__1_atom_case15 = Match(T__20);
+				State = 206; _localctx.local__2_atom_case15 = atom(7);
 				 
-				        ImmediateAST tmp__73 ; 
-				        List<ImmediateAST> tmp__72 ; 
-				        List<string> tmp__71 ; 
-				        string tmp__70 ; 
-				        CommonToken tmp__69 ; 
-				        tmp__69 = ( CommonToken ) _localctx.local__1_atom_case15 ; 
-				        tmp__70 = ( string ) _localctx.local__2_atom_case15.result ; 
-				        tmp__71 = ( List<string> ) _localctx.local__4_atom_case15.result ; 
-				        tmp__72 = ( List<ImmediateAST> ) _localctx.local__6_atom_case15.result ; 
-				        tmp__73 = (ImmediateAST) mkFunc( tmp__69, tmp__70, tmp__71, tmp__72 ); 
-				        _localctx.result =  tmp__73; 
+				        ImmediateAST tmp__118 ; 
+				        ImmediateAST tmp__117 ; 
+				        CommonToken tmp__116 ; 
+				        tmp__116 = ( CommonToken ) _localctx.local__1_atom_case15 ; 
+				        tmp__117 = ( ImmediateAST ) _localctx.local__2_atom_case15.result ; 
+				        tmp__118 = (ImmediateAST) mkInv( tmp__116, tmp__117 ); 
+				        _localctx.result =  tmp__118; 
+				      
+				}
+				break;
+			case 14:
+				{
+				State = 209; _localctx.local__1_atom_case16 = Match(T__21);
+				State = 210; _localctx.local__2_atom_case16 = expr();
+				State = 211; _localctx.local__3_atom_case16 = then();
+				State = 212; _localctx.local__4_atom_case16 = block();
+				State = 213; Match(T__5);
+				 
+				        ImmediateAST tmp__124 ; 
+				        ImmediateAST tmp__123 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__122 ; 
+				        CommonToken tmp__121 ; 
+				        ImmediateAST tmp__120 ; 
+				        CommonToken tmp__119 ; 
+				        tmp__119 = ( CommonToken ) _localctx.local__1_atom_case16 ; 
+				        tmp__120 = ( ImmediateAST ) _localctx.local__2_atom_case16.result ; 
+				        tmp__121 = ( CommonToken ) _localctx.local__3_atom_case16.result ; 
+				        tmp__122 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__4_atom_case16.result ; 
+				        tmp__123 = (ImmediateAST) mkBlock( tmp__121, tmp__122 ); 
+				        tmp__124 = (ImmediateAST) mkIfThen( tmp__119, tmp__120, tmp__123 ); 
+				        _localctx.result =  tmp__124; 
+				      
+				}
+				break;
+			case 15:
+				{
+				State = 216; _localctx.local__1_atom_case17 = Match(T__21);
+				State = 217; _localctx.local__2_atom_case17 = expr();
+				State = 218; _localctx.local__3_atom_case17 = then();
+				State = 219; _localctx.local__4_atom_case17 = block();
+				State = 220; _localctx.local__5_atom_case17 = gen__nullable_gen__list_gen__snd_elif__elifBlock();
+				State = 221; _localctx.local__6_atom_case17 = gen__optional_gen__blockOf_else();
+				State = 222; Match(T__5);
+				 
+				        ImmediateAST tmp__136 ; 
+				        ImmediateAST tmp__135 ; 
+				        CommonToken tmp__134 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> elifs__132 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__133 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> elifs__130 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__131 ; 
+				        ImmediateAST tmp__129 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__128 ; 
+				        CommonToken tmp__127 ; 
+				        ImmediateAST tmp__126 ; 
+				        (ImmediateAST, ImmediateAST) elif__125 ; 
+				        tmp__126 = ( ImmediateAST ) _localctx.local__2_atom_case17.result ; 
+				        tmp__127 = ( CommonToken ) _localctx.local__3_atom_case17.result ; 
+				        tmp__128 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__4_atom_case17.result ; 
+				        tmp__129 = (ImmediateAST) mkBlock( tmp__127, tmp__128 ); 
+				        elif__125 = ( tmp__126 , tmp__129 ); 
+				        tmp__131 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
+				        elifs__130 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__131, elif__125 ); 
+				        tmp__133 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__5_atom_case17.result ; 
+				        elifs__132 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) extend<(ImmediateAST, ImmediateAST)>( elifs__130, tmp__133 ); 
+				        tmp__134 = ( CommonToken ) _localctx.local__1_atom_case17 ; 
+				        tmp__135 = ( ImmediateAST ) _localctx.local__6_atom_case17.result ; 
+				        tmp__136 = (ImmediateAST) mkNestedIf( tmp__134, elifs__130, tmp__135 ); 
+				        _localctx.result =  tmp__136; 
+				      
+				}
+				break;
+			case 16:
+				{
+				State = 225; _localctx.local__1_atom_case18 = Match(T__22);
+				State = 226; _localctx.local__2_atom_case18 = name();
+				State = 227; Match(T__16);
+				State = 228; _localctx.local__4_atom_case18 = gen__nullable_gen__seplist__L44__name();
+				State = 229; Match(T__17);
+				State = 230; _localctx.local__6_atom_case18 = block();
+				State = 231; Match(T__5);
+				 
+				        ImmediateAST tmp__141 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__140 ; 
+				        System.Collections.Generic.List<string> tmp__139 ; 
+				        string tmp__138 ; 
+				        CommonToken tmp__137 ; 
+				        tmp__137 = ( CommonToken ) _localctx.local__1_atom_case18 ; 
+				        tmp__138 = ( string ) _localctx.local__2_atom_case18.result ; 
+				        tmp__139 = ( System.Collections.Generic.List<string> ) _localctx.local__4_atom_case18.result ; 
+				        tmp__140 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__6_atom_case18.result ; 
+				        tmp__141 = (ImmediateAST) mkFunc( tmp__137, tmp__138, tmp__139, tmp__140 ); 
+				        _localctx.result =  tmp__141; 
+				      
+				}
+				break;
+			case 17:
+				{
+				State = 234; _localctx.local__1_atom_case19 = Match(T__22);
+				State = 235; Match(T__16);
+				State = 236; _localctx.local__3_atom_case19 = gen__nullable_gen__seplist__L44__name();
+				State = 237; Match(T__17);
+				State = 238; _localctx.local__5_atom_case19 = block();
+				State = 239; Match(T__5);
+				 
+				        ImmediateAST tmp__146 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__145 ; 
+				        System.Collections.Generic.List<string> tmp__144 ; 
+				        string tmp__143 ; 
+				        CommonToken tmp__142 ; 
+				        tmp__142 = ( CommonToken ) _localctx.local__1_atom_case19 ; 
+				        tmp__143 = "ans" ; 
+				        tmp__144 = ( System.Collections.Generic.List<string> ) _localctx.local__3_atom_case19.result ; 
+				        tmp__145 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__5_atom_case19.result ; 
+				        tmp__146 = (ImmediateAST) mkFunc( tmp__142, tmp__143, tmp__144, tmp__145 ); 
+				        _localctx.result =  tmp__146; 
+				      
+				}
+				break;
+			case 18:
+				{
+				State = 242; _localctx.local__1_atom_case20 = Match(T__16);
+				State = 243; _localctx.local__2_atom_case20 = gen__nullable_gen__seplist__L44__name();
+				State = 244; Match(T__17);
+				State = 245; Match(T__23);
+				State = 246; _localctx.local__5_atom_case20 = gen__line_wrap_expr();
+				 
+				        ImmediateAST tmp__152 ; 
+				        ImmediateAST tmp__151 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__150 ; 
+				        System.Collections.Generic.List<string> tmp__149 ; 
+				        string tmp__148 ; 
+				        CommonToken tmp__147 ; 
+				        tmp__147 = ( CommonToken ) _localctx.local__1_atom_case20 ; 
+				        tmp__148 = "ans" ; 
+				        tmp__149 = ( System.Collections.Generic.List<string> ) _localctx.local__2_atom_case20.result ; 
+				        tmp__151 = ( ImmediateAST ) _localctx.local__5_atom_case20.result ; 
+				        tmp__150 = new System.Collections.Generic.List<ImmediateAST> { tmp__151 }; 
+				        tmp__152 = (ImmediateAST) mkFunc( tmp__147, tmp__148, tmp__149, tmp__150 ); 
+				        _localctx.result =  tmp__152; 
+				      
+				}
+				break;
+			case 19:
+				{
+				State = 249; _localctx.local__1_atom_case21 = Match(NAME_13);
+				State = 250; Match(T__23);
+				State = 251; _localctx.local__3_atom_case21 = gen__line_wrap_expr();
+				 
+				        ImmediateAST tmp__159 ; 
+				        ImmediateAST tmp__158 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__157 ; 
+				        CommonToken tmp__156 ; 
+				        System.Collections.Generic.List<string> tmp__155 ; 
+				        string tmp__154 ; 
+				        CommonToken tmp__153 ; 
+				        tmp__153 = ( CommonToken ) _localctx.local__1_atom_case21 ; 
+				        tmp__154 = "ans" ; 
+				        tmp__156 = ( CommonToken ) _localctx.local__1_atom_case21 ; 
+				        tmp__155 = new System.Collections.Generic.List<string> { tmp__156.Text }; 
+				        tmp__158 = ( ImmediateAST ) _localctx.local__3_atom_case21.result ; 
+				        tmp__157 = new System.Collections.Generic.List<ImmediateAST> { tmp__158 }; 
+				        tmp__159 = (ImmediateAST) mkFunc( tmp__153, tmp__154, tmp__155, tmp__157 ); 
+				        _localctx.result =  tmp__159; 
 				      
 				}
 				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 152;
+			State = 275;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,2,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 150;
+					State = 273;
 					ErrorHandler.Sync(this);
-					switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
+					switch ( Interpreter.AdaptivePredict(TokenStream,7,Context) ) {
 					case 1:
 						{
 						_localctx = new AtomContext(_parentctx, _parentState);
 						_localctx.local__1_atom_case0 = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
-						State = 133;
-						if (!(Precpred(Context, 16))) throw new FailedPredicateException(this, "Precpred(Context, 16)");
-						State = 134; _localctx.local__2_atom_case0 = Match(T__0);
-						State = 135; Match(T__1);
-						State = 136; _localctx.local__4_atom_case0 = expr();
-						State = 137; Match(T__2);
+						State = 256;
+						if (!(Precpred(Context, 22))) throw new FailedPredicateException(this, "Precpred(Context, 22)");
+						State = 257; _localctx.local__2_atom_case0 = Match(T__13);
+						State = 258; Match(T__14);
+						State = 259; _localctx.local__4_atom_case0 = expr();
+						State = 260; Match(T__15);
 						 
-						                  ImmediateAST tmp__4 ; 
-						                  ImmediateAST tmp__3 ; 
-						                  ImmediateAST tmp__2 ; 
-						                  CommonToken tmp__1 ; 
-						                  tmp__1 = ( CommonToken ) _localctx.local__2_atom_case0 ; 
-						                  tmp__2 = ( ImmediateAST ) _localctx.local__1_atom_case0.result ; 
-						                  tmp__3 = ( ImmediateAST ) _localctx.local__4_atom_case0.result ; 
-						                  tmp__4 = (ImmediateAST) mkOGet( tmp__1, tmp__2, tmp__3 ); 
-						                  _localctx.result =  tmp__4; 
+						                  ImmediateAST tmp__56 ; 
+						                  ImmediateAST tmp__55 ; 
+						                  ImmediateAST tmp__54 ; 
+						                  CommonToken tmp__53 ; 
+						                  tmp__53 = ( CommonToken ) _localctx.local__2_atom_case0 ; 
+						                  tmp__54 = ( ImmediateAST ) _localctx.local__1_atom_case0.result ; 
+						                  tmp__55 = ( ImmediateAST ) _localctx.local__4_atom_case0.result ; 
+						                  tmp__56 = (ImmediateAST) mkOGet( tmp__53, tmp__54, tmp__55 ); 
+						                  _localctx.result =  tmp__56; 
 						                
 						}
 						break;
@@ -512,26 +1235,26 @@ public partial class DianaScriptParser : Parser {
 						_localctx = new AtomContext(_parentctx, _parentState);
 						_localctx.local__1_atom_case1 = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
-						State = 140;
-						if (!(Precpred(Context, 15))) throw new FailedPredicateException(this, "Precpred(Context, 15)");
-						State = 141; _localctx.local__2_atom_case1 = Match(T__0);
-						State = 142; _localctx.local__3_atom_case1 = Match(NAME_13);
+						State = 263;
+						if (!(Precpred(Context, 21))) throw new FailedPredicateException(this, "Precpred(Context, 21)");
+						State = 264; _localctx.local__2_atom_case1 = Match(T__13);
+						State = 265; _localctx.local__3_atom_case1 = Match(NAME_13);
 						 
-						                  ImmediateAST tmp__11 ; 
-						                  ImmediateAST tmp__10 ; 
-						                  DObj tmp__9 ; 
-						                  CommonToken tmp__8 ; 
-						                  CommonToken tmp__7 ; 
-						                  ImmediateAST tmp__6 ; 
-						                  CommonToken tmp__5 ; 
-						                  tmp__5 = ( CommonToken ) _localctx.local__2_atom_case1 ; 
-						                  tmp__6 = ( ImmediateAST ) _localctx.local__1_atom_case1.result ; 
-						                  tmp__7 = ( CommonToken ) _localctx.local__3_atom_case1 ; 
-						                  tmp__8 = ( CommonToken ) _localctx.local__3_atom_case1 ; 
-						                  tmp__9 = (DObj) mkstr( tmp__8.Text ); 
-						                  tmp__10 = (ImmediateAST) mkVal( tmp__7, tmp__9 ); 
-						                  tmp__11 = (ImmediateAST) mkOGet( tmp__5, tmp__6, tmp__10 ); 
-						                  _localctx.result =  tmp__11; 
+						                  ImmediateAST tmp__63 ; 
+						                  ImmediateAST tmp__62 ; 
+						                  DObj tmp__61 ; 
+						                  CommonToken tmp__60 ; 
+						                  CommonToken tmp__59 ; 
+						                  ImmediateAST tmp__58 ; 
+						                  CommonToken tmp__57 ; 
+						                  tmp__57 = ( CommonToken ) _localctx.local__2_atom_case1 ; 
+						                  tmp__58 = ( ImmediateAST ) _localctx.local__1_atom_case1.result ; 
+						                  tmp__59 = ( CommonToken ) _localctx.local__3_atom_case1 ; 
+						                  tmp__60 = ( CommonToken ) _localctx.local__3_atom_case1 ; 
+						                  tmp__61 = (DObj) mkstr( tmp__60.Text ); 
+						                  tmp__62 = (ImmediateAST) mkVal( tmp__59, tmp__61 ); 
+						                  tmp__63 = (ImmediateAST) mkOGet( tmp__57, tmp__58, tmp__62 ); 
+						                  _localctx.result =  tmp__63; 
 						                
 						}
 						break;
@@ -540,30 +1263,30 @@ public partial class DianaScriptParser : Parser {
 						_localctx = new AtomContext(_parentctx, _parentState);
 						_localctx.local__1_atom_case2 = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
-						State = 144;
-						if (!(Precpred(Context, 14))) throw new FailedPredicateException(this, "Precpred(Context, 14)");
-						State = 145; _localctx.local__2_atom_case2 = Match(T__3);
-						State = 146; _localctx.local__3_atom_case2 = gen__nullable_gen__seplist__L44__expr();
-						State = 147; Match(T__4);
+						State = 267;
+						if (!(Precpred(Context, 20))) throw new FailedPredicateException(this, "Precpred(Context, 20)");
+						State = 268; _localctx.local__2_atom_case2 = Match(T__16);
+						State = 269; _localctx.local__3_atom_case2 = gen__closelist__L44__expr();
+						State = 270; Match(T__17);
 						 
-						                  ImmediateAST tmp__15 ; 
-						                  List<ImmediateAST> tmp__14 ; 
-						                  ImmediateAST tmp__13 ; 
-						                  CommonToken tmp__12 ; 
-						                  tmp__12 = ( CommonToken ) _localctx.local__2_atom_case2 ; 
-						                  tmp__13 = ( ImmediateAST ) _localctx.local__1_atom_case2.result ; 
-						                  tmp__14 = ( List<ImmediateAST> ) _localctx.local__3_atom_case2.result ; 
-						                  tmp__15 = (ImmediateAST) mkApp( tmp__12, tmp__13, tmp__14 ); 
-						                  _localctx.result =  tmp__15; 
+						                  ImmediateAST tmp__67 ; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__66 ; 
+						                  ImmediateAST tmp__65 ; 
+						                  CommonToken tmp__64 ; 
+						                  tmp__64 = ( CommonToken ) _localctx.local__2_atom_case2 ; 
+						                  tmp__65 = ( ImmediateAST ) _localctx.local__1_atom_case2.result ; 
+						                  tmp__66 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__3_atom_case2.result ; 
+						                  tmp__67 = (ImmediateAST) mkApp( tmp__64, tmp__65, tmp__66 ); 
+						                  _localctx.result =  tmp__67; 
 						                
 						}
 						break;
 					}
 					} 
 				}
-				State = 154;
+				State = 277;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,2,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
 			}
 			}
 		}
@@ -578,8 +1301,126 @@ public partial class DianaScriptParser : Parser {
 		return _localctx;
 	}
 
+	public partial class Gen__line_wrap_exprContext : ParserRuleContext {
+		public ImmediateAST result;
+		public ExprContext local__2_gen__line_wrap_expr_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext[] gen__optional_NEWLINE() {
+			return GetRuleContexts<Gen__optional_NEWLINEContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext gen__optional_NEWLINE(int i) {
+			return GetRuleContext<Gen__optional_NEWLINEContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
+			return GetRuleContext<ExprContext>(0);
+		}
+		public Gen__line_wrap_exprContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_gen__line_wrap_expr; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterGen__line_wrap_expr(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitGen__line_wrap_expr(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Gen__line_wrap_exprContext gen__line_wrap_expr() {
+		Gen__line_wrap_exprContext _localctx = new Gen__line_wrap_exprContext(Context, State);
+		EnterRule(_localctx, 10, RULE_gen__line_wrap_expr);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 278; gen__optional_NEWLINE();
+			State = 279; _localctx.local__2_gen__line_wrap_expr_case0 = expr();
+			State = 280; gen__optional_NEWLINE();
+			 
+			        ImmediateAST tmp__160 ; 
+			        tmp__160 = ( ImmediateAST ) _localctx.local__2_gen__line_wrap_expr_case0.result ; 
+			        _localctx.result =  tmp__160; 
+			      
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Gen__optional_NEWLINEContext : ParserRuleContext {
+		public CommonToken result;
+		public IToken local__1_gen__optional_NEWLINE_case1;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE_17() { return GetToken(DianaScriptParser.NEWLINE_17, 0); }
+		public Gen__optional_NEWLINEContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_gen__optional_NEWLINE; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterGen__optional_NEWLINE(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitGen__optional_NEWLINE(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Gen__optional_NEWLINEContext gen__optional_NEWLINE() {
+		Gen__optional_NEWLINEContext _localctx = new Gen__optional_NEWLINEContext(Context, State);
+		EnterRule(_localctx, 12, RULE_gen__optional_NEWLINE);
+		try {
+			State = 286;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,9,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				 
+				        _localctx.result =  null; 
+				      
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 284; _localctx.local__1_gen__optional_NEWLINE_case1 = Match(NEWLINE_17);
+				 
+				        CommonToken tmp__161 ; 
+				        tmp__161 = ( CommonToken ) _localctx.local__1_gen__optional_NEWLINE_case1 ; 
+				        _localctx.result =  tmp__161; 
+				      
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	public partial class Gen__nullable_gen__seplist__L44__nameContext : ParserRuleContext {
-		public List<string> result;
+		public System.Collections.Generic.List<string> result;
 		public Gen__seplist__L44__nameContext local__1_gen__nullable_gen__seplist__L44__name_case1;
 		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__nameContext gen__seplist__L44__name() {
 			return GetRuleContext<Gen__seplist__L44__nameContext>(0);
@@ -604,29 +1445,29 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__nullable_gen__seplist__L44__nameContext gen__nullable_gen__seplist__L44__name() {
 		Gen__nullable_gen__seplist__L44__nameContext _localctx = new Gen__nullable_gen__seplist__L44__nameContext(Context, State);
-		EnterRule(_localctx, 2, RULE_gen__nullable_gen__seplist__L44__name);
+		EnterRule(_localctx, 14, RULE_gen__nullable_gen__seplist__L44__name);
 		try {
-			State = 159;
+			State = 292;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__4:
+			case T__17:
 				EnterOuterAlt(_localctx, 1);
 				{
 				 
-				        List<string> tmp__74 ; 
-				        tmp__74 = (List<string>) empty<string>(  ); 
-				        _localctx.result =  tmp__74; 
+				        System.Collections.Generic.List<string> tmp__162 ; 
+				        tmp__162 = (System.Collections.Generic.List<string>) empty<string>(  ); 
+				        _localctx.result =  tmp__162; 
 				      
 				}
 				break;
 			case NAME_13:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 156; _localctx.local__1_gen__nullable_gen__seplist__L44__name_case1 = gen__seplist__L44__name(0);
+				State = 289; _localctx.local__1_gen__nullable_gen__seplist__L44__name_case1 = gen__seplist__L44__name(0);
 				 
-				        List<string> tmp__75 ; 
-				        tmp__75 = ( List<string> ) _localctx.local__1_gen__nullable_gen__seplist__L44__name_case1.result ; 
-				        _localctx.result =  tmp__75; 
+				        System.Collections.Generic.List<string> tmp__163 ; 
+				        tmp__163 = ( System.Collections.Generic.List<string> ) _localctx.local__1_gen__nullable_gen__seplist__L44__name_case1.result ; 
+				        _localctx.result =  tmp__163; 
 				      
 				}
 				break;
@@ -646,7 +1487,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class Gen__seplist__L44__nameContext : ParserRuleContext {
-		public List<string> result;
+		public System.Collections.Generic.List<string> result;
 		public Gen__seplist__L44__nameContext local__1_gen__seplist__L44__name_case1;
 		public NameContext local__1_gen__seplist__L44__name_case0;
 		public NameContext local__3_gen__seplist__L44__name_case1;
@@ -683,28 +1524,26 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		Gen__seplist__L44__nameContext _localctx = new Gen__seplist__L44__nameContext(Context, _parentState);
 		Gen__seplist__L44__nameContext _prevctx = _localctx;
-		int _startState = 4;
-		EnterRecursionRule(_localctx, 4, RULE_gen__seplist__L44__name, _p);
+		int _startState = 16;
+		EnterRecursionRule(_localctx, 16, RULE_gen__seplist__L44__name, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 162; _localctx.local__1_gen__seplist__L44__name_case0 = name();
+			State = 295; _localctx.local__1_gen__seplist__L44__name_case0 = name();
 			 
-			        List<string> tmp__78 ; 
-			        string tmp__77 ; 
-			        List<string> tmp__76 ; 
-			        tmp__76 = (List<string>) empty<string>(  ); 
-			        tmp__77 = ( string ) _localctx.local__1_gen__seplist__L44__name_case0.result ; 
-			        tmp__78 = (List<string>) append<string>( tmp__76, tmp__77 ); 
-			        _localctx.result =  tmp__78; 
+			        string tmp__165 ; 
+			        System.Collections.Generic.List<string> tmp__164 ; 
+			        tmp__165 = ( string ) _localctx.local__1_gen__seplist__L44__name_case0.result ; 
+			        tmp__164 = new System.Collections.Generic.List<string> { tmp__165 }; 
+			        _localctx.result =  tmp__164; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 172;
+			State = 305;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -715,25 +1554,25 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new Gen__seplist__L44__nameContext(_parentctx, _parentState);
 					_localctx.local__1_gen__seplist__L44__name_case1 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_gen__seplist__L44__name);
-					State = 165;
+					State = 298;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 166; Match(T__13);
-					State = 167; _localctx.local__3_gen__seplist__L44__name_case1 = name();
+					State = 299; Match(T__12);
+					State = 300; _localctx.local__3_gen__seplist__L44__name_case1 = name();
 					 
-					                  List<string> tmp__81 ; 
-					                  string tmp__80 ; 
-					                  List<string> tmp__79 ; 
-					                  tmp__79 = ( List<string> ) _localctx.local__1_gen__seplist__L44__name_case1.result ; 
-					                  tmp__80 = ( string ) _localctx.local__3_gen__seplist__L44__name_case1.result ; 
-					                  tmp__81 = (List<string>) append<string>( tmp__79, tmp__80 ); 
-					                  _localctx.result =  tmp__81; 
+					                  System.Collections.Generic.List<string> tmp__168 ; 
+					                  string tmp__167 ; 
+					                  System.Collections.Generic.List<string> tmp__166 ; 
+					                  tmp__166 = ( System.Collections.Generic.List<string> ) _localctx.local__1_gen__seplist__L44__name_case1.result ; 
+					                  tmp__167 = ( string ) _localctx.local__3_gen__seplist__L44__name_case1.result ; 
+					                  tmp__168 = (System.Collections.Generic.List<string>) append<string>( tmp__166, tmp__167 ); 
+					                  _localctx.result =  tmp__168; 
 					                
 					}
 					} 
 				}
-				State = 174;
+				State = 307;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
 			}
 			}
 		}
@@ -774,12 +1613,12 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__optional_gen__blockOf_elseContext gen__optional_gen__blockOf_else() {
 		Gen__optional_gen__blockOf_elseContext _localctx = new Gen__optional_gen__blockOf_elseContext(Context, State);
-		EnterRule(_localctx, 6, RULE_gen__optional_gen__blockOf_else);
+		EnterRule(_localctx, 18, RULE_gen__optional_gen__blockOf_else);
 		try {
-			State = 179;
+			State = 312;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__11:
+			case T__5:
 				EnterOuterAlt(_localctx, 1);
 				{
 				 
@@ -787,14 +1626,14 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__14:
+			case T__24:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 176; _localctx.local__1_gen__optional_gen__blockOf_else_case1 = gen__blockOf_else();
+				State = 309; _localctx.local__1_gen__optional_gen__blockOf_else_case1 = gen__blockOf_else();
 				 
-				        ImmediateAST tmp__82 ; 
-				        tmp__82 = ( ImmediateAST ) _localctx.local__1_gen__optional_gen__blockOf_else_case1.result ; 
-				        _localctx.result =  tmp__82; 
+				        ImmediateAST tmp__169 ; 
+				        tmp__169 = ( ImmediateAST ) _localctx.local__1_gen__optional_gen__blockOf_else_case1.result ; 
+				        _localctx.result =  tmp__169; 
 				      
 				}
 				break;
@@ -840,20 +1679,20 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__blockOf_elseContext gen__blockOf_else() {
 		Gen__blockOf_elseContext _localctx = new Gen__blockOf_elseContext(Context, State);
-		EnterRule(_localctx, 8, RULE_gen__blockOf_else);
+		EnterRule(_localctx, 20, RULE_gen__blockOf_else);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 181; _localctx.local__1_gen__blockOf_else_case0 = Match(T__14);
-			State = 182; _localctx.local__2_gen__blockOf_else_case0 = block();
+			State = 314; _localctx.local__1_gen__blockOf_else_case0 = Match(T__24);
+			State = 315; _localctx.local__2_gen__blockOf_else_case0 = block();
 			 
-			        ImmediateAST tmp__85 ; 
-			        List<ImmediateAST> tmp__84 ; 
-			        CommonToken tmp__83 ; 
-			        tmp__83 = ( CommonToken ) _localctx.local__1_gen__blockOf_else_case0 ; 
-			        tmp__84 = ( List<ImmediateAST> ) _localctx.local__2_gen__blockOf_else_case0.result ; 
-			        tmp__85 = (ImmediateAST) mkBlock( tmp__83, tmp__84 ); 
-			        _localctx.result =  tmp__85; 
+			        ImmediateAST tmp__172 ; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__171 ; 
+			        CommonToken tmp__170 ; 
+			        tmp__170 = ( CommonToken ) _localctx.local__1_gen__blockOf_else_case0 ; 
+			        tmp__171 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_else_case0.result ; 
+			        tmp__172 = (ImmediateAST) mkBlock( tmp__170, tmp__171 ); 
+			        _localctx.result =  tmp__172; 
 			      
 			}
 		}
@@ -869,7 +1708,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class Gen__nullable_gen__list_gen__snd_elif__elifBlockContext : ParserRuleContext {
-		public List<(ImmediateAST, ImmediateAST)> result;
+		public System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> result;
 		public Gen__list_gen__snd_elif__elifBlockContext local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case1;
 		[System.Diagnostics.DebuggerNonUserCode] public Gen__list_gen__snd_elif__elifBlockContext gen__list_gen__snd_elif__elifBlock() {
 			return GetRuleContext<Gen__list_gen__snd_elif__elifBlockContext>(0);
@@ -894,30 +1733,30 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__nullable_gen__list_gen__snd_elif__elifBlockContext gen__nullable_gen__list_gen__snd_elif__elifBlock() {
 		Gen__nullable_gen__list_gen__snd_elif__elifBlockContext _localctx = new Gen__nullable_gen__list_gen__snd_elif__elifBlockContext(Context, State);
-		EnterRule(_localctx, 10, RULE_gen__nullable_gen__list_gen__snd_elif__elifBlock);
+		EnterRule(_localctx, 22, RULE_gen__nullable_gen__list_gen__snd_elif__elifBlock);
 		try {
-			State = 189;
+			State = 322;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__11:
-			case T__14:
+			case T__5:
+			case T__24:
 				EnterOuterAlt(_localctx, 1);
 				{
 				 
-				        List<(ImmediateAST, ImmediateAST)> tmp__86 ; 
-				        tmp__86 = (List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
-				        _localctx.result =  tmp__86; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__173 ; 
+				        tmp__173 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
+				        _localctx.result =  tmp__173; 
 				      
 				}
 				break;
-			case T__15:
+			case T__25:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 186; _localctx.local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case1 = gen__list_gen__snd_elif__elifBlock(0);
+				State = 319; _localctx.local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case1 = gen__list_gen__snd_elif__elifBlock(0);
 				 
-				        List<(ImmediateAST, ImmediateAST)> tmp__87 ; 
-				        tmp__87 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case1.result ; 
-				        _localctx.result =  tmp__87; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__174 ; 
+				        tmp__174 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case1.result ; 
+				        _localctx.result =  tmp__174; 
 				      
 				}
 				break;
@@ -937,7 +1776,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class Gen__list_gen__snd_elif__elifBlockContext : ParserRuleContext {
-		public List<(ImmediateAST, ImmediateAST)> result;
+		public System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> result;
 		public Gen__list_gen__snd_elif__elifBlockContext local__1_gen__list_gen__snd_elif__elifBlock_case1;
 		public Gen__snd_elif__elifBlockContext local__1_gen__list_gen__snd_elif__elifBlock_case0;
 		public Gen__snd_elif__elifBlockContext local__2_gen__list_gen__snd_elif__elifBlock_case1;
@@ -974,28 +1813,26 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		Gen__list_gen__snd_elif__elifBlockContext _localctx = new Gen__list_gen__snd_elif__elifBlockContext(Context, _parentState);
 		Gen__list_gen__snd_elif__elifBlockContext _prevctx = _localctx;
-		int _startState = 12;
-		EnterRecursionRule(_localctx, 12, RULE_gen__list_gen__snd_elif__elifBlock, _p);
+		int _startState = 24;
+		EnterRecursionRule(_localctx, 24, RULE_gen__list_gen__snd_elif__elifBlock, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 192; _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case0 = gen__snd_elif__elifBlock();
+			State = 325; _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case0 = gen__snd_elif__elifBlock();
 			 
-			        List<(ImmediateAST, ImmediateAST)> tmp__90 ; 
-			        (ImmediateAST, ImmediateAST) tmp__89 ; 
-			        List<(ImmediateAST, ImmediateAST)> tmp__88 ; 
-			        tmp__88 = (List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
-			        tmp__89 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case0.result ; 
-			        tmp__90 = (List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__88, tmp__89 ); 
-			        _localctx.result =  tmp__90; 
+			        (ImmediateAST, ImmediateAST) tmp__176 ; 
+			        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__175 ; 
+			        tmp__176 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case0.result ; 
+			        tmp__175 = new System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> { tmp__176 }; 
+			        _localctx.result =  tmp__175; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 201;
+			State = 334;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,14,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -1006,24 +1843,24 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new Gen__list_gen__snd_elif__elifBlockContext(_parentctx, _parentState);
 					_localctx.local__1_gen__list_gen__snd_elif__elifBlock_case1 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_gen__list_gen__snd_elif__elifBlock);
-					State = 195;
+					State = 328;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 196; _localctx.local__2_gen__list_gen__snd_elif__elifBlock_case1 = gen__snd_elif__elifBlock();
+					State = 329; _localctx.local__2_gen__list_gen__snd_elif__elifBlock_case1 = gen__snd_elif__elifBlock();
 					 
-					                  List<(ImmediateAST, ImmediateAST)> tmp__93 ; 
-					                  (ImmediateAST, ImmediateAST) tmp__92 ; 
-					                  List<(ImmediateAST, ImmediateAST)> tmp__91 ; 
-					                  tmp__91 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case1.result ; 
-					                  tmp__92 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__2_gen__list_gen__snd_elif__elifBlock_case1.result ; 
-					                  tmp__93 = (List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__91, tmp__92 ); 
-					                  _localctx.result =  tmp__93; 
+					                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__179 ; 
+					                  (ImmediateAST, ImmediateAST) tmp__178 ; 
+					                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__177 ; 
+					                  tmp__177 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__list_gen__snd_elif__elifBlock_case1.result ; 
+					                  tmp__178 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__2_gen__list_gen__snd_elif__elifBlock_case1.result ; 
+					                  tmp__179 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__177, tmp__178 ); 
+					                  _localctx.result =  tmp__179; 
 					                
 					}
 					} 
 				}
-				State = 203;
+				State = 336;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,14,Context);
 			}
 			}
 		}
@@ -1064,16 +1901,16 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__snd_elif__elifBlockContext gen__snd_elif__elifBlock() {
 		Gen__snd_elif__elifBlockContext _localctx = new Gen__snd_elif__elifBlockContext(Context, State);
-		EnterRule(_localctx, 14, RULE_gen__snd_elif__elifBlock);
+		EnterRule(_localctx, 26, RULE_gen__snd_elif__elifBlock);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 204; Match(T__15);
-			State = 205; _localctx.local__2_gen__snd_elif__elifBlock_case0 = elifBlock();
+			State = 337; Match(T__25);
+			State = 338; _localctx.local__2_gen__snd_elif__elifBlock_case0 = elifBlock();
 			 
-			        (ImmediateAST, ImmediateAST) tmp__94 ; 
-			        tmp__94 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__2_gen__snd_elif__elifBlock_case0.result ; 
-			        _localctx.result =  tmp__94; 
+			        (ImmediateAST, ImmediateAST) tmp__180 ; 
+			        tmp__180 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__2_gen__snd_elif__elifBlock_case0.result ; 
+			        _localctx.result =  tmp__180; 
 			      
 			}
 		}
@@ -1088,73 +1925,46 @@ public partial class DianaScriptParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Gen__nullable_gen__seplist__L44__pairContext : ParserRuleContext {
-		public List<(ImmediateAST, ImmediateAST)> result;
-		public Gen__seplist__L44__pairContext local__1_gen__nullable_gen__seplist__L44__pair_case1;
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__pairContext gen__seplist__L44__pair() {
-			return GetRuleContext<Gen__seplist__L44__pairContext>(0);
+	public partial class Gen__closelist__L44__pairContext : ParserRuleContext {
+		public System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> result;
+		public Gen___closelist__L44__pairContext local__2_gen__closelist__L44__pair_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext gen__optional_NEWLINE() {
+			return GetRuleContext<Gen__optional_NEWLINEContext>(0);
 		}
-		public Gen__nullable_gen__seplist__L44__pairContext(ParserRuleContext parent, int invokingState)
+		[System.Diagnostics.DebuggerNonUserCode] public Gen___closelist__L44__pairContext gen___closelist__L44__pair() {
+			return GetRuleContext<Gen___closelist__L44__pairContext>(0);
+		}
+		public Gen__closelist__L44__pairContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_gen__nullable_gen__seplist__L44__pair; } }
+		public override int RuleIndex { get { return RULE_gen__closelist__L44__pair; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterGen__nullable_gen__seplist__L44__pair(this);
+			if (typedListener != null) typedListener.EnterGen__closelist__L44__pair(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitGen__nullable_gen__seplist__L44__pair(this);
+			if (typedListener != null) typedListener.ExitGen__closelist__L44__pair(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Gen__nullable_gen__seplist__L44__pairContext gen__nullable_gen__seplist__L44__pair() {
-		Gen__nullable_gen__seplist__L44__pairContext _localctx = new Gen__nullable_gen__seplist__L44__pairContext(Context, State);
-		EnterRule(_localctx, 16, RULE_gen__nullable_gen__seplist__L44__pair);
+	public Gen__closelist__L44__pairContext gen__closelist__L44__pair() {
+		Gen__closelist__L44__pairContext _localctx = new Gen__closelist__L44__pairContext(Context, State);
+		EnterRule(_localctx, 28, RULE_gen__closelist__L44__pair);
 		try {
-			State = 212;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__6:
-			case T__13:
-				EnterOuterAlt(_localctx, 1);
-				{
-				 
-				        List<(ImmediateAST, ImmediateAST)> tmp__95 ; 
-				        tmp__95 = (List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
-				        _localctx.result =  tmp__95; 
-				      
-				}
-				break;
-			case T__1:
-			case T__3:
-			case T__5:
-			case T__7:
-			case T__8:
-			case T__9:
-			case T__10:
-			case T__12:
-			case T__17:
-			case STR_4:
-			case INT_10:
-			case FLOAT_11:
-			case NAME_13:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 209; _localctx.local__1_gen__nullable_gen__seplist__L44__pair_case1 = gen__seplist__L44__pair(0);
-				 
-				        List<(ImmediateAST, ImmediateAST)> tmp__96 ; 
-				        tmp__96 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__nullable_gen__seplist__L44__pair_case1.result ; 
-				        _localctx.result =  tmp__96; 
-				      
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 341; gen__optional_NEWLINE();
+			State = 342; _localctx.local__2_gen__closelist__L44__pair_case0 = gen___closelist__L44__pair(0);
+			 
+			        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__181 ; 
+			        tmp__181 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__2_gen__closelist__L44__pair_case0.result ; 
+			        _localctx.result =  tmp__181; 
+			      
 			}
 		}
 		catch (RecognitionException re) {
@@ -1168,95 +1978,154 @@ public partial class DianaScriptParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Gen__seplist__L44__pairContext : ParserRuleContext {
-		public List<(ImmediateAST, ImmediateAST)> result;
-		public Gen__seplist__L44__pairContext local__1_gen__seplist__L44__pair_case1;
-		public PairContext local__1_gen__seplist__L44__pair_case0;
-		public PairContext local__3_gen__seplist__L44__pair_case1;
+	public partial class Gen___closelist__L44__pairContext : ParserRuleContext {
+		public System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> result;
+		public Gen___closelist__L44__pairContext local__1_gen___closelist__L44__pair_case0;
+		public Gen___closelist__L44__pairContext local__1_gen___closelist__L44__pair_case1;
+		public Gen___closelist__L44__pairContext local__1_gen___closelist__L44__pair_case2;
+		public PairContext local__1_gen___closelist__L44__pair_case3;
+		public PairContext local__4_gen___closelist__L44__pair_case1;
+		public PairContext local__3_gen___closelist__L44__pair_case2;
 		[System.Diagnostics.DebuggerNonUserCode] public PairContext pair() {
 			return GetRuleContext<PairContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__pairContext gen__seplist__L44__pair() {
-			return GetRuleContext<Gen__seplist__L44__pairContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE_17() { return GetToken(DianaScriptParser.NEWLINE_17, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Gen___closelist__L44__pairContext gen___closelist__L44__pair() {
+			return GetRuleContext<Gen___closelist__L44__pairContext>(0);
 		}
-		public Gen__seplist__L44__pairContext(ParserRuleContext parent, int invokingState)
+		public Gen___closelist__L44__pairContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_gen__seplist__L44__pair; } }
+		public override int RuleIndex { get { return RULE_gen___closelist__L44__pair; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterGen__seplist__L44__pair(this);
+			if (typedListener != null) typedListener.EnterGen___closelist__L44__pair(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitGen__seplist__L44__pair(this);
+			if (typedListener != null) typedListener.ExitGen___closelist__L44__pair(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Gen__seplist__L44__pairContext gen__seplist__L44__pair() {
-		return gen__seplist__L44__pair(0);
+	public Gen___closelist__L44__pairContext gen___closelist__L44__pair() {
+		return gen___closelist__L44__pair(0);
 	}
 
-	private Gen__seplist__L44__pairContext gen__seplist__L44__pair(int _p) {
+	private Gen___closelist__L44__pairContext gen___closelist__L44__pair(int _p) {
 		ParserRuleContext _parentctx = Context;
 		int _parentState = State;
-		Gen__seplist__L44__pairContext _localctx = new Gen__seplist__L44__pairContext(Context, _parentState);
-		Gen__seplist__L44__pairContext _prevctx = _localctx;
-		int _startState = 18;
-		EnterRecursionRule(_localctx, 18, RULE_gen__seplist__L44__pair, _p);
+		Gen___closelist__L44__pairContext _localctx = new Gen___closelist__L44__pairContext(Context, _parentState);
+		Gen___closelist__L44__pairContext _prevctx = _localctx;
+		int _startState = 30;
+		EnterRecursionRule(_localctx, 30, RULE_gen___closelist__L44__pair, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			{
-			State = 215; _localctx.local__1_gen__seplist__L44__pair_case0 = pair();
-			 
-			        List<(ImmediateAST, ImmediateAST)> tmp__99 ; 
-			        (ImmediateAST, ImmediateAST) tmp__98 ; 
-			        List<(ImmediateAST, ImmediateAST)> tmp__97 ; 
-			        tmp__97 = (List<(ImmediateAST, ImmediateAST)>) empty<(ImmediateAST, ImmediateAST)>(  ); 
-			        tmp__98 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__1_gen__seplist__L44__pair_case0.result ; 
-			        tmp__99 = (List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__97, tmp__98 ); 
-			        _localctx.result =  tmp__99; 
-			      
+			State = 350;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,15,Context) ) {
+			case 1:
+				{
+				State = 346; _localctx.local__1_gen___closelist__L44__pair_case3 = pair();
+				 
+				        (ImmediateAST, ImmediateAST) tmp__190 ; 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__189 ; 
+				        tmp__190 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__1_gen___closelist__L44__pair_case3.result ; 
+				        tmp__189 = new System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> { tmp__190 }; 
+				        _localctx.result =  tmp__189; 
+				      
+				}
+				break;
+			case 2:
+				{
+				 
+				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__191 ; 
+				        tmp__191 = new System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> { }; 
+				        _localctx.result =  tmp__191; 
+				      
+				}
+				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 225;
+			State = 368;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,9,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,17,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					{
-					_localctx = new Gen__seplist__L44__pairContext(_parentctx, _parentState);
-					_localctx.local__1_gen__seplist__L44__pair_case1 = _prevctx;
-					PushNewRecursionContext(_localctx, _startState, RULE_gen__seplist__L44__pair);
-					State = 218;
-					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 219; Match(T__13);
-					State = 220; _localctx.local__3_gen__seplist__L44__pair_case1 = pair();
-					 
-					                  List<(ImmediateAST, ImmediateAST)> tmp__102 ; 
-					                  (ImmediateAST, ImmediateAST) tmp__101 ; 
-					                  List<(ImmediateAST, ImmediateAST)> tmp__100 ; 
-					                  tmp__100 = ( List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen__seplist__L44__pair_case1.result ; 
-					                  tmp__101 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__3_gen__seplist__L44__pair_case1.result ; 
-					                  tmp__102 = (List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__100, tmp__101 ); 
-					                  _localctx.result =  tmp__102; 
-					                
+					State = 366;
+					ErrorHandler.Sync(this);
+					switch ( Interpreter.AdaptivePredict(TokenStream,16,Context) ) {
+					case 1:
+						{
+						_localctx = new Gen___closelist__L44__pairContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__pair_case0 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__pair);
+						State = 352;
+						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
+						State = 353; Match(NEWLINE_17);
+						 
+						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__182 ; 
+						                  tmp__182 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen___closelist__L44__pair_case0.result ; 
+						                  _localctx.result =  tmp__182; 
+						                
+						}
+						break;
+					case 2:
+						{
+						_localctx = new Gen___closelist__L44__pairContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__pair_case1 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__pair);
+						State = 355;
+						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
+						State = 356; Match(T__12);
+						State = 357; Match(NEWLINE_17);
+						State = 358; _localctx.local__4_gen___closelist__L44__pair_case1 = pair();
+						 
+						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__185 ; 
+						                  (ImmediateAST, ImmediateAST) tmp__184 ; 
+						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__183 ; 
+						                  tmp__183 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen___closelist__L44__pair_case1.result ; 
+						                  tmp__184 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__4_gen___closelist__L44__pair_case1.result ; 
+						                  tmp__185 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__183, tmp__184 ); 
+						                  _localctx.result =  tmp__185; 
+						                
+						}
+						break;
+					case 3:
+						{
+						_localctx = new Gen___closelist__L44__pairContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__pair_case2 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__pair);
+						State = 361;
+						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
+						State = 362; Match(T__12);
+						State = 363; _localctx.local__3_gen___closelist__L44__pair_case2 = pair();
+						 
+						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__188 ; 
+						                  (ImmediateAST, ImmediateAST) tmp__187 ; 
+						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__186 ; 
+						                  tmp__186 = ( System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> ) _localctx.local__1_gen___closelist__L44__pair_case2.result ; 
+						                  tmp__187 = ( (ImmediateAST, ImmediateAST) ) _localctx.local__3_gen___closelist__L44__pair_case2.result ; 
+						                  tmp__188 = (System.Collections.Generic.List<(ImmediateAST, ImmediateAST)>) append<(ImmediateAST, ImmediateAST)>( tmp__186, tmp__187 ); 
+						                  _localctx.result =  tmp__188; 
+						                
+						}
+						break;
 					}
 					} 
 				}
-				State = 227;
+				State = 370;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,9,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,17,Context);
 			}
 			}
 		}
@@ -1271,74 +2140,46 @@ public partial class DianaScriptParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Gen__nullable_gen__seplist__L44__exprContext : ParserRuleContext {
-		public List<ImmediateAST> result;
-		public Gen__seplist__L44__exprContext local__1_gen__nullable_gen__seplist__L44__expr_case1;
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
-			return GetRuleContext<Gen__seplist__L44__exprContext>(0);
+	public partial class Gen__closelist__L44__exprContext : ParserRuleContext {
+		public System.Collections.Generic.List<ImmediateAST> result;
+		public Gen___closelist__L44__exprContext local__2_gen__closelist__L44__expr_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext gen__optional_NEWLINE() {
+			return GetRuleContext<Gen__optional_NEWLINEContext>(0);
 		}
-		public Gen__nullable_gen__seplist__L44__exprContext(ParserRuleContext parent, int invokingState)
+		[System.Diagnostics.DebuggerNonUserCode] public Gen___closelist__L44__exprContext gen___closelist__L44__expr() {
+			return GetRuleContext<Gen___closelist__L44__exprContext>(0);
+		}
+		public Gen__closelist__L44__exprContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_gen__nullable_gen__seplist__L44__expr; } }
+		public override int RuleIndex { get { return RULE_gen__closelist__L44__expr; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterGen__nullable_gen__seplist__L44__expr(this);
+			if (typedListener != null) typedListener.EnterGen__closelist__L44__expr(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitGen__nullable_gen__seplist__L44__expr(this);
+			if (typedListener != null) typedListener.ExitGen__closelist__L44__expr(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Gen__nullable_gen__seplist__L44__exprContext gen__nullable_gen__seplist__L44__expr() {
-		Gen__nullable_gen__seplist__L44__exprContext _localctx = new Gen__nullable_gen__seplist__L44__exprContext(Context, State);
-		EnterRule(_localctx, 20, RULE_gen__nullable_gen__seplist__L44__expr);
+	public Gen__closelist__L44__exprContext gen__closelist__L44__expr() {
+		Gen__closelist__L44__exprContext _localctx = new Gen__closelist__L44__exprContext(Context, State);
+		EnterRule(_localctx, 32, RULE_gen__closelist__L44__expr);
 		try {
-			State = 232;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__2:
-			case T__4:
-			case T__13:
-				EnterOuterAlt(_localctx, 1);
-				{
-				 
-				        List<ImmediateAST> tmp__103 ; 
-				        tmp__103 = (List<ImmediateAST>) empty<ImmediateAST>(  ); 
-				        _localctx.result =  tmp__103; 
-				      
-				}
-				break;
-			case T__1:
-			case T__3:
-			case T__5:
-			case T__7:
-			case T__8:
-			case T__9:
-			case T__10:
-			case T__12:
-			case T__17:
-			case STR_4:
-			case INT_10:
-			case FLOAT_11:
-			case NAME_13:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 229; _localctx.local__1_gen__nullable_gen__seplist__L44__expr_case1 = gen__seplist__L44__expr(0);
-				 
-				        List<ImmediateAST> tmp__104 ; 
-				        tmp__104 = ( List<ImmediateAST> ) _localctx.local__1_gen__nullable_gen__seplist__L44__expr_case1.result ; 
-				        _localctx.result =  tmp__104; 
-				      
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 371; gen__optional_NEWLINE();
+			State = 372; _localctx.local__2_gen__closelist__L44__expr_case0 = gen___closelist__L44__expr(0);
+			 
+			        System.Collections.Generic.List<ImmediateAST> tmp__192 ; 
+			        tmp__192 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__closelist__L44__expr_case0.result ; 
+			        _localctx.result =  tmp__192; 
+			      
 			}
 		}
 		catch (RecognitionException re) {
@@ -1352,95 +2193,154 @@ public partial class DianaScriptParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Gen__seplist__L44__exprContext : ParserRuleContext {
-		public List<ImmediateAST> result;
-		public Gen__seplist__L44__exprContext local__1_gen__seplist__L44__expr_case1;
-		public ExprContext local__1_gen__seplist__L44__expr_case0;
-		public ExprContext local__3_gen__seplist__L44__expr_case1;
+	public partial class Gen___closelist__L44__exprContext : ParserRuleContext {
+		public System.Collections.Generic.List<ImmediateAST> result;
+		public Gen___closelist__L44__exprContext local__1_gen___closelist__L44__expr_case0;
+		public Gen___closelist__L44__exprContext local__1_gen___closelist__L44__expr_case1;
+		public Gen___closelist__L44__exprContext local__1_gen___closelist__L44__expr_case2;
+		public ExprContext local__1_gen___closelist__L44__expr_case3;
+		public ExprContext local__4_gen___closelist__L44__expr_case1;
+		public ExprContext local__3_gen___closelist__L44__expr_case2;
 		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
 			return GetRuleContext<ExprContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
-			return GetRuleContext<Gen__seplist__L44__exprContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE_17() { return GetToken(DianaScriptParser.NEWLINE_17, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Gen___closelist__L44__exprContext gen___closelist__L44__expr() {
+			return GetRuleContext<Gen___closelist__L44__exprContext>(0);
 		}
-		public Gen__seplist__L44__exprContext(ParserRuleContext parent, int invokingState)
+		public Gen___closelist__L44__exprContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_gen__seplist__L44__expr; } }
+		public override int RuleIndex { get { return RULE_gen___closelist__L44__expr; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterGen__seplist__L44__expr(this);
+			if (typedListener != null) typedListener.EnterGen___closelist__L44__expr(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitGen__seplist__L44__expr(this);
+			if (typedListener != null) typedListener.ExitGen___closelist__L44__expr(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Gen__seplist__L44__exprContext gen__seplist__L44__expr() {
-		return gen__seplist__L44__expr(0);
+	public Gen___closelist__L44__exprContext gen___closelist__L44__expr() {
+		return gen___closelist__L44__expr(0);
 	}
 
-	private Gen__seplist__L44__exprContext gen__seplist__L44__expr(int _p) {
+	private Gen___closelist__L44__exprContext gen___closelist__L44__expr(int _p) {
 		ParserRuleContext _parentctx = Context;
 		int _parentState = State;
-		Gen__seplist__L44__exprContext _localctx = new Gen__seplist__L44__exprContext(Context, _parentState);
-		Gen__seplist__L44__exprContext _prevctx = _localctx;
-		int _startState = 22;
-		EnterRecursionRule(_localctx, 22, RULE_gen__seplist__L44__expr, _p);
+		Gen___closelist__L44__exprContext _localctx = new Gen___closelist__L44__exprContext(Context, _parentState);
+		Gen___closelist__L44__exprContext _prevctx = _localctx;
+		int _startState = 34;
+		EnterRecursionRule(_localctx, 34, RULE_gen___closelist__L44__expr, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			{
-			State = 235; _localctx.local__1_gen__seplist__L44__expr_case0 = expr();
-			 
-			        List<ImmediateAST> tmp__107 ; 
-			        ImmediateAST tmp__106 ; 
-			        List<ImmediateAST> tmp__105 ; 
-			        tmp__105 = (List<ImmediateAST>) empty<ImmediateAST>(  ); 
-			        tmp__106 = ( ImmediateAST ) _localctx.local__1_gen__seplist__L44__expr_case0.result ; 
-			        tmp__107 = (List<ImmediateAST>) append<ImmediateAST>( tmp__105, tmp__106 ); 
-			        _localctx.result =  tmp__107; 
-			      
+			State = 380;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,18,Context) ) {
+			case 1:
+				{
+				State = 376; _localctx.local__1_gen___closelist__L44__expr_case3 = expr();
+				 
+				        ImmediateAST tmp__201 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__200 ; 
+				        tmp__201 = ( ImmediateAST ) _localctx.local__1_gen___closelist__L44__expr_case3.result ; 
+				        tmp__200 = new System.Collections.Generic.List<ImmediateAST> { tmp__201 }; 
+				        _localctx.result =  tmp__200; 
+				      
+				}
+				break;
+			case 2:
+				{
+				 
+				        System.Collections.Generic.List<ImmediateAST> tmp__202 ; 
+				        tmp__202 = new System.Collections.Generic.List<ImmediateAST> { }; 
+				        _localctx.result =  tmp__202; 
+				      
+				}
+				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 245;
+			State = 398;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,20,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					{
-					_localctx = new Gen__seplist__L44__exprContext(_parentctx, _parentState);
-					_localctx.local__1_gen__seplist__L44__expr_case1 = _prevctx;
-					PushNewRecursionContext(_localctx, _startState, RULE_gen__seplist__L44__expr);
-					State = 238;
-					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 239; Match(T__13);
-					State = 240; _localctx.local__3_gen__seplist__L44__expr_case1 = expr();
-					 
-					                  List<ImmediateAST> tmp__110 ; 
-					                  ImmediateAST tmp__109 ; 
-					                  List<ImmediateAST> tmp__108 ; 
-					                  tmp__108 = ( List<ImmediateAST> ) _localctx.local__1_gen__seplist__L44__expr_case1.result ; 
-					                  tmp__109 = ( ImmediateAST ) _localctx.local__3_gen__seplist__L44__expr_case1.result ; 
-					                  tmp__110 = (List<ImmediateAST>) append<ImmediateAST>( tmp__108, tmp__109 ); 
-					                  _localctx.result =  tmp__110; 
-					                
+					State = 396;
+					ErrorHandler.Sync(this);
+					switch ( Interpreter.AdaptivePredict(TokenStream,19,Context) ) {
+					case 1:
+						{
+						_localctx = new Gen___closelist__L44__exprContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__expr_case0 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__expr);
+						State = 382;
+						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
+						State = 383; Match(NEWLINE_17);
+						 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__193 ; 
+						                  tmp__193 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen___closelist__L44__expr_case0.result ; 
+						                  _localctx.result =  tmp__193; 
+						                
+						}
+						break;
+					case 2:
+						{
+						_localctx = new Gen___closelist__L44__exprContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__expr_case1 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__expr);
+						State = 385;
+						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
+						State = 386; Match(T__12);
+						State = 387; Match(NEWLINE_17);
+						State = 388; _localctx.local__4_gen___closelist__L44__expr_case1 = expr();
+						 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__196 ; 
+						                  ImmediateAST tmp__195 ; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__194 ; 
+						                  tmp__194 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen___closelist__L44__expr_case1.result ; 
+						                  tmp__195 = ( ImmediateAST ) _localctx.local__4_gen___closelist__L44__expr_case1.result ; 
+						                  tmp__196 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__194, tmp__195 ); 
+						                  _localctx.result =  tmp__196; 
+						                
+						}
+						break;
+					case 3:
+						{
+						_localctx = new Gen___closelist__L44__exprContext(_parentctx, _parentState);
+						_localctx.local__1_gen___closelist__L44__expr_case2 = _prevctx;
+						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__expr);
+						State = 391;
+						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
+						State = 392; Match(T__12);
+						State = 393; _localctx.local__3_gen___closelist__L44__expr_case2 = expr();
+						 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__199 ; 
+						                  ImmediateAST tmp__198 ; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__197 ; 
+						                  tmp__197 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen___closelist__L44__expr_case2.result ; 
+						                  tmp__198 = ( ImmediateAST ) _localctx.local__3_gen___closelist__L44__expr_case2.result ; 
+						                  tmp__199 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__197, tmp__198 ); 
+						                  _localctx.result =  tmp__199; 
+						                
+						}
+						break;
 					}
 					} 
 				}
-				State = 247;
+				State = 400;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,20,Context);
 			}
 			}
 		}
@@ -1459,6 +2359,9 @@ public partial class DianaScriptParser : Parser {
 		public (ImmediateAST, ImmediateAST) result;
 		public ExprContext local__1_pair_case0;
 		public ExprContext local__3_pair_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__line_wrap__L58Context gen__line_wrap__L58() {
+			return GetRuleContext<Gen__line_wrap__L58Context>(0);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public ExprContext[] expr() {
 			return GetRuleContexts<ExprContext>();
 		}
@@ -1485,21 +2388,75 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public PairContext pair() {
 		PairContext _localctx = new PairContext(Context, State);
-		EnterRule(_localctx, 24, RULE_pair);
+		EnterRule(_localctx, 36, RULE_pair);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 248; _localctx.local__1_pair_case0 = expr();
-			State = 249; Match(T__16);
-			State = 250; _localctx.local__3_pair_case0 = expr();
+			State = 401; _localctx.local__1_pair_case0 = expr();
+			State = 402; gen__line_wrap__L58();
+			State = 403; _localctx.local__3_pair_case0 = expr();
 			 
-			        ImmediateAST tmp__113 ; 
-			        ImmediateAST tmp__112 ; 
-			        (ImmediateAST, ImmediateAST) tmp__111 ; 
-			        tmp__112 = ( ImmediateAST ) _localctx.local__1_pair_case0.result ; 
-			        tmp__113 = ( ImmediateAST ) _localctx.local__3_pair_case0.result ; 
-			        tmp__111 = ( tmp__112 , tmp__113 ); 
-			        _localctx.result =  tmp__111; 
+			        ImmediateAST tmp__205 ; 
+			        ImmediateAST tmp__204 ; 
+			        (ImmediateAST, ImmediateAST) tmp__203 ; 
+			        tmp__204 = ( ImmediateAST ) _localctx.local__1_pair_case0.result ; 
+			        tmp__205 = ( ImmediateAST ) _localctx.local__3_pair_case0.result ; 
+			        tmp__203 = ( tmp__204 , tmp__205 ); 
+			        _localctx.result =  tmp__203; 
+			      
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Gen__line_wrap__L58Context : ParserRuleContext {
+		public CommonToken result;
+		public IToken local__2_gen__line_wrap__L58_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext[] gen__optional_NEWLINE() {
+			return GetRuleContexts<Gen__optional_NEWLINEContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__optional_NEWLINEContext gen__optional_NEWLINE(int i) {
+			return GetRuleContext<Gen__optional_NEWLINEContext>(i);
+		}
+		public Gen__line_wrap__L58Context(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_gen__line_wrap__L58; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.EnterGen__line_wrap__L58(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IDianaScriptListener typedListener = listener as IDianaScriptListener;
+			if (typedListener != null) typedListener.ExitGen__line_wrap__L58(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Gen__line_wrap__L58Context gen__line_wrap__L58() {
+		Gen__line_wrap__L58Context _localctx = new Gen__line_wrap__L58Context(Context, State);
+		EnterRule(_localctx, 38, RULE_gen__line_wrap__L58);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 406; gen__optional_NEWLINE();
+			State = 407; _localctx.local__2_gen__line_wrap__L58_case0 = Match(T__26);
+			State = 408; gen__optional_NEWLINE();
+			 
+			        CommonToken tmp__206 ; 
+			        tmp__206 = ( CommonToken ) _localctx.local__2_gen__line_wrap__L58_case0 ; 
+			        _localctx.result =  tmp__206; 
 			      
 			}
 		}
@@ -1536,22 +2493,22 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public TrailerContext trailer() {
 		TrailerContext _localctx = new TrailerContext(Context, State);
-		EnterRule(_localctx, 26, RULE_trailer);
+		EnterRule(_localctx, 40, RULE_trailer);
 		try {
-			State = 256;
+			State = 414;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__13:
+			case T__12:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 253; Match(T__13);
+				State = 411; Match(T__12);
 				 
 				        _localctx.result =  true; 
 				      
 				}
 				break;
-			case T__4:
-			case T__6:
+			case T__1:
+			case T__17:
 				EnterOuterAlt(_localctx, 2);
 				{
 				 
@@ -1600,17 +2557,17 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public BinContext bin() {
 		BinContext _localctx = new BinContext(Context, State);
-		EnterRule(_localctx, 28, RULE_bin);
+		EnterRule(_localctx, 42, RULE_bin);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 258; _localctx.local__1_bin_case0 = binseq(0);
+			State = 416; _localctx.local__1_bin_case0 = binseq(0);
 			 
-			        ImmediateAST tmp__115 ; 
-			        List<object> tmp__114 ; 
-			        tmp__114 = ( List<object> ) _localctx.local__1_bin_case0.result ; 
-			        tmp__115 = (ImmediateAST) resolve_binop( tmp__114 ); 
-			        _localctx.result =  tmp__115; 
+			        ImmediateAST tmp__208 ; 
+			        System.Collections.Generic.List<object> tmp__207 ; 
+			        tmp__207 = ( System.Collections.Generic.List<object> ) _localctx.local__1_bin_case0.result ; 
+			        tmp__208 = (ImmediateAST) resolve_binop( tmp__207 ); 
+			        _localctx.result =  tmp__208; 
 			      
 			}
 		}
@@ -1626,7 +2583,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class BinseqContext : ParserRuleContext {
-		public List<object> result;
+		public System.Collections.Generic.List<object> result;
 		public BinseqContext local__1_binseq_case1;
 		public AtomContext local__1_binseq_case0;
 		public BinopContext local__2_binseq_case1;
@@ -1667,30 +2624,30 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		BinseqContext _localctx = new BinseqContext(Context, _parentState);
 		BinseqContext _prevctx = _localctx;
-		int _startState = 30;
-		EnterRecursionRule(_localctx, 30, RULE_binseq, _p);
+		int _startState = 44;
+		EnterRecursionRule(_localctx, 44, RULE_binseq, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 262; _localctx.local__1_binseq_case0 = atom(0);
+			State = 420; _localctx.local__1_binseq_case0 = atom(0);
 			 
-			        List<object> tmp__119 ; 
-			        object tmp__118 ; 
-			        ImmediateAST tmp__117 ; 
-			        List<object> tmp__116 ; 
-			        tmp__116 = (List<object>) empty<object>(  ); 
-			        tmp__117 = ( ImmediateAST ) _localctx.local__1_binseq_case0.result ; 
-			        tmp__118 = (object) to_obj<ImmediateAST>( tmp__117 ); 
-			        tmp__119 = (List<object>) append<object>( tmp__116, tmp__118 ); 
-			        _localctx.result =  tmp__119; 
+			        System.Collections.Generic.List<object> tmp__212 ; 
+			        object tmp__211 ; 
+			        ImmediateAST tmp__210 ; 
+			        System.Collections.Generic.List<object> tmp__209 ; 
+			        tmp__209 = (System.Collections.Generic.List<object>) empty<object>(  ); 
+			        tmp__210 = ( ImmediateAST ) _localctx.local__1_binseq_case0.result ; 
+			        tmp__211 = (object) to_obj<ImmediateAST>( tmp__210 ); 
+			        tmp__212 = (System.Collections.Generic.List<object>) append<object>( tmp__209, tmp__211 ); 
+			        _localctx.result =  tmp__212; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 272;
+			State = 430;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,13,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,22,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -1701,32 +2658,32 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new BinseqContext(_parentctx, _parentState);
 					_localctx.local__1_binseq_case1 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_binseq);
-					State = 265;
+					State = 423;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 266; _localctx.local__2_binseq_case1 = binop();
-					State = 267; _localctx.local__3_binseq_case1 = atom(0);
+					State = 424; _localctx.local__2_binseq_case1 = binop();
+					State = 425; _localctx.local__3_binseq_case1 = atom(0);
 					 
-					                  object tmp__125 ; 
-					                  ImmediateAST tmp__124 ; 
-					                  List<object> tmp__123 ; 
-					                  List<object> block__120 ; 
-					                  object tmp__122 ; 
-					                  List<object> tmp__121 ; 
-					                  tmp__121 = ( List<object> ) _localctx.local__1_binseq_case1.result ; 
-					                  tmp__122 = ( object ) _localctx.local__2_binseq_case1.result ; 
-					                  block__120 = (List<object>) append<object>( tmp__121, tmp__122 ); 
-					                  tmp__123 = ( List<object> ) _localctx.local__1_binseq_case1.result ; 
-					                  tmp__124 = ( ImmediateAST ) _localctx.local__3_binseq_case1.result ; 
-					                  tmp__125 = (object) to_obj<ImmediateAST>( tmp__124 ); 
-					                  block__120 = (List<object>) append<object>( tmp__123, tmp__125 ); 
-					                  _localctx.result =  block__120; 
+					                  object tmp__218 ; 
+					                  ImmediateAST tmp__217 ; 
+					                  System.Collections.Generic.List<object> tmp__216 ; 
+					                  System.Collections.Generic.List<object> block__213 ; 
+					                  object tmp__215 ; 
+					                  System.Collections.Generic.List<object> tmp__214 ; 
+					                  tmp__214 = ( System.Collections.Generic.List<object> ) _localctx.local__1_binseq_case1.result ; 
+					                  tmp__215 = ( object ) _localctx.local__2_binseq_case1.result ; 
+					                  block__213 = (System.Collections.Generic.List<object>) append<object>( tmp__214, tmp__215 ); 
+					                  tmp__216 = ( System.Collections.Generic.List<object> ) _localctx.local__1_binseq_case1.result ; 
+					                  tmp__217 = ( ImmediateAST ) _localctx.local__3_binseq_case1.result ; 
+					                  tmp__218 = (object) to_obj<ImmediateAST>( tmp__217 ); 
+					                  block__213 = (System.Collections.Generic.List<object>) append<object>( tmp__216, tmp__218 ); 
+					                  _localctx.result =  block__213; 
 					                
 					}
 					} 
 				}
-				State = 274;
+				State = 432;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,13,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,22,Context);
 			}
 			}
 		}
@@ -1768,69 +2725,69 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public BinopContext binop() {
 		BinopContext _localctx = new BinopContext(Context, State);
-		EnterRule(_localctx, 32, RULE_binop);
+		EnterRule(_localctx, 46, RULE_binop);
 		try {
-			State = 284;
+			State = 442;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case SINGLE_BINOP_2:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 275; _localctx.local__1_binop_case0 = Match(SINGLE_BINOP_2);
+				State = 433; _localctx.local__1_binop_case0 = Match(SINGLE_BINOP_2);
 				 
-				        object tmp__128 ; 
-				        CommonToken tmp__127 ; 
-				        CommonToken tmp__126 ; 
-				        tmp__126 = ( CommonToken ) _localctx.local__1_binop_case0 ; 
-				        tmp__127 = ( CommonToken ) _localctx.local__1_binop_case0 ; 
-				        tmp__128 = (object) mkop( tmp__126, tmp__127.Text ); 
-				        _localctx.result =  tmp__128; 
+				        object tmp__221 ; 
+				        CommonToken tmp__220 ; 
+				        CommonToken tmp__219 ; 
+				        tmp__219 = ( CommonToken ) _localctx.local__1_binop_case0 ; 
+				        tmp__220 = ( CommonToken ) _localctx.local__1_binop_case0 ; 
+				        tmp__221 = (object) mkop( tmp__219, tmp__220.Text ); 
+				        _localctx.result =  tmp__221; 
 				      
 				}
 				break;
-			case T__17:
+			case T__27:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 277; _localctx.local__1_binop_case1 = Match(T__17);
-				State = 278; Match(T__18);
+				State = 435; _localctx.local__1_binop_case1 = Match(T__27);
+				State = 436; Match(T__7);
 				 
-				        object tmp__131 ; 
-				        string tmp__130 ; 
-				        CommonToken tmp__129 ; 
-				        tmp__129 = ( CommonToken ) _localctx.local__1_binop_case1 ; 
-				        tmp__130 = "notin" ; 
-				        tmp__131 = (object) mkop( tmp__129, tmp__130 ); 
-				        _localctx.result =  tmp__131; 
+				        object tmp__224 ; 
+				        string tmp__223 ; 
+				        CommonToken tmp__222 ; 
+				        tmp__222 = ( CommonToken ) _localctx.local__1_binop_case1 ; 
+				        tmp__223 = "notin" ; 
+				        tmp__224 = (object) mkop( tmp__222, tmp__223 ); 
+				        _localctx.result =  tmp__224; 
 				      
 				}
 				break;
-			case T__18:
+			case T__7:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 280; _localctx.local__1_binop_case2 = Match(T__18);
+				State = 438; _localctx.local__1_binop_case2 = Match(T__7);
 				 
-				        object tmp__134 ; 
-				        string tmp__133 ; 
-				        CommonToken tmp__132 ; 
-				        tmp__132 = ( CommonToken ) _localctx.local__1_binop_case2 ; 
-				        tmp__133 = "in" ; 
-				        tmp__134 = (object) mkop( tmp__132, tmp__133 ); 
-				        _localctx.result =  tmp__134; 
+				        object tmp__227 ; 
+				        string tmp__226 ; 
+				        CommonToken tmp__225 ; 
+				        tmp__225 = ( CommonToken ) _localctx.local__1_binop_case2 ; 
+				        tmp__226 = "in" ; 
+				        tmp__227 = (object) mkop( tmp__225, tmp__226 ); 
+				        _localctx.result =  tmp__227; 
 				      
 				}
 				break;
-			case T__8:
+			case T__19:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 282; _localctx.local__1_binop_case3 = Match(T__8);
+				State = 440; _localctx.local__1_binop_case3 = Match(T__19);
 				 
-				        object tmp__137 ; 
-				        string tmp__136 ; 
-				        CommonToken tmp__135 ; 
-				        tmp__135 = ( CommonToken ) _localctx.local__1_binop_case3 ; 
-				        tmp__136 = "-" ; 
-				        tmp__137 = (object) mkop( tmp__135, tmp__136 ); 
-				        _localctx.result =  tmp__137; 
+				        object tmp__230 ; 
+				        string tmp__229 ; 
+				        CommonToken tmp__228 ; 
+				        tmp__228 = ( CommonToken ) _localctx.local__1_binop_case3 ; 
+				        tmp__229 = "-" ; 
+				        tmp__230 = (object) mkop( tmp__228, tmp__229 ); 
+				        _localctx.result =  tmp__230; 
 				      
 				}
 				break;
@@ -1877,46 +2834,49 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public NotContext not() {
 		NotContext _localctx = new NotContext(Context, State);
-		EnterRule(_localctx, 34, RULE_not);
+		EnterRule(_localctx, 48, RULE_not);
 		try {
-			State = 293;
+			State = 451;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__17:
+			case T__27:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 286; _localctx.local__1_not_case0 = Match(T__17);
-				State = 287; _localctx.local__2_not_case0 = bin();
+				State = 444; _localctx.local__1_not_case0 = Match(T__27);
+				State = 445; _localctx.local__2_not_case0 = bin();
 				 
-				        ImmediateAST tmp__140 ; 
-				        ImmediateAST tmp__139 ; 
-				        CommonToken tmp__138 ; 
-				        tmp__138 = ( CommonToken ) _localctx.local__1_not_case0 ; 
-				        tmp__139 = ( ImmediateAST ) _localctx.local__2_not_case0.result ; 
-				        tmp__140 = (ImmediateAST) mkNot( tmp__138, tmp__139 ); 
-				        _localctx.result =  tmp__140; 
+				        ImmediateAST tmp__233 ; 
+				        ImmediateAST tmp__232 ; 
+				        CommonToken tmp__231 ; 
+				        tmp__231 = ( CommonToken ) _localctx.local__1_not_case0 ; 
+				        tmp__232 = ( ImmediateAST ) _localctx.local__2_not_case0.result ; 
+				        tmp__233 = (ImmediateAST) mkNot( tmp__231, tmp__232 ); 
+				        _localctx.result =  tmp__233; 
 				      
 				}
 				break;
-			case T__1:
-			case T__3:
-			case T__5:
-			case T__7:
-			case T__8:
-			case T__9:
-			case T__10:
-			case T__12:
+			case T__0:
+			case T__14:
+			case T__16:
+			case T__18:
+			case T__19:
+			case T__20:
+			case T__21:
+			case T__22:
 			case STR_4:
 			case INT_10:
+			case HEX_7:
+			case OCT_8:
+			case BIN_9:
 			case FLOAT_11:
 			case NAME_13:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 290; _localctx.local__1_not_case1 = bin();
+				State = 448; _localctx.local__1_not_case1 = bin();
 				 
-				        ImmediateAST tmp__141 ; 
-				        tmp__141 = ( ImmediateAST ) _localctx.local__1_not_case1.result ; 
-				        _localctx.result =  tmp__141; 
+				        ImmediateAST tmp__234 ; 
+				        tmp__234 = ( ImmediateAST ) _localctx.local__1_not_case1.result ; 
+				        _localctx.result =  tmp__234; 
 				      
 				}
 				break;
@@ -1974,24 +2934,24 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		And_exprContext _localctx = new And_exprContext(Context, _parentState);
 		And_exprContext _prevctx = _localctx;
-		int _startState = 36;
-		EnterRecursionRule(_localctx, 36, RULE_and_expr, _p);
+		int _startState = 50;
+		EnterRecursionRule(_localctx, 50, RULE_and_expr, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 296; _localctx.local__1_and_expr_case1 = not();
+			State = 454; _localctx.local__1_and_expr_case1 = not();
 			 
-			        ImmediateAST tmp__146 ; 
-			        tmp__146 = ( ImmediateAST ) _localctx.local__1_and_expr_case1.result ; 
-			        _localctx.result =  tmp__146; 
+			        ImmediateAST tmp__239 ; 
+			        tmp__239 = ( ImmediateAST ) _localctx.local__1_and_expr_case1.result ; 
+			        _localctx.result =  tmp__239; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 306;
+			State = 464;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,16,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,25,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -2002,27 +2962,27 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new And_exprContext(_parentctx, _parentState);
 					_localctx.local__1_and_expr_case0 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_and_expr);
-					State = 299;
+					State = 457;
 					if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-					State = 300; _localctx.local__2_and_expr_case0 = Match(T__19);
-					State = 301; _localctx.local__3_and_expr_case0 = not();
+					State = 458; _localctx.local__2_and_expr_case0 = Match(T__28);
+					State = 459; _localctx.local__3_and_expr_case0 = not();
 					 
-					                  ImmediateAST tmp__145 ; 
-					                  ImmediateAST tmp__144 ; 
-					                  ImmediateAST tmp__143 ; 
-					                  CommonToken tmp__142 ; 
-					                  tmp__142 = ( CommonToken ) _localctx.local__2_and_expr_case0 ; 
-					                  tmp__143 = ( ImmediateAST ) _localctx.local__1_and_expr_case0.result ; 
-					                  tmp__144 = ( ImmediateAST ) _localctx.local__3_and_expr_case0.result ; 
-					                  tmp__145 = (ImmediateAST) mkAnd( tmp__142, tmp__143, tmp__144 ); 
-					                  _localctx.result =  tmp__145; 
+					                  ImmediateAST tmp__238 ; 
+					                  ImmediateAST tmp__237 ; 
+					                  ImmediateAST tmp__236 ; 
+					                  CommonToken tmp__235 ; 
+					                  tmp__235 = ( CommonToken ) _localctx.local__2_and_expr_case0 ; 
+					                  tmp__236 = ( ImmediateAST ) _localctx.local__1_and_expr_case0.result ; 
+					                  tmp__237 = ( ImmediateAST ) _localctx.local__3_and_expr_case0.result ; 
+					                  tmp__238 = (ImmediateAST) mkAnd( tmp__235, tmp__236, tmp__237 ); 
+					                  _localctx.result =  tmp__238; 
 					                
 					}
 					} 
 				}
-				State = 308;
+				State = 466;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,16,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,25,Context);
 			}
 			}
 		}
@@ -2076,24 +3036,24 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		Or_exprContext _localctx = new Or_exprContext(Context, _parentState);
 		Or_exprContext _prevctx = _localctx;
-		int _startState = 38;
-		EnterRecursionRule(_localctx, 38, RULE_or_expr, _p);
+		int _startState = 52;
+		EnterRecursionRule(_localctx, 52, RULE_or_expr, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 310; _localctx.local__1_or_expr_case1 = and_expr(0);
+			State = 468; _localctx.local__1_or_expr_case1 = and_expr(0);
 			 
-			        ImmediateAST tmp__151 ; 
-			        tmp__151 = ( ImmediateAST ) _localctx.local__1_or_expr_case1.result ; 
-			        _localctx.result =  tmp__151; 
+			        ImmediateAST tmp__244 ; 
+			        tmp__244 = ( ImmediateAST ) _localctx.local__1_or_expr_case1.result ; 
+			        _localctx.result =  tmp__244; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 320;
+			State = 478;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,17,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,26,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -2104,27 +3064,27 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new Or_exprContext(_parentctx, _parentState);
 					_localctx.local__1_or_expr_case0 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_or_expr);
-					State = 313;
+					State = 471;
 					if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-					State = 314; _localctx.local__2_or_expr_case0 = Match(T__20);
-					State = 315; _localctx.local__3_or_expr_case0 = and_expr(0);
+					State = 472; _localctx.local__2_or_expr_case0 = Match(T__29);
+					State = 473; _localctx.local__3_or_expr_case0 = and_expr(0);
 					 
-					                  ImmediateAST tmp__150 ; 
-					                  ImmediateAST tmp__149 ; 
-					                  ImmediateAST tmp__148 ; 
-					                  CommonToken tmp__147 ; 
-					                  tmp__147 = ( CommonToken ) _localctx.local__2_or_expr_case0 ; 
-					                  tmp__148 = ( ImmediateAST ) _localctx.local__1_or_expr_case0.result ; 
-					                  tmp__149 = ( ImmediateAST ) _localctx.local__3_or_expr_case0.result ; 
-					                  tmp__150 = (ImmediateAST) mkAnd( tmp__147, tmp__148, tmp__149 ); 
-					                  _localctx.result =  tmp__150; 
+					                  ImmediateAST tmp__243 ; 
+					                  ImmediateAST tmp__242 ; 
+					                  ImmediateAST tmp__241 ; 
+					                  CommonToken tmp__240 ; 
+					                  tmp__240 = ( CommonToken ) _localctx.local__2_or_expr_case0 ; 
+					                  tmp__241 = ( ImmediateAST ) _localctx.local__1_or_expr_case0.result ; 
+					                  tmp__242 = ( ImmediateAST ) _localctx.local__3_or_expr_case0.result ; 
+					                  tmp__243 = (ImmediateAST) mkAnd( tmp__240, tmp__241, tmp__242 ); 
+					                  _localctx.result =  tmp__243; 
 					                
 					}
 					} 
 				}
-				State = 322;
+				State = 480;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,17,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,26,Context);
 			}
 			}
 		}
@@ -2165,15 +3125,15 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public ExprContext expr() {
 		ExprContext _localctx = new ExprContext(Context, State);
-		EnterRule(_localctx, 40, RULE_expr);
+		EnterRule(_localctx, 54, RULE_expr);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 323; _localctx.local__1_expr_case0 = or_expr(0);
+			State = 481; _localctx.local__1_expr_case0 = or_expr(0);
 			 
-			        ImmediateAST tmp__152 ; 
-			        tmp__152 = ( ImmediateAST ) _localctx.local__1_expr_case0.result ; 
-			        _localctx.result =  tmp__152; 
+			        ImmediateAST tmp__245 ; 
+			        tmp__245 = ( ImmediateAST ) _localctx.local__1_expr_case0.result ; 
+			        _localctx.result =  tmp__245; 
 			      
 			}
 		}
@@ -2189,7 +3149,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class BlockContext : ParserRuleContext {
-		public List<ImmediateAST> result;
+		public System.Collections.Generic.List<ImmediateAST> result;
 		public Gen__filter_stmt__NEWLINEContext local__1_block_case0;
 		[System.Diagnostics.DebuggerNonUserCode] public Gen__filter_stmt__NEWLINEContext gen__filter_stmt__NEWLINE() {
 			return GetRuleContext<Gen__filter_stmt__NEWLINEContext>(0);
@@ -2214,15 +3174,15 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public BlockContext block() {
 		BlockContext _localctx = new BlockContext(Context, State);
-		EnterRule(_localctx, 42, RULE_block);
+		EnterRule(_localctx, 56, RULE_block);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 326; _localctx.local__1_block_case0 = gen__filter_stmt__NEWLINE(0);
+			State = 484; _localctx.local__1_block_case0 = gen__filter_stmt__NEWLINE(0);
 			 
-			        List<ImmediateAST> tmp__153 ; 
-			        tmp__153 = ( List<ImmediateAST> ) _localctx.local__1_block_case0.result ; 
-			        _localctx.result =  tmp__153; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__246 ; 
+			        tmp__246 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_block_case0.result ; 
+			        _localctx.result =  tmp__246; 
 			      
 			}
 		}
@@ -2238,7 +3198,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class Gen__filter_stmt__NEWLINEContext : ParserRuleContext {
-		public List<ImmediateAST> result;
+		public System.Collections.Generic.List<ImmediateAST> result;
 		public Gen__filter_stmt__NEWLINEContext local__1_gen__filter_stmt__NEWLINE_case0;
 		public Gen__filter_stmt__NEWLINEContext local__1_gen__filter_stmt__NEWLINE_case1;
 		public StmtContext local__1_gen__filter_stmt__NEWLINE_case2;
@@ -2277,69 +3237,69 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		Gen__filter_stmt__NEWLINEContext _localctx = new Gen__filter_stmt__NEWLINEContext(Context, _parentState);
 		Gen__filter_stmt__NEWLINEContext _prevctx = _localctx;
-		int _startState = 44;
-		EnterRecursionRule(_localctx, 44, RULE_gen__filter_stmt__NEWLINE, _p);
+		int _startState = 58;
+		EnterRecursionRule(_localctx, 58, RULE_gen__filter_stmt__NEWLINE, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 335;
+			State = 493;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,18,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,27,Context) ) {
 			case 1:
 				{
-				State = 330; _localctx.local__1_gen__filter_stmt__NEWLINE_case2 = stmt();
+				State = 488; _localctx.local__1_gen__filter_stmt__NEWLINE_case2 = stmt();
 				 
-				        List<ImmediateAST> tmp__160 ; 
-				        ImmediateAST tmp__159 ; 
-				        List<ImmediateAST> tmp__158 ; 
-				        tmp__158 = (List<ImmediateAST>) empty<ImmediateAST>(  ); 
-				        tmp__159 = ( ImmediateAST ) _localctx.local__1_gen__filter_stmt__NEWLINE_case2.result ; 
-				        tmp__160 = (List<ImmediateAST>) append<ImmediateAST>( tmp__158, tmp__159 ); 
-				        _localctx.result =  tmp__160; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__253 ; 
+				        ImmediateAST tmp__252 ; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__251 ; 
+				        tmp__251 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+				        tmp__252 = ( ImmediateAST ) _localctx.local__1_gen__filter_stmt__NEWLINE_case2.result ; 
+				        tmp__253 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__251, tmp__252 ); 
+				        _localctx.result =  tmp__253; 
 				      
 				}
 				break;
 			case 2:
 				{
-				State = 333; Match(NEWLINE_17);
+				State = 491; Match(NEWLINE_17);
 				 
-				        List<ImmediateAST> tmp__161 ; 
-				        tmp__161 = (List<ImmediateAST>) empty<ImmediateAST>(  ); 
-				        _localctx.result =  tmp__161; 
+				        System.Collections.Generic.List<ImmediateAST> tmp__254 ; 
+				        tmp__254 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+				        _localctx.result =  tmp__254; 
 				      
 				}
 				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 346;
+			State = 504;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,20,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 344;
+					State = 502;
 					ErrorHandler.Sync(this);
-					switch ( Interpreter.AdaptivePredict(TokenStream,19,Context) ) {
+					switch ( Interpreter.AdaptivePredict(TokenStream,28,Context) ) {
 					case 1:
 						{
 						_localctx = new Gen__filter_stmt__NEWLINEContext(_parentctx, _parentState);
 						_localctx.local__1_gen__filter_stmt__NEWLINE_case0 = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_gen__filter_stmt__NEWLINE);
-						State = 337;
+						State = 495;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
-						State = 338; _localctx.local__2_gen__filter_stmt__NEWLINE_case0 = stmt();
+						State = 496; _localctx.local__2_gen__filter_stmt__NEWLINE_case0 = stmt();
 						 
-						                  List<ImmediateAST> tmp__156 ; 
-						                  ImmediateAST tmp__155 ; 
-						                  List<ImmediateAST> tmp__154 ; 
-						                  tmp__154 = ( List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__NEWLINE_case0.result ; 
-						                  tmp__155 = ( ImmediateAST ) _localctx.local__2_gen__filter_stmt__NEWLINE_case0.result ; 
-						                  tmp__156 = (List<ImmediateAST>) append<ImmediateAST>( tmp__154, tmp__155 ); 
-						                  _localctx.result =  tmp__156; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__249 ; 
+						                  ImmediateAST tmp__248 ; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__247 ; 
+						                  tmp__247 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__NEWLINE_case0.result ; 
+						                  tmp__248 = ( ImmediateAST ) _localctx.local__2_gen__filter_stmt__NEWLINE_case0.result ; 
+						                  tmp__249 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__247, tmp__248 ); 
+						                  _localctx.result =  tmp__249; 
 						                
 						}
 						break;
@@ -2348,22 +3308,22 @@ public partial class DianaScriptParser : Parser {
 						_localctx = new Gen__filter_stmt__NEWLINEContext(_parentctx, _parentState);
 						_localctx.local__1_gen__filter_stmt__NEWLINE_case1 = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_gen__filter_stmt__NEWLINE);
-						State = 341;
+						State = 499;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 342; Match(NEWLINE_17);
+						State = 500; Match(NEWLINE_17);
 						 
-						                  List<ImmediateAST> tmp__157 ; 
-						                  tmp__157 = ( List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__NEWLINE_case1.result ; 
-						                  _localctx.result =  tmp__157; 
+						                  System.Collections.Generic.List<ImmediateAST> tmp__250 ; 
+						                  tmp__250 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__NEWLINE_case1.result ; 
+						                  _localctx.result =  tmp__250; 
 						                
 						}
 						break;
 					}
 					} 
 				}
-				State = 348;
+				State = 506;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,20,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			}
 			}
 		}
@@ -2414,69 +3374,69 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public LhsContext lhs() {
 		LhsContext _localctx = new LhsContext(Context, State);
-		EnterRule(_localctx, 46, RULE_lhs);
+		EnterRule(_localctx, 60, RULE_lhs);
 		try {
-			State = 363;
+			State = 521;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,21,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,30,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 349; _localctx.local__1_lhs_case0 = Match(NAME_13);
+				State = 507; _localctx.local__1_lhs_case0 = Match(NAME_13);
 				 
-				        ImmediateAST tmp__164 ; 
-				        CommonToken tmp__163 ; 
-				        CommonToken tmp__162 ; 
-				        tmp__162 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
-				        tmp__163 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
-				        tmp__164 = (ImmediateAST) mkVar( tmp__162, tmp__163.Text ); 
-				        _localctx.result =  tmp__164; 
+				        ImmediateAST tmp__257 ; 
+				        CommonToken tmp__256 ; 
+				        CommonToken tmp__255 ; 
+				        tmp__255 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
+				        tmp__256 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
+				        tmp__257 = (ImmediateAST) mkVar( tmp__255, tmp__256.Text ); 
+				        _localctx.result =  tmp__257; 
 				      
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 351; _localctx.local__1_lhs_case1 = atom(0);
-				State = 352; _localctx.local__2_lhs_case1 = Match(T__0);
-				State = 353; Match(T__1);
-				State = 354; _localctx.local__4_lhs_case1 = expr();
-				State = 355; Match(T__2);
+				State = 509; _localctx.local__1_lhs_case1 = atom(0);
+				State = 510; _localctx.local__2_lhs_case1 = Match(T__13);
+				State = 511; Match(T__14);
+				State = 512; _localctx.local__4_lhs_case1 = expr();
+				State = 513; Match(T__15);
 				 
-				        ImmediateAST tmp__168 ; 
-				        ImmediateAST tmp__167 ; 
-				        ImmediateAST tmp__166 ; 
-				        CommonToken tmp__165 ; 
-				        tmp__165 = ( CommonToken ) _localctx.local__2_lhs_case1 ; 
-				        tmp__166 = ( ImmediateAST ) _localctx.local__1_lhs_case1.result ; 
-				        tmp__167 = ( ImmediateAST ) _localctx.local__4_lhs_case1.result ; 
-				        tmp__168 = (ImmediateAST) mkOGet( tmp__165, tmp__166, tmp__167 ); 
-				        _localctx.result =  tmp__168; 
+				        ImmediateAST tmp__261 ; 
+				        ImmediateAST tmp__260 ; 
+				        ImmediateAST tmp__259 ; 
+				        CommonToken tmp__258 ; 
+				        tmp__258 = ( CommonToken ) _localctx.local__2_lhs_case1 ; 
+				        tmp__259 = ( ImmediateAST ) _localctx.local__1_lhs_case1.result ; 
+				        tmp__260 = ( ImmediateAST ) _localctx.local__4_lhs_case1.result ; 
+				        tmp__261 = (ImmediateAST) mkOGet( tmp__258, tmp__259, tmp__260 ); 
+				        _localctx.result =  tmp__261; 
 				      
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 358; _localctx.local__1_lhs_case2 = atom(0);
-				State = 359; _localctx.local__2_lhs_case2 = Match(T__0);
-				State = 360; _localctx.local__3_lhs_case2 = Match(NAME_13);
+				State = 516; _localctx.local__1_lhs_case2 = atom(0);
+				State = 517; _localctx.local__2_lhs_case2 = Match(T__13);
+				State = 518; _localctx.local__3_lhs_case2 = Match(NAME_13);
 				 
-				        ImmediateAST tmp__175 ; 
-				        ImmediateAST tmp__174 ; 
-				        DObj tmp__173 ; 
-				        CommonToken tmp__172 ; 
-				        CommonToken tmp__171 ; 
-				        ImmediateAST tmp__170 ; 
-				        CommonToken tmp__169 ; 
-				        tmp__169 = ( CommonToken ) _localctx.local__2_lhs_case2 ; 
-				        tmp__170 = ( ImmediateAST ) _localctx.local__1_lhs_case2.result ; 
-				        tmp__171 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
-				        tmp__172 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
-				        tmp__173 = (DObj) mkstr( tmp__172.Text ); 
-				        tmp__174 = (ImmediateAST) mkVal( tmp__171, tmp__173 ); 
-				        tmp__175 = (ImmediateAST) mkOGet( tmp__169, tmp__170, tmp__174 ); 
-				        _localctx.result =  tmp__175; 
+				        ImmediateAST tmp__268 ; 
+				        ImmediateAST tmp__267 ; 
+				        DObj tmp__266 ; 
+				        CommonToken tmp__265 ; 
+				        CommonToken tmp__264 ; 
+				        ImmediateAST tmp__263 ; 
+				        CommonToken tmp__262 ; 
+				        tmp__262 = ( CommonToken ) _localctx.local__2_lhs_case2 ; 
+				        tmp__263 = ( ImmediateAST ) _localctx.local__1_lhs_case2.result ; 
+				        tmp__264 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
+				        tmp__265 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
+				        tmp__266 = (DObj) mkstr( tmp__265.Text ); 
+				        tmp__267 = (ImmediateAST) mkVal( tmp__264, tmp__266 ); 
+				        tmp__268 = (ImmediateAST) mkOGet( tmp__262, tmp__263, tmp__267 ); 
+				        _localctx.result =  tmp__268; 
 				      
 				}
 				break;
@@ -2519,81 +3479,17 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public DoContext @do() {
 		DoContext _localctx = new DoContext(Context, State);
-		EnterRule(_localctx, 48, RULE_do);
+		EnterRule(_localctx, 62, RULE_do);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 365; gen__optional_NEWLINE();
-			State = 366; _localctx.local__2_do_case0 = Match(T__21);
+			State = 523; gen__optional_NEWLINE();
+			State = 524; _localctx.local__2_do_case0 = Match(T__11);
 			 
-			        CommonToken tmp__176 ; 
-			        tmp__176 = ( CommonToken ) _localctx.local__2_do_case0 ; 
-			        _localctx.result =  tmp__176; 
+			        CommonToken tmp__269 ; 
+			        tmp__269 = ( CommonToken ) _localctx.local__2_do_case0 ; 
+			        _localctx.result =  tmp__269; 
 			      
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Gen__optional_NEWLINEContext : ParserRuleContext {
-		public CommonToken result;
-		public IToken local__1_gen__optional_NEWLINE_case1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE_17() { return GetToken(DianaScriptParser.NEWLINE_17, 0); }
-		public Gen__optional_NEWLINEContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_gen__optional_NEWLINE; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterGen__optional_NEWLINE(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitGen__optional_NEWLINE(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Gen__optional_NEWLINEContext gen__optional_NEWLINE() {
-		Gen__optional_NEWLINEContext _localctx = new Gen__optional_NEWLINEContext(Context, State);
-		EnterRule(_localctx, 50, RULE_gen__optional_NEWLINE);
-		try {
-			State = 372;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__21:
-			case T__22:
-				EnterOuterAlt(_localctx, 1);
-				{
-				 
-				        _localctx.result =  null; 
-				      
-				}
-				break;
-			case NEWLINE_17:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 370; _localctx.local__1_gen__optional_NEWLINE_case1 = Match(NEWLINE_17);
-				 
-				        CommonToken tmp__177 ; 
-				        tmp__177 = ( CommonToken ) _localctx.local__1_gen__optional_NEWLINE_case1 ; 
-				        _localctx.result =  tmp__177; 
-				      
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2633,199 +3529,17 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public ThenContext then() {
 		ThenContext _localctx = new ThenContext(Context, State);
-		EnterRule(_localctx, 52, RULE_then);
+		EnterRule(_localctx, 64, RULE_then);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 374; gen__optional_NEWLINE();
-			State = 375; _localctx.local__2_then_case0 = Match(T__22);
+			State = 527; gen__optional_NEWLINE();
+			State = 528; _localctx.local__2_then_case0 = Match(T__30);
 			 
-			        CommonToken tmp__178 ; 
-			        tmp__178 = ( CommonToken ) _localctx.local__2_then_case0 ; 
-			        _localctx.result =  tmp__178; 
+			        CommonToken tmp__270 ; 
+			        tmp__270 = ( CommonToken ) _localctx.local__2_then_case0 ; 
+			        _localctx.result =  tmp__270; 
 			      
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class StmtContext : ParserRuleContext {
-		public ImmediateAST result;
-		public Lhs_seqContext local__1_stmt_case0;
-		public ExprContext local__2_stmt_case0;
-		public IToken local__1_stmt_case1;
-		public BlockContext local__2_stmt_case1;
-		public IToken local__1_stmt_case2;
-		public IToken local__2_stmt_case2;
-		public ExprContext local__4_stmt_case2;
-		public Gen__blockOf_doContext local__5_stmt_case2;
-		public IToken local__1_stmt_case3;
-		public IToken local__1_stmt_case4;
-		public IToken local__1_stmt_case5;
-		public ExprContext local__2_stmt_case5;
-		public IToken local__1_stmt_case6;
-		[System.Diagnostics.DebuggerNonUserCode] public Lhs_seqContext lhs_seq() {
-			return GetRuleContext<Lhs_seqContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExprContext expr() {
-			return GetRuleContext<ExprContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NAME_13() { return GetToken(DianaScriptParser.NAME_13, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Gen__blockOf_doContext gen__blockOf_do() {
-			return GetRuleContext<Gen__blockOf_doContext>(0);
-		}
-		public StmtContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_stmt; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.EnterStmt(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IDianaScriptListener typedListener = listener as IDianaScriptListener;
-			if (typedListener != null) typedListener.ExitStmt(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public StmtContext stmt() {
-		StmtContext _localctx = new StmtContext(Context, State);
-		EnterRule(_localctx, 54, RULE_stmt);
-		try {
-			State = 405;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,23,Context) ) {
-			case 1:
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 378; _localctx.local__1_stmt_case0 = lhs_seq(0);
-				State = 379; _localctx.local__2_stmt_case0 = expr();
-				 
-				        ImmediateAST tmp__181 ; 
-				        ImmediateAST tmp__180 ; 
-				        List<ImmediateAST> tmp__179 ; 
-				        tmp__179 = ( List<ImmediateAST> ) _localctx.local__1_stmt_case0.result ; 
-				        tmp__180 = ( ImmediateAST ) _localctx.local__2_stmt_case0.result ; 
-				        tmp__181 = (ImmediateAST) mkStoreMany( tmp__179, tmp__180 ); 
-				        _localctx.result =  tmp__181; 
-				      
-				}
-				break;
-			case 2:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 382; _localctx.local__1_stmt_case1 = Match(T__23);
-				State = 383; _localctx.local__2_stmt_case1 = block();
-				State = 384; Match(T__11);
-				 
-				        ImmediateAST tmp__186 ; 
-				        ImmediateAST tmp__185 ; 
-				        List<ImmediateAST> tmp__184 ; 
-				        CommonToken tmp__183 ; 
-				        CommonToken tmp__182 ; 
-				        tmp__182 = ( CommonToken ) _localctx.local__1_stmt_case1 ; 
-				        tmp__183 = ( CommonToken ) _localctx.local__1_stmt_case1 ; 
-				        tmp__184 = ( List<ImmediateAST> ) _localctx.local__2_stmt_case1.result ; 
-				        tmp__185 = (ImmediateAST) mkBlock( tmp__183, tmp__184 ); 
-				        tmp__186 = (ImmediateAST) mkLoop( tmp__182, tmp__185 ); 
-				        _localctx.result =  tmp__186; 
-				      
-				}
-				break;
-			case 3:
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 387; _localctx.local__1_stmt_case2 = Match(T__24);
-				State = 388; _localctx.local__2_stmt_case2 = Match(NAME_13);
-				State = 389; Match(T__18);
-				State = 390; _localctx.local__4_stmt_case2 = expr();
-				State = 391; _localctx.local__5_stmt_case2 = gen__blockOf_do();
-				State = 392; Match(T__11);
-				 
-				        ImmediateAST tmp__191 ; 
-				        ImmediateAST tmp__190 ; 
-				        ImmediateAST tmp__189 ; 
-				        CommonToken tmp__188 ; 
-				        CommonToken tmp__187 ; 
-				        tmp__187 = ( CommonToken ) _localctx.local__1_stmt_case2 ; 
-				        tmp__188 = ( CommonToken ) _localctx.local__2_stmt_case2 ; 
-				        tmp__189 = ( ImmediateAST ) _localctx.local__4_stmt_case2.result ; 
-				        tmp__190 = ( ImmediateAST ) _localctx.local__5_stmt_case2.result ; 
-				        tmp__191 = (ImmediateAST) mkFor( tmp__187, tmp__188.Text, tmp__189, tmp__190 ); 
-				        _localctx.result =  tmp__191; 
-				      
-				}
-				break;
-			case 4:
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 395; _localctx.local__1_stmt_case3 = Match(T__25);
-				 
-				        ImmediateAST tmp__193 ; 
-				        CommonToken tmp__192 ; 
-				        tmp__192 = ( CommonToken ) _localctx.local__1_stmt_case3 ; 
-				        tmp__193 = (ImmediateAST) mkBreak( tmp__192 ); 
-				        _localctx.result =  tmp__193; 
-				      
-				}
-				break;
-			case 5:
-				EnterOuterAlt(_localctx, 5);
-				{
-				State = 397; _localctx.local__1_stmt_case4 = Match(T__26);
-				 
-				        ImmediateAST tmp__195 ; 
-				        CommonToken tmp__194 ; 
-				        tmp__194 = ( CommonToken ) _localctx.local__1_stmt_case4 ; 
-				        tmp__195 = (ImmediateAST) mkContinue( tmp__194 ); 
-				        _localctx.result =  tmp__195; 
-				      
-				}
-				break;
-			case 6:
-				EnterOuterAlt(_localctx, 6);
-				{
-				State = 399; _localctx.local__1_stmt_case5 = Match(T__27);
-				State = 400; _localctx.local__2_stmt_case5 = expr();
-				 
-				        ImmediateAST tmp__198 ; 
-				        ImmediateAST tmp__197 ; 
-				        CommonToken tmp__196 ; 
-				        tmp__196 = ( CommonToken ) _localctx.local__1_stmt_case5 ; 
-				        tmp__197 = ( ImmediateAST ) _localctx.local__2_stmt_case5.result ; 
-				        tmp__198 = (ImmediateAST) mkReturn( tmp__196, tmp__197 ); 
-				        _localctx.result =  tmp__198; 
-				      
-				}
-				break;
-			case 7:
-				EnterOuterAlt(_localctx, 7);
-				{
-				State = 403; _localctx.local__1_stmt_case6 = Match(T__27);
-				 
-				        ImmediateAST tmp__200 ; 
-				        CommonToken tmp__199 ; 
-				        tmp__199 = ( CommonToken ) _localctx.local__1_stmt_case6 ; 
-				        tmp__200 = (ImmediateAST) mkReturn( tmp__199, null ); 
-				        _localctx.result =  tmp__200; 
-				      
-				}
-				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -2869,20 +3583,20 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__blockOf_doContext gen__blockOf_do() {
 		Gen__blockOf_doContext _localctx = new Gen__blockOf_doContext(Context, State);
-		EnterRule(_localctx, 56, RULE_gen__blockOf_do);
+		EnterRule(_localctx, 66, RULE_gen__blockOf_do);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 407; _localctx.local__1_gen__blockOf_do_case0 = @do();
-			State = 408; _localctx.local__2_gen__blockOf_do_case0 = block();
+			State = 531; _localctx.local__1_gen__blockOf_do_case0 = @do();
+			State = 532; _localctx.local__2_gen__blockOf_do_case0 = block();
 			 
-			        ImmediateAST tmp__203 ; 
-			        List<ImmediateAST> tmp__202 ; 
-			        CommonToken tmp__201 ; 
-			        tmp__201 = ( CommonToken ) _localctx.local__1_gen__blockOf_do_case0.result ; 
-			        tmp__202 = ( List<ImmediateAST> ) _localctx.local__2_gen__blockOf_do_case0.result ; 
-			        tmp__203 = (ImmediateAST) mkBlock( tmp__201, tmp__202 ); 
-			        _localctx.result =  tmp__203; 
+			        ImmediateAST tmp__273 ; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__272 ; 
+			        CommonToken tmp__271 ; 
+			        tmp__271 = ( CommonToken ) _localctx.local__1_gen__blockOf_do_case0.result ; 
+			        tmp__272 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_do_case0.result ; 
+			        tmp__273 = (ImmediateAST) mkBlock( tmp__271, tmp__272 ); 
+			        _localctx.result =  tmp__273; 
 			      
 			}
 		}
@@ -2921,15 +3635,15 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public NameContext name() {
 		NameContext _localctx = new NameContext(Context, State);
-		EnterRule(_localctx, 58, RULE_name);
+		EnterRule(_localctx, 68, RULE_name);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 411; _localctx.local__1_name_case0 = Match(NAME_13);
+			State = 535; _localctx.local__1_name_case0 = Match(NAME_13);
 			 
-			        CommonToken tmp__204 ; 
-			        tmp__204 = ( CommonToken ) _localctx.local__1_name_case0 ; 
-			        _localctx.result =  tmp__204.Text; 
+			        CommonToken tmp__274 ; 
+			        tmp__274 = ( CommonToken ) _localctx.local__1_name_case0 ; 
+			        _localctx.result =  tmp__274.Text; 
 			      
 			}
 		}
@@ -2974,20 +3688,20 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public ElifBlockContext elifBlock() {
 		ElifBlockContext _localctx = new ElifBlockContext(Context, State);
-		EnterRule(_localctx, 60, RULE_elifBlock);
+		EnterRule(_localctx, 70, RULE_elifBlock);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 414; _localctx.local__1_elifBlock_case0 = expr();
-			State = 415; _localctx.local__2_elifBlock_case0 = gen__blockOf_then();
+			State = 538; _localctx.local__1_elifBlock_case0 = expr();
+			State = 539; _localctx.local__2_elifBlock_case0 = gen__blockOf_then();
 			 
-			        ImmediateAST tmp__207 ; 
-			        ImmediateAST tmp__206 ; 
-			        (ImmediateAST, ImmediateAST) tmp__205 ; 
-			        tmp__206 = ( ImmediateAST ) _localctx.local__1_elifBlock_case0.result ; 
-			        tmp__207 = ( ImmediateAST ) _localctx.local__2_elifBlock_case0.result ; 
-			        tmp__205 = ( tmp__206 , tmp__207 ); 
-			        _localctx.result =  tmp__205; 
+			        ImmediateAST tmp__277 ; 
+			        ImmediateAST tmp__276 ; 
+			        (ImmediateAST, ImmediateAST) tmp__275 ; 
+			        tmp__276 = ( ImmediateAST ) _localctx.local__1_elifBlock_case0.result ; 
+			        tmp__277 = ( ImmediateAST ) _localctx.local__2_elifBlock_case0.result ; 
+			        tmp__275 = ( tmp__276 , tmp__277 ); 
+			        _localctx.result =  tmp__275; 
 			      
 			}
 		}
@@ -3032,20 +3746,20 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Gen__blockOf_thenContext gen__blockOf_then() {
 		Gen__blockOf_thenContext _localctx = new Gen__blockOf_thenContext(Context, State);
-		EnterRule(_localctx, 62, RULE_gen__blockOf_then);
+		EnterRule(_localctx, 72, RULE_gen__blockOf_then);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 418; _localctx.local__1_gen__blockOf_then_case0 = then();
-			State = 419; _localctx.local__2_gen__blockOf_then_case0 = block();
+			State = 542; _localctx.local__1_gen__blockOf_then_case0 = then();
+			State = 543; _localctx.local__2_gen__blockOf_then_case0 = block();
 			 
-			        ImmediateAST tmp__210 ; 
-			        List<ImmediateAST> tmp__209 ; 
-			        CommonToken tmp__208 ; 
-			        tmp__208 = ( CommonToken ) _localctx.local__1_gen__blockOf_then_case0.result ; 
-			        tmp__209 = ( List<ImmediateAST> ) _localctx.local__2_gen__blockOf_then_case0.result ; 
-			        tmp__210 = (ImmediateAST) mkBlock( tmp__208, tmp__209 ); 
-			        _localctx.result =  tmp__210; 
+			        ImmediateAST tmp__280 ; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__279 ; 
+			        CommonToken tmp__278 ; 
+			        tmp__278 = ( CommonToken ) _localctx.local__1_gen__blockOf_then_case0.result ; 
+			        tmp__279 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_then_case0.result ; 
+			        tmp__280 = (ImmediateAST) mkBlock( tmp__278, tmp__279 ); 
+			        _localctx.result =  tmp__280; 
 			      
 			}
 		}
@@ -3061,7 +3775,7 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class Lhs_seqContext : ParserRuleContext {
-		public List<ImmediateAST> result;
+		public System.Collections.Generic.List<ImmediateAST> result;
 		public Lhs_seqContext local__1_lhs_seq_case1;
 		public LhsContext local__2_lhs_seq_case1;
 		[System.Diagnostics.DebuggerNonUserCode] public Lhs_seqContext lhs_seq() {
@@ -3097,23 +3811,23 @@ public partial class DianaScriptParser : Parser {
 		int _parentState = State;
 		Lhs_seqContext _localctx = new Lhs_seqContext(Context, _parentState);
 		Lhs_seqContext _prevctx = _localctx;
-		int _startState = 64;
-		EnterRecursionRule(_localctx, 64, RULE_lhs_seq, _p);
+		int _startState = 74;
+		EnterRecursionRule(_localctx, 74, RULE_lhs_seq, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
 			 
-			        List<ImmediateAST> tmp__211 ; 
-			        tmp__211 = (List<ImmediateAST>) empty<ImmediateAST>(  ); 
-			        _localctx.result =  tmp__211; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__281 ; 
+			        tmp__281 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+			        _localctx.result =  tmp__281; 
 			      
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 432;
+			State = 556;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,24,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,31,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -3124,25 +3838,25 @@ public partial class DianaScriptParser : Parser {
 					_localctx = new Lhs_seqContext(_parentctx, _parentState);
 					_localctx.local__1_lhs_seq_case1 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_lhs_seq);
-					State = 425;
+					State = 549;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 426; _localctx.local__2_lhs_seq_case1 = lhs();
-					State = 427; Match(T__28);
+					State = 550; _localctx.local__2_lhs_seq_case1 = lhs();
+					State = 551; Match(T__3);
 					 
-					                  List<ImmediateAST> tmp__214 ; 
-					                  ImmediateAST tmp__213 ; 
-					                  List<ImmediateAST> tmp__212 ; 
-					                  tmp__212 = ( List<ImmediateAST> ) _localctx.local__1_lhs_seq_case1.result ; 
-					                  tmp__213 = ( ImmediateAST ) _localctx.local__2_lhs_seq_case1.result ; 
-					                  tmp__214 = (List<ImmediateAST>) append<ImmediateAST>( tmp__212, tmp__213 ); 
-					                  _localctx.result =  tmp__214; 
+					                  System.Collections.Generic.List<ImmediateAST> tmp__284 ; 
+					                  ImmediateAST tmp__283 ; 
+					                  System.Collections.Generic.List<ImmediateAST> tmp__282 ; 
+					                  tmp__282 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_lhs_seq_case1.result ; 
+					                  tmp__283 = ( ImmediateAST ) _localctx.local__2_lhs_seq_case1.result ; 
+					                  tmp__284 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__282, tmp__283 ); 
+					                  _localctx.result =  tmp__284; 
 					                
 					}
 					} 
 				}
-				State = 434;
+				State = 558;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,24,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,31,Context);
 			}
 			}
 		}
@@ -3183,9 +3897,9 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public Expr_optContext expr_opt() {
 		Expr_optContext _localctx = new Expr_optContext(Context, State);
-		EnterRule(_localctx, 66, RULE_expr_opt);
+		EnterRule(_localctx, 76, RULE_expr_opt);
 		try {
-			State = 439;
+			State = 563;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case Eof:
@@ -3196,26 +3910,29 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__1:
-			case T__3:
-			case T__5:
-			case T__7:
-			case T__8:
-			case T__9:
-			case T__10:
-			case T__12:
-			case T__17:
+			case T__0:
+			case T__14:
+			case T__16:
+			case T__18:
+			case T__19:
+			case T__20:
+			case T__21:
+			case T__22:
+			case T__27:
 			case STR_4:
 			case INT_10:
+			case HEX_7:
+			case OCT_8:
+			case BIN_9:
 			case FLOAT_11:
 			case NAME_13:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 436; _localctx.local__1_expr_opt_case1 = expr();
+				State = 560; _localctx.local__1_expr_opt_case1 = expr();
 				 
-				        ImmediateAST tmp__215 ; 
-				        tmp__215 = ( ImmediateAST ) _localctx.local__1_expr_opt_case1.result ; 
-				        _localctx.result =  tmp__215; 
+				        ImmediateAST tmp__285 ; 
+				        tmp__285 = ( ImmediateAST ) _localctx.local__1_expr_opt_case1.result ; 
+				        _localctx.result =  tmp__285; 
 				      
 				}
 				break;
@@ -3235,11 +3952,10 @@ public partial class DianaScriptParser : Parser {
 	}
 
 	public partial class StartContext : ParserRuleContext {
-		public List<ImmediateAST> result;
-		public BlockContext local__1_start_case0;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(DianaScriptParser.Eof, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
+		public System.Collections.Generic.List<ImmediateAST> result;
+		public Gen__filter_stmt__NEWLINEContext local__1_start_case0;
+		[System.Diagnostics.DebuggerNonUserCode] public Gen__filter_stmt__NEWLINEContext gen__filter_stmt__NEWLINE() {
+			return GetRuleContext<Gen__filter_stmt__NEWLINEContext>(0);
 		}
 		public StartContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -3261,16 +3977,15 @@ public partial class DianaScriptParser : Parser {
 	[RuleVersion(0)]
 	public StartContext start() {
 		StartContext _localctx = new StartContext(Context, State);
-		EnterRule(_localctx, 68, RULE_start);
+		EnterRule(_localctx, 78, RULE_start);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 441; _localctx.local__1_start_case0 = block();
-			State = 442; Match(Eof);
+			State = 565; _localctx.local__1_start_case0 = gen__filter_stmt__NEWLINE(0);
 			 
-			        List<ImmediateAST> tmp__216 ; 
-			        tmp__216 = ( List<ImmediateAST> ) _localctx.local__1_start_case0.result ; 
-			        _localctx.result =  tmp__216; 
+			        System.Collections.Generic.List<ImmediateAST> tmp__286 ; 
+			        tmp__286 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_start_case0.result ; 
+			        _localctx.result =  tmp__286; 
 			      
 			}
 		}
@@ -3287,86 +4002,105 @@ public partial class DianaScriptParser : Parser {
 
 	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 0: return atom_sempred((AtomContext)_localctx, predIndex);
-		case 2: return gen__seplist__L44__name_sempred((Gen__seplist__L44__nameContext)_localctx, predIndex);
-		case 6: return gen__list_gen__snd_elif__elifBlock_sempred((Gen__list_gen__snd_elif__elifBlockContext)_localctx, predIndex);
-		case 9: return gen__seplist__L44__pair_sempred((Gen__seplist__L44__pairContext)_localctx, predIndex);
-		case 11: return gen__seplist__L44__expr_sempred((Gen__seplist__L44__exprContext)_localctx, predIndex);
-		case 15: return binseq_sempred((BinseqContext)_localctx, predIndex);
-		case 18: return and_expr_sempred((And_exprContext)_localctx, predIndex);
-		case 19: return or_expr_sempred((Or_exprContext)_localctx, predIndex);
-		case 22: return gen__filter_stmt__NEWLINE_sempred((Gen__filter_stmt__NEWLINEContext)_localctx, predIndex);
-		case 32: return lhs_seq_sempred((Lhs_seqContext)_localctx, predIndex);
+		case 1: return gen__filter_option__NEWLINE_sempred((Gen__filter_option__NEWLINEContext)_localctx, predIndex);
+		case 3: return gen__seplist__L44__expr_sempred((Gen__seplist__L44__exprContext)_localctx, predIndex);
+		case 4: return atom_sempred((AtomContext)_localctx, predIndex);
+		case 8: return gen__seplist__L44__name_sempred((Gen__seplist__L44__nameContext)_localctx, predIndex);
+		case 12: return gen__list_gen__snd_elif__elifBlock_sempred((Gen__list_gen__snd_elif__elifBlockContext)_localctx, predIndex);
+		case 15: return gen___closelist__L44__pair_sempred((Gen___closelist__L44__pairContext)_localctx, predIndex);
+		case 17: return gen___closelist__L44__expr_sempred((Gen___closelist__L44__exprContext)_localctx, predIndex);
+		case 22: return binseq_sempred((BinseqContext)_localctx, predIndex);
+		case 25: return and_expr_sempred((And_exprContext)_localctx, predIndex);
+		case 26: return or_expr_sempred((Or_exprContext)_localctx, predIndex);
+		case 29: return gen__filter_stmt__NEWLINE_sempred((Gen__filter_stmt__NEWLINEContext)_localctx, predIndex);
+		case 37: return lhs_seq_sempred((Lhs_seqContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private bool atom_sempred(AtomContext _localctx, int predIndex) {
+	private bool gen__filter_option__NEWLINE_sempred(Gen__filter_option__NEWLINEContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return Precpred(Context, 16);
-		case 1: return Precpred(Context, 15);
-		case 2: return Precpred(Context, 14);
-		}
-		return true;
-	}
-	private bool gen__seplist__L44__name_sempred(Gen__seplist__L44__nameContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 3: return Precpred(Context, 1);
-		}
-		return true;
-	}
-	private bool gen__list_gen__snd_elif__elifBlock_sempred(Gen__list_gen__snd_elif__elifBlockContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 4: return Precpred(Context, 1);
-		}
-		return true;
-	}
-	private bool gen__seplist__L44__pair_sempred(Gen__seplist__L44__pairContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 5: return Precpred(Context, 1);
+		case 0: return Precpred(Context, 4);
+		case 1: return Precpred(Context, 3);
 		}
 		return true;
 	}
 	private bool gen__seplist__L44__expr_sempred(Gen__seplist__L44__exprContext _localctx, int predIndex) {
 		switch (predIndex) {
+		case 2: return Precpred(Context, 1);
+		}
+		return true;
+	}
+	private bool atom_sempred(AtomContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 3: return Precpred(Context, 22);
+		case 4: return Precpred(Context, 21);
+		case 5: return Precpred(Context, 20);
+		}
+		return true;
+	}
+	private bool gen__seplist__L44__name_sempred(Gen__seplist__L44__nameContext _localctx, int predIndex) {
+		switch (predIndex) {
 		case 6: return Precpred(Context, 1);
 		}
 		return true;
 	}
-	private bool binseq_sempred(BinseqContext _localctx, int predIndex) {
+	private bool gen__list_gen__snd_elif__elifBlock_sempred(Gen__list_gen__snd_elif__elifBlockContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 7: return Precpred(Context, 1);
 		}
 		return true;
 	}
+	private bool gen___closelist__L44__pair_sempred(Gen___closelist__L44__pairContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 8: return Precpred(Context, 5);
+		case 9: return Precpred(Context, 4);
+		case 10: return Precpred(Context, 3);
+		}
+		return true;
+	}
+	private bool gen___closelist__L44__expr_sempred(Gen___closelist__L44__exprContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 11: return Precpred(Context, 5);
+		case 12: return Precpred(Context, 4);
+		case 13: return Precpred(Context, 3);
+		}
+		return true;
+	}
+	private bool binseq_sempred(BinseqContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 14: return Precpred(Context, 1);
+		}
+		return true;
+	}
 	private bool and_expr_sempred(And_exprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 8: return Precpred(Context, 2);
+		case 15: return Precpred(Context, 2);
 		}
 		return true;
 	}
 	private bool or_expr_sempred(Or_exprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 9: return Precpred(Context, 2);
+		case 16: return Precpred(Context, 2);
 		}
 		return true;
 	}
 	private bool gen__filter_stmt__NEWLINE_sempred(Gen__filter_stmt__NEWLINEContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 10: return Precpred(Context, 4);
-		case 11: return Precpred(Context, 3);
+		case 17: return Precpred(Context, 4);
+		case 18: return Precpred(Context, 3);
 		}
 		return true;
 	}
 	private bool lhs_seq_sempred(Lhs_seqContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 12: return Precpred(Context, 1);
+		case 19: return Precpred(Context, 1);
 		}
 		return true;
 	}
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\'', '\x1C0', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', ',', '\x23B', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
 		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
@@ -3379,364 +4113,472 @@ public partial class DianaScriptParser : Parser {
 		'\x1B', '\t', '\x1B', '\x4', '\x1C', '\t', '\x1C', '\x4', '\x1D', '\t', 
 		'\x1D', '\x4', '\x1E', '\t', '\x1E', '\x4', '\x1F', '\t', '\x1F', '\x4', 
 		' ', '\t', ' ', '\x4', '!', '\t', '!', '\x4', '\"', '\t', '\"', '\x4', 
-		'#', '\t', '#', '\x4', '$', '\t', '$', '\x3', '\x2', '\x3', '\x2', '\x3', 
+		'#', '\t', '#', '\x4', '$', '\t', '$', '\x4', '%', '\t', '%', '\x4', '&', 
+		'\t', '&', '\x4', '\'', '\t', '\'', '\x4', '(', '\t', '(', '\x4', ')', 
+		'\t', ')', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
 		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x5', '\x2', '\x86', 
-		'\n', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', 
-		'\x2', '\x3', '\x2', '\x3', '\x2', '\a', '\x2', '\x99', '\n', '\x2', '\f', 
-		'\x2', '\xE', '\x2', '\x9C', '\v', '\x2', '\x3', '\x3', '\x3', '\x3', 
-		'\x3', '\x3', '\x3', '\x3', '\x5', '\x3', '\xA2', '\n', '\x3', '\x3', 
+		'\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x5', 
+		'\x2', 'z', '\n', '\x2', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\x3', '\x5', '\x3', '\x82', '\n', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\a', '\x3', '\x8B', '\n', '\x3', '\f', '\x3', 
+		'\xE', '\x3', '\x8E', '\v', '\x3', '\x3', '\x4', '\x3', '\x4', '\x3', 
 		'\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x3', 
-		'\x4', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\a', '\x4', '\xAD', 
-		'\n', '\x4', '\f', '\x4', '\xE', '\x4', '\xB0', '\v', '\x4', '\x3', '\x5', 
-		'\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x5', '\x5', '\xB6', '\n', 
-		'\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', 
-		'\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x5', '\a', '\xC0', '\n', 
-		'\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
-		'\x3', '\b', '\x3', '\b', '\x3', '\b', '\a', '\b', '\xCA', '\n', '\b', 
-		'\f', '\b', '\xE', '\b', '\xCD', '\v', '\b', '\x3', '\t', '\x3', '\t', 
-		'\x3', '\t', '\x3', '\t', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', 
-		'\n', '\x5', '\n', '\xD7', '\n', '\n', '\x3', '\v', '\x3', '\v', '\x3', 
-		'\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', 
-		'\x3', '\v', '\a', '\v', '\xE2', '\n', '\v', '\f', '\v', '\xE', '\v', 
-		'\xE5', '\v', '\v', '\x3', '\f', '\x3', '\f', '\x3', '\f', '\x3', '\f', 
-		'\x5', '\f', '\xEB', '\n', '\f', '\x3', '\r', '\x3', '\r', '\x3', '\r', 
-		'\x3', '\r', '\x3', '\r', '\x3', '\r', '\x3', '\r', '\x3', '\r', '\x3', 
-		'\r', '\a', '\r', '\xF6', '\n', '\r', '\f', '\r', '\xE', '\r', '\xF9', 
-		'\v', '\r', '\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\x3', 
-		'\xE', '\x3', '\xF', '\x3', '\xF', '\x3', '\xF', '\x5', '\xF', '\x103', 
-		'\n', '\xF', '\x3', '\x10', '\x3', '\x10', '\x3', '\x10', '\x3', '\x11', 
-		'\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', 
-		'\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\a', '\x11', '\x111', '\n', 
-		'\x11', '\f', '\x11', '\xE', '\x11', '\x114', '\v', '\x11', '\x3', '\x12', 
-		'\x3', '\x12', '\x3', '\x12', '\x3', '\x12', '\x3', '\x12', '\x3', '\x12', 
-		'\x3', '\x12', '\x3', '\x12', '\x3', '\x12', '\x5', '\x12', '\x11F', '\n', 
-		'\x12', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', 
-		'\x13', '\x3', '\x13', '\x3', '\x13', '\x5', '\x13', '\x128', '\n', '\x13', 
-		'\x3', '\x14', '\x3', '\x14', '\x3', '\x14', '\x3', '\x14', '\x3', '\x14', 
-		'\x3', '\x14', '\x3', '\x14', '\x3', '\x14', '\x3', '\x14', '\a', '\x14', 
-		'\x133', '\n', '\x14', '\f', '\x14', '\xE', '\x14', '\x136', '\v', '\x14', 
-		'\x3', '\x15', '\x3', '\x15', '\x3', '\x15', '\x3', '\x15', '\x3', '\x15', 
-		'\x3', '\x15', '\x3', '\x15', '\x3', '\x15', '\x3', '\x15', '\a', '\x15', 
-		'\x141', '\n', '\x15', '\f', '\x15', '\xE', '\x15', '\x144', '\v', '\x15', 
-		'\x3', '\x16', '\x3', '\x16', '\x3', '\x16', '\x3', '\x17', '\x3', '\x17', 
-		'\x3', '\x17', '\x3', '\x18', '\x3', '\x18', '\x3', '\x18', '\x3', '\x18', 
-		'\x3', '\x18', '\x3', '\x18', '\x5', '\x18', '\x152', '\n', '\x18', '\x3', 
+		'\x4', '\x3', '\x4', '\x3', '\x4', '\x5', '\x4', '\x9A', '\n', '\x4', 
+		'\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', 
+		'\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\a', '\x5', '\xA5', 
+		'\n', '\x5', '\f', '\x5', '\xE', '\x5', '\xA8', '\v', '\x5', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\x6', '\x5', '\x6', '\x101', '\n', '\x6', '\x3', '\x6', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', 
+		'\x6', '\a', '\x6', '\x114', '\n', '\x6', '\f', '\x6', '\xE', '\x6', '\x117', 
+		'\v', '\x6', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', 
+		'\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x5', '\b', '\x121', '\n', 
+		'\b', '\x3', '\t', '\x3', '\t', '\x3', '\t', '\x3', '\t', '\x5', '\t', 
+		'\x127', '\n', '\t', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', 
+		'\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\a', 
+		'\n', '\x132', '\n', '\n', '\f', '\n', '\xE', '\n', '\x135', '\v', '\n', 
+		'\x3', '\v', '\x3', '\v', '\x3', '\v', '\x3', '\v', '\x5', '\v', '\x13B', 
+		'\n', '\v', '\x3', '\f', '\x3', '\f', '\x3', '\f', '\x3', '\f', '\x3', 
+		'\r', '\x3', '\r', '\x3', '\r', '\x3', '\r', '\x5', '\r', '\x145', '\n', 
+		'\r', '\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\x3', '\xE', 
+		'\x3', '\xE', '\x3', '\xE', '\x3', '\xE', '\a', '\xE', '\x14F', '\n', 
+		'\xE', '\f', '\xE', '\xE', '\xE', '\x152', '\v', '\xE', '\x3', '\xF', 
+		'\x3', '\xF', '\x3', '\xF', '\x3', '\xF', '\x3', '\x10', '\x3', '\x10', 
+		'\x3', '\x10', '\x3', '\x10', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', 
+		'\x3', '\x11', '\x3', '\x11', '\x5', '\x11', '\x161', '\n', '\x11', '\x3', 
+		'\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', 
+		'\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\x3', 
+		'\x11', '\x3', '\x11', '\x3', '\x11', '\x3', '\x11', '\a', '\x11', '\x171', 
+		'\n', '\x11', '\f', '\x11', '\xE', '\x11', '\x174', '\v', '\x11', '\x3', 
+		'\x12', '\x3', '\x12', '\x3', '\x12', '\x3', '\x12', '\x3', '\x13', '\x3', 
+		'\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x5', '\x13', '\x17F', 
+		'\n', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', 
+		'\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', 
+		'\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', '\x3', '\x13', 
+		'\a', '\x13', '\x18F', '\n', '\x13', '\f', '\x13', '\xE', '\x13', '\x192', 
+		'\v', '\x13', '\x3', '\x14', '\x3', '\x14', '\x3', '\x14', '\x3', '\x14', 
+		'\x3', '\x14', '\x3', '\x15', '\x3', '\x15', '\x3', '\x15', '\x3', '\x15', 
+		'\x3', '\x15', '\x3', '\x16', '\x3', '\x16', '\x3', '\x16', '\x5', '\x16', 
+		'\x1A1', '\n', '\x16', '\x3', '\x17', '\x3', '\x17', '\x3', '\x17', '\x3', 
 		'\x18', '\x3', '\x18', '\x3', '\x18', '\x3', '\x18', '\x3', '\x18', '\x3', 
-		'\x18', '\x3', '\x18', '\a', '\x18', '\x15B', '\n', '\x18', '\f', '\x18', 
-		'\xE', '\x18', '\x15E', '\v', '\x18', '\x3', '\x19', '\x3', '\x19', '\x3', 
+		'\x18', '\x3', '\x18', '\x3', '\x18', '\x3', '\x18', '\a', '\x18', '\x1AF', 
+		'\n', '\x18', '\f', '\x18', '\xE', '\x18', '\x1B2', '\v', '\x18', '\x3', 
 		'\x19', '\x3', '\x19', '\x3', '\x19', '\x3', '\x19', '\x3', '\x19', '\x3', 
-		'\x19', '\x3', '\x19', '\x3', '\x19', '\x3', '\x19', '\x3', '\x19', '\x3', 
-		'\x19', '\x3', '\x19', '\x5', '\x19', '\x16E', '\n', '\x19', '\x3', '\x1A', 
-		'\x3', '\x1A', '\x3', '\x1A', '\x3', '\x1A', '\x3', '\x1B', '\x3', '\x1B', 
-		'\x3', '\x1B', '\x5', '\x1B', '\x177', '\n', '\x1B', '\x3', '\x1C', '\x3', 
-		'\x1C', '\x3', '\x1C', '\x3', '\x1C', '\x3', '\x1D', '\x3', '\x1D', '\x3', 
-		'\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', 
-		'\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', 
-		'\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', 
-		'\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', 
-		'\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x5', 
-		'\x1D', '\x198', '\n', '\x1D', '\x3', '\x1E', '\x3', '\x1E', '\x3', '\x1E', 
-		'\x3', '\x1E', '\x3', '\x1F', '\x3', '\x1F', '\x3', '\x1F', '\x3', ' ', 
-		'\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', '!', '\x3', '!', '\x3', '!', 
-		'\x3', '!', '\x3', '\"', '\x3', '\"', '\x3', '\"', '\x3', '\"', '\x3', 
-		'\"', '\x3', '\"', '\x3', '\"', '\x3', '\"', '\a', '\"', '\x1B1', '\n', 
-		'\"', '\f', '\"', '\xE', '\"', '\x1B4', '\v', '\"', '\x3', '#', '\x3', 
-		'#', '\x3', '#', '\x3', '#', '\x5', '#', '\x1BA', '\n', '#', '\x3', '$', 
-		'\x3', '$', '\x3', '$', '\x3', '$', '\x3', '$', '\x2', '\f', '\x2', '\x6', 
-		'\xE', '\x14', '\x18', ' ', '&', '(', '.', '\x42', '%', '\x2', '\x4', 
-		'\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', '\x18', 
-		'\x1A', '\x1C', '\x1E', ' ', '\"', '$', '&', '(', '*', ',', '.', '\x30', 
-		'\x32', '\x34', '\x36', '\x38', ':', '<', '>', '@', '\x42', '\x44', '\x46', 
-		'\x2', '\x2', '\x2', '\x1CA', '\x2', '\x85', '\x3', '\x2', '\x2', '\x2', 
-		'\x4', '\xA1', '\x3', '\x2', '\x2', '\x2', '\x6', '\xA3', '\x3', '\x2', 
-		'\x2', '\x2', '\b', '\xB5', '\x3', '\x2', '\x2', '\x2', '\n', '\xB7', 
-		'\x3', '\x2', '\x2', '\x2', '\f', '\xBF', '\x3', '\x2', '\x2', '\x2', 
-		'\xE', '\xC1', '\x3', '\x2', '\x2', '\x2', '\x10', '\xCE', '\x3', '\x2', 
-		'\x2', '\x2', '\x12', '\xD6', '\x3', '\x2', '\x2', '\x2', '\x14', '\xD8', 
-		'\x3', '\x2', '\x2', '\x2', '\x16', '\xEA', '\x3', '\x2', '\x2', '\x2', 
-		'\x18', '\xEC', '\x3', '\x2', '\x2', '\x2', '\x1A', '\xFA', '\x3', '\x2', 
-		'\x2', '\x2', '\x1C', '\x102', '\x3', '\x2', '\x2', '\x2', '\x1E', '\x104', 
-		'\x3', '\x2', '\x2', '\x2', ' ', '\x107', '\x3', '\x2', '\x2', '\x2', 
-		'\"', '\x11E', '\x3', '\x2', '\x2', '\x2', '$', '\x127', '\x3', '\x2', 
-		'\x2', '\x2', '&', '\x129', '\x3', '\x2', '\x2', '\x2', '(', '\x137', 
-		'\x3', '\x2', '\x2', '\x2', '*', '\x145', '\x3', '\x2', '\x2', '\x2', 
-		',', '\x148', '\x3', '\x2', '\x2', '\x2', '.', '\x151', '\x3', '\x2', 
-		'\x2', '\x2', '\x30', '\x16D', '\x3', '\x2', '\x2', '\x2', '\x32', '\x16F', 
-		'\x3', '\x2', '\x2', '\x2', '\x34', '\x176', '\x3', '\x2', '\x2', '\x2', 
-		'\x36', '\x178', '\x3', '\x2', '\x2', '\x2', '\x38', '\x197', '\x3', '\x2', 
-		'\x2', '\x2', ':', '\x199', '\x3', '\x2', '\x2', '\x2', '<', '\x19D', 
-		'\x3', '\x2', '\x2', '\x2', '>', '\x1A0', '\x3', '\x2', '\x2', '\x2', 
-		'@', '\x1A4', '\x3', '\x2', '\x2', '\x2', '\x42', '\x1A8', '\x3', '\x2', 
-		'\x2', '\x2', '\x44', '\x1B9', '\x3', '\x2', '\x2', '\x2', '\x46', '\x1BB', 
-		'\x3', '\x2', '\x2', '\x2', 'H', 'I', '\b', '\x2', '\x1', '\x2', 'I', 
-		'J', '\a', '\x4', '\x2', '\x2', 'J', 'K', '\x5', '\x16', '\f', '\x2', 
-		'K', 'L', '\a', '\x5', '\x2', '\x2', 'L', 'M', '\b', '\x2', '\x1', '\x2', 
-		'M', '\x86', '\x3', '\x2', '\x2', '\x2', 'N', 'O', '\a', '\x6', '\x2', 
-		'\x2', 'O', 'P', '\x5', '\x16', '\f', '\x2', 'P', 'Q', '\x5', '\x1C', 
-		'\xF', '\x2', 'Q', 'R', '\a', '\a', '\x2', '\x2', 'R', 'S', '\b', '\x2', 
-		'\x1', '\x2', 'S', '\x86', '\x3', '\x2', '\x2', '\x2', 'T', 'U', '\a', 
-		'\b', '\x2', '\x2', 'U', 'V', '\x5', '\x12', '\n', '\x2', 'V', 'W', '\x5', 
-		'\x1C', '\xF', '\x2', 'W', 'X', '\a', '\t', '\x2', '\x2', 'X', 'Y', '\b', 
-		'\x2', '\x1', '\x2', 'Y', '\x86', '\x3', '\x2', '\x2', '\x2', 'Z', '[', 
-		'\a', '\"', '\x2', '\x2', '[', '\x86', '\b', '\x2', '\x1', '\x2', '\\', 
-		']', '\a', '#', '\x2', '\x2', ']', '\x86', '\b', '\x2', '\x1', '\x2', 
-		'^', '_', '\a', '$', '\x2', '\x2', '_', '\x86', '\b', '\x2', '\x1', '\x2', 
-		'`', '\x61', '\a', '\n', '\x2', '\x2', '\x61', '\x86', '\b', '\x2', '\x1', 
-		'\x2', '\x62', '\x63', '\a', '%', '\x2', '\x2', '\x63', '\x86', '\b', 
-		'\x2', '\x1', '\x2', '\x64', '\x65', '\a', '\v', '\x2', '\x2', '\x65', 
-		'\x66', '\x5', '\x2', '\x2', '\a', '\x66', 'g', '\b', '\x2', '\x1', '\x2', 
-		'g', '\x86', '\x3', '\x2', '\x2', '\x2', 'h', 'i', '\a', '\f', '\x2', 
-		'\x2', 'i', 'j', '\x5', '\x2', '\x2', '\x6', 'j', 'k', '\b', '\x2', '\x1', 
-		'\x2', 'k', '\x86', '\x3', '\x2', '\x2', '\x2', 'l', 'm', '\a', '\r', 
-		'\x2', '\x2', 'm', 'n', '\x5', '*', '\x16', '\x2', 'n', 'o', '\x5', '\x36', 
-		'\x1C', '\x2', 'o', 'p', '\x5', ',', '\x17', '\x2', 'p', 'q', '\a', '\xE', 
-		'\x2', '\x2', 'q', 'r', '\b', '\x2', '\x1', '\x2', 'r', '\x86', '\x3', 
-		'\x2', '\x2', '\x2', 's', 't', '\a', '\r', '\x2', '\x2', 't', 'u', '\x5', 
-		'*', '\x16', '\x2', 'u', 'v', '\x5', '\x36', '\x1C', '\x2', 'v', 'w', 
-		'\x5', ',', '\x17', '\x2', 'w', 'x', '\x5', '\f', '\a', '\x2', 'x', 'y', 
-		'\x5', '\b', '\x5', '\x2', 'y', 'z', '\a', '\xE', '\x2', '\x2', 'z', '{', 
-		'\b', '\x2', '\x1', '\x2', '{', '\x86', '\x3', '\x2', '\x2', '\x2', '|', 
-		'}', '\a', '\xF', '\x2', '\x2', '}', '~', '\x5', '<', '\x1F', '\x2', '~', 
-		'\x7F', '\a', '\x6', '\x2', '\x2', '\x7F', '\x80', '\x5', '\x4', '\x3', 
-		'\x2', '\x80', '\x81', '\a', '\a', '\x2', '\x2', '\x81', '\x82', '\x5', 
-		',', '\x17', '\x2', '\x82', '\x83', '\a', '\xE', '\x2', '\x2', '\x83', 
-		'\x84', '\b', '\x2', '\x1', '\x2', '\x84', '\x86', '\x3', '\x2', '\x2', 
-		'\x2', '\x85', 'H', '\x3', '\x2', '\x2', '\x2', '\x85', 'N', '\x3', '\x2', 
-		'\x2', '\x2', '\x85', 'T', '\x3', '\x2', '\x2', '\x2', '\x85', 'Z', '\x3', 
-		'\x2', '\x2', '\x2', '\x85', '\\', '\x3', '\x2', '\x2', '\x2', '\x85', 
-		'^', '\x3', '\x2', '\x2', '\x2', '\x85', '`', '\x3', '\x2', '\x2', '\x2', 
-		'\x85', '\x62', '\x3', '\x2', '\x2', '\x2', '\x85', '\x64', '\x3', '\x2', 
-		'\x2', '\x2', '\x85', 'h', '\x3', '\x2', '\x2', '\x2', '\x85', 'l', '\x3', 
-		'\x2', '\x2', '\x2', '\x85', 's', '\x3', '\x2', '\x2', '\x2', '\x85', 
-		'|', '\x3', '\x2', '\x2', '\x2', '\x86', '\x9A', '\x3', '\x2', '\x2', 
-		'\x2', '\x87', '\x88', '\f', '\x12', '\x2', '\x2', '\x88', '\x89', '\a', 
-		'\x3', '\x2', '\x2', '\x89', '\x8A', '\a', '\x4', '\x2', '\x2', '\x8A', 
-		'\x8B', '\x5', '*', '\x16', '\x2', '\x8B', '\x8C', '\a', '\x5', '\x2', 
-		'\x2', '\x8C', '\x8D', '\b', '\x2', '\x1', '\x2', '\x8D', '\x99', '\x3', 
-		'\x2', '\x2', '\x2', '\x8E', '\x8F', '\f', '\x11', '\x2', '\x2', '\x8F', 
-		'\x90', '\a', '\x3', '\x2', '\x2', '\x90', '\x91', '\a', '%', '\x2', '\x2', 
-		'\x91', '\x99', '\b', '\x2', '\x1', '\x2', '\x92', '\x93', '\f', '\x10', 
-		'\x2', '\x2', '\x93', '\x94', '\a', '\x6', '\x2', '\x2', '\x94', '\x95', 
-		'\x5', '\x16', '\f', '\x2', '\x95', '\x96', '\a', '\a', '\x2', '\x2', 
-		'\x96', '\x97', '\b', '\x2', '\x1', '\x2', '\x97', '\x99', '\x3', '\x2', 
-		'\x2', '\x2', '\x98', '\x87', '\x3', '\x2', '\x2', '\x2', '\x98', '\x8E', 
-		'\x3', '\x2', '\x2', '\x2', '\x98', '\x92', '\x3', '\x2', '\x2', '\x2', 
-		'\x99', '\x9C', '\x3', '\x2', '\x2', '\x2', '\x9A', '\x98', '\x3', '\x2', 
-		'\x2', '\x2', '\x9A', '\x9B', '\x3', '\x2', '\x2', '\x2', '\x9B', '\x3', 
-		'\x3', '\x2', '\x2', '\x2', '\x9C', '\x9A', '\x3', '\x2', '\x2', '\x2', 
-		'\x9D', '\xA2', '\b', '\x3', '\x1', '\x2', '\x9E', '\x9F', '\x5', '\x6', 
-		'\x4', '\x2', '\x9F', '\xA0', '\b', '\x3', '\x1', '\x2', '\xA0', '\xA2', 
-		'\x3', '\x2', '\x2', '\x2', '\xA1', '\x9D', '\x3', '\x2', '\x2', '\x2', 
-		'\xA1', '\x9E', '\x3', '\x2', '\x2', '\x2', '\xA2', '\x5', '\x3', '\x2', 
-		'\x2', '\x2', '\xA3', '\xA4', '\b', '\x4', '\x1', '\x2', '\xA4', '\xA5', 
-		'\x5', '<', '\x1F', '\x2', '\xA5', '\xA6', '\b', '\x4', '\x1', '\x2', 
-		'\xA6', '\xAE', '\x3', '\x2', '\x2', '\x2', '\xA7', '\xA8', '\f', '\x3', 
-		'\x2', '\x2', '\xA8', '\xA9', '\a', '\x10', '\x2', '\x2', '\xA9', '\xAA', 
-		'\x5', '<', '\x1F', '\x2', '\xAA', '\xAB', '\b', '\x4', '\x1', '\x2', 
-		'\xAB', '\xAD', '\x3', '\x2', '\x2', '\x2', '\xAC', '\xA7', '\x3', '\x2', 
-		'\x2', '\x2', '\xAD', '\xB0', '\x3', '\x2', '\x2', '\x2', '\xAE', '\xAC', 
-		'\x3', '\x2', '\x2', '\x2', '\xAE', '\xAF', '\x3', '\x2', '\x2', '\x2', 
-		'\xAF', '\a', '\x3', '\x2', '\x2', '\x2', '\xB0', '\xAE', '\x3', '\x2', 
-		'\x2', '\x2', '\xB1', '\xB6', '\b', '\x5', '\x1', '\x2', '\xB2', '\xB3', 
-		'\x5', '\n', '\x6', '\x2', '\xB3', '\xB4', '\b', '\x5', '\x1', '\x2', 
-		'\xB4', '\xB6', '\x3', '\x2', '\x2', '\x2', '\xB5', '\xB1', '\x3', '\x2', 
-		'\x2', '\x2', '\xB5', '\xB2', '\x3', '\x2', '\x2', '\x2', '\xB6', '\t', 
-		'\x3', '\x2', '\x2', '\x2', '\xB7', '\xB8', '\a', '\x11', '\x2', '\x2', 
-		'\xB8', '\xB9', '\x5', ',', '\x17', '\x2', '\xB9', '\xBA', '\b', '\x6', 
-		'\x1', '\x2', '\xBA', '\v', '\x3', '\x2', '\x2', '\x2', '\xBB', '\xC0', 
-		'\b', '\a', '\x1', '\x2', '\xBC', '\xBD', '\x5', '\xE', '\b', '\x2', '\xBD', 
-		'\xBE', '\b', '\a', '\x1', '\x2', '\xBE', '\xC0', '\x3', '\x2', '\x2', 
-		'\x2', '\xBF', '\xBB', '\x3', '\x2', '\x2', '\x2', '\xBF', '\xBC', '\x3', 
-		'\x2', '\x2', '\x2', '\xC0', '\r', '\x3', '\x2', '\x2', '\x2', '\xC1', 
-		'\xC2', '\b', '\b', '\x1', '\x2', '\xC2', '\xC3', '\x5', '\x10', '\t', 
-		'\x2', '\xC3', '\xC4', '\b', '\b', '\x1', '\x2', '\xC4', '\xCB', '\x3', 
-		'\x2', '\x2', '\x2', '\xC5', '\xC6', '\f', '\x3', '\x2', '\x2', '\xC6', 
-		'\xC7', '\x5', '\x10', '\t', '\x2', '\xC7', '\xC8', '\b', '\b', '\x1', 
-		'\x2', '\xC8', '\xCA', '\x3', '\x2', '\x2', '\x2', '\xC9', '\xC5', '\x3', 
-		'\x2', '\x2', '\x2', '\xCA', '\xCD', '\x3', '\x2', '\x2', '\x2', '\xCB', 
-		'\xC9', '\x3', '\x2', '\x2', '\x2', '\xCB', '\xCC', '\x3', '\x2', '\x2', 
-		'\x2', '\xCC', '\xF', '\x3', '\x2', '\x2', '\x2', '\xCD', '\xCB', '\x3', 
-		'\x2', '\x2', '\x2', '\xCE', '\xCF', '\a', '\x12', '\x2', '\x2', '\xCF', 
-		'\xD0', '\x5', '>', ' ', '\x2', '\xD0', '\xD1', '\b', '\t', '\x1', '\x2', 
-		'\xD1', '\x11', '\x3', '\x2', '\x2', '\x2', '\xD2', '\xD7', '\b', '\n', 
-		'\x1', '\x2', '\xD3', '\xD4', '\x5', '\x14', '\v', '\x2', '\xD4', '\xD5', 
-		'\b', '\n', '\x1', '\x2', '\xD5', '\xD7', '\x3', '\x2', '\x2', '\x2', 
-		'\xD6', '\xD2', '\x3', '\x2', '\x2', '\x2', '\xD6', '\xD3', '\x3', '\x2', 
-		'\x2', '\x2', '\xD7', '\x13', '\x3', '\x2', '\x2', '\x2', '\xD8', '\xD9', 
-		'\b', '\v', '\x1', '\x2', '\xD9', '\xDA', '\x5', '\x1A', '\xE', '\x2', 
-		'\xDA', '\xDB', '\b', '\v', '\x1', '\x2', '\xDB', '\xE3', '\x3', '\x2', 
-		'\x2', '\x2', '\xDC', '\xDD', '\f', '\x3', '\x2', '\x2', '\xDD', '\xDE', 
-		'\a', '\x10', '\x2', '\x2', '\xDE', '\xDF', '\x5', '\x1A', '\xE', '\x2', 
-		'\xDF', '\xE0', '\b', '\v', '\x1', '\x2', '\xE0', '\xE2', '\x3', '\x2', 
-		'\x2', '\x2', '\xE1', '\xDC', '\x3', '\x2', '\x2', '\x2', '\xE2', '\xE5', 
-		'\x3', '\x2', '\x2', '\x2', '\xE3', '\xE1', '\x3', '\x2', '\x2', '\x2', 
-		'\xE3', '\xE4', '\x3', '\x2', '\x2', '\x2', '\xE4', '\x15', '\x3', '\x2', 
-		'\x2', '\x2', '\xE5', '\xE3', '\x3', '\x2', '\x2', '\x2', '\xE6', '\xEB', 
-		'\b', '\f', '\x1', '\x2', '\xE7', '\xE8', '\x5', '\x18', '\r', '\x2', 
-		'\xE8', '\xE9', '\b', '\f', '\x1', '\x2', '\xE9', '\xEB', '\x3', '\x2', 
-		'\x2', '\x2', '\xEA', '\xE6', '\x3', '\x2', '\x2', '\x2', '\xEA', '\xE7', 
-		'\x3', '\x2', '\x2', '\x2', '\xEB', '\x17', '\x3', '\x2', '\x2', '\x2', 
-		'\xEC', '\xED', '\b', '\r', '\x1', '\x2', '\xED', '\xEE', '\x5', '*', 
-		'\x16', '\x2', '\xEE', '\xEF', '\b', '\r', '\x1', '\x2', '\xEF', '\xF7', 
-		'\x3', '\x2', '\x2', '\x2', '\xF0', '\xF1', '\f', '\x3', '\x2', '\x2', 
-		'\xF1', '\xF2', '\a', '\x10', '\x2', '\x2', '\xF2', '\xF3', '\x5', '*', 
-		'\x16', '\x2', '\xF3', '\xF4', '\b', '\r', '\x1', '\x2', '\xF4', '\xF6', 
-		'\x3', '\x2', '\x2', '\x2', '\xF5', '\xF0', '\x3', '\x2', '\x2', '\x2', 
-		'\xF6', '\xF9', '\x3', '\x2', '\x2', '\x2', '\xF7', '\xF5', '\x3', '\x2', 
-		'\x2', '\x2', '\xF7', '\xF8', '\x3', '\x2', '\x2', '\x2', '\xF8', '\x19', 
-		'\x3', '\x2', '\x2', '\x2', '\xF9', '\xF7', '\x3', '\x2', '\x2', '\x2', 
-		'\xFA', '\xFB', '\x5', '*', '\x16', '\x2', '\xFB', '\xFC', '\a', '\x13', 
-		'\x2', '\x2', '\xFC', '\xFD', '\x5', '*', '\x16', '\x2', '\xFD', '\xFE', 
-		'\b', '\xE', '\x1', '\x2', '\xFE', '\x1B', '\x3', '\x2', '\x2', '\x2', 
-		'\xFF', '\x100', '\a', '\x10', '\x2', '\x2', '\x100', '\x103', '\b', '\xF', 
-		'\x1', '\x2', '\x101', '\x103', '\b', '\xF', '\x1', '\x2', '\x102', '\xFF', 
-		'\x3', '\x2', '\x2', '\x2', '\x102', '\x101', '\x3', '\x2', '\x2', '\x2', 
-		'\x103', '\x1D', '\x3', '\x2', '\x2', '\x2', '\x104', '\x105', '\x5', 
-		' ', '\x11', '\x2', '\x105', '\x106', '\b', '\x10', '\x1', '\x2', '\x106', 
-		'\x1F', '\x3', '\x2', '\x2', '\x2', '\x107', '\x108', '\b', '\x11', '\x1', 
-		'\x2', '\x108', '\x109', '\x5', '\x2', '\x2', '\x2', '\x109', '\x10A', 
-		'\b', '\x11', '\x1', '\x2', '\x10A', '\x112', '\x3', '\x2', '\x2', '\x2', 
-		'\x10B', '\x10C', '\f', '\x3', '\x2', '\x2', '\x10C', '\x10D', '\x5', 
-		'\"', '\x12', '\x2', '\x10D', '\x10E', '\x5', '\x2', '\x2', '\x2', '\x10E', 
-		'\x10F', '\b', '\x11', '\x1', '\x2', '\x10F', '\x111', '\x3', '\x2', '\x2', 
-		'\x2', '\x110', '\x10B', '\x3', '\x2', '\x2', '\x2', '\x111', '\x114', 
-		'\x3', '\x2', '\x2', '\x2', '\x112', '\x110', '\x3', '\x2', '\x2', '\x2', 
-		'\x112', '\x113', '\x3', '\x2', '\x2', '\x2', '\x113', '!', '\x3', '\x2', 
-		'\x2', '\x2', '\x114', '\x112', '\x3', '\x2', '\x2', '\x2', '\x115', '\x116', 
-		'\a', '!', '\x2', '\x2', '\x116', '\x11F', '\b', '\x12', '\x1', '\x2', 
-		'\x117', '\x118', '\a', '\x14', '\x2', '\x2', '\x118', '\x119', '\a', 
-		'\x15', '\x2', '\x2', '\x119', '\x11F', '\b', '\x12', '\x1', '\x2', '\x11A', 
-		'\x11B', '\a', '\x15', '\x2', '\x2', '\x11B', '\x11F', '\b', '\x12', '\x1', 
-		'\x2', '\x11C', '\x11D', '\a', '\v', '\x2', '\x2', '\x11D', '\x11F', '\b', 
-		'\x12', '\x1', '\x2', '\x11E', '\x115', '\x3', '\x2', '\x2', '\x2', '\x11E', 
-		'\x117', '\x3', '\x2', '\x2', '\x2', '\x11E', '\x11A', '\x3', '\x2', '\x2', 
-		'\x2', '\x11E', '\x11C', '\x3', '\x2', '\x2', '\x2', '\x11F', '#', '\x3', 
-		'\x2', '\x2', '\x2', '\x120', '\x121', '\a', '\x14', '\x2', '\x2', '\x121', 
-		'\x122', '\x5', '\x1E', '\x10', '\x2', '\x122', '\x123', '\b', '\x13', 
-		'\x1', '\x2', '\x123', '\x128', '\x3', '\x2', '\x2', '\x2', '\x124', '\x125', 
-		'\x5', '\x1E', '\x10', '\x2', '\x125', '\x126', '\b', '\x13', '\x1', '\x2', 
-		'\x126', '\x128', '\x3', '\x2', '\x2', '\x2', '\x127', '\x120', '\x3', 
-		'\x2', '\x2', '\x2', '\x127', '\x124', '\x3', '\x2', '\x2', '\x2', '\x128', 
-		'%', '\x3', '\x2', '\x2', '\x2', '\x129', '\x12A', '\b', '\x14', '\x1', 
-		'\x2', '\x12A', '\x12B', '\x5', '$', '\x13', '\x2', '\x12B', '\x12C', 
-		'\b', '\x14', '\x1', '\x2', '\x12C', '\x134', '\x3', '\x2', '\x2', '\x2', 
-		'\x12D', '\x12E', '\f', '\x4', '\x2', '\x2', '\x12E', '\x12F', '\a', '\x16', 
-		'\x2', '\x2', '\x12F', '\x130', '\x5', '$', '\x13', '\x2', '\x130', '\x131', 
-		'\b', '\x14', '\x1', '\x2', '\x131', '\x133', '\x3', '\x2', '\x2', '\x2', 
-		'\x132', '\x12D', '\x3', '\x2', '\x2', '\x2', '\x133', '\x136', '\x3', 
-		'\x2', '\x2', '\x2', '\x134', '\x132', '\x3', '\x2', '\x2', '\x2', '\x134', 
-		'\x135', '\x3', '\x2', '\x2', '\x2', '\x135', '\'', '\x3', '\x2', '\x2', 
-		'\x2', '\x136', '\x134', '\x3', '\x2', '\x2', '\x2', '\x137', '\x138', 
-		'\b', '\x15', '\x1', '\x2', '\x138', '\x139', '\x5', '&', '\x14', '\x2', 
-		'\x139', '\x13A', '\b', '\x15', '\x1', '\x2', '\x13A', '\x142', '\x3', 
-		'\x2', '\x2', '\x2', '\x13B', '\x13C', '\f', '\x4', '\x2', '\x2', '\x13C', 
-		'\x13D', '\a', '\x17', '\x2', '\x2', '\x13D', '\x13E', '\x5', '&', '\x14', 
-		'\x2', '\x13E', '\x13F', '\b', '\x15', '\x1', '\x2', '\x13F', '\x141', 
-		'\x3', '\x2', '\x2', '\x2', '\x140', '\x13B', '\x3', '\x2', '\x2', '\x2', 
-		'\x141', '\x144', '\x3', '\x2', '\x2', '\x2', '\x142', '\x140', '\x3', 
-		'\x2', '\x2', '\x2', '\x142', '\x143', '\x3', '\x2', '\x2', '\x2', '\x143', 
-		')', '\x3', '\x2', '\x2', '\x2', '\x144', '\x142', '\x3', '\x2', '\x2', 
-		'\x2', '\x145', '\x146', '\x5', '(', '\x15', '\x2', '\x146', '\x147', 
-		'\b', '\x16', '\x1', '\x2', '\x147', '+', '\x3', '\x2', '\x2', '\x2', 
-		'\x148', '\x149', '\x5', '.', '\x18', '\x2', '\x149', '\x14A', '\b', '\x17', 
-		'\x1', '\x2', '\x14A', '-', '\x3', '\x2', '\x2', '\x2', '\x14B', '\x14C', 
-		'\b', '\x18', '\x1', '\x2', '\x14C', '\x14D', '\x5', '\x38', '\x1D', '\x2', 
-		'\x14D', '\x14E', '\b', '\x18', '\x1', '\x2', '\x14E', '\x152', '\x3', 
-		'\x2', '\x2', '\x2', '\x14F', '\x150', '\a', '\'', '\x2', '\x2', '\x150', 
-		'\x152', '\b', '\x18', '\x1', '\x2', '\x151', '\x14B', '\x3', '\x2', '\x2', 
-		'\x2', '\x151', '\x14F', '\x3', '\x2', '\x2', '\x2', '\x152', '\x15C', 
-		'\x3', '\x2', '\x2', '\x2', '\x153', '\x154', '\f', '\x6', '\x2', '\x2', 
-		'\x154', '\x155', '\x5', '\x38', '\x1D', '\x2', '\x155', '\x156', '\b', 
-		'\x18', '\x1', '\x2', '\x156', '\x15B', '\x3', '\x2', '\x2', '\x2', '\x157', 
-		'\x158', '\f', '\x5', '\x2', '\x2', '\x158', '\x159', '\a', '\'', '\x2', 
-		'\x2', '\x159', '\x15B', '\b', '\x18', '\x1', '\x2', '\x15A', '\x153', 
-		'\x3', '\x2', '\x2', '\x2', '\x15A', '\x157', '\x3', '\x2', '\x2', '\x2', 
-		'\x15B', '\x15E', '\x3', '\x2', '\x2', '\x2', '\x15C', '\x15A', '\x3', 
-		'\x2', '\x2', '\x2', '\x15C', '\x15D', '\x3', '\x2', '\x2', '\x2', '\x15D', 
-		'/', '\x3', '\x2', '\x2', '\x2', '\x15E', '\x15C', '\x3', '\x2', '\x2', 
-		'\x2', '\x15F', '\x160', '\a', '%', '\x2', '\x2', '\x160', '\x16E', '\b', 
-		'\x19', '\x1', '\x2', '\x161', '\x162', '\x5', '\x2', '\x2', '\x2', '\x162', 
-		'\x163', '\a', '\x3', '\x2', '\x2', '\x163', '\x164', '\a', '\x4', '\x2', 
-		'\x2', '\x164', '\x165', '\x5', '*', '\x16', '\x2', '\x165', '\x166', 
-		'\a', '\x5', '\x2', '\x2', '\x166', '\x167', '\b', '\x19', '\x1', '\x2', 
-		'\x167', '\x16E', '\x3', '\x2', '\x2', '\x2', '\x168', '\x169', '\x5', 
-		'\x2', '\x2', '\x2', '\x169', '\x16A', '\a', '\x3', '\x2', '\x2', '\x16A', 
-		'\x16B', '\a', '%', '\x2', '\x2', '\x16B', '\x16C', '\b', '\x19', '\x1', 
-		'\x2', '\x16C', '\x16E', '\x3', '\x2', '\x2', '\x2', '\x16D', '\x15F', 
-		'\x3', '\x2', '\x2', '\x2', '\x16D', '\x161', '\x3', '\x2', '\x2', '\x2', 
-		'\x16D', '\x168', '\x3', '\x2', '\x2', '\x2', '\x16E', '\x31', '\x3', 
-		'\x2', '\x2', '\x2', '\x16F', '\x170', '\x5', '\x34', '\x1B', '\x2', '\x170', 
-		'\x171', '\a', '\x18', '\x2', '\x2', '\x171', '\x172', '\b', '\x1A', '\x1', 
-		'\x2', '\x172', '\x33', '\x3', '\x2', '\x2', '\x2', '\x173', '\x177', 
-		'\b', '\x1B', '\x1', '\x2', '\x174', '\x175', '\a', '\'', '\x2', '\x2', 
-		'\x175', '\x177', '\b', '\x1B', '\x1', '\x2', '\x176', '\x173', '\x3', 
-		'\x2', '\x2', '\x2', '\x176', '\x174', '\x3', '\x2', '\x2', '\x2', '\x177', 
-		'\x35', '\x3', '\x2', '\x2', '\x2', '\x178', '\x179', '\x5', '\x34', '\x1B', 
-		'\x2', '\x179', '\x17A', '\a', '\x19', '\x2', '\x2', '\x17A', '\x17B', 
-		'\b', '\x1C', '\x1', '\x2', '\x17B', '\x37', '\x3', '\x2', '\x2', '\x2', 
-		'\x17C', '\x17D', '\x5', '\x42', '\"', '\x2', '\x17D', '\x17E', '\x5', 
-		'*', '\x16', '\x2', '\x17E', '\x17F', '\b', '\x1D', '\x1', '\x2', '\x17F', 
-		'\x198', '\x3', '\x2', '\x2', '\x2', '\x180', '\x181', '\a', '\x1A', '\x2', 
-		'\x2', '\x181', '\x182', '\x5', ',', '\x17', '\x2', '\x182', '\x183', 
-		'\a', '\xE', '\x2', '\x2', '\x183', '\x184', '\b', '\x1D', '\x1', '\x2', 
-		'\x184', '\x198', '\x3', '\x2', '\x2', '\x2', '\x185', '\x186', '\a', 
-		'\x1B', '\x2', '\x2', '\x186', '\x187', '\a', '%', '\x2', '\x2', '\x187', 
-		'\x188', '\a', '\x15', '\x2', '\x2', '\x188', '\x189', '\x5', '*', '\x16', 
-		'\x2', '\x189', '\x18A', '\x5', ':', '\x1E', '\x2', '\x18A', '\x18B', 
-		'\a', '\xE', '\x2', '\x2', '\x18B', '\x18C', '\b', '\x1D', '\x1', '\x2', 
-		'\x18C', '\x198', '\x3', '\x2', '\x2', '\x2', '\x18D', '\x18E', '\a', 
-		'\x1C', '\x2', '\x2', '\x18E', '\x198', '\b', '\x1D', '\x1', '\x2', '\x18F', 
-		'\x190', '\a', '\x1D', '\x2', '\x2', '\x190', '\x198', '\b', '\x1D', '\x1', 
-		'\x2', '\x191', '\x192', '\a', '\x1E', '\x2', '\x2', '\x192', '\x193', 
-		'\x5', '*', '\x16', '\x2', '\x193', '\x194', '\b', '\x1D', '\x1', '\x2', 
-		'\x194', '\x198', '\x3', '\x2', '\x2', '\x2', '\x195', '\x196', '\a', 
-		'\x1E', '\x2', '\x2', '\x196', '\x198', '\b', '\x1D', '\x1', '\x2', '\x197', 
-		'\x17C', '\x3', '\x2', '\x2', '\x2', '\x197', '\x180', '\x3', '\x2', '\x2', 
-		'\x2', '\x197', '\x185', '\x3', '\x2', '\x2', '\x2', '\x197', '\x18D', 
-		'\x3', '\x2', '\x2', '\x2', '\x197', '\x18F', '\x3', '\x2', '\x2', '\x2', 
-		'\x197', '\x191', '\x3', '\x2', '\x2', '\x2', '\x197', '\x195', '\x3', 
-		'\x2', '\x2', '\x2', '\x198', '\x39', '\x3', '\x2', '\x2', '\x2', '\x199', 
-		'\x19A', '\x5', '\x32', '\x1A', '\x2', '\x19A', '\x19B', '\x5', ',', '\x17', 
-		'\x2', '\x19B', '\x19C', '\b', '\x1E', '\x1', '\x2', '\x19C', ';', '\x3', 
-		'\x2', '\x2', '\x2', '\x19D', '\x19E', '\a', '%', '\x2', '\x2', '\x19E', 
-		'\x19F', '\b', '\x1F', '\x1', '\x2', '\x19F', '=', '\x3', '\x2', '\x2', 
-		'\x2', '\x1A0', '\x1A1', '\x5', '*', '\x16', '\x2', '\x1A1', '\x1A2', 
-		'\x5', '@', '!', '\x2', '\x1A2', '\x1A3', '\b', ' ', '\x1', '\x2', '\x1A3', 
-		'?', '\x3', '\x2', '\x2', '\x2', '\x1A4', '\x1A5', '\x5', '\x36', '\x1C', 
-		'\x2', '\x1A5', '\x1A6', '\x5', ',', '\x17', '\x2', '\x1A6', '\x1A7', 
-		'\b', '!', '\x1', '\x2', '\x1A7', '\x41', '\x3', '\x2', '\x2', '\x2', 
-		'\x1A8', '\x1A9', '\b', '\"', '\x1', '\x2', '\x1A9', '\x1AA', '\b', '\"', 
-		'\x1', '\x2', '\x1AA', '\x1B2', '\x3', '\x2', '\x2', '\x2', '\x1AB', '\x1AC', 
-		'\f', '\x3', '\x2', '\x2', '\x1AC', '\x1AD', '\x5', '\x30', '\x19', '\x2', 
-		'\x1AD', '\x1AE', '\a', '\x1F', '\x2', '\x2', '\x1AE', '\x1AF', '\b', 
-		'\"', '\x1', '\x2', '\x1AF', '\x1B1', '\x3', '\x2', '\x2', '\x2', '\x1B0', 
-		'\x1AB', '\x3', '\x2', '\x2', '\x2', '\x1B1', '\x1B4', '\x3', '\x2', '\x2', 
-		'\x2', '\x1B2', '\x1B0', '\x3', '\x2', '\x2', '\x2', '\x1B2', '\x1B3', 
-		'\x3', '\x2', '\x2', '\x2', '\x1B3', '\x43', '\x3', '\x2', '\x2', '\x2', 
-		'\x1B4', '\x1B2', '\x3', '\x2', '\x2', '\x2', '\x1B5', '\x1BA', '\b', 
-		'#', '\x1', '\x2', '\x1B6', '\x1B7', '\x5', '*', '\x16', '\x2', '\x1B7', 
-		'\x1B8', '\b', '#', '\x1', '\x2', '\x1B8', '\x1BA', '\x3', '\x2', '\x2', 
-		'\x2', '\x1B9', '\x1B5', '\x3', '\x2', '\x2', '\x2', '\x1B9', '\x1B6', 
-		'\x3', '\x2', '\x2', '\x2', '\x1BA', '\x45', '\x3', '\x2', '\x2', '\x2', 
-		'\x1BB', '\x1BC', '\x5', ',', '\x17', '\x2', '\x1BC', '\x1BD', '\a', '\x2', 
-		'\x2', '\x3', '\x1BD', '\x1BE', '\b', '$', '\x1', '\x2', '\x1BE', 'G', 
-		'\x3', '\x2', '\x2', '\x2', '\x1C', '\x85', '\x98', '\x9A', '\xA1', '\xAE', 
-		'\xB5', '\xBF', '\xCB', '\xD6', '\xE3', '\xEA', '\xF7', '\x102', '\x112', 
-		'\x11E', '\x127', '\x134', '\x142', '\x151', '\x15A', '\x15C', '\x16D', 
-		'\x176', '\x197', '\x1B2', '\x1B9',
+		'\x19', '\x3', '\x19', '\x3', '\x19', '\x3', '\x19', '\x5', '\x19', '\x1BD', 
+		'\n', '\x19', '\x3', '\x1A', '\x3', '\x1A', '\x3', '\x1A', '\x3', '\x1A', 
+		'\x3', '\x1A', '\x3', '\x1A', '\x3', '\x1A', '\x5', '\x1A', '\x1C6', '\n', 
+		'\x1A', '\x3', '\x1B', '\x3', '\x1B', '\x3', '\x1B', '\x3', '\x1B', '\x3', 
+		'\x1B', '\x3', '\x1B', '\x3', '\x1B', '\x3', '\x1B', '\x3', '\x1B', '\a', 
+		'\x1B', '\x1D1', '\n', '\x1B', '\f', '\x1B', '\xE', '\x1B', '\x1D4', '\v', 
+		'\x1B', '\x3', '\x1C', '\x3', '\x1C', '\x3', '\x1C', '\x3', '\x1C', '\x3', 
+		'\x1C', '\x3', '\x1C', '\x3', '\x1C', '\x3', '\x1C', '\x3', '\x1C', '\a', 
+		'\x1C', '\x1DF', '\n', '\x1C', '\f', '\x1C', '\xE', '\x1C', '\x1E2', '\v', 
+		'\x1C', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1D', '\x3', '\x1E', '\x3', 
+		'\x1E', '\x3', '\x1E', '\x3', '\x1F', '\x3', '\x1F', '\x3', '\x1F', '\x3', 
+		'\x1F', '\x3', '\x1F', '\x3', '\x1F', '\x5', '\x1F', '\x1F0', '\n', '\x1F', 
+		'\x3', '\x1F', '\x3', '\x1F', '\x3', '\x1F', '\x3', '\x1F', '\x3', '\x1F', 
+		'\x3', '\x1F', '\x3', '\x1F', '\a', '\x1F', '\x1F9', '\n', '\x1F', '\f', 
+		'\x1F', '\xE', '\x1F', '\x1FC', '\v', '\x1F', '\x3', ' ', '\x3', ' ', 
+		'\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', 
+		'\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', '\x3', ' ', 
+		'\x5', ' ', '\x20C', '\n', ' ', '\x3', '!', '\x3', '!', '\x3', '!', '\x3', 
+		'!', '\x3', '\"', '\x3', '\"', '\x3', '\"', '\x3', '\"', '\x3', '#', '\x3', 
+		'#', '\x3', '#', '\x3', '#', '\x3', '$', '\x3', '$', '\x3', '$', '\x3', 
+		'%', '\x3', '%', '\x3', '%', '\x3', '%', '\x3', '&', '\x3', '&', '\x3', 
+		'&', '\x3', '&', '\x3', '\'', '\x3', '\'', '\x3', '\'', '\x3', '\'', '\x3', 
+		'\'', '\x3', '\'', '\x3', '\'', '\x3', '\'', '\a', '\'', '\x22D', '\n', 
+		'\'', '\f', '\'', '\xE', '\'', '\x230', '\v', '\'', '\x3', '(', '\x3', 
+		'(', '\x3', '(', '\x3', '(', '\x5', '(', '\x236', '\n', '(', '\x3', ')', 
+		'\x3', ')', '\x3', ')', '\x3', ')', '\x2', '\xE', '\x4', '\b', '\n', '\x12', 
+		'\x1A', ' ', '$', '.', '\x34', '\x36', '<', 'L', '*', '\x2', '\x4', '\x6', 
+		'\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', '\x18', '\x1A', 
+		'\x1C', '\x1E', ' ', '\"', '$', '&', '(', '*', ',', '.', '\x30', '\x32', 
+		'\x34', '\x36', '\x38', ':', '<', '>', '@', '\x42', '\x44', '\x46', 'H', 
+		'J', 'L', 'N', 'P', '\x2', '\x2', '\x2', '\x252', '\x2', 'y', '\x3', '\x2', 
+		'\x2', '\x2', '\x4', '\x81', '\x3', '\x2', '\x2', '\x2', '\x6', '\x99', 
+		'\x3', '\x2', '\x2', '\x2', '\b', '\x9B', '\x3', '\x2', '\x2', '\x2', 
+		'\n', '\x100', '\x3', '\x2', '\x2', '\x2', '\f', '\x118', '\x3', '\x2', 
+		'\x2', '\x2', '\xE', '\x120', '\x3', '\x2', '\x2', '\x2', '\x10', '\x126', 
+		'\x3', '\x2', '\x2', '\x2', '\x12', '\x128', '\x3', '\x2', '\x2', '\x2', 
+		'\x14', '\x13A', '\x3', '\x2', '\x2', '\x2', '\x16', '\x13C', '\x3', '\x2', 
+		'\x2', '\x2', '\x18', '\x144', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x146', 
+		'\x3', '\x2', '\x2', '\x2', '\x1C', '\x153', '\x3', '\x2', '\x2', '\x2', 
+		'\x1E', '\x157', '\x3', '\x2', '\x2', '\x2', ' ', '\x160', '\x3', '\x2', 
+		'\x2', '\x2', '\"', '\x175', '\x3', '\x2', '\x2', '\x2', '$', '\x17E', 
+		'\x3', '\x2', '\x2', '\x2', '&', '\x193', '\x3', '\x2', '\x2', '\x2', 
+		'(', '\x198', '\x3', '\x2', '\x2', '\x2', '*', '\x1A0', '\x3', '\x2', 
+		'\x2', '\x2', ',', '\x1A2', '\x3', '\x2', '\x2', '\x2', '.', '\x1A5', 
+		'\x3', '\x2', '\x2', '\x2', '\x30', '\x1BC', '\x3', '\x2', '\x2', '\x2', 
+		'\x32', '\x1C5', '\x3', '\x2', '\x2', '\x2', '\x34', '\x1C7', '\x3', '\x2', 
+		'\x2', '\x2', '\x36', '\x1D5', '\x3', '\x2', '\x2', '\x2', '\x38', '\x1E3', 
+		'\x3', '\x2', '\x2', '\x2', ':', '\x1E6', '\x3', '\x2', '\x2', '\x2', 
+		'<', '\x1EF', '\x3', '\x2', '\x2', '\x2', '>', '\x20B', '\x3', '\x2', 
+		'\x2', '\x2', '@', '\x20D', '\x3', '\x2', '\x2', '\x2', '\x42', '\x211', 
+		'\x3', '\x2', '\x2', '\x2', '\x44', '\x215', '\x3', '\x2', '\x2', '\x2', 
+		'\x46', '\x219', '\x3', '\x2', '\x2', '\x2', 'H', '\x21C', '\x3', '\x2', 
+		'\x2', '\x2', 'J', '\x220', '\x3', '\x2', '\x2', '\x2', 'L', '\x224', 
+		'\x3', '\x2', '\x2', '\x2', 'N', '\x235', '\x3', '\x2', '\x2', '\x2', 
+		'P', '\x237', '\x3', '\x2', '\x2', '\x2', 'R', 'S', '\a', '*', '\x2', 
+		'\x2', 'S', 'T', '\a', '\x3', '\x2', '\x2', 'T', 'U', '\x5', '\x4', '\x3', 
+		'\x2', 'U', 'V', '\a', '\x4', '\x2', '\x2', 'V', 'W', '\b', '\x2', '\x1', 
+		'\x2', 'W', 'z', '\x3', '\x2', '\x2', '\x2', 'X', 'Y', '\x5', 'L', '\'', 
+		'\x2', 'Y', 'Z', '\x5', '\x38', '\x1D', '\x2', 'Z', '[', '\b', '\x2', 
+		'\x1', '\x2', '[', 'z', '\x3', '\x2', '\x2', '\x2', '\\', ']', '\a', '\x5', 
+		'\x2', '\x2', ']', '^', '\a', '*', '\x2', '\x2', '^', '_', '\a', '\x6', 
+		'\x2', '\x2', '_', '`', '\x5', '\x38', '\x1D', '\x2', '`', '\x61', '\b', 
+		'\x2', '\x1', '\x2', '\x61', 'z', '\x3', '\x2', '\x2', '\x2', '\x62', 
+		'\x63', '\a', '\a', '\x2', '\x2', '\x63', '\x64', '\x5', ':', '\x1E', 
+		'\x2', '\x64', '\x65', '\a', '\b', '\x2', '\x2', '\x65', '\x66', '\b', 
+		'\x2', '\x1', '\x2', '\x66', 'z', '\x3', '\x2', '\x2', '\x2', 'g', 'h', 
+		'\a', '\t', '\x2', '\x2', 'h', 'i', '\a', '*', '\x2', '\x2', 'i', 'j', 
+		'\a', '\n', '\x2', '\x2', 'j', 'k', '\x5', '\x38', '\x1D', '\x2', 'k', 
+		'l', '\x5', '\x44', '#', '\x2', 'l', 'm', '\a', '\b', '\x2', '\x2', 'm', 
+		'n', '\b', '\x2', '\x1', '\x2', 'n', 'z', '\x3', '\x2', '\x2', '\x2', 
+		'o', 'p', '\a', '\v', '\x2', '\x2', 'p', 'z', '\b', '\x2', '\x1', '\x2', 
+		'q', 'r', '\a', '\f', '\x2', '\x2', 'r', 'z', '\b', '\x2', '\x1', '\x2', 
+		's', 't', '\a', '\r', '\x2', '\x2', 't', 'u', '\x5', '\x38', '\x1D', '\x2', 
+		'u', 'v', '\b', '\x2', '\x1', '\x2', 'v', 'z', '\x3', '\x2', '\x2', '\x2', 
+		'w', 'x', '\a', '\r', '\x2', '\x2', 'x', 'z', '\b', '\x2', '\x1', '\x2', 
+		'y', 'R', '\x3', '\x2', '\x2', '\x2', 'y', 'X', '\x3', '\x2', '\x2', '\x2', 
+		'y', '\\', '\x3', '\x2', '\x2', '\x2', 'y', '\x62', '\x3', '\x2', '\x2', 
+		'\x2', 'y', 'g', '\x3', '\x2', '\x2', '\x2', 'y', 'o', '\x3', '\x2', '\x2', 
+		'\x2', 'y', 'q', '\x3', '\x2', '\x2', '\x2', 'y', 's', '\x3', '\x2', '\x2', 
+		'\x2', 'y', 'w', '\x3', '\x2', '\x2', '\x2', 'z', '\x3', '\x3', '\x2', 
+		'\x2', '\x2', '{', '|', '\b', '\x3', '\x1', '\x2', '|', '}', '\x5', '\x6', 
+		'\x4', '\x2', '}', '~', '\b', '\x3', '\x1', '\x2', '~', '\x82', '\x3', 
+		'\x2', '\x2', '\x2', '\x7F', '\x80', '\a', ',', '\x2', '\x2', '\x80', 
+		'\x82', '\b', '\x3', '\x1', '\x2', '\x81', '{', '\x3', '\x2', '\x2', '\x2', 
+		'\x81', '\x7F', '\x3', '\x2', '\x2', '\x2', '\x82', '\x8C', '\x3', '\x2', 
+		'\x2', '\x2', '\x83', '\x84', '\f', '\x6', '\x2', '\x2', '\x84', '\x85', 
+		'\x5', '\x6', '\x4', '\x2', '\x85', '\x86', '\b', '\x3', '\x1', '\x2', 
+		'\x86', '\x8B', '\x3', '\x2', '\x2', '\x2', '\x87', '\x88', '\f', '\x5', 
+		'\x2', '\x2', '\x88', '\x89', '\a', ',', '\x2', '\x2', '\x89', '\x8B', 
+		'\b', '\x3', '\x1', '\x2', '\x8A', '\x83', '\x3', '\x2', '\x2', '\x2', 
+		'\x8A', '\x87', '\x3', '\x2', '\x2', '\x2', '\x8B', '\x8E', '\x3', '\x2', 
+		'\x2', '\x2', '\x8C', '\x8A', '\x3', '\x2', '\x2', '\x2', '\x8C', '\x8D', 
+		'\x3', '\x2', '\x2', '\x2', '\x8D', '\x5', '\x3', '\x2', '\x2', '\x2', 
+		'\x8E', '\x8C', '\x3', '\x2', '\x2', '\x2', '\x8F', '\x90', '\a', '*', 
+		'\x2', '\x2', '\x90', '\x9A', '\b', '\x4', '\x1', '\x2', '\x91', '\x92', 
+		'\a', '*', '\x2', '\x2', '\x92', '\x93', '\x5', '\b', '\x5', '\x2', '\x93', 
+		'\x94', '\b', '\x4', '\x1', '\x2', '\x94', '\x9A', '\x3', '\x2', '\x2', 
+		'\x2', '\x95', '\x96', '\a', '\xE', '\x2', '\x2', '\x96', '\x97', '\x5', 
+		'\x38', '\x1D', '\x2', '\x97', '\x98', '\b', '\x4', '\x1', '\x2', '\x98', 
+		'\x9A', '\x3', '\x2', '\x2', '\x2', '\x99', '\x8F', '\x3', '\x2', '\x2', 
+		'\x2', '\x99', '\x91', '\x3', '\x2', '\x2', '\x2', '\x99', '\x95', '\x3', 
+		'\x2', '\x2', '\x2', '\x9A', '\a', '\x3', '\x2', '\x2', '\x2', '\x9B', 
+		'\x9C', '\b', '\x5', '\x1', '\x2', '\x9C', '\x9D', '\x5', '\x38', '\x1D', 
+		'\x2', '\x9D', '\x9E', '\b', '\x5', '\x1', '\x2', '\x9E', '\xA6', '\x3', 
+		'\x2', '\x2', '\x2', '\x9F', '\xA0', '\f', '\x3', '\x2', '\x2', '\xA0', 
+		'\xA1', '\a', '\xF', '\x2', '\x2', '\xA1', '\xA2', '\x5', '\x38', '\x1D', 
+		'\x2', '\xA2', '\xA3', '\b', '\x5', '\x1', '\x2', '\xA3', '\xA5', '\x3', 
+		'\x2', '\x2', '\x2', '\xA4', '\x9F', '\x3', '\x2', '\x2', '\x2', '\xA5', 
+		'\xA8', '\x3', '\x2', '\x2', '\x2', '\xA6', '\xA4', '\x3', '\x2', '\x2', 
+		'\x2', '\xA6', '\xA7', '\x3', '\x2', '\x2', '\x2', '\xA7', '\t', '\x3', 
+		'\x2', '\x2', '\x2', '\xA8', '\xA6', '\x3', '\x2', '\x2', '\x2', '\xA9', 
+		'\xAA', '\b', '\x6', '\x1', '\x2', '\xAA', '\xAB', '\a', '\x11', '\x2', 
+		'\x2', '\xAB', '\xAC', '\x5', '\"', '\x12', '\x2', '\xAC', '\xAD', '\a', 
+		'\x12', '\x2', '\x2', '\xAD', '\xAE', '\b', '\x6', '\x1', '\x2', '\xAE', 
+		'\x101', '\x3', '\x2', '\x2', '\x2', '\xAF', '\xB0', '\a', '\x13', '\x2', 
+		'\x2', '\xB0', '\xB1', '\x5', '\"', '\x12', '\x2', '\xB1', '\xB2', '\x5', 
+		'*', '\x16', '\x2', '\xB2', '\xB3', '\a', '\x14', '\x2', '\x2', '\xB3', 
+		'\xB4', '\b', '\x6', '\x1', '\x2', '\xB4', '\x101', '\x3', '\x2', '\x2', 
+		'\x2', '\xB5', '\xB6', '\a', '\x3', '\x2', '\x2', '\xB6', '\xB7', '\x5', 
+		'\x1E', '\x10', '\x2', '\xB7', '\xB8', '\x5', '*', '\x16', '\x2', '\xB8', 
+		'\xB9', '\a', '\x4', '\x2', '\x2', '\xB9', '\xBA', '\b', '\x6', '\x1', 
+		'\x2', '\xBA', '\x101', '\x3', '\x2', '\x2', '\x2', '\xBB', '\xBC', '\a', 
+		'$', '\x2', '\x2', '\xBC', '\x101', '\b', '\x6', '\x1', '\x2', '\xBD', 
+		'\xBE', '\a', '%', '\x2', '\x2', '\xBE', '\x101', '\b', '\x6', '\x1', 
+		'\x2', '\xBF', '\xC0', '\a', '&', '\x2', '\x2', '\xC0', '\x101', '\b', 
+		'\x6', '\x1', '\x2', '\xC1', '\xC2', '\a', '\'', '\x2', '\x2', '\xC2', 
+		'\x101', '\b', '\x6', '\x1', '\x2', '\xC3', '\xC4', '\a', '(', '\x2', 
+		'\x2', '\xC4', '\x101', '\b', '\x6', '\x1', '\x2', '\xC5', '\xC6', '\a', 
+		')', '\x2', '\x2', '\xC6', '\x101', '\b', '\x6', '\x1', '\x2', '\xC7', 
+		'\xC8', '\a', '\x15', '\x2', '\x2', '\xC8', '\x101', '\b', '\x6', '\x1', 
+		'\x2', '\xC9', '\xCA', '\a', '*', '\x2', '\x2', '\xCA', '\x101', '\b', 
+		'\x6', '\x1', '\x2', '\xCB', '\xCC', '\a', '\x16', '\x2', '\x2', '\xCC', 
+		'\xCD', '\x5', '\n', '\x6', '\n', '\xCD', '\xCE', '\b', '\x6', '\x1', 
+		'\x2', '\xCE', '\x101', '\x3', '\x2', '\x2', '\x2', '\xCF', '\xD0', '\a', 
+		'\x17', '\x2', '\x2', '\xD0', '\xD1', '\x5', '\n', '\x6', '\t', '\xD1', 
+		'\xD2', '\b', '\x6', '\x1', '\x2', '\xD2', '\x101', '\x3', '\x2', '\x2', 
+		'\x2', '\xD3', '\xD4', '\a', '\x18', '\x2', '\x2', '\xD4', '\xD5', '\x5', 
+		'\x38', '\x1D', '\x2', '\xD5', '\xD6', '\x5', '\x42', '\"', '\x2', '\xD6', 
+		'\xD7', '\x5', ':', '\x1E', '\x2', '\xD7', '\xD8', '\a', '\b', '\x2', 
+		'\x2', '\xD8', '\xD9', '\b', '\x6', '\x1', '\x2', '\xD9', '\x101', '\x3', 
+		'\x2', '\x2', '\x2', '\xDA', '\xDB', '\a', '\x18', '\x2', '\x2', '\xDB', 
+		'\xDC', '\x5', '\x38', '\x1D', '\x2', '\xDC', '\xDD', '\x5', '\x42', '\"', 
+		'\x2', '\xDD', '\xDE', '\x5', ':', '\x1E', '\x2', '\xDE', '\xDF', '\x5', 
+		'\x18', '\r', '\x2', '\xDF', '\xE0', '\x5', '\x14', '\v', '\x2', '\xE0', 
+		'\xE1', '\a', '\b', '\x2', '\x2', '\xE1', '\xE2', '\b', '\x6', '\x1', 
+		'\x2', '\xE2', '\x101', '\x3', '\x2', '\x2', '\x2', '\xE3', '\xE4', '\a', 
+		'\x19', '\x2', '\x2', '\xE4', '\xE5', '\x5', '\x46', '$', '\x2', '\xE5', 
+		'\xE6', '\a', '\x13', '\x2', '\x2', '\xE6', '\xE7', '\x5', '\x10', '\t', 
+		'\x2', '\xE7', '\xE8', '\a', '\x14', '\x2', '\x2', '\xE8', '\xE9', '\x5', 
+		':', '\x1E', '\x2', '\xE9', '\xEA', '\a', '\b', '\x2', '\x2', '\xEA', 
+		'\xEB', '\b', '\x6', '\x1', '\x2', '\xEB', '\x101', '\x3', '\x2', '\x2', 
+		'\x2', '\xEC', '\xED', '\a', '\x19', '\x2', '\x2', '\xED', '\xEE', '\a', 
+		'\x13', '\x2', '\x2', '\xEE', '\xEF', '\x5', '\x10', '\t', '\x2', '\xEF', 
+		'\xF0', '\a', '\x14', '\x2', '\x2', '\xF0', '\xF1', '\x5', ':', '\x1E', 
+		'\x2', '\xF1', '\xF2', '\a', '\b', '\x2', '\x2', '\xF2', '\xF3', '\b', 
+		'\x6', '\x1', '\x2', '\xF3', '\x101', '\x3', '\x2', '\x2', '\x2', '\xF4', 
+		'\xF5', '\a', '\x13', '\x2', '\x2', '\xF5', '\xF6', '\x5', '\x10', '\t', 
+		'\x2', '\xF6', '\xF7', '\a', '\x14', '\x2', '\x2', '\xF7', '\xF8', '\a', 
+		'\x1A', '\x2', '\x2', '\xF8', '\xF9', '\x5', '\f', '\a', '\x2', '\xF9', 
+		'\xFA', '\b', '\x6', '\x1', '\x2', '\xFA', '\x101', '\x3', '\x2', '\x2', 
+		'\x2', '\xFB', '\xFC', '\a', '*', '\x2', '\x2', '\xFC', '\xFD', '\a', 
+		'\x1A', '\x2', '\x2', '\xFD', '\xFE', '\x5', '\f', '\a', '\x2', '\xFE', 
+		'\xFF', '\b', '\x6', '\x1', '\x2', '\xFF', '\x101', '\x3', '\x2', '\x2', 
+		'\x2', '\x100', '\xA9', '\x3', '\x2', '\x2', '\x2', '\x100', '\xAF', '\x3', 
+		'\x2', '\x2', '\x2', '\x100', '\xB5', '\x3', '\x2', '\x2', '\x2', '\x100', 
+		'\xBB', '\x3', '\x2', '\x2', '\x2', '\x100', '\xBD', '\x3', '\x2', '\x2', 
+		'\x2', '\x100', '\xBF', '\x3', '\x2', '\x2', '\x2', '\x100', '\xC1', '\x3', 
+		'\x2', '\x2', '\x2', '\x100', '\xC3', '\x3', '\x2', '\x2', '\x2', '\x100', 
+		'\xC5', '\x3', '\x2', '\x2', '\x2', '\x100', '\xC7', '\x3', '\x2', '\x2', 
+		'\x2', '\x100', '\xC9', '\x3', '\x2', '\x2', '\x2', '\x100', '\xCB', '\x3', 
+		'\x2', '\x2', '\x2', '\x100', '\xCF', '\x3', '\x2', '\x2', '\x2', '\x100', 
+		'\xD3', '\x3', '\x2', '\x2', '\x2', '\x100', '\xDA', '\x3', '\x2', '\x2', 
+		'\x2', '\x100', '\xE3', '\x3', '\x2', '\x2', '\x2', '\x100', '\xEC', '\x3', 
+		'\x2', '\x2', '\x2', '\x100', '\xF4', '\x3', '\x2', '\x2', '\x2', '\x100', 
+		'\xFB', '\x3', '\x2', '\x2', '\x2', '\x101', '\x115', '\x3', '\x2', '\x2', 
+		'\x2', '\x102', '\x103', '\f', '\x18', '\x2', '\x2', '\x103', '\x104', 
+		'\a', '\x10', '\x2', '\x2', '\x104', '\x105', '\a', '\x11', '\x2', '\x2', 
+		'\x105', '\x106', '\x5', '\x38', '\x1D', '\x2', '\x106', '\x107', '\a', 
+		'\x12', '\x2', '\x2', '\x107', '\x108', '\b', '\x6', '\x1', '\x2', '\x108', 
+		'\x114', '\x3', '\x2', '\x2', '\x2', '\x109', '\x10A', '\f', '\x17', '\x2', 
+		'\x2', '\x10A', '\x10B', '\a', '\x10', '\x2', '\x2', '\x10B', '\x10C', 
+		'\a', '*', '\x2', '\x2', '\x10C', '\x114', '\b', '\x6', '\x1', '\x2', 
+		'\x10D', '\x10E', '\f', '\x16', '\x2', '\x2', '\x10E', '\x10F', '\a', 
+		'\x13', '\x2', '\x2', '\x10F', '\x110', '\x5', '\"', '\x12', '\x2', '\x110', 
+		'\x111', '\a', '\x14', '\x2', '\x2', '\x111', '\x112', '\b', '\x6', '\x1', 
+		'\x2', '\x112', '\x114', '\x3', '\x2', '\x2', '\x2', '\x113', '\x102', 
+		'\x3', '\x2', '\x2', '\x2', '\x113', '\x109', '\x3', '\x2', '\x2', '\x2', 
+		'\x113', '\x10D', '\x3', '\x2', '\x2', '\x2', '\x114', '\x117', '\x3', 
+		'\x2', '\x2', '\x2', '\x115', '\x113', '\x3', '\x2', '\x2', '\x2', '\x115', 
+		'\x116', '\x3', '\x2', '\x2', '\x2', '\x116', '\v', '\x3', '\x2', '\x2', 
+		'\x2', '\x117', '\x115', '\x3', '\x2', '\x2', '\x2', '\x118', '\x119', 
+		'\x5', '\xE', '\b', '\x2', '\x119', '\x11A', '\x5', '\x38', '\x1D', '\x2', 
+		'\x11A', '\x11B', '\x5', '\xE', '\b', '\x2', '\x11B', '\x11C', '\b', '\a', 
+		'\x1', '\x2', '\x11C', '\r', '\x3', '\x2', '\x2', '\x2', '\x11D', '\x121', 
+		'\b', '\b', '\x1', '\x2', '\x11E', '\x11F', '\a', ',', '\x2', '\x2', '\x11F', 
+		'\x121', '\b', '\b', '\x1', '\x2', '\x120', '\x11D', '\x3', '\x2', '\x2', 
+		'\x2', '\x120', '\x11E', '\x3', '\x2', '\x2', '\x2', '\x121', '\xF', '\x3', 
+		'\x2', '\x2', '\x2', '\x122', '\x127', '\b', '\t', '\x1', '\x2', '\x123', 
+		'\x124', '\x5', '\x12', '\n', '\x2', '\x124', '\x125', '\b', '\t', '\x1', 
+		'\x2', '\x125', '\x127', '\x3', '\x2', '\x2', '\x2', '\x126', '\x122', 
+		'\x3', '\x2', '\x2', '\x2', '\x126', '\x123', '\x3', '\x2', '\x2', '\x2', 
+		'\x127', '\x11', '\x3', '\x2', '\x2', '\x2', '\x128', '\x129', '\b', '\n', 
+		'\x1', '\x2', '\x129', '\x12A', '\x5', '\x46', '$', '\x2', '\x12A', '\x12B', 
+		'\b', '\n', '\x1', '\x2', '\x12B', '\x133', '\x3', '\x2', '\x2', '\x2', 
+		'\x12C', '\x12D', '\f', '\x3', '\x2', '\x2', '\x12D', '\x12E', '\a', '\xF', 
+		'\x2', '\x2', '\x12E', '\x12F', '\x5', '\x46', '$', '\x2', '\x12F', '\x130', 
+		'\b', '\n', '\x1', '\x2', '\x130', '\x132', '\x3', '\x2', '\x2', '\x2', 
+		'\x131', '\x12C', '\x3', '\x2', '\x2', '\x2', '\x132', '\x135', '\x3', 
+		'\x2', '\x2', '\x2', '\x133', '\x131', '\x3', '\x2', '\x2', '\x2', '\x133', 
+		'\x134', '\x3', '\x2', '\x2', '\x2', '\x134', '\x13', '\x3', '\x2', '\x2', 
+		'\x2', '\x135', '\x133', '\x3', '\x2', '\x2', '\x2', '\x136', '\x13B', 
+		'\b', '\v', '\x1', '\x2', '\x137', '\x138', '\x5', '\x16', '\f', '\x2', 
+		'\x138', '\x139', '\b', '\v', '\x1', '\x2', '\x139', '\x13B', '\x3', '\x2', 
+		'\x2', '\x2', '\x13A', '\x136', '\x3', '\x2', '\x2', '\x2', '\x13A', '\x137', 
+		'\x3', '\x2', '\x2', '\x2', '\x13B', '\x15', '\x3', '\x2', '\x2', '\x2', 
+		'\x13C', '\x13D', '\a', '\x1B', '\x2', '\x2', '\x13D', '\x13E', '\x5', 
+		':', '\x1E', '\x2', '\x13E', '\x13F', '\b', '\f', '\x1', '\x2', '\x13F', 
+		'\x17', '\x3', '\x2', '\x2', '\x2', '\x140', '\x145', '\b', '\r', '\x1', 
+		'\x2', '\x141', '\x142', '\x5', '\x1A', '\xE', '\x2', '\x142', '\x143', 
+		'\b', '\r', '\x1', '\x2', '\x143', '\x145', '\x3', '\x2', '\x2', '\x2', 
+		'\x144', '\x140', '\x3', '\x2', '\x2', '\x2', '\x144', '\x141', '\x3', 
+		'\x2', '\x2', '\x2', '\x145', '\x19', '\x3', '\x2', '\x2', '\x2', '\x146', 
+		'\x147', '\b', '\xE', '\x1', '\x2', '\x147', '\x148', '\x5', '\x1C', '\xF', 
+		'\x2', '\x148', '\x149', '\b', '\xE', '\x1', '\x2', '\x149', '\x150', 
+		'\x3', '\x2', '\x2', '\x2', '\x14A', '\x14B', '\f', '\x3', '\x2', '\x2', 
+		'\x14B', '\x14C', '\x5', '\x1C', '\xF', '\x2', '\x14C', '\x14D', '\b', 
+		'\xE', '\x1', '\x2', '\x14D', '\x14F', '\x3', '\x2', '\x2', '\x2', '\x14E', 
+		'\x14A', '\x3', '\x2', '\x2', '\x2', '\x14F', '\x152', '\x3', '\x2', '\x2', 
+		'\x2', '\x150', '\x14E', '\x3', '\x2', '\x2', '\x2', '\x150', '\x151', 
+		'\x3', '\x2', '\x2', '\x2', '\x151', '\x1B', '\x3', '\x2', '\x2', '\x2', 
+		'\x152', '\x150', '\x3', '\x2', '\x2', '\x2', '\x153', '\x154', '\a', 
+		'\x1C', '\x2', '\x2', '\x154', '\x155', '\x5', 'H', '%', '\x2', '\x155', 
+		'\x156', '\b', '\xF', '\x1', '\x2', '\x156', '\x1D', '\x3', '\x2', '\x2', 
+		'\x2', '\x157', '\x158', '\x5', '\xE', '\b', '\x2', '\x158', '\x159', 
+		'\x5', ' ', '\x11', '\x2', '\x159', '\x15A', '\b', '\x10', '\x1', '\x2', 
+		'\x15A', '\x1F', '\x3', '\x2', '\x2', '\x2', '\x15B', '\x15C', '\b', '\x11', 
+		'\x1', '\x2', '\x15C', '\x15D', '\x5', '&', '\x14', '\x2', '\x15D', '\x15E', 
+		'\b', '\x11', '\x1', '\x2', '\x15E', '\x161', '\x3', '\x2', '\x2', '\x2', 
+		'\x15F', '\x161', '\b', '\x11', '\x1', '\x2', '\x160', '\x15B', '\x3', 
+		'\x2', '\x2', '\x2', '\x160', '\x15F', '\x3', '\x2', '\x2', '\x2', '\x161', 
+		'\x172', '\x3', '\x2', '\x2', '\x2', '\x162', '\x163', '\f', '\a', '\x2', 
+		'\x2', '\x163', '\x164', '\a', ',', '\x2', '\x2', '\x164', '\x171', '\b', 
+		'\x11', '\x1', '\x2', '\x165', '\x166', '\f', '\x6', '\x2', '\x2', '\x166', 
+		'\x167', '\a', '\xF', '\x2', '\x2', '\x167', '\x168', '\a', ',', '\x2', 
+		'\x2', '\x168', '\x169', '\x5', '&', '\x14', '\x2', '\x169', '\x16A', 
+		'\b', '\x11', '\x1', '\x2', '\x16A', '\x171', '\x3', '\x2', '\x2', '\x2', 
+		'\x16B', '\x16C', '\f', '\x5', '\x2', '\x2', '\x16C', '\x16D', '\a', '\xF', 
+		'\x2', '\x2', '\x16D', '\x16E', '\x5', '&', '\x14', '\x2', '\x16E', '\x16F', 
+		'\b', '\x11', '\x1', '\x2', '\x16F', '\x171', '\x3', '\x2', '\x2', '\x2', 
+		'\x170', '\x162', '\x3', '\x2', '\x2', '\x2', '\x170', '\x165', '\x3', 
+		'\x2', '\x2', '\x2', '\x170', '\x16B', '\x3', '\x2', '\x2', '\x2', '\x171', 
+		'\x174', '\x3', '\x2', '\x2', '\x2', '\x172', '\x170', '\x3', '\x2', '\x2', 
+		'\x2', '\x172', '\x173', '\x3', '\x2', '\x2', '\x2', '\x173', '!', '\x3', 
+		'\x2', '\x2', '\x2', '\x174', '\x172', '\x3', '\x2', '\x2', '\x2', '\x175', 
+		'\x176', '\x5', '\xE', '\b', '\x2', '\x176', '\x177', '\x5', '$', '\x13', 
+		'\x2', '\x177', '\x178', '\b', '\x12', '\x1', '\x2', '\x178', '#', '\x3', 
+		'\x2', '\x2', '\x2', '\x179', '\x17A', '\b', '\x13', '\x1', '\x2', '\x17A', 
+		'\x17B', '\x5', '\x38', '\x1D', '\x2', '\x17B', '\x17C', '\b', '\x13', 
+		'\x1', '\x2', '\x17C', '\x17F', '\x3', '\x2', '\x2', '\x2', '\x17D', '\x17F', 
+		'\b', '\x13', '\x1', '\x2', '\x17E', '\x179', '\x3', '\x2', '\x2', '\x2', 
+		'\x17E', '\x17D', '\x3', '\x2', '\x2', '\x2', '\x17F', '\x190', '\x3', 
+		'\x2', '\x2', '\x2', '\x180', '\x181', '\f', '\a', '\x2', '\x2', '\x181', 
+		'\x182', '\a', ',', '\x2', '\x2', '\x182', '\x18F', '\b', '\x13', '\x1', 
+		'\x2', '\x183', '\x184', '\f', '\x6', '\x2', '\x2', '\x184', '\x185', 
+		'\a', '\xF', '\x2', '\x2', '\x185', '\x186', '\a', ',', '\x2', '\x2', 
+		'\x186', '\x187', '\x5', '\x38', '\x1D', '\x2', '\x187', '\x188', '\b', 
+		'\x13', '\x1', '\x2', '\x188', '\x18F', '\x3', '\x2', '\x2', '\x2', '\x189', 
+		'\x18A', '\f', '\x5', '\x2', '\x2', '\x18A', '\x18B', '\a', '\xF', '\x2', 
+		'\x2', '\x18B', '\x18C', '\x5', '\x38', '\x1D', '\x2', '\x18C', '\x18D', 
+		'\b', '\x13', '\x1', '\x2', '\x18D', '\x18F', '\x3', '\x2', '\x2', '\x2', 
+		'\x18E', '\x180', '\x3', '\x2', '\x2', '\x2', '\x18E', '\x183', '\x3', 
+		'\x2', '\x2', '\x2', '\x18E', '\x189', '\x3', '\x2', '\x2', '\x2', '\x18F', 
+		'\x192', '\x3', '\x2', '\x2', '\x2', '\x190', '\x18E', '\x3', '\x2', '\x2', 
+		'\x2', '\x190', '\x191', '\x3', '\x2', '\x2', '\x2', '\x191', '%', '\x3', 
+		'\x2', '\x2', '\x2', '\x192', '\x190', '\x3', '\x2', '\x2', '\x2', '\x193', 
+		'\x194', '\x5', '\x38', '\x1D', '\x2', '\x194', '\x195', '\x5', '(', '\x15', 
+		'\x2', '\x195', '\x196', '\x5', '\x38', '\x1D', '\x2', '\x196', '\x197', 
+		'\b', '\x14', '\x1', '\x2', '\x197', '\'', '\x3', '\x2', '\x2', '\x2', 
+		'\x198', '\x199', '\x5', '\xE', '\b', '\x2', '\x199', '\x19A', '\a', '\x1D', 
+		'\x2', '\x2', '\x19A', '\x19B', '\x5', '\xE', '\b', '\x2', '\x19B', '\x19C', 
+		'\b', '\x15', '\x1', '\x2', '\x19C', ')', '\x3', '\x2', '\x2', '\x2', 
+		'\x19D', '\x19E', '\a', '\xF', '\x2', '\x2', '\x19E', '\x1A1', '\b', '\x16', 
+		'\x1', '\x2', '\x19F', '\x1A1', '\b', '\x16', '\x1', '\x2', '\x1A0', '\x19D', 
+		'\x3', '\x2', '\x2', '\x2', '\x1A0', '\x19F', '\x3', '\x2', '\x2', '\x2', 
+		'\x1A1', '+', '\x3', '\x2', '\x2', '\x2', '\x1A2', '\x1A3', '\x5', '.', 
+		'\x18', '\x2', '\x1A3', '\x1A4', '\b', '\x17', '\x1', '\x2', '\x1A4', 
+		'-', '\x3', '\x2', '\x2', '\x2', '\x1A5', '\x1A6', '\b', '\x18', '\x1', 
+		'\x2', '\x1A6', '\x1A7', '\x5', '\n', '\x6', '\x2', '\x1A7', '\x1A8', 
+		'\b', '\x18', '\x1', '\x2', '\x1A8', '\x1B0', '\x3', '\x2', '\x2', '\x2', 
+		'\x1A9', '\x1AA', '\f', '\x3', '\x2', '\x2', '\x1AA', '\x1AB', '\x5', 
+		'\x30', '\x19', '\x2', '\x1AB', '\x1AC', '\x5', '\n', '\x6', '\x2', '\x1AC', 
+		'\x1AD', '\b', '\x18', '\x1', '\x2', '\x1AD', '\x1AF', '\x3', '\x2', '\x2', 
+		'\x2', '\x1AE', '\x1A9', '\x3', '\x2', '\x2', '\x2', '\x1AF', '\x1B2', 
+		'\x3', '\x2', '\x2', '\x2', '\x1B0', '\x1AE', '\x3', '\x2', '\x2', '\x2', 
+		'\x1B0', '\x1B1', '\x3', '\x2', '\x2', '\x2', '\x1B1', '/', '\x3', '\x2', 
+		'\x2', '\x2', '\x1B2', '\x1B0', '\x3', '\x2', '\x2', '\x2', '\x1B3', '\x1B4', 
+		'\a', '#', '\x2', '\x2', '\x1B4', '\x1BD', '\b', '\x19', '\x1', '\x2', 
+		'\x1B5', '\x1B6', '\a', '\x1E', '\x2', '\x2', '\x1B6', '\x1B7', '\a', 
+		'\n', '\x2', '\x2', '\x1B7', '\x1BD', '\b', '\x19', '\x1', '\x2', '\x1B8', 
+		'\x1B9', '\a', '\n', '\x2', '\x2', '\x1B9', '\x1BD', '\b', '\x19', '\x1', 
+		'\x2', '\x1BA', '\x1BB', '\a', '\x16', '\x2', '\x2', '\x1BB', '\x1BD', 
+		'\b', '\x19', '\x1', '\x2', '\x1BC', '\x1B3', '\x3', '\x2', '\x2', '\x2', 
+		'\x1BC', '\x1B5', '\x3', '\x2', '\x2', '\x2', '\x1BC', '\x1B8', '\x3', 
+		'\x2', '\x2', '\x2', '\x1BC', '\x1BA', '\x3', '\x2', '\x2', '\x2', '\x1BD', 
+		'\x31', '\x3', '\x2', '\x2', '\x2', '\x1BE', '\x1BF', '\a', '\x1E', '\x2', 
+		'\x2', '\x1BF', '\x1C0', '\x5', ',', '\x17', '\x2', '\x1C0', '\x1C1', 
+		'\b', '\x1A', '\x1', '\x2', '\x1C1', '\x1C6', '\x3', '\x2', '\x2', '\x2', 
+		'\x1C2', '\x1C3', '\x5', ',', '\x17', '\x2', '\x1C3', '\x1C4', '\b', '\x1A', 
+		'\x1', '\x2', '\x1C4', '\x1C6', '\x3', '\x2', '\x2', '\x2', '\x1C5', '\x1BE', 
+		'\x3', '\x2', '\x2', '\x2', '\x1C5', '\x1C2', '\x3', '\x2', '\x2', '\x2', 
+		'\x1C6', '\x33', '\x3', '\x2', '\x2', '\x2', '\x1C7', '\x1C8', '\b', '\x1B', 
+		'\x1', '\x2', '\x1C8', '\x1C9', '\x5', '\x32', '\x1A', '\x2', '\x1C9', 
+		'\x1CA', '\b', '\x1B', '\x1', '\x2', '\x1CA', '\x1D2', '\x3', '\x2', '\x2', 
+		'\x2', '\x1CB', '\x1CC', '\f', '\x4', '\x2', '\x2', '\x1CC', '\x1CD', 
+		'\a', '\x1F', '\x2', '\x2', '\x1CD', '\x1CE', '\x5', '\x32', '\x1A', '\x2', 
+		'\x1CE', '\x1CF', '\b', '\x1B', '\x1', '\x2', '\x1CF', '\x1D1', '\x3', 
+		'\x2', '\x2', '\x2', '\x1D0', '\x1CB', '\x3', '\x2', '\x2', '\x2', '\x1D1', 
+		'\x1D4', '\x3', '\x2', '\x2', '\x2', '\x1D2', '\x1D0', '\x3', '\x2', '\x2', 
+		'\x2', '\x1D2', '\x1D3', '\x3', '\x2', '\x2', '\x2', '\x1D3', '\x35', 
+		'\x3', '\x2', '\x2', '\x2', '\x1D4', '\x1D2', '\x3', '\x2', '\x2', '\x2', 
+		'\x1D5', '\x1D6', '\b', '\x1C', '\x1', '\x2', '\x1D6', '\x1D7', '\x5', 
+		'\x34', '\x1B', '\x2', '\x1D7', '\x1D8', '\b', '\x1C', '\x1', '\x2', '\x1D8', 
+		'\x1E0', '\x3', '\x2', '\x2', '\x2', '\x1D9', '\x1DA', '\f', '\x4', '\x2', 
+		'\x2', '\x1DA', '\x1DB', '\a', ' ', '\x2', '\x2', '\x1DB', '\x1DC', '\x5', 
+		'\x34', '\x1B', '\x2', '\x1DC', '\x1DD', '\b', '\x1C', '\x1', '\x2', '\x1DD', 
+		'\x1DF', '\x3', '\x2', '\x2', '\x2', '\x1DE', '\x1D9', '\x3', '\x2', '\x2', 
+		'\x2', '\x1DF', '\x1E2', '\x3', '\x2', '\x2', '\x2', '\x1E0', '\x1DE', 
+		'\x3', '\x2', '\x2', '\x2', '\x1E0', '\x1E1', '\x3', '\x2', '\x2', '\x2', 
+		'\x1E1', '\x37', '\x3', '\x2', '\x2', '\x2', '\x1E2', '\x1E0', '\x3', 
+		'\x2', '\x2', '\x2', '\x1E3', '\x1E4', '\x5', '\x36', '\x1C', '\x2', '\x1E4', 
+		'\x1E5', '\b', '\x1D', '\x1', '\x2', '\x1E5', '\x39', '\x3', '\x2', '\x2', 
+		'\x2', '\x1E6', '\x1E7', '\x5', '<', '\x1F', '\x2', '\x1E7', '\x1E8', 
+		'\b', '\x1E', '\x1', '\x2', '\x1E8', ';', '\x3', '\x2', '\x2', '\x2', 
+		'\x1E9', '\x1EA', '\b', '\x1F', '\x1', '\x2', '\x1EA', '\x1EB', '\x5', 
+		'\x2', '\x2', '\x2', '\x1EB', '\x1EC', '\b', '\x1F', '\x1', '\x2', '\x1EC', 
+		'\x1F0', '\x3', '\x2', '\x2', '\x2', '\x1ED', '\x1EE', '\a', ',', '\x2', 
+		'\x2', '\x1EE', '\x1F0', '\b', '\x1F', '\x1', '\x2', '\x1EF', '\x1E9', 
+		'\x3', '\x2', '\x2', '\x2', '\x1EF', '\x1ED', '\x3', '\x2', '\x2', '\x2', 
+		'\x1F0', '\x1FA', '\x3', '\x2', '\x2', '\x2', '\x1F1', '\x1F2', '\f', 
+		'\x6', '\x2', '\x2', '\x1F2', '\x1F3', '\x5', '\x2', '\x2', '\x2', '\x1F3', 
+		'\x1F4', '\b', '\x1F', '\x1', '\x2', '\x1F4', '\x1F9', '\x3', '\x2', '\x2', 
+		'\x2', '\x1F5', '\x1F6', '\f', '\x5', '\x2', '\x2', '\x1F6', '\x1F7', 
+		'\a', ',', '\x2', '\x2', '\x1F7', '\x1F9', '\b', '\x1F', '\x1', '\x2', 
+		'\x1F8', '\x1F1', '\x3', '\x2', '\x2', '\x2', '\x1F8', '\x1F5', '\x3', 
+		'\x2', '\x2', '\x2', '\x1F9', '\x1FC', '\x3', '\x2', '\x2', '\x2', '\x1FA', 
+		'\x1F8', '\x3', '\x2', '\x2', '\x2', '\x1FA', '\x1FB', '\x3', '\x2', '\x2', 
+		'\x2', '\x1FB', '=', '\x3', '\x2', '\x2', '\x2', '\x1FC', '\x1FA', '\x3', 
+		'\x2', '\x2', '\x2', '\x1FD', '\x1FE', '\a', '*', '\x2', '\x2', '\x1FE', 
+		'\x20C', '\b', ' ', '\x1', '\x2', '\x1FF', '\x200', '\x5', '\n', '\x6', 
+		'\x2', '\x200', '\x201', '\a', '\x10', '\x2', '\x2', '\x201', '\x202', 
+		'\a', '\x11', '\x2', '\x2', '\x202', '\x203', '\x5', '\x38', '\x1D', '\x2', 
+		'\x203', '\x204', '\a', '\x12', '\x2', '\x2', '\x204', '\x205', '\b', 
+		' ', '\x1', '\x2', '\x205', '\x20C', '\x3', '\x2', '\x2', '\x2', '\x206', 
+		'\x207', '\x5', '\n', '\x6', '\x2', '\x207', '\x208', '\a', '\x10', '\x2', 
+		'\x2', '\x208', '\x209', '\a', '*', '\x2', '\x2', '\x209', '\x20A', '\b', 
+		' ', '\x1', '\x2', '\x20A', '\x20C', '\x3', '\x2', '\x2', '\x2', '\x20B', 
+		'\x1FD', '\x3', '\x2', '\x2', '\x2', '\x20B', '\x1FF', '\x3', '\x2', '\x2', 
+		'\x2', '\x20B', '\x206', '\x3', '\x2', '\x2', '\x2', '\x20C', '?', '\x3', 
+		'\x2', '\x2', '\x2', '\x20D', '\x20E', '\x5', '\xE', '\b', '\x2', '\x20E', 
+		'\x20F', '\a', '\xE', '\x2', '\x2', '\x20F', '\x210', '\b', '!', '\x1', 
+		'\x2', '\x210', '\x41', '\x3', '\x2', '\x2', '\x2', '\x211', '\x212', 
+		'\x5', '\xE', '\b', '\x2', '\x212', '\x213', '\a', '!', '\x2', '\x2', 
+		'\x213', '\x214', '\b', '\"', '\x1', '\x2', '\x214', '\x43', '\x3', '\x2', 
+		'\x2', '\x2', '\x215', '\x216', '\x5', '@', '!', '\x2', '\x216', '\x217', 
+		'\x5', ':', '\x1E', '\x2', '\x217', '\x218', '\b', '#', '\x1', '\x2', 
+		'\x218', '\x45', '\x3', '\x2', '\x2', '\x2', '\x219', '\x21A', '\a', '*', 
+		'\x2', '\x2', '\x21A', '\x21B', '\b', '$', '\x1', '\x2', '\x21B', 'G', 
+		'\x3', '\x2', '\x2', '\x2', '\x21C', '\x21D', '\x5', '\x38', '\x1D', '\x2', 
+		'\x21D', '\x21E', '\x5', 'J', '&', '\x2', '\x21E', '\x21F', '\b', '%', 
+		'\x1', '\x2', '\x21F', 'I', '\x3', '\x2', '\x2', '\x2', '\x220', '\x221', 
+		'\x5', '\x42', '\"', '\x2', '\x221', '\x222', '\x5', ':', '\x1E', '\x2', 
+		'\x222', '\x223', '\b', '&', '\x1', '\x2', '\x223', 'K', '\x3', '\x2', 
+		'\x2', '\x2', '\x224', '\x225', '\b', '\'', '\x1', '\x2', '\x225', '\x226', 
+		'\b', '\'', '\x1', '\x2', '\x226', '\x22E', '\x3', '\x2', '\x2', '\x2', 
+		'\x227', '\x228', '\f', '\x3', '\x2', '\x2', '\x228', '\x229', '\x5', 
+		'>', ' ', '\x2', '\x229', '\x22A', '\a', '\x6', '\x2', '\x2', '\x22A', 
+		'\x22B', '\b', '\'', '\x1', '\x2', '\x22B', '\x22D', '\x3', '\x2', '\x2', 
+		'\x2', '\x22C', '\x227', '\x3', '\x2', '\x2', '\x2', '\x22D', '\x230', 
+		'\x3', '\x2', '\x2', '\x2', '\x22E', '\x22C', '\x3', '\x2', '\x2', '\x2', 
+		'\x22E', '\x22F', '\x3', '\x2', '\x2', '\x2', '\x22F', 'M', '\x3', '\x2', 
+		'\x2', '\x2', '\x230', '\x22E', '\x3', '\x2', '\x2', '\x2', '\x231', '\x236', 
+		'\b', '(', '\x1', '\x2', '\x232', '\x233', '\x5', '\x38', '\x1D', '\x2', 
+		'\x233', '\x234', '\b', '(', '\x1', '\x2', '\x234', '\x236', '\x3', '\x2', 
+		'\x2', '\x2', '\x235', '\x231', '\x3', '\x2', '\x2', '\x2', '\x235', '\x232', 
+		'\x3', '\x2', '\x2', '\x2', '\x236', 'O', '\x3', '\x2', '\x2', '\x2', 
+		'\x237', '\x238', '\x5', '<', '\x1F', '\x2', '\x238', '\x239', '\b', ')', 
+		'\x1', '\x2', '\x239', 'Q', '\x3', '\x2', '\x2', '\x2', '#', 'y', '\x81', 
+		'\x8A', '\x8C', '\x99', '\xA6', '\x100', '\x113', '\x115', '\x120', '\x126', 
+		'\x133', '\x13A', '\x144', '\x150', '\x160', '\x170', '\x172', '\x17E', 
+		'\x18E', '\x190', '\x1A0', '\x1B0', '\x1BC', '\x1C5', '\x1D2', '\x1E0', 
+		'\x1EF', '\x1F8', '\x1FA', '\x20B', '\x22E', '\x235',
 	};
 
 	public static readonly ATN _ATN =

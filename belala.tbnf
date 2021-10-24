@@ -1,0 +1,14 @@
+%import "DianaScript.tbnf"
+
+typealias ast = ImmediateAST
+
+val mkOption0: (token) -> (int, int, str, list[ast])
+val mkOptionN: (token, list[ast]) -> (int, int, str, list[ast])
+val mkDoOption: (ast) -> (int, int, str, list[ast])
+val mkWorkflow: (token, ast, list[(int, int, str, list[ast])]) -> ast
+
+option : <NAME>               { mkOption0($1) }
+       | <NAME> seplist[",", expr] { mkOptionN($1, $2) }
+       | "do" expr                      { mkDoOption($2) }
+
+stmt : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, mkVar($1, $1.Text), $3) }
