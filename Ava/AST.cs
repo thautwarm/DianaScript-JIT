@@ -84,7 +84,9 @@ namespace Ava
             {
                 return -1;
             }
-
+            if (ctx.TryGetValue(s, out var ret)){
+                return ret;
+            }
             int i = nlocal++;
             ctx[s] = i;
             return i;
@@ -160,7 +162,7 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
-            int lhs_ = ctx.search(lhs);
+            int lhs_ = ctx.enter(lhs);
             var lhs_string = lhs;
             var rhs_ = rhs.compile(ctx);
             if (lhs_ < 0)
@@ -204,7 +206,7 @@ namespace Ava
                 var each = lhs[i];
                 if (each is Load load)
                 {
-                    var n_i = ctx.search(load.n);
+                    var n_i = ctx.enter(load.n);
                     var lhs_string = load.n;
                     if (n_i < 0)
                     {
@@ -487,9 +489,7 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
-
             var body_ = body.compile(ctx);
-
             return (ExecContext ctx) =>
             {
                 DObj ret = DNone.unique;
@@ -526,9 +526,9 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
+
             var cond_ = cond.compile(ctx);
             var then_ = then.compile(ctx);
-
             return (ExecContext ctx) =>
             {
                 DObj ret = DNone.unique;
@@ -567,6 +567,7 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
+            
             var target_ = ctx.enter(target);
             var target_str = target;
             var iter_ = iter.compile(ctx);
@@ -1014,46 +1015,6 @@ namespace Ava
         }
     }
 
-    public partial class Let : ImmediateAST
-    {
-        public ExecType compile_impl(MetaContext ctx)
-        {
-            int lhs_ = ctx.enter(name);
-            var lhs_string = name;
-            var rhs_ = expr.compile(ctx);
-            if (lhs_ >= 0)
-            {
-                var new_ctx = new Dictionary<string, int>();
-                foreach (var kv in ctx.ctx)
-                {
-                    new_ctx[kv.Key] = kv.Value;
-                }
-                new_ctx[lhs_string] = lhs_;
-                ctx.ctx = new_ctx;
-            }
-            if (lhs_ < 0)
-                return (ExecContext ctx) =>
-                    {
-                        try
-                        {
-                            ctx.globals[lhs_string] = rhs_(ctx);
-                        }
-                        catch (KeyNotFoundException)
-                        {
-                            throw new NameError($"global variable {lhs_string} not found");
-                        }
-
-                        return DNone.unique;
-                    }
-                    ;
-            else
-                return (ExecContext ctx) =>
-                {
-                    ctx.locals[lhs_] = rhs_(ctx);
-                    return DNone.unique;
-                };
-        }
-    }
     public partial class Workflow : ImmediateAST
     {
 

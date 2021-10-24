@@ -1,7 +1,7 @@
 x = 1
 log(x)
 
-func f(x)
+fun f(x)
     return x + x
 end
 
@@ -14,12 +14,12 @@ else
     log("3")
 end
 
-func fact(x)
+fun fact(x)
     if x < 1 then
         log("ret")
         return 1
     else
-        r = x * fact(x - 1)
+         r = x * fact(x - 1)
         log(r, "<- ret")
         return r
     end
@@ -47,7 +47,7 @@ else
     log(3)
 end
 
-func g()
+fun g()
     
     for i in [1, 2, 3, 4] do
         log(i)
@@ -60,7 +60,7 @@ log(int("233"))
 
 x = time()
 
-func test()
+fun test()
     loop
         if x < 10000000 then
             break
@@ -86,9 +86,8 @@ log("aaa")
 
 
 
-func test2()
-    
-    x = 0
+fun test2()
+     x = 0
     loop
         if x > 10000000 then
             break
@@ -99,7 +98,7 @@ func test2()
 end
 
 
-func benchfunc(f)
+fun benchfunc(f)
     x = time()
     f()
     span = time() - x

@@ -198,10 +198,6 @@ namespace Ava.Frontend
             return (token.Line, token.Column, token.Text, args);
         }
 
-        public static ast mkLet(CommonToken token, string name, ast expr)
-        {
-            return Let.make(name, expr, token.Line, token.Column);
-        }
 
         public static ast mkWorkflow(CommonToken token, ast a, List<(int lineno, int colno, string attr, List<ast> args)> args)
         {

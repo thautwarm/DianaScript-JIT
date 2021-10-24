@@ -56,7 +56,7 @@ builder {
 
 builder = {
     "start": fun()
-        let x  = {}
+         x  = {}
         x.["yield"] = x -> log("yield " + str(x))
         x.["finish"] = () -> ()
         return x

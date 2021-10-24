@@ -27,8 +27,7 @@ setup(
     install_requires=['pyrsistent'], # dependencies
     platforms="any",
     classifiers=[
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     zip_safe=False,

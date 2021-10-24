@@ -35,7 +35,6 @@ val mkBlock: (token, list[ast]) -> ast
 val mkContinue: (token) -> ast
 val mkBreak: (token) -> ast
 val mkReturn: (token, ast) -> ast
-val mkLet : (token, str, ast) -> ast
 val mkint: (str, int) -> DObj
 val mkfloat: (str) -> DObj
 val mkstr: (str) -> DObj
@@ -91,7 +90,6 @@ snd[a, b] : a b { $2 }
 name : <NAME> { $1.Text }
 stmt :
     lhs_seq expr { mkStoreMany($1, $2)  }
-    | "let" <NAME> "=" expr { mkLet($1, $2.Text, $4)  }
     | "loop" block "end"
         { mkLoop($1, mkBlock($1, $2))  }
     | "for" <NAME> "in" expr blockOf[do] "end"
