@@ -121,6 +121,19 @@ namespace Ava.Frontend
 
         public static DObj mknone() => MK.None();
 
+        public static ast mkPipeline(List<ast> exprs)
+        {
+            var fst = exprs[0];
+            if(exprs.Count == 1)    
+                return fst;
+            
+            return Pipeline.make(exprs.ToArray(), fst.Lineno, fst.Colno);
+        }
+        public static ast mkLet(CommonToken token, string name, ast expr)
+        {
+            return Let.make(name, expr, token.Line, token.Column);
+        }
+
         public static ast mkIfThen(CommonToken token, ast cond, ast then)
         {
             return IfThenElse.make(

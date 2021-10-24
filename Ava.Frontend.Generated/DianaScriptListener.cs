@@ -312,6 +312,26 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitExpr([NotNull] DianaScriptParser.ExprContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__seplist_gen__line_wrap__L124_L62__or_expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__seplist_gen__line_wrap__L124_L62__or_expr([NotNull] DianaScriptParser.Gen__seplist_gen__line_wrap__L124_L62__or_exprContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__seplist_gen__line_wrap__L124_L62__or_expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__seplist_gen__line_wrap__L124_L62__or_expr([NotNull] DianaScriptParser.Gen__seplist_gen__line_wrap__L124_L62__or_exprContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap__L124_L62"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__line_wrap__L124_L62([NotNull] DianaScriptParser.Gen__line_wrap__L124_L62Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap__L124_L62"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__line_wrap__L124_L62([NotNull] DianaScriptParser.Gen__line_wrap__L124_L62Context context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.block"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -12,7 +12,8 @@ public static partial class MainClass
 
     public static void ExecuteSourceFiles(string[] paths)
     {
-        var globals = Ava.DianaScriptAPIs.InitGlobals();
+        var apis = new Ava.DianaScriptAPIs();
+        var globals = apis.InitGlobals();
         foreach(var path in paths)
         {
             ICharStream stream = CharStreams.fromPath(path);
@@ -34,7 +35,8 @@ public static partial class MainClass
             ExecuteSourceFiles(args);
             return;            
         }
-        var globals = Ava.DianaScriptAPIs.InitGlobals();
+        var apis = new Ava.DianaScriptAPIs();
+        var globals = apis.InitGlobals();
         while (true)
         {
             Console.Write("> ");
@@ -62,7 +64,7 @@ public static partial class MainClass
 
             var meta_ctx = MetaContext.Create();
             var cps = block.compile(meta_ctx);
-            var globals = Ava.DianaScriptAPIs.InitGlobals();
+            var globals = new Ava.DianaScriptAPIs().InitGlobals();
             CPSExecutor.Exec(globals, cps, path);
         }
     }

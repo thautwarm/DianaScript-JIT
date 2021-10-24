@@ -84,11 +84,25 @@ namespace Ava
             {
                 return -1;
             }
-            if (ctx.TryGetValue(s, out var ret)){
+            if (ctx.TryGetValue(s, out var ret))
+            {
                 return ret;
             }
             int i = nlocal++;
             ctx[s] = i;
+            return i;
+        }
+
+
+        public EncodedVar enter_force(string s)
+        {
+            if (parent == null) // store variables in the global scope
+            {
+                return -1;
+            }
+            var new_ctx = ctx.ShallowCopy();
+            var i = new_ctx[s] = nlocal++;
+            ctx = new_ctx;
             return i;
         }
     }
@@ -567,7 +581,7 @@ namespace Ava
 
         public ExecType compile_impl(MetaContext ctx)
         {
-            
+
             var target_ = ctx.enter(target);
             var target_str = target;
             var iter_ = iter.compile(ctx);
@@ -732,7 +746,10 @@ namespace Ava
         // public ImmediateAST[] suite { get; set; }
         public ExecType compile_impl(MetaContext ctx)
         {
+            var old_ctx = ctx.ctx;
             var suite_ = suite.Select(x => x.compile(ctx)).ToArray();
+
+            ctx.ctx = old_ctx; // This encloses let scope
 
             return (ExecContext ctx) =>
             {
@@ -817,6 +834,14 @@ namespace Ava
             var nlocal = subctx.nlocal;
             var narg = args.Length;
             var argstrs = args.Select(x => x).ToArray();
+            var bind_scope = true;
+            if (name_str == "")
+            {
+                name_str = "<lambda>";
+                bind_scope = false;
+
+            }
+
 
             return (ExecContext ctx) =>
             {
@@ -848,15 +873,18 @@ namespace Ava
                 }
 
                 var f = new DFunc { name = name, func = call };
-                if (name_i < 0)
-                {
-                    ctx.globals[name_str] = f;
-                }
-                else
-                {
-                    ctx.locals[name_i] = f;
-                }
 
+                if (bind_scope)
+                {
+                    if (name_i < 0)
+                    {
+                        ctx.globals[name_str] = f;
+                    }
+                    else
+                    {
+                        ctx.locals[name_i] = f;
+                    }
+                }
                 return f;
             };
         }
@@ -1063,5 +1091,63 @@ namespace Ava
             };
         }
 
+    }
+
+    public partial class Let : ImmediateAST
+    {
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            int lhs_ = ctx.enter(name);
+            var lhs_string = name;
+            var rhs_ = expr.compile(ctx);
+            if (lhs_ >= 0)
+            {
+                var new_ctx = new Dictionary<string, int>();
+                foreach (var kv in ctx.ctx)
+                {
+                    new_ctx[kv.Key] = kv.Value;
+                }
+                new_ctx[lhs_string] = lhs_;
+                ctx.ctx = new_ctx;
+            }
+            if (lhs_ < 0)
+                return (ExecContext ctx) =>
+                    {
+                        try
+                        {
+                            ctx.globals[lhs_string] = rhs_(ctx);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            throw new NameError($"global variable {lhs_string} not found");
+                        }
+
+                        return DNone.unique;
+                    }
+                    ;
+            else
+                return (ExecContext ctx) =>
+                {
+                    ctx.locals[lhs_] = rhs_(ctx);
+                    return DNone.unique;
+                };
+        }
+    }
+
+    public partial class Pipeline : ImmediateAST
+    {
+
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            ImmediateAST block = Block.make(
+                    funcs.Select(x => Let.make("_", x, x.Lineno, x.Colno) as ImmediateAST).Append(Load.make("_", lineno, colno)).ToArray(),
+                    lineno, colno
+                );
+            if (ctx.parent == null)
+            {
+                block = Call.make(Function.make("", new string[0], block, lineno, colno), new ImmediateAST[0], lineno, colno);
+            }
+            return block.compile(ctx);
+        }
     }
 }

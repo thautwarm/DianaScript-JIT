@@ -213,7 +213,7 @@ fun bool(x)
     else return False
     end
 end
-        
+   
 fun test_not()
     assert_and_print(not 1 == False, "not 1 == False")
     assert_and_print(bool(10) == True, "not 10 == False")

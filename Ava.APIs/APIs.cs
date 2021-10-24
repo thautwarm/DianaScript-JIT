@@ -19,7 +19,7 @@ namespace Ava
     using UnityEngine;
 #endif
 
-    public static partial class DianaScriptAPIs
+    public partial class DianaScriptAPIs
     {
         // Start is called before the first frame update
 
@@ -87,8 +87,18 @@ namespace Ava
             return DNone.unique;
         }
 
-        public static Dictionary<string, DObj> InitGlobals()
+        public DObj isdefined(DObj s)
         {
+            return MK.Int(G.ContainsKey(((DString) s).value));
+        }
+
+        private Dictionary<string, DObj> G;
+        public Dictionary<string, DObj> InitGlobals()
+        {
+
+            if (G != null)
+                return G;
+
             DInt.SetupType();
             DFloat.SetupType();
             DList.SetupType();
@@ -98,7 +108,7 @@ namespace Ava
             DInt.classobject.methods["__call__"] = MK.FuncN("int", IntType.__call__);
             DFloat.classobject.methods["__call__"] = MK.FuncN("float", FloatType.__call__);
             DString.classobject.methods["__call__"] = MK.FuncN("str", StrType.__call__);
-            return new Dictionary<string, DObj>
+            G = new Dictionary<string, DObj>
             {
                 {"log", MK.FuncN("log", log)},
                 {"typeof", MK.Func1("typeof", classname)},
@@ -111,8 +121,10 @@ namespace Ava
                 {"str", DString.classobject},
                 {"list", DList.classobject},
                 {"dict", DDict.classobject},
+                {"isdefined", MK.Func1("isdefined", isdefined)}
                 
             };
+            return G;
         }
 
 #if NUNITY

@@ -407,6 +407,32 @@ class Workflow:
         serialize_(self.colno, buf)
         serialize_(self.builder, buf)
         serialize_(self.options, buf)
+@dataclass(frozen=True)
+class Let:
+    lineno: int
+    colno: int
+    name: str
+    expr: ImmediateAST
+    TAG = 31
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        serialize_(self.lineno, buf)
+        serialize_(self.colno, buf)
+        serialize_(self.name, buf)
+        serialize_(self.expr, buf)
+@dataclass(frozen=True)
+class Pipeline:
+    lineno: int
+    colno: int
+    funcs: list[ImmediateAST]
+    TAG = 32
+    
+    def serialize_(self, buf: bytearray):
+        buf.append(self.TAG)
+        serialize_(self.lineno, buf)
+        serialize_(self.colno, buf)
+        serialize_(self.funcs, buf)
 
 ImmediateAST = (
     object
@@ -441,4 +467,6 @@ ImmediateAST = (
     | Neg
     | Inv
     | Workflow
+    | Let
+    | Pipeline
 )
