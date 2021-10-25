@@ -124,27 +124,32 @@ gen__filter_option__NEWLINE returns [System.Collections.Generic.List<(int, int, 
       } 
 ; 
 option returns [(int, int, string, System.Collections.Generic.List<ImmediateAST>) result] :
-      local__1_option_case0=NAME_13 { 
-        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__42 ; 
+      local__1_option_case0=NAME_13 local__2_option_case0=gen__nullable_gen__seplist__L44__expr { 
+        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__43 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__42 ; 
         CommonToken tmp__41 ; 
         tmp__41 = ( CommonToken ) _localctx.local__1_option_case0 ; 
-        tmp__42 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkOption0( tmp__41 ); 
-        $result = tmp__42; 
+        tmp__42 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_option_case0.result ; 
+        tmp__43 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkOptionN( tmp__41, tmp__42 ); 
+        $result = tmp__43; 
       } 
-    | local__1_option_case1=NAME_13 local__2_option_case1=gen__seplist__L44__expr { 
+    | 'do' local__2_option_case1=expr { 
         (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__45 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__44 ; 
-        CommonToken tmp__43 ; 
-        tmp__43 = ( CommonToken ) _localctx.local__1_option_case1 ; 
-        tmp__44 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_option_case1.result ; 
-        tmp__45 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkOptionN( tmp__43, tmp__44 ); 
+        ImmediateAST tmp__44 ; 
+        tmp__44 = ( ImmediateAST ) _localctx.local__2_option_case1.result ; 
+        tmp__45 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkDoOption( tmp__44 ); 
         $result = tmp__45; 
       } 
-    | 'do' local__2_option_case2=expr { 
-        (int, int, string, System.Collections.Generic.List<ImmediateAST>) tmp__47 ; 
-        ImmediateAST tmp__46 ; 
-        tmp__46 = ( ImmediateAST ) _localctx.local__2_option_case2.result ; 
-        tmp__47 = ((int, int, string, System.Collections.Generic.List<ImmediateAST>)) mkDoOption( tmp__46 ); 
+; 
+gen__nullable_gen__seplist__L44__expr returns [System.Collections.Generic.List<ImmediateAST> result] :
+      { 
+        System.Collections.Generic.List<ImmediateAST> tmp__46 ; 
+        tmp__46 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+        $result = tmp__46; 
+      } 
+    | local__1_gen__nullable_gen__seplist__L44__expr_case1=gen__seplist__L44__expr { 
+        System.Collections.Generic.List<ImmediateAST> tmp__47 ; 
+        tmp__47 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__nullable_gen__seplist__L44__expr_case1.result ; 
         $result = tmp__47; 
       } 
 ; 

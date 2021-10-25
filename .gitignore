@@ -3,10 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# generated ran code
+# generated ran code and antlr files
 *.tokens
 *.interp
 *.ran
+
+# generated Python code
+codegen/*_raw.py
+
 .vscode/
 runtests/mylang_raw.py
 docs/_build

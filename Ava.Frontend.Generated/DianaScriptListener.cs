@@ -62,6 +62,16 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOption([NotNull] DianaScriptParser.OptionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__seplist__L44__expr"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -117,8 +117,7 @@ namespace Ava.Frontend
             foreach (var op in ops)
             {
                 var opname = op.op.opname;
-                var key = (precedences[opname],
-                associativities.GetValueOrDefault(opname, false));
+                var key = (precedences[opname], associativities.TryGetValue(opname, out bool assoc)? assoc : false);
                 if (op_chunks.TryGetValue(key, out var group))
                 {
                     group.Add(op);

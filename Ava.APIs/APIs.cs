@@ -29,10 +29,10 @@ namespace Ava
             return MK.Int(System.DateTime.Now.Ticks);
         }
 #else
-    public static DObj time()
-    {
-        return MK.Float(Time.realtimeSinceStartup);
-    }
+        public static DObj time()
+        {
+            return MK.Float(Time.realtimeSinceStartup);
+        }
 #endif
 
         public static DObj classname(DObj o)
@@ -89,7 +89,7 @@ namespace Ava
 
         public DObj isdefined(DObj s)
         {
-            return MK.Int(G.ContainsKey(((DString) s).value));
+            return MK.Int(G.ContainsKey(((DString)s).value));
         }
 
         private Dictionary<string, DObj> G;
@@ -122,25 +122,9 @@ namespace Ava
                 {"list", DList.classobject},
                 {"dict", DDict.classobject},
                 {"isdefined", MK.Func1("isdefined", isdefined)}
-                
+
             };
             return G;
         }
-
-#if NUNITY
-#else
-    public static void Main(string[] paths)
-    {
-        foreach(var path in paths)
-        {
-            var parser = new Parser(path);
-            var block = parser.ReadImmediateAST() as Block;
-            var meta_ctx = MetaContext.Create();
-            var cps = block.compile(meta_ctx);
-            var globals = InitGlobals();
-            CPSExecutor.Exec(globals, cps, path);
-        }
-    }
-#endif
     }
 }

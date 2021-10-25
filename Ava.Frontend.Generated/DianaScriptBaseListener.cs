@@ -73,6 +73,18 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOption([NotNull] DianaScriptParser.OptionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__seplist__L44__expr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

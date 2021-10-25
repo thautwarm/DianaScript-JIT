@@ -116,17 +116,17 @@ namespace Ava.Frontend
         public static DObj mkstr(string s) =>
             MK.String(s);
 
-        
-        
+
+
 
         public static DObj mknone() => MK.None();
 
         public static ast mkPipeline(List<ast> exprs)
         {
             var fst = exprs[0];
-            if(exprs.Count == 1)    
+            if (exprs.Count == 1)
                 return fst;
-            
+
             return Pipeline.make(exprs.ToArray(), fst.Lineno, fst.Colno);
         }
         public static ast mkLet(CommonToken token, string name, ast expr)
@@ -199,12 +199,12 @@ namespace Ava.Frontend
             return For.make(target, iter, body, token.Line, token.Column);
         }
 
-        public static Option mkOption0(CommonToken token)
-        {
-            return (token.Line, token.Column, token.Text, new List<ast>{
-                CVal.make(MK.Int(1), token.Line, token.Column)
-            });
-        }
+        // public static Option mkOption0(CommonToken token)
+        // {
+        //     return (token.Line, token.Column, token.Text, new List<ast>{
+        //         CVal.make(MK.Int(1), token.Line, token.Column)
+        //     });
+        // }
 
         public static Option mkOptionN(CommonToken token, List<ast> args)
         {

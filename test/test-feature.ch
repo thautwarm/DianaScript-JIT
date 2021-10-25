@@ -59,6 +59,7 @@ builder = {
          x  = {}
         x.["yield"] = x -> log("yield " + str(x))
         x.["finish"] = () -> ()
+        x.["reason"] = () -> log("reason!")
         return x
     end
 }
@@ -66,6 +67,7 @@ builder = {
 
 
 builder {
+    reason
     yield 1
     yield 2
 }
