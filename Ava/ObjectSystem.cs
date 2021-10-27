@@ -40,6 +40,7 @@ namespace Ava
         public IEnumerable<DObj> __iter__();
     }
 
+    [Serializable]
     public partial class DInt
     {
         public Int64 value;
@@ -71,6 +72,7 @@ namespace Ava
         }
     }
 
+    [Serializable]
     public partial class DFloat
     {
         public string __str__() => value.ToString();
@@ -126,6 +128,7 @@ namespace Ava
         }
     }
 
+    [Serializable]
     public partial class DNone
     {
         public string __str__() => "None";
@@ -151,6 +154,7 @@ namespace Ava
         }
     }
 
+    [Serializable]
     public partial class DString
     {
         public object Native => value;
