@@ -8,6 +8,7 @@ namespace Ava
 {
 
 {% for defi in defs %}
+[Serializable]
 public partial class {{defi.name}}
 {
 

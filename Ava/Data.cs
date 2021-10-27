@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Ava
 {
 
+[Serializable]
 public partial class Store
 {
 
@@ -30,6 +31,7 @@ public partial class Store
         rhs = rhs,
     };
 }
+[Serializable]
 public partial class StoreMany
 {
 
@@ -53,6 +55,7 @@ public partial class StoreMany
         rhs = rhs,
     };
 }
+[Serializable]
 public partial class Bin
 {
 
@@ -79,6 +82,7 @@ public partial class Bin
         right = right,
     };
 }
+[Serializable]
 public partial class Load
 {
 
@@ -99,6 +103,7 @@ public partial class Load
         n = n,
     };
 }
+[Serializable]
 public partial class IfThenElse
 {
 
@@ -125,6 +130,7 @@ public partial class IfThenElse
         orelse = orelse,
     };
 }
+[Serializable]
 public partial class NestedIf
 {
 
@@ -148,6 +154,7 @@ public partial class NestedIf
         orelse = orelse,
     };
 }
+[Serializable]
 public partial class While
 {
 
@@ -171,6 +178,7 @@ public partial class While
         then = then,
     };
 }
+[Serializable]
 public partial class Loop
 {
 
@@ -191,6 +199,7 @@ public partial class Loop
         body = body,
     };
 }
+[Serializable]
 public partial class For
 {
 
@@ -217,6 +226,7 @@ public partial class For
         body = body,
     };
 }
+[Serializable]
 public partial class OGet
 {
 
@@ -240,6 +250,7 @@ public partial class OGet
         item = item,
     };
 }
+[Serializable]
 public partial class OSet
 {
 
@@ -266,6 +277,7 @@ public partial class OSet
         value = value,
     };
 }
+[Serializable]
 public partial class Block
 {
 
@@ -286,6 +298,7 @@ public partial class Block
         suite = suite,
     };
 }
+[Serializable]
 public partial class Call
 {
 
@@ -309,6 +322,7 @@ public partial class Call
         args = args,
     };
 }
+[Serializable]
 public partial class Function
 {
 
@@ -335,6 +349,7 @@ public partial class Function
         body = body,
     };
 }
+[Serializable]
 public partial class CStr
 {
 
@@ -355,6 +370,7 @@ public partial class CStr
         str = str,
     };
 }
+[Serializable]
 public partial class CVal
 {
 
@@ -375,6 +391,7 @@ public partial class CVal
         obj = obj,
     };
 }
+[Serializable]
 public partial class CInt
 {
 
@@ -395,6 +412,7 @@ public partial class CInt
         value = value,
     };
 }
+[Serializable]
 public partial class CFloat
 {
 
@@ -415,6 +433,7 @@ public partial class CFloat
         value = value,
     };
 }
+[Serializable]
 public partial class CNone
 {
 
@@ -432,6 +451,7 @@ public partial class CNone
         colno = colno,
     };
 }
+[Serializable]
 public partial class CList
 {
 
@@ -452,6 +472,7 @@ public partial class CList
         elts = elts,
     };
 }
+[Serializable]
 public partial class CTuple
 {
 
@@ -472,6 +493,7 @@ public partial class CTuple
         elts = elts,
     };
 }
+[Serializable]
 public partial class CDict
 {
 
@@ -492,6 +514,7 @@ public partial class CDict
         pairs = pairs,
     };
 }
+[Serializable]
 public partial class Break
 {
 
@@ -509,6 +532,7 @@ public partial class Break
         colno = colno,
     };
 }
+[Serializable]
 public partial class Continue
 {
 
@@ -526,6 +550,7 @@ public partial class Continue
         colno = colno,
     };
 }
+[Serializable]
 public partial class Return
 {
 
@@ -546,6 +571,7 @@ public partial class Return
         value = value,
     };
 }
+[Serializable]
 public partial class And
 {
 
@@ -569,6 +595,7 @@ public partial class And
         right = right,
     };
 }
+[Serializable]
 public partial class Or
 {
 
@@ -592,6 +619,7 @@ public partial class Or
         right = right,
     };
 }
+[Serializable]
 public partial class Not
 {
 
@@ -612,6 +640,7 @@ public partial class Not
         value = value,
     };
 }
+[Serializable]
 public partial class Neg
 {
 
@@ -632,6 +661,7 @@ public partial class Neg
         value = value,
     };
 }
+[Serializable]
 public partial class Inv
 {
 
@@ -652,6 +682,7 @@ public partial class Inv
         value = value,
     };
 }
+[Serializable]
 public partial class Workflow
 {
 
@@ -675,6 +706,7 @@ public partial class Workflow
         options = options,
     };
 }
+[Serializable]
 public partial class Let
 {
 
@@ -698,6 +730,7 @@ public partial class Let
         expr = expr,
     };
 }
+[Serializable]
 public partial class Pipeline
 {
 
@@ -1399,24 +1432,6 @@ public partial class ByteASTLoader
 
     private static readonly object _loaderSync = new object();
 
-    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
-    {
-        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
-        }
-        return arr;
-    }
-    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
-    {
-        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
-        }
-        return arr;
-    }
     public string[] Read(THint<string[]> _)
     {
         var arr = new string[ReadInt()];
@@ -1432,6 +1447,24 @@ public partial class ByteASTLoader
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<ImmediateAST>.val);
+        }
+        return arr;
+    }
+    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
+    {
+        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
+        }
+        return arr;
+    }
+    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
+    {
+        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
         }
         return arr;
     }
