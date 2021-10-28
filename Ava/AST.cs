@@ -1124,34 +1124,34 @@ namespace Ava
                 fs[i++] = (l, c, task, MK.String(task), args.Select(x => x.compile(ctx)).ToArray());
             }
 
-            int n = options.Length + 2;
             var start = MK.String("start");
             var finish = MK.String("finish");
             
             
             return (ExecContext ctx) =>
             {
-                DObj ret = builder_(ctx);
-                ret = ret.__get__(start).__call__(new DObj[0]);
+                DObj builder = builder_(ctx);
+                DObj ret = builder.__get__(start).__call__(new DObj[0]);
                 binder?.Invoke(ctx, ret);
                 foreach (var (l, c, desc, attr, args) in fs)
                 {
-                    DObj[] argobjs = new DObj[args.Length];
+                    DObj[] argobjs = new DObj[args.Length + 1];
+                    argobjs[0] = ret;
                     try
                     {
-                        for (var i = 0; i < args.Length; i++)
+                        for (var i = 1; i <= args.Length; i++)
                         {
-                            argobjs[i] = args[i](ctx);
+                            argobjs[i] = args[i-1](ctx);
                         }
-                        ret.__get__(attr).__call__(argobjs);
+                        builder.__get__(attr).__call__(argobjs);
                     }
                     catch
                     {
-                        ctx.frames.Add((l, c, ret.__str__() + "." + desc));
+                        ctx.frames.Add((l, c, "workflow." + desc));
                         throw;
                     }
                 }
-                ret.__get__(finish).__call__(new DObj[0]);
+                builder.__get__(finish).__call__(new DObj[]{ ret });
                 return ret;
             };
         }

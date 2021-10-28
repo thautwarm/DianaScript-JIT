@@ -41,11 +41,9 @@ end
 builder = {
     "start": fun ()
         log("started!")
-        {
-            "do": (x) -> log("do" + str(x)),
-            "finish": () -> log("finished!")
-        }
-     end
+     end,
+     "do": (self, x) -> log("do" + str(x)),
+    "finish": (self) -> log("finished!")
 }
 
 builder {
@@ -57,11 +55,11 @@ builder {
 builder = {
     "start": fun()
          x  = {}
-        x.["yield"] = x -> log("yield " + str(x))
-        x.["finish"] = () -> ()
-        x.["reason"] = () -> log("reason!")
         return x
-    end
+    end,
+    "yield": (self, x) -> log("yield " + str(x)),
+    "finish": (self) -> (),
+    "reason": (self) -> log("reason!")
 }
 
 
