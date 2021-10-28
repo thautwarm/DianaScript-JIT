@@ -17,7 +17,7 @@ namespace Ava
         public bool __bool__();
         public bool __eq__(DObj o);
         public bool __lt__(DObj o);
-        public DObj __call__(DObj[] objs);
+        public DObj __call__(params DObj[] objs);
         public DObj __get__(DObj s);
         public void __set__(DObj s, DObj value);
         public DObj __add__(DObj a);
@@ -458,7 +458,7 @@ namespace Ava
         public string Classname => "function";
 
 
-        public DObj __call__(DObj[] args) => func(args);
+        public DObj __call__(params DObj[] args) => func(args);
 
         public bool __bool__()
         {
@@ -516,7 +516,7 @@ namespace Ava
             }
             throw new AttributeError(attr.__str__());
         }
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             if(methods.TryGetValue("__call__", out var field))
             {
@@ -527,7 +527,7 @@ namespace Ava
     }
     public static class FloatType
     {
-        public static DObj __call__(DObj[] args)
+        public static DObj __call__(params DObj[] args)
         {
             if (args.Length == 0) return MK.Int(0);
             if (args.Length != 1) throw new InvalidCastException($"float object is not callable.");

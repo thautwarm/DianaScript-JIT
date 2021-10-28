@@ -7,7 +7,7 @@ namespace Ava
 {
     public partial class DInt : DObj
     {
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -45,7 +45,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -114,7 +114,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -222,7 +222,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -311,7 +311,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -396,7 +396,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -470,7 +470,7 @@ namespace Ava
         }
 
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
@@ -568,7 +568,7 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public DObj __call__(DObj[] objs)
+        public DObj __call__(params DObj[] objs)
         {
             throw new NotImplementedException();
         }
