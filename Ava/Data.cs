@@ -737,6 +737,27 @@ public partial class Workflow
     };
 }
 [Serializable]
+public partial class Decl
+{
+
+    int ImmediateAST.Lineno => lineno;
+    int ImmediateAST.Colno => colno;
+    public string description => "Decl";
+
+    public int lineno;
+    public int colno;
+    public string[] names;
+    public static Decl make(
+        string[] names,
+        int lineno,
+        int colno
+    ) => new  Decl {
+        lineno = lineno,
+        colno = colno,
+        names = names,
+    };
+}
+[Serializable]
 public partial class Let
 {
 
@@ -1101,6 +1122,15 @@ public partial class ByteASTLoader
             }
             case 32:
             {
+                return new Decl
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    names = Read(THint<string[]>.val),
+                };
+            }
+            case 33:
+            {
                 return new Let
                 {
                     lineno = Read(THint<int>.val),
@@ -1109,7 +1139,7 @@ public partial class ByteASTLoader
                     expr = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 33:
+            case 34:
             {
                 return new Pipeline
                 {
@@ -1464,6 +1494,16 @@ public partial class ByteASTLoader
     };
 
 
+    private Decl Read(THint<Decl> _) => ReadDecl();
+
+    public Decl ReadDecl() => new Decl
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        names = Read(THint<string[]>.val),
+    };
+
+
     private Let Read(THint<Let> _) => ReadLet();
 
     public Let ReadLet() => new Let
@@ -1487,12 +1527,12 @@ public partial class ByteASTLoader
 
     private static readonly object _loaderSync = new object();
 
-    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
+    public string[] Read(THint<string[]> _)
     {
-        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
+        var arr = new string[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
-            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
+            arr[i] = Read(THint<string>.val);
         }
         return arr;
     }
@@ -1505,21 +1545,21 @@ public partial class ByteASTLoader
         }
         return arr;
     }
+    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
+    {
+        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
+        }
+        return arr;
+    }
     public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
         var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
-        }
-        return arr;
-    }
-    public string[] Read(THint<string[]> _)
-    {
-        var arr = new string[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<string>.val);
         }
         return arr;
     }

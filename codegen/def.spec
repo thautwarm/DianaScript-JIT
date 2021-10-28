@@ -204,6 +204,12 @@ Workflow(
     (int, int, string, ImmediateAST[])[] options
 )
 
+Decl(
+    int lineno,
+    int colno,
+    string[] names
+)
+
 Let(
     int lineno,
     int colno,

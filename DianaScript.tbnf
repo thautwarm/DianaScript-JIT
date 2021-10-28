@@ -20,6 +20,7 @@ val mkList: (token, list[ast]) -> ast
 val mkTuple: (token, list[ast], bool) -> ast
 val mkDict: (token, list[(ast, ast)]) -> ast
 val mkVar: (token, str) -> ast
+val mkDecl: (token, list[str]) -> ast
 val mkInv: (token, ast) -> ast
 val mkNeg: (token, ast) -> ast
 val mkNot: (token, ast) -> ast
@@ -96,6 +97,7 @@ stmt :
     | "continue"      { mkContinue($1) }
     | "return" expr   { mkReturn($1, $2) }
     | "return"        { mkReturn($1, null) }
+    | "var" seplist[",", name] { mkDecl($1, $2) }
     | ibin            { $1 }
 
 

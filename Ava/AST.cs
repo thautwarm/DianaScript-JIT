@@ -150,6 +150,8 @@ namespace Ava
 #if MAX_PERFORMANCE
             return callable;
 #endif
+            if (callable == null) // declaration
+                return callable;
             return (ExecContext ctx) =>
             {
                 try
@@ -810,7 +812,11 @@ namespace Ava
         public ExecType compile_impl(MetaContext ctx)
         {
             var old_ctx = ctx.ctx;
-            var suite_ = suite.Select(x => x.compile(ctx)).ToArray();
+            var suite_ =
+                    suite
+                        .Select(x => x.compile(ctx))
+                        .Where(x => x != null)
+                        .ToArray();
 
             ctx.ctx = old_ctx; // This encloses let scope
 
@@ -1158,6 +1164,15 @@ namespace Ava
 
     }
 
+    public partial class Decl: ImmediateAST
+    {
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            foreach(var name in names) ctx.enter(name);
+            return null;;
+        }
+        
+    }
     public partial class Let : ImmediateAST
     {
         public ExecType compile_impl(MetaContext ctx)
@@ -1205,7 +1220,10 @@ namespace Ava
         public ExecType compile_impl(MetaContext ctx)
         {
             ImmediateAST block = Block.make(
-                    funcs.Select(x => Let.make("_", x, x.Lineno, x.Colno) as ImmediateAST).Append(Load.make("_", lineno, colno)).ToArray(),
+                    funcs
+                        .Select(x => Let.make("_", x, x.Lineno, x.Colno) as ImmediateAST)
+                        .Append(Load.make("_", lineno, colno))
+                        .ToArray(),
                     lineno, colno
                 );
             if (ctx.parent == null)

@@ -232,6 +232,14 @@ namespace Ava.Frontend
             return (expr.Lineno, expr.Colno, "do", new List<ast> { expr });
         }
 
+        public static ast mkDecl(CommonToken token, List<string> names)
+        {
+            return Decl.make(names.ToArray(), token.Line, token.Column);
+        }
+
+
+
+
     }
 
 }
