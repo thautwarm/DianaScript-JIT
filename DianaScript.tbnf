@@ -72,15 +72,14 @@ _closelist[sep, e]:
 closelist[sep, e]: optional[<NEWLINE>] _closelist[sep, e] { $2 }
 
 
-nullable[seq] : { empty() }
-              | seq { $1 }
+nullable[seq] : seq { $1 }
+              | { empty() }
 
-optional[a] :   { null }
-            | a { $1 }
+optional[a] : a { $1 }
+            |   { null }
 
-lhs_seq : { empty()  }
-        | lhs_seq lhs "="
-            { append($1, $2)  }
+lhs_seq : lhs_seq lhs "=" { append($1, $2)  }
+        | { empty()  }
 
 elifBlock : expr blockOf[then] { ($1, $2) }
 

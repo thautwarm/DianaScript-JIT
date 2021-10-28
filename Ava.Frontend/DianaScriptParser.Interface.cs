@@ -215,10 +215,11 @@ namespace Ava.Frontend
         }
 
 
-        public static ast mkWorkflow(CommonToken token, ast a, List<(int lineno, int colno, string attr, List<ast> args)> args)
+        public static ast mkWorkflow(CommonToken token, string builder, string bindname, List<(int lineno, int colno, string attr, List<ast> args)> args)
         {
             return Workflow.make(
-                a,
+                builder,
+                bindname,
                 args.Select(x => (x.lineno, x.colno, x.attr, x.args.ToArray())).ToArray(),
                 token.Line,
                 token.Column

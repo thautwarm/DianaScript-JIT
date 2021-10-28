@@ -4,11 +4,12 @@ typealias ast = ImmediateAST
 
 val mkOptionN: (token, list[ast]) -> (int, int, str, list[ast])
 val mkDoOption: (ast) -> (int, int, str, list[ast])
-val mkWorkflow: (token, ast, list[(int, int, str, list[ast])]) -> ast
+val mkWorkflow: (token, str, str, list[(int, int, str, list[ast])]) -> ast
 val mkLet : (token, str, ast) -> ast
 
 option : <NAME> nullable[seplist[",", expr]] { mkOptionN($1, $2) }
-       | "do" expr                      { mkDoOption($2) }
+       | "do" expr                           { mkDoOption($2) }
 
-stmt : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, mkVar($1, $1.Text), $3) }
+stmt : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, null, $3) }
+     | <NAME> "as" <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, $3.Text, $5) }
      | "let" <NAME> "=" expr  { mkLet($1, $2.Text, $4) }

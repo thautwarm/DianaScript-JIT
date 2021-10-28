@@ -719,10 +719,12 @@ public partial class Workflow
 
     public int lineno;
     public int colno;
-    public ImmediateAST builder;
+    public string builder;
+    public string bindname;
     public (int, int, string, ImmediateAST[])[] options;
     public static Workflow make(
-        ImmediateAST builder,
+        string builder,
+        string bindname,
         (int, int, string, ImmediateAST[])[] options,
         int lineno,
         int colno
@@ -730,6 +732,7 @@ public partial class Workflow
         lineno = lineno,
         colno = colno,
         builder = builder,
+        bindname = bindname,
         options = options,
     };
 }
@@ -1091,7 +1094,8 @@ public partial class ByteASTLoader
                 {
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
-                    builder = Read(THint<ImmediateAST>.val),
+                    builder = Read(THint<string>.val),
+                    bindname = Read(THint<string>.val),
                     options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
                 };
             }
@@ -1454,7 +1458,8 @@ public partial class ByteASTLoader
     {
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
-        builder = Read(THint<ImmediateAST>.val),
+        builder = Read(THint<string>.val),
+        bindname = Read(THint<string>.val),
         options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
     };
 
@@ -1491,12 +1496,12 @@ public partial class ByteASTLoader
         }
         return arr;
     }
-    public string[] Read(THint<string[]> _)
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
     {
-        var arr = new string[ReadInt()];
+        var arr = new ImmediateAST[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
-            arr[i] = Read(THint<string>.val);
+            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }
@@ -1509,12 +1514,12 @@ public partial class ByteASTLoader
         }
         return arr;
     }
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    public string[] Read(THint<string[]> _)
     {
-        var arr = new ImmediateAST[ReadInt()];
+        var arr = new string[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
-            arr[i] = Read(THint<ImmediateAST>.val);
+            arr[i] = Read(THint<string>.val);
         }
         return arr;
     }

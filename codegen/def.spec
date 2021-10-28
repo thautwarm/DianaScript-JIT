@@ -199,7 +199,8 @@ Inv(
 Workflow(
     int lineno,
     int colno,
-    ImmediateAST builder,
+    string builder,
+    string bindname,
     (int, int, string, ImmediateAST[])[] options
 )
 

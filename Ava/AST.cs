@@ -174,24 +174,30 @@ namespace Ava
 
         // public int colno { get; set; }
 
-        public ExecType compile_impl(MetaContext ctx)
+        public static Action<ExecContext, DObj> storevar(int lhs_, string lhs_string)
         {
-            int lhs_ = ctx.enter(lhs);
-            var lhs_string = lhs;
-            var rhs_ = rhs.compile(ctx);
             if (lhs_ < 0)
-                return (ExecContext ctx) =>
+                return (ExecContext ctx, DObj v) =>
                     {
-                        ctx.globals[lhs_string] = rhs_(ctx);
-                        return DNone.unique;
+                        ctx.globals[lhs_string] = v;
                     }
                     ;
             else
-                return (ExecContext ctx) =>
+                return (ExecContext ctx, DObj v) =>
                 {
-                    ctx.locals[lhs_] = rhs_(ctx);
-                    return DNone.unique;
+                    ctx.locals[lhs_] = v;
                 };
+        }
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            int lhs_ = ctx.enter(lhs);
+            var rhs_ = rhs.compile(ctx);
+            var store_func = storevar(lhs_, lhs);
+            return ctx =>
+            {
+                store_func(ctx, rhs_(ctx));
+                return DNone.unique;
+            };
         }
     }
 
@@ -929,7 +935,7 @@ namespace Ava
                     return body_(newctx);
                 }
 
-                var f = new DFunc { name = name, func = call };
+                var f = new DFunc { name = name_str, func = call };
 
                 if (bind_scope)
                 {
@@ -1110,8 +1116,8 @@ namespace Ava
             (int lineno, int colno, string desc, DString attr, ExecType[] args)[] fs = new (int, int, string, DString, ExecType[])[options.Length];
 
 
-            ExecType builder_ = builder.compile(ctx);
-
+            ExecType builder_ = Load.loadvar(ctx.search(builder), builder);            
+            var binder = bindname == null ? null : Store.storevar(ctx.enter(bindname), bindname);
             int i = 0;
             foreach (var (l, c, task, args) in options)
             {
@@ -1121,11 +1127,13 @@ namespace Ava
             int n = options.Length + 2;
             var start = MK.String("start");
             var finish = MK.String("finish");
+            
+            
             return (ExecContext ctx) =>
             {
-
                 DObj ret = builder_(ctx);
                 ret = ret.__get__(start).__call__(new DObj[0]);
+                binder?.Invoke(ctx, ret);
                 foreach (var (l, c, desc, attr, args) in fs)
                 {
                     DObj[] argobjs = new DObj[args.Length];

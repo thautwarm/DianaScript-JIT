@@ -66,10 +66,10 @@ builder = {
 
 
 
-builder {
+builder as bb {
     reason
     yield 1
-    yield 2
+    yield bb
 }
 
 
