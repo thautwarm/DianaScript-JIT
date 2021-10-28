@@ -182,15 +182,7 @@ namespace Ava
             if (lhs_ < 0)
                 return (ExecContext ctx) =>
                     {
-                        try
-                        {
-                            ctx.globals[lhs_string] = rhs_(ctx);
-                        }
-                        catch (KeyNotFoundException)
-                        {
-                            throw new NameError($"global variable {lhs_string} not found");
-                        }
-
+                        ctx.globals[lhs_string] = rhs_(ctx);
                         return DNone.unique;
                     }
                     ;
@@ -262,6 +254,78 @@ namespace Ava
         }
     }
 
+    public partial class IBin : ImmediateAST
+    {
+
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            Action<ExecContext, DObj> act;
+            var bin_func = Bin.create_binary_op(op);
+
+            if (left is Load load)
+            {
+                var n_i = ctx.enter(load.n);
+                var lhs_string = load.n;
+                if (n_i < 0)
+                {
+                    act = (ExecContext ctx, DObj value) =>
+                    {
+                        
+                        try
+                        {
+                            var dObj = ctx.globals[lhs_string];                            
+                            ctx.globals[lhs_string] = bin_func(dObj, value);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            throw new NameError($"global variable {lhs_string} not found.");
+                        }
+                        
+                    
+                    };
+                }
+                else
+                {
+                    act = (ExecContext ctx, DObj value) =>
+                    {
+                        try
+                        {
+                            var dObj = ctx.locals[n_i] ??
+                                throw new NameError($"local variable {lhs_string} used before definition!");
+
+                            ctx.locals[n_i] = bin_func(dObj, value);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            throw new NameError($"local variable {lhs_string} not found.");
+                        }                        
+                    };
+                }
+            }
+            else if (left is OGet oget)
+            {
+                var item_ = oget.item.compile(ctx);
+                var target_ = oget.target.compile(ctx);
+
+                act = (ExecContext ctx, DObj value) =>
+                {
+                    var t = target_(ctx);
+                    var it = item_(ctx);
+                    t.__set__(it, bin_func(t.__get__(it), value));
+                };
+            }
+            else
+                throw new InvalidOperationException();
+            
+            var right_ = right.compile(ctx);
+            return (ctx) =>
+            {
+                act(ctx, right_(ctx));
+                return DNone.unique;
+            };
+            
+        }
+    }
     public partial class Bin : ImmediateAST
     {
         // public ImmediateAST left;
@@ -272,51 +336,46 @@ namespace Ava
         // public int lineno { get; set; }
         // public int colno { get; set; }
 
-        public ExecType compile_impl(MetaContext ctx)
+        public static Func<DObj, DObj, DObj> create_binary_op(string op)
         {
-            var left_ = left.compile(ctx);
-            var right_ = right.compile(ctx);
-
             switch (op)
             {
                 case "+":
-                    return (ctx) => left_(ctx).__add__(right_(ctx));
+                    return (l, r) => l.__add__(r);
 
                 case "-":
-                    return (ctx) => left_(ctx).__sub__(right_(ctx));
+                    return (l, r) => l.__sub__(r);
 
                 case "*":
-                    return (ctx) => left_(ctx).__mul__(right_(ctx));
+                    return (l, r) => l.__mul__(r);
 
                 case "**":
-                    return (ctx) => left_(ctx).__pow__(right_(ctx));
+                    return (l, r) => l.__pow__(r);
 
                 case "/":
-                    return (ctx) => left_(ctx).__truediv__(right_(ctx));
+                    return (l, r) => l.__truediv__(r);
 
                 case "//":
-                    return (ctx) => left_(ctx).__floordiv__(right_(ctx));
+                    return (l, r) => l.__floordiv__(r);
 
                 case "^":
-                    return (ctx) => left_(ctx).__bitxor__(right_(ctx));
+                    return (l, r) => l.__bitxor__(r);
 
                 case "|":
-                    return (ctx) => left_(ctx).__bitor__(right_(ctx));
+                    return (l, r) => l.__bitor__(r);
 
                 case "&":
-                    return (ctx) => left_(ctx).__bitand__(right_(ctx));
+                    return (l, r) => l.__bitand__(r);
 
                 case "==":
-                    return (ctx) => MK.Int(left_(ctx).__eq__(right_(ctx)));
+                    return (l, r) => MK.Int(l.__eq__(r));
 
                 case "!=":
-                    return (ctx) => MK.Int(!left_(ctx).__eq__(right_(ctx)));
+                    return (l, r) => MK.Int(!l.__eq__(r));
 
                 case ">":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             !l.__lt__(r) &&
                             !l.__eq__(r)
@@ -324,70 +383,64 @@ namespace Ava
                     };
 
                 case ">=":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             !l.__lt__(r)
                         );
                     };
                 case "<":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             l.__lt__(r)
                         );
                     };
                 case "<=":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             l.__lt__(r) || l.__eq__(r)
                         );
                     };
 
                 case "in":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             r.__contains__(l)
                         );
                     };
 
                 case "notin":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return MK.Int(
                             !r.__contains__(l)
                         );
                     };
 
                 case "<<":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return l.__lshift__(r);
                     };
                 case ">>":
-                    return (ctx) =>
+                    return (l, r) =>
                     {
-                        var l = left_(ctx);
-                        var r = right_(ctx);
                         return l.__rshift__(r);
                     };
                 default:
                     throw new NotImplementedException(op);
             }
+        
+        }
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            var left_ = left.compile(ctx);
+            var right_ = right.compile(ctx);
+            var f = create_binary_op(op);
+            return (ctx) => f(left_(ctx), right_(ctx));
         }
     }
 
@@ -399,11 +452,8 @@ namespace Ava
 
         //     public int colno { get; set; }
 
-        public ExecType compile_impl(MetaContext ctx)
+        public static ExecType loadvar(int lhs_, string lhs_string)
         {
-            var lhs_string = n;
-            var lhs_ = ctx.search(lhs_string);
-
             if (lhs_ < 0)
 
                 return (ExecContext ctx) =>
@@ -432,6 +482,13 @@ namespace Ava
                         throw new NameError($"local variable {lhs_string} not found.");
                     }
                 };
+        }
+        public ExecType compile_impl(MetaContext ctx)
+        {
+            var lhs_string = n;
+            var lhs_ = ctx.search(lhs_string);
+            return loadvar(lhs_, lhs_string);
+            
         }
     }
 

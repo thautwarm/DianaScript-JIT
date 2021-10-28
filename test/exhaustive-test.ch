@@ -225,3 +225,35 @@ print({}, {1: 2}, {1: 2, 3: 4})
 print((1, ))
 
 print(0b01 << 33)
+
+
+
+x = 2
+
+x += 3
+
+assert_and_print(x == 5, "assign global var")
+
+x = [2]
+
+x.[0] += 3
+
+assert_and_print(x.[0] == 5, "assign global list")
+
+x = None
+
+fun test_local_assign()
+    x = 2
+
+    x += 3
+
+    assert_and_print(x == 5, "assign local var")
+
+    x = [2]
+
+    x.[0] += 3
+
+    assert_and_print(x.[0] == 5, "assign local list")
+end
+
+test_local_assign()

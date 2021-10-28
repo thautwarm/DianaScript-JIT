@@ -95,10 +95,7 @@ namespace Ava
         private Dictionary<string, DObj> G;
         public Dictionary<string, DObj> InitGlobals()
         {
-
-            if (G != null)
-                return G;
-
+            G?.Clear();
             DInt.SetupType();
             DFloat.SetupType();
             DList.SetupType();

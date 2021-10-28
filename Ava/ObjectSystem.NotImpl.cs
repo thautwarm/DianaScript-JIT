@@ -401,11 +401,6 @@ namespace Ava
             throw new NotImplementedException();
         }
 
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-
         public DObj __sub__(DObj a)
         {
             throw new NotImplementedException();

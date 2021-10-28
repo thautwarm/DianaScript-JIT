@@ -14,6 +14,13 @@ Bin(
     string op,
     ImmediateAST right)
 
+IBin(
+    int lineno,
+    int colno,
+    ImmediateAST left,
+    string op,
+    ImmediateAST right)
+
 Load(
     int lineno,
     int colno,

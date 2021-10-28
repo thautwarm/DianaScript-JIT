@@ -27,6 +27,7 @@ val mkAnd: (token, ast, ast) -> ast
 val mkOr: (token, ast, ast) -> ast
 val mkIfThen: (token, ast, ast) -> ast
 val mkStoreMany: (list[ast], ast) -> ast
+val mkIBin: (token, ast, str, ast) -> ast
 val mkNestedIf: (token, list[(ast, ast)], ast) -> ast
 val mkPipeline: (list[ast]) -> ast
 val mkFunc: (token, str, list[str], list[ast]) -> ast
@@ -96,7 +97,11 @@ stmt :
     | "continue"      { mkContinue($1) }
     | "return" expr   { mkReturn($1, $2) }
     | "return"        { mkReturn($1, null) }
+    | ibin            { $1 }
 
+
+or_[a, b] : a  { 0 }
+          | b  { 0 }
 
 then: optional[<NEWLINE>] "then" { $2 }
 do: optional[<NEWLINE>] "do" { $2 }
@@ -107,7 +112,7 @@ lhs : <NAME>  { mkVar($1, $1.Text) }
     | atom "." <NAME>
         { mkOGet($2, $1, mkVal($3, mkstr($3.Text))) }
 
-block : filter[stmt, <NEWLINE>] { $1 }
+block : filter[stmt, or_[";", <NEWLINE>]] { $1 }
 
 filter[keep, discard] :
     filter[keep, discard] keep { append($1, $2) }
@@ -134,6 +139,11 @@ binop : <SINGLE_BINOP> { mkop($1, $1.Text) }
       | "not" "in"     { mkop($1, "notin") }
       | "in"           { mkop($1, "in") }
       | "-"            { mkop($1, "-") }
+
+ibinop : <SINGLE_BINOP>  { $1.Text }
+       | "-"             { "-" }
+
+ibin  : lhs ibinop "=" expr { mkIBin($3, $1, $2, $4) }
 
 binseq  : atom    { append(empty(), to_obj($1)) }
         | binseq binop atom   {

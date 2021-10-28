@@ -203,7 +203,7 @@ namespace Ava
 
         public object Native => dict;
         public int __len__() => dict.Count;
-    
+
         public string __str__()
         {
             return "{" + String.Join(", ", dict.Select(x =>
@@ -291,14 +291,17 @@ namespace Ava
             return this.__eq__(other);
         }
 
-        public DObj __get__(DObj s)
+        public DObj __get__(DObj o)
         {
-            if (s is DInt i)
-            {
+            if(o is DInt i)
                 return elts[(int) i.value];
-            }
+            throw new ValueError($"cannot get tuple item with {o.__str__()}.");
+        }
 
-            throw new NotImplementedException();
+
+        public void __set__(DObj s, DObj value)
+        {
+            throw new ValueError($"cannot set tuple item.");
         }
 
         public bool __lt__(DObj o)
@@ -378,14 +381,9 @@ namespace Ava
 
         public DObj __get__(DObj o)
         {
-            switch(o)
-            {
-            case DInt i:
+            if(o is DInt i)
                 return elts[(int) i.value];
-            case DString s:
-                throw new NotImplementedException();
-            }
-            throw new NotImplementedException();
+            throw new ValueError($"cannot get list item with {o.__str__()}.");
         }
 
 
@@ -394,9 +392,9 @@ namespace Ava
             if (s is DInt i)
             {
                 elts[(int) i.value] = value;
+                return;
             }
-
-            throw new NotImplementedException();
+            throw new ValueError($"cannot set list item with {s.__str__()}.");
         }
 
         public bool Equals(DObj other)
@@ -431,7 +429,7 @@ namespace Ava
         }
     }
 
-    public partial class DNative 
+    public partial class DNative
     {
         public object value;
 
