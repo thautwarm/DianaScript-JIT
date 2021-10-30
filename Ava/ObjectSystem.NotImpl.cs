@@ -5,860 +5,131 @@ using System.Linq;
 
 namespace Ava
 {
-    public partial class DInt : DObj
+    public interface DObj : IEquatable<DObj>
     {
-        public DObj __call__(params DObj[] objs)
+        bool IEquatable<DObj>.Equals(DObj other)
         {
-            throw new NotImplementedException();
+            return __eq__(other);
         }
 
-        public bool __contains__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
+        public bool __bool__() => true;
+        public object Native { get; }
+        public string Classname { get; }
+        public string __str__() => Native.ToString();
+        public string __repr__() => __str__();
 
-        public DObj __get__(DObj s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int __len__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DFloat : DObj
-    {
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __get__(DObj s)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        void DObj.__set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __contains__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int __len__()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DNone : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __get__(DObj s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-
+        static Exception unsupported_op(DObj a, string op) =>
+            new TypeError($"{a.Classname} does not support '{op}'");
         public DObj __add__(DObj a)
         {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "+");
         }
 
         public DObj __bitand__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "&");
         }
 
         public DObj __bitor__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "|");
         }
 
         public DObj __bitxor__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "^");
+        }
+
+        public DObj __call__(params DObj[] objs)
+        {
+            throw unsupported_op(this, "__call__");
         }
 
         public bool __contains__(DObj a)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int __len__()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DString : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __get__(DObj s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public partial class DDict : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public DObj __add__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public partial class DTuple : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DList : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DNative : DObj
-    {
-        public bool Equals(DObj other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __add__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __bool__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __call__(params DObj[] objs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __contains__(DObj a)
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__contains__");
         }
 
         public bool __eq__(DObj o)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "==");
         }
 
         public DObj __floordiv__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "//");
         }
 
         public DObj __get__(DObj s)
         {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int __len__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__get__");
         }
 
         public void __set__(DObj s, DObj value)
         {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class DFunc : DObj
-    {
-        public DObj __neg__()
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__set__");
         }
 
         public DObj __inv__()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool __lt__(DObj o)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __get__(DObj s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __add__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __sub__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mul__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __truediv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __pow__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __mod__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __lshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __rshift__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __contains__(DObj a)
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__inv__");
         }
 
         public IEnumerable<DObj> __iter__()
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__iter__");
         }
 
         public int __len__()
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class TypeObject_v1 : DObj
-    {
-        public DObj __add__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitand__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __bitxor__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool __contains__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __floordiv__(DObj a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DObj __inv__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int __len__()
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__len__");
         }
 
         public DObj __lshift__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "<<");
         }
 
         public bool __lt__(DObj o)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "<");
         }
 
         public DObj __mod__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "%");
         }
 
         public DObj __mul__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "*");
         }
 
         public DObj __neg__()
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "__neg__");
         }
 
         public DObj __pow__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "**");
         }
 
         public DObj __rshift__(DObj a)
         {
-            throw new NotImplementedException();
-        }
-
-        public void __set__(DObj s, DObj value)
-        {
-            throw new NotImplementedException();
+            throw unsupported_op(this, ">>");
         }
 
         public DObj __sub__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "-");
         }
 
         public DObj __truediv__(DObj a)
         {
-            throw new NotImplementedException();
+            throw unsupported_op(this, "/");
         }
     }
 
-
+    
 }

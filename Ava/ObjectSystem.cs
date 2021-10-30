@@ -9,51 +9,24 @@ namespace Ava
     using int_t = System.Int64;
     using uint_t = System.UInt64;
 
-    public interface DObj : IEquatable<DObj>
-    {
-        public string Classname { get; }
-
-        public object Native { get; }
-        public bool __bool__();
-        public bool __eq__(DObj o);
-        public bool __lt__(DObj o);
-        public DObj __call__(params DObj[] objs);
-        public DObj __get__(DObj s);
-        public void __set__(DObj s, DObj value);
-        public DObj __add__(DObj a);
-        public DObj __sub__(DObj a);
-        public DObj __mul__(DObj a);
-        public DObj __floordiv__(DObj a);
-        public DObj __truediv__(DObj a);
-        public DObj __pow__(DObj a);
-        public DObj __mod__(DObj a);
-        public DObj __lshift__(DObj a);
-        public DObj __rshift__(DObj a);
-        public DObj __bitand__(DObj a);
-        public DObj __bitor__(DObj a);
-        public DObj __bitxor__(DObj a);
-        public bool __contains__(DObj a);
-        public DObj __neg__();
-        public DObj __inv__();
-        public string __str__();
-        public int __len__();
-        public IEnumerable<DObj> __iter__();
-    }
-
     [Serializable]
-    public partial class DInt
+    public partial class DInt: DObj
     {
+        public static explicit operator int(DInt v) => (int) v.value;
+        public static explicit operator ulong(DInt v) => unchecked((ulong) v.value);
+        public static explicit operator long(DInt v) => v.value;
+        public static explicit operator uint(DInt v) => unchecked((uint) v.value);
+        public static explicit operator byte(DInt v)  => (byte)v.value;
+        public static explicit operator DInt(int v) => MK.Int(v);
+        public static explicit operator DInt(long v) => MK.Int(v);
+        public static explicit operator DInt(ulong v) => MK.Int(v);
+        public static explicit operator DInt(uint v) => MK.Int(v);
+        public static explicit operator DInt(byte v) => MK.Int(v);
+    
         public Int64 value;
 
         public object Native => value;
-
-        public string __str__() => value.ToString();
         public string Classname => "int";
-
-        public bool Equals(DObj other)
-        {
-            return this.__eq__(other);
-        }
 
         public bool __bool__()
         {
@@ -65,7 +38,6 @@ namespace Ava
             return MK.Int(~value);
         }
 
-
         public DObj __neg__()
         {
             return MK.Int(-value);
@@ -73,20 +45,16 @@ namespace Ava
     }
 
     [Serializable]
-    public partial class DFloat
+    public partial class DFloat: DObj
     {
-        public string __str__() => value.ToString();
-
+        public static explicit operator float(DFloat v) => v.value;
+        public static explicit operator DFloat(float v) => MK.Float(v);
+        public static explicit operator DFloat(double v) => MK.Float((float) v);
+    
         public object Native => value;
         public string Classname => "float";
 
-        public bool Equals(DObj other)
-        {
-            return this.__eq__(other);
-        }
-
         public float value;
-
 
         public DObj __neg__()
         {
@@ -97,7 +65,6 @@ namespace Ava
         {
             return value != 0;
         }
-
 
         public bool __eq__(DObj o)
         {
@@ -110,7 +77,7 @@ namespace Ava
                 return value == f.value;
             }
 
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool __lt__(DObj o)
@@ -124,22 +91,17 @@ namespace Ava
                 return value < f.value;
             }
 
-            throw new NotImplementedException();
+            throw new ValueError($"cannot compare float with {o.__repr__()}");
         }
     }
 
     [Serializable]
-    public partial class DNone
+    public partial class DNone: DObj
     {
         public string __str__() => "None";
         public string Classname => "none";
 
         public object Native => this;
-
-        public bool Equals(DObj other)
-        {
-            return this.__eq__(other);
-        }
 
         public static DNone unique = new DNone();
 
@@ -155,7 +117,7 @@ namespace Ava
     }
 
     [Serializable]
-    public partial class DString
+    public partial class DString: DObj
     {
         public object Native => value;
 
@@ -164,6 +126,7 @@ namespace Ava
             return (o is DString s) && value.Contains(s.value);
         }
         public string __str__() => value;
+        public string __repr__() => "\"" + value.Replace("\"", "\\\"") + "\"";
         public string Classname => "str";
         public string value;
 
@@ -198,7 +161,7 @@ namespace Ava
     }
 
 
-    public partial class DDict
+    public partial class DDict: DObj
     {
 
         public object Native => dict;
@@ -207,7 +170,7 @@ namespace Ava
         public string __str__()
         {
             return "{" + String.Join(", ", dict.Select(x =>
-                $"{x.Key.__str__()}: {x.Value.__str__()}")) + "}";
+                $"{x.Key.__repr__()}: {x.Value.__repr__()}")) + "}";
         }
 
         public string Classname => "dict";
@@ -257,12 +220,12 @@ namespace Ava
     }
 
 
-    public partial class DTuple
+    public partial class DTuple: DObj
     {
         public object Native => elts;
         public string __str__()
         {
-            return "(" + String.Join(",", elts.Select(x => x.__str__())) + ",)";
+            return "(" + String.Join(",", elts.Select(x => x.__repr__())) + ",)";
         }
 
         public string Classname => "tuple";
@@ -295,7 +258,7 @@ namespace Ava
         {
             if(o is DInt i)
                 return elts[(int) i.value];
-            throw new ValueError($"cannot get tuple item with {o.__str__()}.");
+            throw new ValueError($"cannot get tuple item with {o.__repr__()}.");
         }
 
 
@@ -358,7 +321,7 @@ namespace Ava
         public int __len__() => elts.Count;
         public string __str__()
         {
-            return "[" + String.Join(",", elts.Select(x => x.__str__())) + "]";
+            return "[" + String.Join(",", elts.Select(x => x.__repr__())) + "]";
         }
 
         public string Classname => "list";
@@ -383,7 +346,7 @@ namespace Ava
         {
             if(o is DInt i)
                 return elts[(int) i.value];
-            throw new ValueError($"cannot get list item with {o.__str__()}.");
+            throw new ValueError($"cannot get list item with {o.__repr__()}.");
         }
 
 
@@ -394,7 +357,7 @@ namespace Ava
                 elts[(int) i.value] = value;
                 return;
             }
-            throw new ValueError($"cannot set list item with {s.__str__()}.");
+            throw new ValueError($"cannot set list item with {s.__repr__()}.");
         }
 
         public bool Equals(DObj other)
@@ -429,26 +392,16 @@ namespace Ava
         }
     }
 
-    public partial class DNative
+    public partial class DNative: DObj
     {
         public object value;
-
         public object Native => value;
         public string Classname => "native";
-
-
-        public string __str__()
-        {
-            return value.ToString();
-        }
     }
 
-    public partial class DFunc
+    public partial class DFunc: DObj
     {
-        public string __str__()
-        {
-            return name;
-        }
+        public string __str__() => name;
 
         public object Native => func;
 
@@ -457,13 +410,7 @@ namespace Ava
         public string name;
         public string Classname => "function";
 
-
         public DObj __call__(params DObj[] args) => func(args);
-
-        public bool __bool__()
-        {
-            return true;
-        }
 
         public bool __eq__(DObj o)
         {
@@ -478,7 +425,7 @@ namespace Ava
     }
 
     // TODO: After C# 8.0 default interface gets adopted by Unity, we introduce small-talk OOP system
-    public partial class TypeObject_v1
+    public partial class TypeObject_v1: DObj
     {
 
         public object Native => this;
@@ -490,10 +437,6 @@ namespace Ava
         {
             this.typename = typename;
             this.methods = new Dictionary<string, DObj>();
-        }
-        public bool __bool__()
-        {
-            return true;
         }
         public string __str__() => typename;
         public string Classname => "type";
