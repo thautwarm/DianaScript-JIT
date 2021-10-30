@@ -10,6 +10,7 @@ val mkLet : (token, str, ast) -> ast
 option : <NAME> nullable[seplist[",", expr]] { mkOptionN($1, $2) }
        | "do" expr                           { mkDoOption($2) }
 
-stmt : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, null, $3) }
+stmt : "let" <NAME> "=" expr  { mkLet($1, $2.Text, $4) }
+
+expr : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, null, $3) }
      | <NAME> "as" <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, $3.Text, $5) }
-     | "let" <NAME> "=" expr  { mkLet($1, $2.Text, $4) }
