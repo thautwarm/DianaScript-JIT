@@ -127,6 +127,8 @@ namespace Ava
         {
             DObj call(DObj[] args)
             {
+                if (args.Length < 1)
+                    throw new ArgumentException($"{name} requires more than 1 arguments.");
                 return f(args[0]);
             }
 
@@ -137,6 +139,8 @@ namespace Ava
         {
             DObj call(DObj[] args)
             {
+                if (args.Length < 2)
+                    throw new ArgumentException($"{name} requires more than 2 arguments.");
                 return f(args[0], args[1]);
             }
 
@@ -146,6 +150,11 @@ namespace Ava
         public static DFunc FuncN(string name, Func<DObj[], DObj> f)
         {
             return new DFunc {func = f, name = name};
+        }
+
+        public static DTuple tuple(params DObj[] args)
+        {
+            return new DTuple {elts = args};
         }
     }
 }

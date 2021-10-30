@@ -52,7 +52,7 @@ namespace Ava
 
         public bool __eq__(DObj o)
         {
-            throw unsupported_op(this, "==");
+            return Object.ReferenceEquals(o.Native, this.Native);
         }
 
         public DObj __floordiv__(DObj a)
