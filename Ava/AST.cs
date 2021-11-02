@@ -763,7 +763,10 @@ namespace Ava
             }
 
             backset(ctx.currentOffset);
-            orelse.emit(ctx, true);
+            if(orelse != null)
+                orelse.emit(ctx, true);
+            else
+                ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
 
             int end_label = ctx.currentOffset;
             foreach (var op in end_label_operands)

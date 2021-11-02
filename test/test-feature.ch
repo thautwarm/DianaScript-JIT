@@ -47,7 +47,7 @@ z = [None]
 log(dict.search(k, 10, z))
 log(z)
 
-assert(z == 8)
+assert(z == [None])
 assert(not isdefined("_"))
 
 

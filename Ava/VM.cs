@@ -14,6 +14,8 @@ namespace Ava
         CONTINUE = 2,
         RETURN = 3
     }
+
+    [Serializable]
     public enum BC
     {
         LOAD_GLOBAL,
@@ -177,9 +179,7 @@ namespace Ava
         {
 
             var bytecode = co.bytecode;
-
             var end = bytecode.Length;
-            var offset = this.offset;
             head:
             if (offset < end)
             {
