@@ -8,11 +8,18 @@ namespace Ava
 {
 
 [Serializable]
-public partial class Store
+public partial class Store : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        lhs.__resolve_local(ctx);
+        rhs.__resolve_local(ctx);
+    }
+
     public string description => "Store";
 
     public int lineno;
@@ -32,11 +39,18 @@ public partial class Store
     };
 }
 [Serializable]
-public partial class StoreMany
+public partial class StoreMany : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        lhs.__resolve_local(ctx);
+        rhs.__resolve_local(ctx);
+    }
+
     public string description => "StoreMany";
 
     public int lineno;
@@ -56,11 +70,19 @@ public partial class StoreMany
     };
 }
 [Serializable]
-public partial class Bin
+public partial class Bin : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        left.__resolve_local(ctx);
+        op.__resolve_local(ctx);
+        right.__resolve_local(ctx);
+    }
+
     public string description => "Bin";
 
     public int lineno;
@@ -83,11 +105,19 @@ public partial class Bin
     };
 }
 [Serializable]
-public partial class IBin
+public partial class IBin : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        left.__resolve_local(ctx);
+        op.__resolve_local(ctx);
+        right.__resolve_local(ctx);
+    }
+
     public string description => "IBin";
 
     public int lineno;
@@ -110,11 +140,17 @@ public partial class IBin
     };
 }
 [Serializable]
-public partial class Load
+public partial class Load : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        n.__resolve_local(ctx);
+    }
+
     public string description => "Load";
 
     public int lineno;
@@ -131,11 +167,19 @@ public partial class Load
     };
 }
 [Serializable]
-public partial class IfThenElse
+public partial class IfThenElse : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        cond.__resolve_local(ctx);
+        then.__resolve_local(ctx);
+        orelse.__resolve_local(ctx);
+    }
+
     public string description => "IfThenElse";
 
     public int lineno;
@@ -158,11 +202,18 @@ public partial class IfThenElse
     };
 }
 [Serializable]
-public partial class NestedIf
+public partial class NestedIf : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        elifs.__resolve_local(ctx);
+        orelse.__resolve_local(ctx);
+    }
+
     public string description => "NestedIf";
 
     public int lineno;
@@ -182,11 +233,18 @@ public partial class NestedIf
     };
 }
 [Serializable]
-public partial class While
+public partial class While : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        cond.__resolve_local(ctx);
+        then.__resolve_local(ctx);
+    }
+
     public string description => "While";
 
     public int lineno;
@@ -206,11 +264,44 @@ public partial class While
     };
 }
 [Serializable]
-public partial class Loop
+public partial class Raise : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        expr.__resolve_local(ctx);
+    }
+
+    public string description => "Raise";
+
+    public int lineno;
+    public int colno;
+    public ImmediateAST expr;
+    public static Raise make(
+        ImmediateAST expr,
+        int lineno,
+        int colno
+    ) => new  Raise {
+        lineno = lineno,
+        colno = colno,
+        expr = expr,
+    };
+}
+[Serializable]
+public partial class Loop : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        body.__resolve_local(ctx);
+    }
+
     public string description => "Loop";
 
     public int lineno;
@@ -227,11 +318,81 @@ public partial class Loop
     };
 }
 [Serializable]
-public partial class For
+public partial class Meta : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        filename_idx.__resolve_local(ctx);
+        inner.__resolve_local(ctx);
+    }
+
+    public string description => "Meta";
+
+    public int lineno;
+    public int colno;
+    public int filename_idx;
+    public ImmediateAST inner;
+    public static Meta make(
+        int filename_idx,
+        ImmediateAST inner,
+        int lineno,
+        int colno
+    ) => new  Meta {
+        lineno = lineno,
+        colno = colno,
+        filename_idx = filename_idx,
+        inner = inner,
+    };
+}
+[Serializable]
+public partial class SetMeta : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        idx.__resolve_local(ctx);
+        filename.__resolve_local(ctx);
+    }
+
+    public string description => "SetMeta";
+
+    public int lineno;
+    public int colno;
+    public int idx;
+    public string filename;
+    public static SetMeta make(
+        int idx,
+        string filename,
+        int lineno,
+        int colno
+    ) => new  SetMeta {
+        lineno = lineno,
+        colno = colno,
+        idx = idx,
+        filename = filename,
+    };
+}
+[Serializable]
+public partial class For : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        target.__resolve_local(ctx);
+        iter.__resolve_local(ctx);
+        body.__resolve_local(ctx);
+    }
+
     public string description => "For";
 
     public int lineno;
@@ -254,11 +415,18 @@ public partial class For
     };
 }
 [Serializable]
-public partial class OGet
+public partial class OGet : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        target.__resolve_local(ctx);
+        item.__resolve_local(ctx);
+    }
+
     public string description => "OGet";
 
     public int lineno;
@@ -278,11 +446,19 @@ public partial class OGet
     };
 }
 [Serializable]
-public partial class OSet
+public partial class OSet : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        target.__resolve_local(ctx);
+        item.__resolve_local(ctx);
+        value.__resolve_local(ctx);
+    }
+
     public string description => "OSet";
 
     public int lineno;
@@ -305,11 +481,17 @@ public partial class OSet
     };
 }
 [Serializable]
-public partial class Block
+public partial class Block : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        suite.__resolve_local(ctx);
+    }
+
     public string description => "Block";
 
     public int lineno;
@@ -326,11 +508,18 @@ public partial class Block
     };
 }
 [Serializable]
-public partial class Call
+public partial class Call : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        f.__resolve_local(ctx);
+        args.__resolve_local(ctx);
+    }
+
     public string description => "Call";
 
     public int lineno;
@@ -350,11 +539,19 @@ public partial class Call
     };
 }
 [Serializable]
-public partial class Function
+public partial class Function : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        name.__resolve_local(ctx);
+        args.__resolve_local(ctx);
+        body.__resolve_local(ctx);
+    }
+
     public string description => "Function";
 
     public int lineno;
@@ -377,32 +574,17 @@ public partial class Function
     };
 }
 [Serializable]
-public partial class CStr
+public partial class CVal : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "CStr";
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
 
-    public int lineno;
-    public int colno;
-    public string str;
-    public static CStr make(
-        string str,
-        int lineno,
-        int colno
-    ) => new  CStr {
-        lineno = lineno,
-        colno = colno,
-        str = str,
-    };
-}
-[Serializable]
-public partial class CVal
-{
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        obj.__resolve_local(ctx);
+    }
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
     public string description => "CVal";
 
     public int lineno;
@@ -419,71 +601,17 @@ public partial class CVal
     };
 }
 [Serializable]
-public partial class CInt
+public partial class CList : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "CInt";
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
 
-    public int lineno;
-    public int colno;
-    public Int64 value;
-    public static CInt make(
-        Int64 value,
-        int lineno,
-        int colno
-    ) => new  CInt {
-        lineno = lineno,
-        colno = colno,
-        value = value,
-    };
-}
-[Serializable]
-public partial class CFloat
-{
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        elts.__resolve_local(ctx);
+    }
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "CFloat";
-
-    public int lineno;
-    public int colno;
-    public float value;
-    public static CFloat make(
-        float value,
-        int lineno,
-        int colno
-    ) => new  CFloat {
-        lineno = lineno,
-        colno = colno,
-        value = value,
-    };
-}
-[Serializable]
-public partial class CNone
-{
-
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "CNone";
-
-    public int lineno;
-    public int colno;
-    public static CNone make(
-        int lineno,
-        int colno
-    ) => new  CNone {
-        lineno = lineno,
-        colno = colno,
-    };
-}
-[Serializable]
-public partial class CList
-{
-
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
     public string description => "CList";
 
     public int lineno;
@@ -500,11 +628,17 @@ public partial class CList
     };
 }
 [Serializable]
-public partial class CTuple
+public partial class CTuple : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        elts.__resolve_local(ctx);
+    }
+
     public string description => "CTuple";
 
     public int lineno;
@@ -521,11 +655,17 @@ public partial class CTuple
     };
 }
 [Serializable]
-public partial class CDict
+public partial class CDict : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        pairs.__resolve_local(ctx);
+    }
+
     public string description => "CDict";
 
     public int lineno;
@@ -542,11 +682,43 @@ public partial class CDict
     };
 }
 [Serializable]
-public partial class Break
+public partial class CStrDict : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        pairs.__resolve_local(ctx);
+    }
+
+    public string description => "CStrDict";
+
+    public int lineno;
+    public int colno;
+    public (ImmediateAST, ImmediateAST)[] pairs;
+    public static CStrDict make(
+        (ImmediateAST, ImmediateAST)[] pairs,
+        int lineno,
+        int colno
+    ) => new  CStrDict {
+        lineno = lineno,
+        colno = colno,
+        pairs = pairs,
+    };
+}
+[Serializable]
+public partial class Break : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+    }
+
     public string description => "Break";
 
     public int lineno;
@@ -560,11 +732,16 @@ public partial class Break
     };
 }
 [Serializable]
-public partial class Continue
+public partial class Continue : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+    }
+
     public string description => "Continue";
 
     public int lineno;
@@ -578,11 +755,17 @@ public partial class Continue
     };
 }
 [Serializable]
-public partial class Return
+public partial class Return : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        value.__resolve_local(ctx);
+    }
+
     public string description => "Return";
 
     public int lineno;
@@ -599,11 +782,18 @@ public partial class Return
     };
 }
 [Serializable]
-public partial class And
+public partial class And : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        left.__resolve_local(ctx);
+        right.__resolve_local(ctx);
+    }
+
     public string description => "And";
 
     public int lineno;
@@ -623,11 +813,18 @@ public partial class And
     };
 }
 [Serializable]
-public partial class Or
+public partial class Or : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        left.__resolve_local(ctx);
+        right.__resolve_local(ctx);
+    }
+
     public string description => "Or";
 
     public int lineno;
@@ -647,11 +844,17 @@ public partial class Or
     };
 }
 [Serializable]
-public partial class Not
+public partial class Not : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        value.__resolve_local(ctx);
+    }
+
     public string description => "Not";
 
     public int lineno;
@@ -668,11 +871,17 @@ public partial class Not
     };
 }
 [Serializable]
-public partial class Neg
+public partial class Neg : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        value.__resolve_local(ctx);
+    }
+
     public string description => "Neg";
 
     public int lineno;
@@ -689,11 +898,17 @@ public partial class Neg
     };
 }
 [Serializable]
-public partial class Inv
+public partial class Inv : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        value.__resolve_local(ctx);
+    }
+
     public string description => "Inv";
 
     public int lineno;
@@ -710,38 +925,17 @@ public partial class Inv
     };
 }
 [Serializable]
-public partial class Workflow
+public partial class Decl : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "Workflow";
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
 
-    public int lineno;
-    public int colno;
-    public string builder;
-    public string bindname;
-    public (int, int, string, ImmediateAST[])[] options;
-    public static Workflow make(
-        string builder,
-        string bindname,
-        (int, int, string, ImmediateAST[])[] options,
-        int lineno,
-        int colno
-    ) => new  Workflow {
-        lineno = lineno,
-        colno = colno,
-        builder = builder,
-        bindname = bindname,
-        options = options,
-    };
-}
-[Serializable]
-public partial class Decl
-{
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        names.__resolve_local(ctx);
+    }
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
     public string description => "Decl";
 
     public int lineno;
@@ -758,48 +952,30 @@ public partial class Decl
     };
 }
 [Serializable]
-public partial class Let
+public partial class ExprStmt : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "Let";
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        expr.__resolve_local(ctx);
+    }
+
+    public string description => "ExprStmt";
 
     public int lineno;
     public int colno;
-    public string name;
     public ImmediateAST expr;
-    public static Let make(
-        string name,
+    public static ExprStmt make(
         ImmediateAST expr,
         int lineno,
         int colno
-    ) => new  Let {
+    ) => new  ExprStmt {
         lineno = lineno,
         colno = colno,
-        name = name,
         expr = expr,
-    };
-}
-[Serializable]
-public partial class Pipeline
-{
-
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
-    public string description => "Pipeline";
-
-    public int lineno;
-    public int colno;
-    public ImmediateAST[] funcs;
-    public static Pipeline make(
-        ImmediateAST[] funcs,
-        int lineno,
-        int colno
-    ) => new  Pipeline {
-        lineno = lineno,
-        colno = colno,
-        funcs = funcs,
     };
 }
 
@@ -897,6 +1073,15 @@ public partial class ByteASTLoader
             }
             case 8:
             {
+                return new Raise
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    expr = Read(THint<ImmediateAST>.val),
+                };
+            }
+            case 9:
+            {
                 return new Loop
                 {
                     lineno = Read(THint<int>.val),
@@ -904,7 +1089,27 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 9:
+            case 10:
+            {
+                return new Meta
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    filename_idx = Read(THint<int>.val),
+                    inner = Read(THint<ImmediateAST>.val),
+                };
+            }
+            case 11:
+            {
+                return new SetMeta
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    idx = Read(THint<int>.val),
+                    filename = Read(THint<string>.val),
+                };
+            }
+            case 12:
             {
                 return new For
                 {
@@ -915,7 +1120,7 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 10:
+            case 13:
             {
                 return new OGet
                 {
@@ -925,7 +1130,7 @@ public partial class ByteASTLoader
                     item = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 11:
+            case 14:
             {
                 return new OSet
                 {
@@ -936,7 +1141,7 @@ public partial class ByteASTLoader
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 12:
+            case 15:
             {
                 return new Block
                 {
@@ -945,7 +1150,7 @@ public partial class ByteASTLoader
                     suite = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 13:
+            case 16:
             {
                 return new Call
                 {
@@ -955,7 +1160,7 @@ public partial class ByteASTLoader
                     args = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 14:
+            case 17:
             {
                 return new Function
                 {
@@ -966,16 +1171,7 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 15:
-            {
-                return new CStr
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    str = Read(THint<string>.val),
-                };
-            }
-            case 16:
+            case 18:
             {
                 return new CVal
                 {
@@ -984,33 +1180,7 @@ public partial class ByteASTLoader
                     obj = Read(THint<DObj>.val),
                 };
             }
-            case 17:
-            {
-                return new CInt
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    value = Read(THint<Int64>.val),
-                };
-            }
-            case 18:
-            {
-                return new CFloat
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    value = Read(THint<float>.val),
-                };
-            }
             case 19:
-            {
-                return new CNone
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                };
-            }
-            case 20:
             {
                 return new CList
                 {
@@ -1019,7 +1189,7 @@ public partial class ByteASTLoader
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 21:
+            case 20:
             {
                 return new CTuple
                 {
@@ -1028,9 +1198,18 @@ public partial class ByteASTLoader
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 22:
+            case 21:
             {
                 return new CDict
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    pairs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
+                };
+            }
+            case 22:
+            {
+                return new CStrDict
                 {
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
@@ -1111,17 +1290,6 @@ public partial class ByteASTLoader
             }
             case 31:
             {
-                return new Workflow
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    builder = Read(THint<string>.val),
-                    bindname = Read(THint<string>.val),
-                    options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
-                };
-            }
-            case 32:
-            {
                 return new Decl
                 {
                     lineno = Read(THint<int>.val),
@@ -1129,23 +1297,13 @@ public partial class ByteASTLoader
                     names = Read(THint<string[]>.val),
                 };
             }
-            case 33:
+            case 32:
             {
-                return new Let
+                return new ExprStmt
                 {
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
-                    name = Read(THint<string>.val),
                     expr = Read(THint<ImmediateAST>.val),
-                };
-            }
-            case 34:
-            {
-                return new Pipeline
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    funcs = Read(THint<ImmediateAST[]>.val),
                 };
             }
             default:
@@ -1245,6 +1403,16 @@ public partial class ByteASTLoader
     };
 
 
+    private Raise Read(THint<Raise> _) => ReadRaise();
+
+    public Raise ReadRaise() => new Raise
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        expr = Read(THint<ImmediateAST>.val),
+    };
+
+
     private Loop Read(THint<Loop> _) => ReadLoop();
 
     public Loop ReadLoop() => new Loop
@@ -1252,6 +1420,28 @@ public partial class ByteASTLoader
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
         body = Read(THint<ImmediateAST>.val),
+    };
+
+
+    private Meta Read(THint<Meta> _) => ReadMeta();
+
+    public Meta ReadMeta() => new Meta
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        filename_idx = Read(THint<int>.val),
+        inner = Read(THint<ImmediateAST>.val),
+    };
+
+
+    private SetMeta Read(THint<SetMeta> _) => ReadSetMeta();
+
+    public SetMeta ReadSetMeta() => new SetMeta
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        idx = Read(THint<int>.val),
+        filename = Read(THint<string>.val),
     };
 
 
@@ -1323,16 +1513,6 @@ public partial class ByteASTLoader
     };
 
 
-    private CStr Read(THint<CStr> _) => ReadCStr();
-
-    public CStr ReadCStr() => new CStr
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        str = Read(THint<string>.val),
-    };
-
-
     private CVal Read(THint<CVal> _) => ReadCVal();
 
     public CVal ReadCVal() => new CVal
@@ -1340,35 +1520,6 @@ public partial class ByteASTLoader
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
         obj = Read(THint<DObj>.val),
-    };
-
-
-    private CInt Read(THint<CInt> _) => ReadCInt();
-
-    public CInt ReadCInt() => new CInt
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        value = Read(THint<Int64>.val),
-    };
-
-
-    private CFloat Read(THint<CFloat> _) => ReadCFloat();
-
-    public CFloat ReadCFloat() => new CFloat
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        value = Read(THint<float>.val),
-    };
-
-
-    private CNone Read(THint<CNone> _) => ReadCNone();
-
-    public CNone ReadCNone() => new CNone
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
     };
 
 
@@ -1395,6 +1546,16 @@ public partial class ByteASTLoader
     private CDict Read(THint<CDict> _) => ReadCDict();
 
     public CDict ReadCDict() => new CDict
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        pairs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
+    };
+
+
+    private CStrDict Read(THint<CStrDict> _) => ReadCStrDict();
+
+    public CStrDict ReadCStrDict() => new CStrDict
     {
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
@@ -1482,18 +1643,6 @@ public partial class ByteASTLoader
     };
 
 
-    private Workflow Read(THint<Workflow> _) => ReadWorkflow();
-
-    public Workflow ReadWorkflow() => new Workflow
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        builder = Read(THint<string>.val),
-        bindname = Read(THint<string>.val),
-        options = Read(THint<(int, int, string, ImmediateAST[])[]>.val),
-    };
-
-
     private Decl Read(THint<Decl> _) => ReadDecl();
 
     public Decl ReadDecl() => new Decl
@@ -1504,47 +1653,18 @@ public partial class ByteASTLoader
     };
 
 
-    private Let Read(THint<Let> _) => ReadLet();
+    private ExprStmt Read(THint<ExprStmt> _) => ReadExprStmt();
 
-    public Let ReadLet() => new Let
+    public ExprStmt ReadExprStmt() => new ExprStmt
     {
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
-        name = Read(THint<string>.val),
         expr = Read(THint<ImmediateAST>.val),
-    };
-
-
-    private Pipeline Read(THint<Pipeline> _) => ReadPipeline();
-
-    public Pipeline ReadPipeline() => new Pipeline
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        funcs = Read(THint<ImmediateAST[]>.val),
     };
 
 
     private static readonly object _loaderSync = new object();
 
-    public (int, int, string, ImmediateAST[])[] Read(THint<(int, int, string, ImmediateAST[])[]> _)
-    {
-        var arr = new (int, int, string, ImmediateAST[])[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(int, int, string, ImmediateAST[])>.val);
-        }
-        return arr;
-    }
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
-    {
-        var arr = new ImmediateAST[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<ImmediateAST>.val);
-        }
-        return arr;
-    }
     public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
         var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
@@ -1560,6 +1680,15 @@ public partial class ByteASTLoader
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<string>.val);
+        }
+        return arr;
+    }
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    {
+        var arr = new ImmediateAST[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }

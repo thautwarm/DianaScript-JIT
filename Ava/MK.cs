@@ -18,6 +18,8 @@ namespace Ava
 
         public static DObj unbox(THint<DObj> _, DObj o) => o;
 
+        public static Ref unbox(THint<Ref> _, DObj o) => (Ref) o;
+
         public static Dictionary<DObj, DObj> unbox(THint<Dictionary<DObj, DObj>> _, DObj o) => ((DDict) o).dict;
         public static DObj[] unbox(THint<DObj[]> _, DObj o) => ((DTuple) o).elts;
         public static List<DObj> unbox(THint<List<DObj>> _, DObj o) => ((DList) o).elts;
@@ -112,6 +114,13 @@ namespace Ava
         {
             return new DDict {dict = dObjs};
         }
+
+        public static DObj StrDict(Dictionary<string, DObj> dObjs)
+        {
+            return new DStrDict {dict = dObjs};
+        }
+
+        public static DObj create(Dictionary<string, DObj> d) => StrDict(d);
 
         public static DFunc Func0(string name, Func<DObj> f)
         {

@@ -48,7 +48,6 @@ else
 end
 
 fun g()
-    
     for i in [1, 2, 3, 4] do
         log(i)
     end
@@ -61,10 +60,8 @@ log(int("233"))
 x = time()
 
 fun test()
-    loop
-        if x < 10000000 then
-            break
-        end
+    var x
+    while x < 10000000 do
         x = x + 1
     end
 end
@@ -87,12 +84,10 @@ log("aaa")
 
 
 fun test2()
-     x = 0
-    loop
-        if x > 10000000 then
-            break
-        end
-        x = x + 1
+    var localvariable
+    localvariable = 0
+    while localvariable < 10000000 do
+        localvariable =  localvariable + 1
     end
     return x
 end

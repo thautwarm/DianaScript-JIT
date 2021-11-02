@@ -9,11 +9,19 @@ namespace Ava
 
 {% for defi in defs %}
 [Serializable]
-public partial class {{defi.name}}
+public partial class {{defi.name}} : ImmediateAST
 {
 
-    int ImmediateAST.Lineno => lineno;
-    int ImmediateAST.Colno => colno;
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        {% for field in defi if field.name not in ("lineno", "colno") %}
+        {{field.name}}.__resolve_local(ctx);
+        {% endfor %}
+    }
+
     public string description => "{{defi.name}}";
 
 {% for field in defi %}

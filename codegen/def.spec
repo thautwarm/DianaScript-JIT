@@ -47,11 +47,31 @@ While(
     ImmediateAST then
 )
 
+Raise(
+    int lineno,
+    int colno,
+    ImmediateAST expr
+)
+
 
 Loop(
     int lineno,
     int colno,
     ImmediateAST body
+)
+
+Meta(
+    int lineno,
+    int colno,
+    int filename_idx,
+    ImmediateAST inner
+)
+
+SetMeta(
+    int lineno,
+    int colno,
+    int idx,
+    string filename
 )
 
 For(
@@ -100,33 +120,10 @@ Function(
     ImmediateAST body
 )
 
-CStr(
-    int lineno,
-    int colno,
-    string str
-)
-
 CVal(
     int lineno,
     int colno,
     DObj obj
-)
-
-CInt(
-    int lineno,
-    int colno,
-    Int64 value
-)
-
-CFloat(
-    int lineno,
-    int colno,
-    float value
-)
-
-CNone(
-    int lineno,
-    int colno
 )
 
 CList(
@@ -142,6 +139,12 @@ CTuple(
 )
 
 CDict(
+    int lineno,
+    int colno,
+    (ImmediateAST, ImmediateAST)[] pairs
+)
+
+CStrDict(
     int lineno,
     int colno,
     (ImmediateAST, ImmediateAST)[] pairs
@@ -196,29 +199,15 @@ Inv(
     ImmediateAST value
 )
 
-Workflow(
-    int lineno,
-    int colno,
-    string builder,
-    string bindname,
-    (int, int, string, ImmediateAST[])[] options
-)
-
 Decl(
     int lineno,
     int colno,
     string[] names
 )
 
-Let(
-    int lineno,
-    int colno,
-    string name,
-    ImmediateAST expr
-)
 
-Pipeline(
+ExprStmt(
     int lineno,
     int colno,
-    ImmediateAST[] funcs
+    ImmediateAST expr
 )

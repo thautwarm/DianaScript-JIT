@@ -11,12 +11,13 @@ namespace Ava
         {
             return __eq__(other);
         }
-
         public bool __bool__() => true;
         public object Native { get; }
         public string Classname { get; }
         public string __str__() => Native.ToString();
         public string __repr__() => __str__();
+
+        public DObj __next__() => throw unsupported_op(this, "__next__");
 
         static Exception unsupported_op(DObj a, string op) =>
             new TypeError($"{a.Classname} does not support '{op}'");
@@ -129,7 +130,11 @@ namespace Ava
         {
             throw unsupported_op(this, "/");
         }
+
+        public void SetContentsVM(VM vm, DObj o) => throw new TypeError($"setref not supported by {Classname}");
+        public DObj GetContentsVM(VM vm) => throw new TypeError($"deref not supported by {Classname}");
+
     }
 
-    
+
 }

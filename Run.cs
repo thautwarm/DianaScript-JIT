@@ -23,10 +23,18 @@ public static partial class MainClass
     {
         var apis = new Ava.DianaScriptAPIs();
         var globals = apis.InitGlobals();
+        
         foreach(var path in paths)
         {
-            var cps = Ava.DianaScriptAPIs.Parse(path).compile(MetaContext.Create());
-            var res = CPSExecutor.Exec(globals, cps, path);
+            var ast = Ava.DianaScriptAPIs.Parse(path);
+            var ctx = MetaContext.Create(path);
+            var initPos = ctx.currentPos;
+            ast.emit(ctx, false);
+            var (_, code) = ctx.buildCode(initPos, new string[0]);
+            // code.ShowCode();
+            var vm = new VM(code, new DObj[0], new DObj[0], globals);
+            
+            vm.execute();
         }
     }
     public static void Main(string[] args)
@@ -43,33 +51,15 @@ public static partial class MainClass
         {
             Console.Write("> ");
             String input = Console.ReadLine(); ;
-            ICharStream stream = CharStreams.fromString(input);
-
-            ITokenSource lexer = new DianaScriptLexer(stream);
-
-            ITokenStream tokens = new CommonTokenStream(lexer);
-
-            var parser = new DianaScriptParser(tokens);
-            parser.RemoveErrorListeners();
-            parser.AddErrorListener(new XParser());
-            var result = parser.start().result.ToArray();
-            var cps = Block.make(result, 0, 0).compile(MetaContext.Create());
-            var res = CPSExecutor.Exec(globals, cps, "xxx");
-
+            var ast = Ava.DianaScriptAPIs.Parse(input, "repl");
+            var ctx = MetaContext.Create("repl");
+            var initPos = ctx.currentPos;
+            ast.emit(ctx, false);
+            var (_, code) = ctx.buildCode(initPos, new string[0]);
+            // code.ShowCode();
+            var vm = new VM(code, new DObj[0], new DObj[0], globals);
+            var res = vm.execute();
             Console.WriteLine(res.__str__());
-        }
-    }
-    public static void Main_back(string[] paths)
-    {
-        foreach (var path in paths)
-        {
-            var loader = new ByteASTLoader(path);
-            var block = loader.ReadImmediateAST() as Block;
-
-            var meta_ctx = MetaContext.Create();
-            var cps = block.compile(meta_ctx);
-            var globals = new Ava.DianaScriptAPIs().InitGlobals();
-            CPSExecutor.Exec(globals, cps, path);
         }
     }
 }

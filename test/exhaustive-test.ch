@@ -5,7 +5,7 @@ print("================================================")
 True = 1
 False = 0
 
-
+log(2, 3)
 fun assert_and_print(test, msg)
      a = assert(test, msg)
     assert(a == None)
@@ -15,10 +15,12 @@ end
 x = 2
 
 fun f(x)
+    var x, y
     x = 3
+    y = 2
     assert_and_print(x == 3, "local assign")
+    log(y)
 end
-
 
 assert_and_print(x == 2, "global not polluted")
 
@@ -32,24 +34,12 @@ f3(1, 2, 3)
 
 fun test_assign(x, y, z)
     x = y = z
-     a = x
+    a = x
     assert_and_print((x == a and y == a and z == a), "multi assign")
 end
 
 test_assign(1, 2, 3)
 
-fun test_loop_break()
-     x = 0
-    loop    
-        if x < 100 then
-            x = x + 1
-        else
-            break
-        end
-    end
-
-    assert_and_print(x == 100, "loop break")
-end
 
 
 fun test_loop_break_and_continue()
@@ -68,9 +58,26 @@ end
 
 test_loop_break_and_continue()
 
+
+fun test_loop_break()
+    var x
+    x = 0
+    loop
+        if x < 100 then
+            x = x + 1
+        else
+            
+            break
+        end
+    end
+
+    assert_and_print(x == 100, "loop break")
+end
+
 fun test_foreach()
-     xs = [1, 2, 3, 4, 5]
-     sum = 0
+    var sum, xs, k
+    xs = [1, 2, 3, 4, 5]
+    sum = 0
     for _ in xs do
         sum = sum + 1
     end
@@ -91,6 +98,7 @@ test_foreach()
 
 
 fun test_if()
+    var x
     if True then
         assert_and_print(True, "no else")
     end
@@ -123,6 +131,7 @@ test_if()
 
 BAD = False
 fun test_return(x)
+    var x, BAD
     if x == 1 then
         return "return in if"
         BAD = True
@@ -191,7 +200,7 @@ assert_and_print(BAD != True, msg)
 
 
 fun test_shortcuts()
-    
+    var x
     True or assert_and_print(False, "failed at (True or _)")
 
     False or assert_and_print(True, "succeeded at (False or _)")
@@ -243,6 +252,7 @@ assert_and_print(x.[0] == 5, "assign global list")
 x = None
 
 fun test_local_assign()
+    var x
     x = 2
 
     x += 3
@@ -257,3 +267,16 @@ fun test_local_assign()
 end
 
 test_local_assign()
+
+
+
+
+fun test_closure(x, z, k)
+    var u
+    u = 8
+    fun (y)
+        (x + y) * k * u + z
+    end
+end
+
+log(test_closure(1, 2, 3)(4))

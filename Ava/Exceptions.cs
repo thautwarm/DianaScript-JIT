@@ -6,41 +6,33 @@ namespace Ava
 {
     public class DianaVMError : Exception
     {
-        public List<(int, int, string)> frames;
         public Exception e;
 
-        public string filename;
+        public SourcePos pos;
 
-        public DianaVMError(Exception e, string filename, List<(int, int, string)> frames) : base(
-            e.GetType().ToString() + ": " + e.Message)
+        public DianaVMError(Exception e, SourcePos pos) : base(
+            e.GetType().ToString() + ": " + e.StackTrace)
         {
             this.e = e;
-            this.frames = frames;
-            this.filename = filename;
+            this.pos = pos;
         }
+
 
         public override string StackTrace => get_stack_trace();
 
         string get_stack_trace()
         {
-            return
-#if MY_DEBUG
-        e.StackTrace + "\n\n" +
-#endif
-                "DianaVM exception not handled:\n" +
-                String.Concat(
-                    this.frames.Select(frame =>
-                    {
-                        var (l, c, msg) = frame;
-                        return $"  {msg} at {filename}:{l}:{c}\n";
-                    }).ToArray()
-                );
+            return $"DianaVM exception not handled at {pos.filename}:{pos.line}:{pos.col}\n" + e.Message + "\n" + e.StackTrace;
         }
     }
 
     public class NameError : Exception
     {
         public NameError(string s) : base(s)
+        {
+        }
+
+        public NameError(string kind, string s) : base($"{kind} variable {s} not found")
         {
         }
     }

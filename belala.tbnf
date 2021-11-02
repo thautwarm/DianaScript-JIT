@@ -6,11 +6,11 @@ val mkOptionN: (token, list[ast]) -> (int, int, str, list[ast])
 val mkDoOption: (ast) -> (int, int, str, list[ast])
 val mkWorkflow: (token, str, str, list[(int, int, str, list[ast])]) -> ast
 val mkLet : (token, str, ast) -> ast
+val mkRaise: (token, ast) -> ast
+val mkMeta : (str, str, str, ast) -> ast
 
-option : <NAME> nullable[seplist[",", expr]] { mkOptionN($1, $2) }
-       | "do" expr                           { mkDoOption($2) }
 
-stmt : "let" <NAME> "=" expr  { mkLet($1, $2.Text, $4) }
+stmt : "raise" expr           { mkRaise($1, $2) }
+     | "__META" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
 
-expr : <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, null, $3) }
-     | <NAME> "as" <NAME> "{" filter[option, <NEWLINE>]  "}" { mkWorkflow($1, $1.Text, $3.Text, $5) }
+expr : "__META" <INT> ":" <INT> ":" <INT> "in" expr { mkMeta($2.Text, $4.Text, $6.Text, $8) }

@@ -42,16 +42,6 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitExpr([NotNull] DianaScriptParser.ExprContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__filter_option__NEWLINE"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGen__filter_option__NEWLINE([NotNull] DianaScriptParser.Gen__filter_option__NEWLINEContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__filter_option__NEWLINE"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGen__filter_option__NEWLINE([NotNull] DianaScriptParser.Gen__filter_option__NEWLINEContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.stmt"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -61,36 +51,6 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitStmt([NotNull] DianaScriptParser.StmtContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.option"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterOption([NotNull] DianaScriptParser.OptionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.option"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitOption([NotNull] DianaScriptParser.OptionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__nullable_gen__seplist__L44__expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGen__nullable_gen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__nullable_gen__seplist__L44__exprContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__seplist__L44__expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__seplist__L44__exprContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__seplist__L44__expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGen__seplist__L44__expr([NotNull] DianaScriptParser.Gen__seplist__L44__exprContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.newline"/>.
 	/// </summary>
@@ -351,26 +311,6 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitOr_expr([NotNull] DianaScriptParser.Or_exprContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__seplist_gen__line_wrap__L124_L62__or_expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGen__seplist_gen__line_wrap__L124_L62__or_expr([NotNull] DianaScriptParser.Gen__seplist_gen__line_wrap__L124_L62__or_exprContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__seplist_gen__line_wrap__L124_L62__or_expr"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGen__seplist_gen__line_wrap__L124_L62__or_expr([NotNull] DianaScriptParser.Gen__seplist_gen__line_wrap__L124_L62__or_exprContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap__L124_L62"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGen__line_wrap__L124_L62([NotNull] DianaScriptParser.Gen__line_wrap__L124_L62Context context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap__L124_L62"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGen__line_wrap__L124_L62([NotNull] DianaScriptParser.Gen__line_wrap__L124_L62Context context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.block"/>.
 	/// </summary>

@@ -74,6 +74,12 @@ namespace Ava.Frontend
         public static ast mkDict(CommonToken token, List<(ast, ast)> elts)
         => CDict.make(elts.ToArray(), token.Line, token.Column);
 
+        public static ast mkStrDict(CommonToken token, List<(ast, ast)> elts)
+        => CStrDict.make(elts.ToArray(), token.Line, token.Column);
+
+        public static ast mkMeta(string idx, string l, string c, ast inner)
+        => Meta.make(int.Parse(idx), inner, int.Parse(l), int.Parse(c));
+
         public static ast mkVar(CommonToken token, string name)
         => Load.make(name, token.Line, token.Column);
 
@@ -124,19 +130,6 @@ namespace Ava.Frontend
 
         public static DObj mknone() => MK.None();
 
-        public static ast mkPipeline(List<ast> exprs)
-        {
-            var fst = exprs[0];
-            if (exprs.Count == 1)
-                return fst;
-
-            return Pipeline.make(exprs.ToArray(), fst.Lineno, fst.Colno);
-        }
-        public static ast mkLet(CommonToken token, string name, ast expr)
-        {
-            return Let.make(name, expr, token.Line, token.Column);
-        }
-
         public static ast mkIfThen(CommonToken token, ast cond, ast then)
         {
             return IfThenElse.make(
@@ -144,6 +137,16 @@ namespace Ava.Frontend
                 CVal.make(MK.None(), token.Line, token.Column),
                 token.Line, token.Column
             );
+        }
+
+        public static ast mkExprStmt(ast inner)
+        {
+            return ExprStmt.make(inner, inner.Lineno, inner.Colno);
+        }
+
+        public static ast mkRaise(CommonToken token, ast inner)
+        {
+            return Raise.make(inner, token.Line, token.Column);
         }
 
         public static ast mkBlock(CommonToken token, List<ast> suite)
@@ -202,6 +205,11 @@ namespace Ava.Frontend
             return For.make(target, iter, body, token.Line, token.Column);
         }
 
+        public static ast mkWhile(CommonToken token, ast cond, ast body)
+        {
+            return While.make(cond, body, token.Line, token.Column);
+        }
+
         // public static Option mkOption0(CommonToken token)
         // {
         //     return (token.Line, token.Column, token.Text, new List<ast>{
@@ -215,18 +223,7 @@ namespace Ava.Frontend
         }
 
 
-        public static ast mkWorkflow(CommonToken token, string builder, string bindname, List<(int lineno, int colno, string attr, List<ast> args)> args)
-        {
-            return Workflow.make(
-                builder,
-                bindname,
-                args.Select(x => (x.lineno, x.colno, x.attr, x.args.ToArray())).ToArray(),
-                token.Line,
-                token.Column
-
-            );
-        }
-
+        
         public static Option mkDoOption(ast expr)
         {
             return (expr.Lineno, expr.Colno, "do", new List<ast> { expr });

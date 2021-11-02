@@ -38,40 +38,6 @@ end
 
 
 
-builder = {
-    "start": fun ()
-        log("started!")
-     end,
-     "do": (self, x) -> log("do" + str(x)),
-    "finish": (self) -> log("finished!")
-}
-
-builder {
-    do 1
-    do 2
-    do 3
-}
-
-builder = {
-    "start": fun()
-         x  = {}
-        return x
-    end,
-    "yield": (self, x) -> log("yield " + str(x)),
-    "finish": (self) -> (),
-    "reason": (self) -> log("reason!")
-}
-
-
-
-builder as bb {
-    reason
-    yield 1
-    yield bb
-}
-
-
-
 k = {1 : 2}
 z = [None]
 dict.search(k, 1, z)
@@ -81,11 +47,8 @@ z = [None]
 log(dict.search(k, 10, z))
 log(z)
 
-
-z = 1
-|> _ + 1
-|> _ * 4
-
-
 assert(z == 8)
 assert(not isdefined("_"))
+
+
+log({| "a" : 5 |})

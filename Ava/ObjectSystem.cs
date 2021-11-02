@@ -119,6 +119,8 @@ namespace Ava
     [Serializable]
     public partial class DString: DObj
     {
+        public static explicit operator string(DString o) => o.value;
+        public static explicit operator DString(string o) => MK.String(o);
         public object Native => value;
 
         public bool __contains__(DObj o)
@@ -219,6 +221,64 @@ namespace Ava
         }
     }
 
+    public partial class DStrDict: DObj
+    {
+
+        public object Native => dict;
+        public int __len__() => dict.Count;
+
+        public string __str__()
+        {
+            return "{|" + String.Join(", ", dict.Select(x =>
+                $"{x.Key}: {x.Value.__repr__()}")) + "|}";
+        }
+
+        public string Classname => "dict";
+        public Dictionary<string, DObj> dict;
+
+
+        public bool __bool__()
+        {
+            return dict.Count != 0;
+        }
+
+
+        public bool __eq__(DObj o)
+        {
+            return (o is DStrDict a) && a.dict.Count == dict.Count && !dict.Except(a.dict).Any();
+        }
+
+        public DObj __get__(DObj s)
+        {
+            return dict[(string) (DString) s];
+        }
+
+
+        public void __set__(DObj s, DObj value)
+        {
+            dict[(string) (DString) s] = value;
+        }
+
+        public bool Equals(DObj other)
+        {
+            return this.__eq__(other);
+        }
+
+
+        public bool __contains__(DObj a)
+        {
+            return dict.ContainsKey((string) (DString) a);
+        }
+
+        public IEnumerable<DObj> __iter__()
+        {
+            foreach (var obj in dict)
+            {
+                yield return MK.Tuple(new[] {MK.String(obj.Key), obj.Value});
+            }
+        }
+    }
+
 
     public partial class DTuple: DObj
     {
@@ -308,13 +368,13 @@ namespace Ava
         }
     }
 
-    public interface Ref: DObj
+    public interface Ref
     {
         public void SetContents(DObj v);
         public DObj GetContents();
     }
 
-    public partial class DList: Ref
+    public partial class DList: Ref, DObj
     {
 
         public object Native => elts;
