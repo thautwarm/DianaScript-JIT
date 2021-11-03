@@ -38,6 +38,7 @@ You can access `DObj.Native` to access their .NET representation:
 | ~ | bit invert | `Int` | 
 | << | left shift | `Int`(higher bits are circular) |
 | >> | zero-fill right shift |  `Int`(discard lower bits) |
+| not in/in | check if/if not contained | any in/not in `List/Set/Tuple/String`  | 
 
 ## Modules and Methods
 
