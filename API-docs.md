@@ -75,9 +75,9 @@ You can access `DObj.Native` to access their .NET representation:
 - `Str.lower(Str)`
      wrap of `Systen.String.ToLowerInvariant`
 
-- `Str.Contains(String): Int` : return 0 if false, or 1 if true
+- `Str.contains(String): Int` : return 0 if false, or 1 if true
 
-- `Str.Format(Str, any1, any2, ...)`: equivalent to `System.String.Format`.
+- `Str.format(Str, any1, any2, ...)`: equivalent to `System.String.Format`.
 
 - `Str.substr(Str, Int, Int?)`
 
