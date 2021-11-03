@@ -27,6 +27,7 @@ Dict DDict Dictionary<DObj, DObj> {
     bool this DDict.__truediv__(DObj) as quotient
     IEnumerable<DObj> CollectionExts.ObjectPairs(Dictionary<DObj, DObj>) as items
     void this.ForEachIndex_(DObj) as forkey
+    void this.Merge(Dictionary<DObj, DObj>) as update
 }
 
 

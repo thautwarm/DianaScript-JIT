@@ -46,19 +46,19 @@ namespace Ava
             return self;
         }
 
-        public static void Merge(this Dictionary<DObj, DObj> self, IEnumerable<DObj> other)
+        public static void Merge(this Dictionary<DObj, DObj> self, Dictionary<DObj, DObj> other)
         {
             foreach(var x in other)
             {
-                self[x] = DNone.unique;
+                self[x.Key] = x.Value;
             }
         }
 
-        public static void Merge(this Dictionary<string, DObj> self, IEnumerable<DObj> other)
+        public static void Merge(this Dictionary<string, DObj> self, Dictionary<string, DObj> other)
         {
             foreach(var x in other)
             {
-                self[(string) (DString) x] = DNone.unique;
+                self[(string) (DString) x.Key] = x.Value;
             }
         }
 

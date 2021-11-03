@@ -194,7 +194,9 @@ We omit the return type when it is `Str`.
 
 - `Dict.intersect(Dict, Enum)`: same as `&` operator for dictionaries; set intersect
 
+- `Dict.update(Dict, Dict)`: update the first dict with key-values pairs in the second dict
 - `Dict.forkey(Dict, function)`
+
 
 ## Enum
 

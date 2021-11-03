@@ -159,6 +159,19 @@ public partial class DDict
     }
     throw new ArgumentException($"call Dict.forkey; needs at most (2) arguments, got {nargs}.");
   }
+  public static DObj bind_update(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 2)
+      throw new ArgumentException($"calling Dict.update; needs at least  (2) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<Dictionary<DObj, DObj>>.val, _args[0]);
+    var _arg1 = MK.unbox(THint<Dictionary<DObj, DObj>>.val, _args[1]);
+    {
+      _arg0.Merge(_arg1);
+      return MK.None();
+    }
+    throw new ArgumentException($"call Dict.update; needs at most (2) arguments, got {nargs}.");
+  }
   static DDict()
   {
     module_instance = new DModule("Dict");
@@ -174,6 +187,7 @@ public partial class DDict
     module_instance.fields.Add("quotient", MK.FuncN("Dict.quotient", bind_quotient));
     module_instance.fields.Add("items", MK.FuncN("Dict.items", bind_items));
     module_instance.fields.Add("forkey", MK.FuncN("Dict.forkey", bind_forkey));
+    module_instance.fields.Add("update", MK.FuncN("Dict.update", bind_update));
   }
 }
 }
