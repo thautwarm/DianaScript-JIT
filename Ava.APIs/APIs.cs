@@ -89,17 +89,10 @@ namespace Ava
             return DNone.unique;
         }
 
-        public DObj isdefined(DObj s)
-        {
-            return MK.Int(G.ContainsKey(((DString)s).value));
-        }
-
-        private Dictionary<string, DObj> G;
         public Dictionary<string, DObj> InitGlobals()
         {
-            G?.Clear();
-
-            G = new Dictionary<string, DObj>
+            
+            var ns = new Dictionary<string, DObj>
             {
                 {"log", MK.FuncN("log", log)},
                 {"typeof", MK.Func1("typeof", classname)},
@@ -114,10 +107,16 @@ namespace Ava
                 {DDict.module_instance.name, DDict.module_instance},
                 {DStrDict.module_instance.name, DStrDict.module_instance},
                 {DIterable.module_instance.name, DIterable.module_instance},
-                {"isdefined", MK.Func1("isdefined", isdefined)}
-
             };
-            return G;
+
+            DObj isdefined(DObj s)
+            {
+                return MK.Int(ns.ContainsKey(((DString)s).value));
+            }
+
+            ns.Add("isdefined", MK.Func1("isdefined", isdefined));
+
+            return ns;
         }
 
         public static CodeObject compileModule(ast ast, string path, string name = null)
