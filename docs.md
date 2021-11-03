@@ -2,7 +2,7 @@
 
 ```ruby
 # this is a comment
-x = x[1] = 3  # multi-target assignment
+k = x[1] = 3  # multi-target assignment
 
 
 # variable declaration.
