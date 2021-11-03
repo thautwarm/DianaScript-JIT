@@ -9,6 +9,7 @@ namespace Ava
     using static VMExts;
     using EncodedVar = System.Int32;
 
+
     public static partial class CollectionExts
     {
         public static Dictionary<K, V> ShallowCopy<K, V>(this Dictionary<K, V> self)
@@ -35,12 +36,12 @@ namespace Ava
         public List<int> bytecode;
 
         public List<(int, SourcePos)> sourcePos;
-        
-        
+
+
         // no need to init
         public List<int> currentLoopBreakOperands;
         public int currentLoopContinueTarget = -1;
-        
+
 
         public void addCode(params int[] codes)
         {
@@ -49,7 +50,7 @@ namespace Ava
 
         public void addCode(BC bc)
         {
-            bytecode.Add((int) bc);
+            bytecode.Add((int)bc);
         }
 
         public void addCode(BC bc, int op)
@@ -69,7 +70,7 @@ namespace Ava
                 bc = BC.STORE_FREE;
                 op = -1 - op;
             }
-            bytecode.Add((int) bc);
+            bytecode.Add((int)bc);
             bytecode.Add(op);
         }
         public void setCode(int offset, int v)
@@ -113,7 +114,7 @@ namespace Ava
             };
         }
 
-        public SourcePos currentPos => 
+        public SourcePos currentPos =>
             sourcePos.Count == 0 ? new SourcePos(0, 0, filename) : sourcePos[sourcePos.Count - 1].Item2;
         public static MetaContext Create(MetaContext p, Dictionary<string, EncodedVar> ctx)
         {
@@ -196,7 +197,7 @@ namespace Ava
             currentLoopContinueTarget = currentOffset;
             currentLoopBreakOperands = new List<int>();
             f();
-            foreach(var op in currentLoopBreakOperands)
+            foreach (var op in currentLoopBreakOperands)
             {
                 setCode(op, currentOffset);
             }
@@ -213,7 +214,7 @@ namespace Ava
             var freenames = _free.Select(x => x.Key).ToArray();
             var freetrans = _free.Select(x => x.Value).ToArray();
 
-            
+
             var narg = args.Length;
             var argstrs = args.Select(x => x).ToArray();
             var consts_ = consts
@@ -229,28 +230,28 @@ namespace Ava
                             .OrderBy(x => x.Value)
                             .Select(x => x.Key).ToArray();
 
-            
+
             var code = new CodeObject(
-                name: name_str, consts: consts_, bytecode:bytecode.ToArray(), strings: strings_, localnames: localnames_, sourcePos: sourcePos.ToArray(), narg: narg, nlocal: nlocal, freenames: freenames, pos: currentPos);
-            
+                name: name_str, consts: consts_, bytecode: bytecode.ToArray(), strings: strings_, localnames: localnames_, sourcePos: sourcePos.ToArray(), narg: narg, nlocal: nlocal, freenames: freenames, pos: currentPos);
+
             return (freetrans, code);
         }
     }
 
     public static class Resolver
     {
-        public static void __resolve_local(this DObj self, MetaContext ctx) {} 
-        public static void __resolve_local(this int self, MetaContext ctx) {} 
-        public static void __resolve_local(this string self, MetaContext ctx) {} 
-        public static void __resolve_local(this string[] self, MetaContext ctx) {}
+        public static void __resolve_local(this DObj self, MetaContext ctx) { }
+        public static void __resolve_local(this int self, MetaContext ctx) { }
+        public static void __resolve_local(this string self, MetaContext ctx) { }
+        public static void __resolve_local(this string[] self, MetaContext ctx) { }
         public static void __resolve_local(this ImmediateAST[] self, MetaContext ctx)
         {
-            foreach(var ast in self)
+            foreach (var ast in self)
                 ast.__resolve_local(ctx);
         }
         public static void __resolve_local(this (ImmediateAST, ImmediateAST)[] self, MetaContext ctx)
         {
-            foreach(var (a1, a2) in self)
+            foreach (var (a1, a2) in self)
             {
                 a1.__resolve_local(ctx);
                 a2.__resolve_local(ctx);
@@ -265,15 +266,15 @@ namespace Ava
         int Lineno { get; set; }
         int Colno { get; set; }
 
-        public void emit_impl(MetaContext ctx, bool isRHS);
+        public void emit_impl(MetaContext ctx);
 
-        public void emit(MetaContext ctx, bool isRHS)
+        public void emit(MetaContext ctx)
         {
-            if(!ctx.useMeta)
+            if (!ctx.useMeta)
             {
                 new SourcePos(Lineno, Colno, ctx.filename).visit(ctx);
             }
-            emit_impl(ctx, isRHS);
+            emit_impl(ctx);
         }
 
         public void __default_resolve_local(MetaContext ctx);
@@ -285,7 +286,7 @@ namespace Ava
 
     public partial class Store
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             throw new NotImplementedException();
         }
@@ -294,7 +295,7 @@ namespace Ava
 
     public partial class Meta
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             new SourcePos(lineno, colno, ctx.filenames[filename_idx]).visit(ctx);
         }
@@ -303,9 +304,9 @@ namespace Ava
 
     public partial class Raise
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            expr.emit(ctx, true);
+            expr.emit(ctx);
             ctx.addCode(BC.RAISE);
         }
     }
@@ -313,7 +314,7 @@ namespace Ava
 
     public partial class SetMeta
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             ctx.useMeta = true;
             ctx.filenames[idx] = filename;
@@ -323,13 +324,13 @@ namespace Ava
 
     public partial class StoreMany
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            
+
             var insts = new Stack<(BC, int)>();
             for (int i = 0; i < lhs.Length; i++)
             {
-                switch(lhs[i])
+                switch (lhs[i])
                 {
                     case Load var:
                         var n_ = ctx.search(var.n);
@@ -339,8 +340,8 @@ namespace Ava
                             insts.Push((BC.STORE_GLOBAL, ctx.strIdx(var.n)));
                         break;
                     case OGet get:
-                        get.target.emit(ctx, true);
-                        get.item.emit(ctx, true);
+                        get.target.emit(ctx);
+                        get.item.emit(ctx);
                         insts.Push((BC.STORE_ITEM, 0));
                         break;
                     default:
@@ -348,7 +349,7 @@ namespace Ava
                 }
             }
 
-            rhs.emit_impl(ctx, true);
+            rhs.emit_impl(ctx);
             BC a;
             int b;
             for (int i = 0; i < lhs.Length - 2; i++)
@@ -387,7 +388,7 @@ namespace Ava
         {
             return funcs[i](l, r);
         }
-        
+
         // [MethodImpl(MethodImplOptions.AggressiveInlining)]
         // public static DObj callfunc2(int i, DObj l, DObj r)
         // {
@@ -650,23 +651,47 @@ namespace Ava
     }
     public partial class IBin
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            left.emit_impl(ctx, false);
-            ctx.addCode(BC.READ_NOPOP);
-            right.emit_impl(ctx, true);
+            Action storeOp;
+            switch (left)
+            {
+                case Load var:
+                    var n_ = ctx.search(var.n);
+                    if (n_.HasValue)
+                    {
+                        ctx.addCode(BC.LOAD_LOCAL, n_.Value);
+                        storeOp = () => ctx.addCode(BC.STORE_LOCAL, n_.Value);
+                    }
+                    else
+                    {
+                        ctx.addCode(BC.LOAD_GLOBAL, ctx.strIdx(var.n));
+                        storeOp = () => ctx.addCode(BC.STORE_GLOBAL, ctx.strIdx(var.n));
+                    }
+                    break;
+                case OGet get:
+                    get.target.emit(ctx);
+                    get.item.emit(ctx);
+                    ctx.addCode(BC.DUP2);
+                    ctx.addCode(BC.LOAD_ITEM);
+                    storeOp = () => ctx.addCode(BC.STORE_ITEM);
+                    break;
+                default:
+                    throw new NotFiniteNumberException();
+            }
+            right.emit_impl(ctx);
             ctx.addCode(BC.CALL_PRIME2, Prime2.getFuncIdx(op));
-            ctx.addCode(BC.WRITE);
+            storeOp();
         }
 
     }
 
     public partial class Bin
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            left.emit_impl(ctx, true);
-            right.emit_impl(ctx, true);
+            left.emit_impl(ctx);
+            right.emit_impl(ctx);
             if (op == "+")
             {
                 ctx.addCode(BC.BADD);
@@ -688,48 +713,48 @@ namespace Ava
 
     public partial class Load
     {
-        public void emit_impl(MetaContext ctx, bool isRhs)
+        public void store(MetaContext ctx)
         {
             var lhs_ = ctx.search(n);
-            if (!isRhs)
-                if (!lhs_.HasValue)
-                {
-                    ctx.addCode(BC.LOAD_GLOBAL_REF, ctx.strIdx(n));
-                }
-                else
-                {
-                    ctx.addCode(BC.LOAD_LOCAL_REF, lhs_.Value);
-                }
+            if (!lhs_.HasValue)
+            {
+                ctx.addCode(BC.LOAD_GLOBAL_REF, ctx.strIdx(n));
+            }
             else
             {
-                if (!lhs_.HasValue)
-                {
-                    ctx.addCode(BC.LOAD_GLOBAL, ctx.strIdx(n));
-                }
-                else
-                {
-                    ctx.addCode(BC.LOAD_LOCAL, lhs_.Value);
-                }
+                ctx.addCode(BC.LOAD_LOCAL_REF, lhs_.Value);
+            }
+        }
+        public void emit_impl(MetaContext ctx)
+        {
+            var lhs_ = ctx.search(n);
+            if (!lhs_.HasValue)
+            {
+                ctx.addCode(BC.LOAD_GLOBAL, ctx.strIdx(n));
+            }
+            else
+            {
+                ctx.addCode(BC.LOAD_LOCAL, lhs_.Value);
             }
         }
     }
 
     public partial class IfThenElse
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            cond.emit(ctx, true);
+            cond.emit(ctx);
 
             var else_operand = ctx.currentOffset + 1;
             ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
 
-            then.emit(ctx, true);
+            then.emit(ctx);
 
             var succ_operand = ctx.currentOffset + 1;
             ctx.addCode(BC.GOTO, PSEUDO);
 
             ctx.setCode(else_operand, ctx.currentOffset);
-            orelse.emit(ctx, true);
+            orelse.emit(ctx);
 
             ctx.setCode(succ_operand, ctx.currentOffset);
         }
@@ -738,7 +763,7 @@ namespace Ava
 
     public partial class NestedIf
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
 
             var PSEUDO = 0;
@@ -749,12 +774,12 @@ namespace Ava
             {
                 backset(ctx.currentOffset);
 
-                cond.emit(ctx, true);
+                cond.emit(ctx);
 
                 var next_label_op = ctx.currentOffset + 1;
                 ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
 
-                body.emit(ctx, true);
+                body.emit(ctx);
 
                 end_label_operands.Add(ctx.currentOffset + 1);
                 ctx.addCode(BC.GOTO, PSEUDO);
@@ -763,8 +788,8 @@ namespace Ava
             }
 
             backset(ctx.currentOffset);
-            if(orelse != null)
-                orelse.emit(ctx, true);
+            if (orelse != null)
+                orelse.emit(ctx);
             else
                 ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
 
@@ -778,17 +803,17 @@ namespace Ava
 
     public partial class While
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             // var backjump_offset = ctx.currentOffset;
             ctx.enterLoop(() =>
             {
-                cond.emit(ctx, true);
+                cond.emit(ctx);
 
                 var end_label = ctx.currentOffset + 1;
                 ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
 
-                then.emit(ctx, true);
+                then.emit(ctx);
                 ctx.addCode(BC.POP);
                 ctx.addCode(BC.GOTO, ctx.currentLoopContinueTarget);
                 ctx.setCode(end_label, ctx.currentOffset);
@@ -799,12 +824,12 @@ namespace Ava
 
     public partial class Loop
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             var backjump_offset = ctx.currentOffset;
             ctx.enterLoop(() =>
             {
-                body.emit(ctx, true);
+                body.emit(ctx);
                 ctx.addCode(BC.POP);
                 ctx.addCode(BC.GOTO, backjump_offset);
             });
@@ -829,10 +854,10 @@ namespace Ava
     }
     public partial class For
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             var PSEUDO = 0;
-            iter.emit(ctx, true);
+            iter.emit(ctx);
 
             ctx.addCode(BC.FOR);
 
@@ -846,7 +871,7 @@ namespace Ava
                else
                    ctx.addCode(BC.STORE_LOCAL, lhs.Value);
 
-               body.emit(ctx, true);
+               body.emit(ctx);
                ctx.addCode(BC.POP);
 
                ctx.addCode(BC.GOTO, ctx.currentLoopContinueTarget);
@@ -864,27 +889,18 @@ namespace Ava
 
     public partial class OGet
     {
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void emit_impl(MetaContext ctx)
         {
-            if (isRHS)
-            {
-                target.emit(ctx, true);
-                item.emit(ctx, true);
-                ctx.addCode(BC.LOAD_ITEM);
-            }
-            else
-            {
-                target.emit(ctx, true);
-                item.emit(ctx, true);
-                ctx.addCode(BC.LOAD_ITEM_REF);
-            }
+            target.emit(ctx);
+            item.emit(ctx);
+            ctx.addCode(BC.LOAD_ITEM);
         }
     }
 
     public partial class OSet
 
     {
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void emit_impl(MetaContext ctx)
         {
             throw new NotImplementedException();
         }
@@ -892,14 +908,14 @@ namespace Ava
 
     public partial class Block
     {
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void emit_impl(MetaContext ctx)
         {
             if (suite.Length == 0)
             {
                 ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
                 return;
             }
-            suite[0].emit(ctx, true);
+            suite[0].emit(ctx);
             var last = suite[0];
 
             foreach (var st in suite.Skip(1))
@@ -908,10 +924,10 @@ namespace Ava
                 {
                     ctx.addCode(BC.POP);
                 }
-                st.emit(ctx, true);
+                st.emit(ctx);
                 last = st;
             }
-            if (last is ExprStmt) {}
+            if (last is ExprStmt) { }
             else
             {
                 ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
@@ -922,12 +938,12 @@ namespace Ava
 
     public partial class Call
     {
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void emit_impl(MetaContext ctx)
         {
-            f.emit(ctx, true);
+            f.emit(ctx);
 
             foreach (var arg in args)
-                arg.emit(ctx, true);
+                arg.emit(ctx);
 
             ctx.addCode(BC.CALL_FUNC, args.Length);
         }
@@ -936,9 +952,9 @@ namespace Ava
 
     public partial class Function
     {
-        public void __resolve_local(MetaContext ctx){}
-    
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void __resolve_local(MetaContext ctx) { }
+
+        public void emit_impl(MetaContext ctx)
         {
 
             var name_i = ctx.search(name);
@@ -946,7 +962,7 @@ namespace Ava
 
             var subctx_dict = new Dictionary<string, int>();
             var subctx = MetaContext.Create(ctx, subctx_dict);
-            
+
             for (var i = 0; i < args.Length; i++)
             {
                 if (subctx_dict.ContainsKey(args[i]))
@@ -962,7 +978,7 @@ namespace Ava
             subctx.nlocal = args.Length;
             var currentPos = ctx.currentPos;
             body.__resolve_local(subctx);
-            body.emit(subctx, true);
+            body.emit(subctx);
 
             var bind_scope = true;
             if (name_str == "")
@@ -971,11 +987,11 @@ namespace Ava
                 bind_scope = false;
 
             }
-            
+
             var (freetrans, code) = subctx.buildCode(currentPos, args, name_str);
 
             var operand = ctx.objIdx(code);
-            
+
             ctx.addCode(BC.PUSHCONST, operand);
             ctx.addCode(BC.MK_FUNC, freetrans.Length);
             foreach (var (from, to) in freetrans)
@@ -995,7 +1011,7 @@ namespace Ava
 
     public partial class CVal
     {
-        public void emit_impl(MetaContext ctx, bool isRHS)
+        public void emit_impl(MetaContext ctx)
         {
             ctx.addCode(BC.PUSHCONST, ctx.objIdx(obj));
         }
@@ -1004,18 +1020,18 @@ namespace Ava
 
     public partial class ExprStmt : ImmediateAST
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            expr.emit(ctx, true);
+            expr.emit(ctx);
         }
     }
     public partial class CList
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             foreach (var elt in elts)
             {
-                elt.emit(ctx, true);
+                elt.emit(ctx);
             }
             ctx.addCode(BC.MK_LIST, elts.Length);
         }
@@ -1024,11 +1040,11 @@ namespace Ava
 
     public partial class CTuple
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             foreach (var elt in elts)
             {
-                elt.emit(ctx, true);
+                elt.emit(ctx);
             }
             ctx.addCode(BC.MK_TUPLE, elts.Length);
         }
@@ -1036,12 +1052,12 @@ namespace Ava
 
     public partial class CDict
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             foreach (var (k, v) in pairs)
             {
-                k.emit(ctx, true);
-                v.emit(ctx, true);
+                k.emit(ctx);
+                v.emit(ctx);
             }
             ctx.addCode(BC.MK_DICT, pairs.Length);
         }
@@ -1049,12 +1065,12 @@ namespace Ava
 
     public partial class CStrDict
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             foreach (var (k, v) in pairs)
             {
-                k.emit(ctx, true);
-                v.emit(ctx, true);
+                k.emit(ctx);
+                v.emit(ctx);
             }
             ctx.addCode(BC.MK_STRDICT, pairs.Length);
         }
@@ -1062,24 +1078,24 @@ namespace Ava
 
     public partial class And
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            left.emit(ctx, true);
+            left.emit(ctx);
             var jump_operand = ctx.currentOffset + 1;
             ctx.addCode(BC.GOTO_IF_NOT_AND_NO_POP, PSEUDO);
-            right.emit(ctx, true);
+            right.emit(ctx);
             ctx.setCode(jump_operand, ctx.currentOffset);
         }
     }
 
     public partial class Or
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            left.emit(ctx, true);
+            left.emit(ctx);
             var jump_operand = ctx.currentOffset + 1;
             ctx.addCode(BC.GOTO_IF_AND_NO_POP, PSEUDO);
-            right.emit(ctx, true);
+            right.emit(ctx);
             ctx.setCode(jump_operand, ctx.currentOffset);
         }
     }
@@ -1087,38 +1103,38 @@ namespace Ava
 
     public partial class Not
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            value.emit(ctx, true);
+            value.emit(ctx);
             ctx.addCode(BC.NOT);
         }
     }
 
     public partial class Neg
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            value.emit(ctx, true);
+            value.emit(ctx);
             ctx.addCode(BC.NEG);
         }
     }
 
     public partial class Inv
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
-            value.emit(ctx, true);
+            value.emit(ctx);
             ctx.addCode(BC.INV);
         }
     }
 
     public partial class Decl
     {
-        public void emit_impl(MetaContext ctx, bool _) { }
+        public void emit_impl(MetaContext ctx) { }
 
         public void __resolve_local(MetaContext ctx)
         {
-            foreach(var name in names)
+            foreach (var name in names)
             {
                 Console.WriteLine(name);
                 ctx.enter(name);
@@ -1128,20 +1144,20 @@ namespace Ava
 
     public partial class Return
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             if (value != null)
-                value.emit(ctx, true);
+                value.emit(ctx);
             else
                 ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
-            
+
             ctx.addCode(BC.RETURN);
         }
     }
 
     public partial class Continue
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             int operand = ctx.currentOffset + 1;
             ctx.addLoopContinue(operand);
@@ -1150,7 +1166,7 @@ namespace Ava
 
     public partial class Break
     {
-        public void emit_impl(MetaContext ctx, bool _)
+        public void emit_impl(MetaContext ctx)
         {
             int operand = ctx.currentOffset + 1;
             ctx.addCode(BC.GOTO, PSEUDO);

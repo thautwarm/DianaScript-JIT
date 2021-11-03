@@ -10,7 +10,7 @@ namespace Ava
     using uint_t = System.UInt64;
 
     [Serializable]
-    public partial class DInt: DObj
+    public sealed partial class DInt: DObj
     {
         public static explicit operator int(DInt v) => (int) v.value;
         public static explicit operator ulong(DInt v) => unchecked((ulong) v.value);
@@ -45,7 +45,7 @@ namespace Ava
     }
 
     [Serializable]
-    public partial class DFloat: DObj
+    public sealed partial class DFloat: DObj
     {
         public static explicit operator float(DFloat v) => v.value;
         public static explicit operator DFloat(float v) => MK.Float(v);
@@ -96,7 +96,7 @@ namespace Ava
     }
 
     [Serializable]
-    public partial class DNone: DObj
+    public sealed partial class DNone: DObj
     {
         public string __str__() => "None";
         public string Classname => "none";
@@ -117,7 +117,7 @@ namespace Ava
     }
 
     [Serializable]
-    public partial class DString: DObj
+    public sealed partial class DString: DObj
     {
         public static explicit operator string(DString o) => o.value;
         public static explicit operator DString(string o) => MK.String(o);
@@ -163,7 +163,7 @@ namespace Ava
     }
 
 
-    public partial class DDict: DObj
+    public sealed partial class DDict: DObj
     {
 
         public object Native => dict;
@@ -221,7 +221,7 @@ namespace Ava
         }
     }
 
-    public partial class DStrDict: DObj
+    public sealed partial class DStrDict: DObj
     {
 
         public object Native => dict;
@@ -280,7 +280,7 @@ namespace Ava
     }
 
 
-    public partial class DTuple: DObj
+    public sealed partial class DTuple: DObj
     {
         public object Native => elts;
         public string __str__()
@@ -374,7 +374,7 @@ namespace Ava
         public DObj GetContents();
     }
 
-    public partial class DList: Ref, DObj
+    public sealed partial class DList: Ref, DObj
     {
 
         public object Native => elts;
@@ -452,14 +452,14 @@ namespace Ava
         }
     }
 
-    public partial class DNative: DObj
+    public sealed partial class DNative: DObj
     {
         public object value;
         public object Native => value;
         public string Classname => "native";
     }
 
-    public partial class DFunc: DObj
+    public sealed partial class DFunc: DObj
     {
         public string __str__() => name;
 
@@ -485,7 +485,7 @@ namespace Ava
     }
 
     // TODO: After C# 8.0 default interface gets adopted by Unity, we introduce small-talk OOP system
-    public partial class TypeObject_v1: DObj
+    public sealed partial class TypeObject_v1: DObj
     {
 
         public object Native => this;

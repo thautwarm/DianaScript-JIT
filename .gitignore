@@ -11,6 +11,7 @@
 # generated Python code
 codegen/*_raw.py
 
+.idea/
 .vscode/
 runtests/mylang_raw.py
 docs/_build

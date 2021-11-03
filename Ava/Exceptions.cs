@@ -10,8 +10,7 @@ namespace Ava
 
         public SourcePos pos;
 
-        public DianaVMError(Exception e, SourcePos pos) : base(
-            e.GetType().ToString() + ": " + e.StackTrace)
+        public DianaVMError(Exception e, SourcePos pos) : base()
         {
             this.e = e;
             this.pos = pos;
@@ -22,7 +21,7 @@ namespace Ava
 
         string get_stack_trace()
         {
-            return $"DianaVM exception not handled at {pos.filename}:{pos.line}:{pos.col}\n" + e.Message + "\n" + e.StackTrace;
+            return $"DianaVM exception not handled at {pos.filename}:{pos.line}:{pos.col}\n\n" + e.StackTrace;
         }
     }
 

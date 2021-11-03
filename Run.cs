@@ -29,12 +29,10 @@ public static partial class MainClass
             var ast = Ava.DianaScriptAPIs.Parse(path);
             var ctx = MetaContext.Create(path);
             var initPos = ctx.currentPos;
-            ast.emit(ctx, false);
+            ast.emit(ctx);
             var (_, code) = ctx.buildCode(initPos, new string[0]);
             // code.ShowCode();
-            var vm = new VM(code, new DObj[0], new DObj[0], globals);
-            
-            vm.execute();
+            VM.execute(code, new DObj[0], new DObj[0], globals);            
         }
     }
     public static void Main(string[] args)
@@ -54,11 +52,10 @@ public static partial class MainClass
             var ast = Ava.DianaScriptAPIs.Parse(input, "repl");
             var ctx = MetaContext.Create("repl");
             var initPos = ctx.currentPos;
-            ast.emit(ctx, false);
+            ast.emit(ctx);
             var (_, code) = ctx.buildCode(initPos, new string[0]);
             // code.ShowCode();
-            var vm = new VM(code, new DObj[0], new DObj[0], globals);
-            var res = vm.execute();
+            var res = VM.execute(code, new DObj[0], new DObj[0], globals);
             Console.WriteLine(res.__str__());
         }
     }
