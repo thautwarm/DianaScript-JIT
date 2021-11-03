@@ -12,6 +12,7 @@ public static partial class MainClass
         var globals = apis.InitGlobals();
         var ast = DianaScriptAPIs.Parse(path);
         var code = DianaScriptAPIs.compileModule(ast, path);
+        // code.ShowCode();
         VM.execute(code, globals);            
     }
     public static void Main(string[] args)

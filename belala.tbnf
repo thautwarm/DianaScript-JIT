@@ -14,5 +14,6 @@ val mkSetMeta: (token, str, str) -> ast
 stmt : "raise" expr                                 { mkRaise($1, $2) }
      | "__SETMETA" <INT> <STR>                      { mkSetMeta($1, $2.Text, $3.Text) }
      | "__META" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
+     | line_wrap["begin"] block line_wrap["end"]    { mkBlock($1, $2) }
 
 expr : "__META" <INT> ":" <INT> ":" <INT> "in" expr { mkMeta($2.Text, $4.Text, $6.Text, $8) }

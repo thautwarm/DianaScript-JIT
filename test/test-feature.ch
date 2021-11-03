@@ -57,3 +57,10 @@ log(Num.of("1.2"))
 log(typeof(Num.of(12)) == "Num")
 
 log(Int.of(1.2))
+
+
+var x
+
+x = 2
+
+log(x)
