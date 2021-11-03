@@ -1,6 +1,6 @@
-## Basic Types
+## 基础类型
 
-In C# side, every thing in DianaScript is an instance whose class interfaces `DObj`.
+在C#中, DianaScript的所有对象都实现interface `DObj`.
 
 You can access `DObj.Native` to access their .NET representation:
 
