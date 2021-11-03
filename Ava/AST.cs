@@ -283,6 +283,7 @@ namespace Ava
 
     public partial class Meta
     {
+        public bool is_stmt => inner.is_stmt;
         public void emit_impl(MetaContext ctx)
         {
             new SourcePos(lineno, colno, ctx.filenames[filename_idx]).visit(ctx);
