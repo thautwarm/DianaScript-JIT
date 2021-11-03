@@ -19,6 +19,7 @@ val mkApp: (token, ast, list[ast]) -> ast
 val mkList: (token, list[ast]) -> ast
 val mkTuple: (token, list[ast], bool) -> ast
 val mkDict: (token, list[(ast, ast)]) -> ast
+val mkSet: (token, list[ast]) -> ast
 val mkStrDict: (token, list[(ast, ast)]) -> ast
 val mkVar: (token, str) -> ast
 val mkDecl: (token, list[str]) -> ast
@@ -37,7 +38,6 @@ val mkLoop: (token, ast) -> ast
 val mkFor: (token, str, ast, ast) -> ast
 val mkWhile: (token, ast, ast) -> ast
 val mkBlock: (token, list[ast]) -> ast
-val mkExprStmt: (ast) -> ast
 val mkContinue: (token) -> ast
 val mkBreak: (token) -> ast
 val mkReturn: (token, ast) -> ast
@@ -104,7 +104,7 @@ stmt :
     | "return"        { mkReturn($1, null) }
     | "var" seplist[",", name] { mkDecl($1, $2) }
     | ibin            { $1 }
-    | expr            { mkExprStmt($1) }
+    | expr            { $1 }
 
 
 or_[a, b] : a  { 0 }
@@ -172,7 +172,9 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
      | "[" closelist[",", expr] "]" { mkList($1, $2) }
      | "(" closelist[",", expr] trailer ")" { mkTuple($1, $2, $3) }
      | "{|" closelist[",", pair] trailer "|}" { mkStrDict($1, $2) }
+     
      | "{" closelist[",", pair] trailer "}" { mkDict($1, $2) }
+     | "{" closelist[",", expr] "}" { mkSet($1, $2) }
      | <STR> { mkVal($1, mkstr(unesc($1.Text))) }
      | <INT> { mkVal($1, mkint($1.Text, 0)) }
      | <HEX> { mkVal($1, mkint($1.Text, 16)) }

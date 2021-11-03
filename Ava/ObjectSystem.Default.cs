@@ -12,8 +12,8 @@ namespace Ava
             return __eq__(other);
         }
         public bool __bool__() => true;
-        public object Native { get; }
-        public string Classname { get; }
+        public object Native => this;
+        public string Classname => this.GetType().Name;
         public string __str__() => Native.ToString();
         public string __repr__() => __str__();
         public DObj __next__() => throw unsupported_op(this, "__next__");
@@ -42,6 +42,21 @@ namespace Ava
         public DObj __call__(params DObj[] objs)
         {
             throw unsupported_op(this, "__call__");
+        }
+
+        public DObj __call0__()
+        {
+            return __call__();
+        }
+
+        public DObj __call1__(DObj o)
+        {
+            return __call__(o);
+        }
+
+        public DObj __call2__(DObj arg1, DObj arg2)
+        {
+            return __call__(arg1, arg2);
         }
 
         public bool __contains__(DObj a)
@@ -128,11 +143,50 @@ namespace Ava
         {
             throw unsupported_op(this, "/");
         }
-
-        public void SetContentsVM(VM vm, DObj o) => throw new TypeError($"setref not supported by {Classname}");
-        public DObj GetContentsVM(VM vm) => throw new TypeError($"deref not supported by {Classname}");
-
     }
 
+    public class DModule : DObj
+    {
 
+        public Dictionary<string, DObj> fields;
+        public string name;
+        public string Classname => "module";
+
+        public DModule(string name)
+        {
+            fields = new Dictionary<string, DObj>();
+            this.name = name;
+        }
+
+        public string __str__() => name;
+
+        public DObj __getstr__(string field)
+        {
+            if(fields.TryGetValue(field, out var obj))
+            {
+                return obj;
+            }
+            throw new AttributeError($"module {name} has no attribute {field}.");
+        }
+        public DObj __get__(DObj s)
+        {
+            var field = (s as DString)?.value;
+            if (field == null)
+                throw new TypeError($"a module field should be string.");
+            return __getstr__(field);
+        }
+    }
+
+    public partial class DIterable : DObj
+    {
+        public string __str__() => $"<{module_instance.name}>";
+        public Dictionary<string, DObj> fields;
+
+        public IEnumerable<DObj> iter;
+        public DIterable(IEnumerable<DObj> iter)
+        {
+            this.iter = iter;
+        }
+        public IEnumerable<DObj> __iter__() => iter;
+    }
 }

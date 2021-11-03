@@ -53,6 +53,10 @@ namespace Ava
 
         public DObj __call__(DObj[] args)
         {
+            if (args.Length < co.narg)
+            {
+                throw new ArgumentException($"function {co.name} requires {co.narg} argument(s) but got {args.Length}.");
+            }
             DObj[] locals;
             if (co.nlocal == args.Length)
             {
@@ -138,12 +142,10 @@ namespace Ava
 
                     case BC.LOAD_ITEM:
                     case BC.POP:
-                    case BC.LOAD_ITEM_REF:
                         writeLine(b);
                         offset += 1;
                         continue;
                     case BC.LOAD_LOCAL:
-                    case BC.LOAD_LOCAL_REF:
                     case BC.STORE_LOCAL:
                         var off = bytecode[offset + 1];
                         var lcn = localnames[off];
@@ -151,7 +153,6 @@ namespace Ava
                         offset += 2;
                         continue;
                     case BC.LOAD_FREE:
-                    case BC.LOAD_FREE_REF:
                     case BC.STORE_FREE:
                         off = bytecode[offset + 1];
                         lcn = freenames[off];
@@ -160,12 +161,6 @@ namespace Ava
                         continue;
 
                     case BC.LOAD_GLOBAL:
-                        off = bytecode[offset + 1];
-                        lcn = strings[off];
-                        writeLine(b + " " + lcn);
-                        offset += 2;
-                        continue;
-                    case BC.LOAD_GLOBAL_REF:
                         off = bytecode[offset + 1];
                         lcn = strings[off];
                         writeLine(b + " " + lcn);
@@ -181,6 +176,7 @@ namespace Ava
                     case BC.MK_STRDICT:
                     case BC.MK_TUPLE:
                     case BC.MK_LIST:
+                    case BC.MK_SET:
                         writeLine(b + " " + bytecode[offset + 1]);
                         offset += 2;
                         continue;

@@ -9,24 +9,25 @@ namespace Ava
     using int_t = System.Int64;
     using uint_t = System.UInt64;
 
+
     [Serializable]
-    public sealed partial class DInt: DObj
+    public sealed partial class DInt : DObj
     {
-        public static explicit operator int(DInt v) => (int) v.value;
-        public static explicit operator ulong(DInt v) => unchecked((ulong) v.value);
+        public static explicit operator int(DInt v) => (int)v.value;
+        public static explicit operator ulong(DInt v) => unchecked((ulong)v.value);
         public static explicit operator long(DInt v) => v.value;
-        public static explicit operator uint(DInt v) => unchecked((uint) v.value);
-        public static explicit operator byte(DInt v)  => (byte)v.value;
+        public static explicit operator uint(DInt v) => unchecked((uint)v.value);
+        public static explicit operator byte(DInt v) => (byte)v.value;
         public static explicit operator DInt(int v) => MK.Int(v);
         public static explicit operator DInt(long v) => MK.Int(v);
         public static explicit operator DInt(ulong v) => MK.Int(v);
         public static explicit operator DInt(uint v) => MK.Int(v);
         public static explicit operator DInt(byte v) => MK.Int(v);
-    
+
         public Int64 value;
 
         public object Native => value;
-        public string Classname => "int";
+
 
         public bool __bool__()
         {
@@ -45,14 +46,14 @@ namespace Ava
     }
 
     [Serializable]
-    public sealed partial class DFloat: DObj
+    public sealed partial class DFloat : DObj
     {
         public static explicit operator float(DFloat v) => v.value;
         public static explicit operator DFloat(float v) => MK.Float(v);
-        public static explicit operator DFloat(double v) => MK.Float((float) v);
-    
+        public static explicit operator DFloat(double v) => MK.Float((float)v);
+
         public object Native => value;
-        public string Classname => "float";
+
 
         public float value;
 
@@ -96,14 +97,14 @@ namespace Ava
     }
 
     [Serializable]
-    public sealed partial class DNone: DObj
+    public sealed partial class DNone : DObj
     {
         public string __str__() => "None";
-        public string Classname => "none";
+
 
         public object Native => this;
 
-        public static DNone unique = new DNone();
+        public static DObj unique = new DNone();
 
         public bool __bool__()
         {
@@ -117,7 +118,7 @@ namespace Ava
     }
 
     [Serializable]
-    public sealed partial class DString: DObj
+    public sealed partial class DString : DObj
     {
         public static explicit operator string(DString o) => o.value;
         public static explicit operator DString(string o) => MK.String(o);
@@ -129,7 +130,7 @@ namespace Ava
         }
         public string __str__() => value;
         public string __repr__() => "\"" + value.Replace("\"", "\\\"") + "\"";
-        public string Classname => "str";
+
         public string value;
 
         public bool __bool__()
@@ -155,15 +156,23 @@ namespace Ava
         {
             foreach (var c in value)
             {
-                yield return MK.String(new String(new char[] {c}));
+                yield return MK.String(new String(new char[] { c }));
             }
         }
 
         public int __len__() => value.Length;
+
+        public DObj __mul__(DObj a)
+        {
+            var i = (int) (DInt) a;
+            if (value.Length == 1)
+                return MK.String(new String(value[0], i));
+            return MK.String(string.Concat(Enumerable.Repeat(value, i)));
+        }
     }
 
 
-    public sealed partial class DDict: DObj
+    public sealed partial class DDict : DObj
     {
 
         public object Native => dict;
@@ -171,11 +180,13 @@ namespace Ava
 
         public string __str__()
         {
-            return "{" + String.Join(", ", dict.Select(x =>
-                $"{x.Key.__repr__()}: {x.Value.__repr__()}")) + "}";
+            return "{"
+                + String.Join(", ",
+                    dict.Select(x =>
+                        (x.Value == DNone.unique) ? (x.Key.__repr__()) : $"{x.Key.__repr__()}: {x.Value.__repr__()}"))
+                + "}";
         }
 
-        public string Classname => "dict";
         public Dictionary<DObj, DObj> dict;
 
 
@@ -216,12 +227,48 @@ namespace Ava
         {
             foreach (var obj in dict)
             {
-                yield return MK.Tuple(new[] {obj.Key, obj.Value});
+                yield return obj.Key;
             }
+        }
+
+        public DObj __sub__(DObj o)
+        {
+            return MK.Dict(this.dict.DifferenceDObj(o));
+        }
+
+        public DObj __bitor__(DObj o)
+        {
+            return MK.Dict(this.dict.Union(o.__iter__()));
+        }
+
+        public DObj __bitand__(DObj o)
+        {
+            return MK.Dict(this.dict.Intersect(o.__iter__()));
+        }
+
+        public DObj __truediv__(DObj func)
+        {
+            
+            var res = new Dictionary<DObj, DObj>();
+            foreach(var elt in __iter__())
+            {
+                var group_key = func.__call1__(elt);
+                if(res.TryGetValue(group_key, out var group))
+                {
+                    (group as DList).elts.Add(elt);
+                    continue;
+                }
+                else
+                {
+                    group = MK.List(new List<DObj> { elt });
+                    res[group_key] = group;
+                }
+            }
+            return MK.Dict(res);
         }
     }
 
-    public sealed partial class DStrDict: DObj
+    public sealed partial class DStrDict : DObj
     {
 
         public object Native => dict;
@@ -233,7 +280,7 @@ namespace Ava
                 $"{x.Key}: {x.Value.__repr__()}")) + "|}";
         }
 
-        public string Classname => "dict";
+
         public Dictionary<string, DObj> dict;
 
 
@@ -250,13 +297,13 @@ namespace Ava
 
         public DObj __get__(DObj s)
         {
-            return dict[(string) (DString) s];
+            return dict[(string)(DString)s];
         }
 
 
         public void __set__(DObj s, DObj value)
         {
-            dict[(string) (DString) s] = value;
+            dict[(string)(DString)s] = value;
         }
 
         public bool Equals(DObj other)
@@ -267,20 +314,20 @@ namespace Ava
 
         public bool __contains__(DObj a)
         {
-            return dict.ContainsKey((string) (DString) a);
+            return dict.ContainsKey((string)(DString)a);
         }
 
         public IEnumerable<DObj> __iter__()
         {
             foreach (var obj in dict)
             {
-                yield return MK.Tuple(new[] {MK.String(obj.Key), obj.Value});
+                yield return MK.String(obj.Key);
             }
         }
     }
 
 
-    public sealed partial class DTuple: DObj
+    public sealed partial class DTuple : DObj
     {
         public object Native => elts;
         public string __str__()
@@ -288,7 +335,7 @@ namespace Ava
             return "(" + String.Join(",", elts.Select(x => x.__repr__())) + ",)";
         }
 
-        public string Classname => "tuple";
+
         public DObj[] elts;
 
         public bool __bool__()
@@ -316,8 +363,8 @@ namespace Ava
 
         public DObj __get__(DObj o)
         {
-            if(o is DInt i)
-                return elts[(int) i.value];
+            if (o is DInt i)
+                return elts[(int)i.value];
             throw new ValueError($"cannot get tuple item with {o.__repr__()}.");
         }
 
@@ -354,11 +401,9 @@ namespace Ava
         }
         public DObj __add__(DObj a)
         {
-            if (a is DList b)
-            {
-                return MK.Tuple(elts.Concat(b.elts).ToArray());
-            }
-
+            
+            return MK.Tuple(elts.Concat(a.__iter__()).ToArray());
+            
             throw new NotFiniteNumberException();
         }
 
@@ -374,7 +419,7 @@ namespace Ava
         public DObj GetContents();
     }
 
-    public sealed partial class DList: Ref, DObj
+    public sealed partial class DList : Ref, DObj
     {
 
         public object Native => elts;
@@ -384,7 +429,7 @@ namespace Ava
             return "[" + String.Join(",", elts.Select(x => x.__repr__())) + "]";
         }
 
-        public string Classname => "list";
+
         public List<DObj> elts;
 
         public bool __bool__()
@@ -404,8 +449,8 @@ namespace Ava
 
         public DObj __get__(DObj o)
         {
-            if(o is DInt i)
-                return elts[(int) i.value];
+            if (o is DInt i)
+                return elts[(int)i.value];
             throw new ValueError($"cannot get list item with {o.__repr__()}.");
         }
 
@@ -414,7 +459,7 @@ namespace Ava
         {
             if (s is DInt i)
             {
-                elts[(int) i.value] = value;
+                elts[(int)i.value] = value;
                 return;
             }
             throw new ValueError($"cannot set list item with {s.__repr__()}.");
@@ -427,12 +472,7 @@ namespace Ava
 
         public DObj __add__(DObj a)
         {
-            if (a is DList b)
-            {
-                return MK.List(elts.Concat(b.elts).ToList());
-            }
-
-            throw new NotImplementedException();
+            return MK.List(elts.Concat(a.__iter__()).ToList());
         }
 
         public IEnumerable<DObj> __iter__()
@@ -452,14 +492,13 @@ namespace Ava
         }
     }
 
-    public sealed partial class DNative: DObj
+    public sealed partial class DNative : DObj
     {
         public object value;
         public object Native => value;
-        public string Classname => "native";
     }
 
-    public sealed partial class DFunc: DObj
+    public sealed partial class DFunc : DObj
     {
         public string __str__() => name;
 
@@ -468,7 +507,7 @@ namespace Ava
         public Func<DObj[], DObj> func;
 
         public string name;
-        public string Classname => "function";
+
 
         public DObj __call__(params DObj[] args) => func(args);
 
@@ -484,61 +523,14 @@ namespace Ava
         }
     }
 
-    // TODO: After C# 8.0 default interface gets adopted by Unity, we introduce small-talk OOP system
-    public sealed partial class TypeObject_v1: DObj
+    public static class TypeConversion
     {
-
-        public object Native => this;
-
-        public string typename;
-        public Dictionary<string, DObj> methods;
-
-        public TypeObject_v1(string typename)
+        public static DObj toFloat(DObj x)
         {
-            this.typename = typename;
-            this.methods = new Dictionary<string, DObj>();
-        }
-        public string __str__() => typename;
-        public string Classname => "type";
-
-        public bool __eq__(DObj o)
-        {
-            return ReferenceEquals(this, o);
-        }
-
-        public bool Equals(DObj other)
-        {
-            return __eq__(other);
-        }
-
-        public DObj __get__(DObj attr)
-        {
-            if(attr is DString s && methods.TryGetValue(s.value, out var field))
-            {
-                return field;
-            }
-            throw new AttributeError(attr.__str__());
-        }
-        public DObj __call__(params DObj[] objs)
-        {
-            if(methods.TryGetValue("__call__", out var field))
-            {
-                return field.__call__(objs);
-            }
-            throw new NotImplementedException();
-        }
-    }
-    public static class FloatType
-    {
-        public static DObj __call__(params DObj[] args)
-        {
-            if (args.Length == 0) return MK.Int(0);
-            if (args.Length != 1) throw new InvalidCastException($"float object is not callable.");
-            var x = args[0];
             switch (x)
             {
                 case DInt i:
-                    return MK.Float((float) i.value);
+                    return MK.Float((float)i.value);
                 case DFloat _:
                     return x;
                 case DString s:
@@ -547,34 +539,20 @@ namespace Ava
                     throw new InvalidCastException($"cannot cast {x.Classname} objects to float");
             }
         }
-    }
 
-    public static partial class StrType
-    {
-
-        public static DObj __call__(DObj[] args)
+        public static DObj toStr(DObj x)
         {
-            if (args.Length == 0) return MK.Int(0);
-            // TODO
-            if (args.Length != 1) throw new InvalidCastException($"str object is not callable.");
-            var x = args[0];
             return MK.String(x.__str__());
         }
-    }
 
-    public static partial class IntType
-    {
-        public static DObj __call__(DObj[] args)
+        public static DObj toInt(DObj x)
         {
-            if (args.Length == 0) return MK.Int(0);
-            if (args.Length != 1) throw new InvalidCastException($"integer object is not callable.");
-            var x = args[0];
             switch (x)
             {
                 case DInt _:
                     return x;
                 case DFloat f:
-                    return MK.Int((int_t) f.value);
+                    return MK.Int((int_t)f.value);
                 case DString s:
                     return MK.Int(int_t.Parse(s.value));
                 default:

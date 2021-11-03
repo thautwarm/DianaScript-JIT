@@ -56,7 +56,7 @@ public static partial class MainClass
             var (_, code) = ctx.buildCode(initPos, new string[0]);
             // code.ShowCode();
             var res = VM.execute(code, new DObj[0], new DObj[0], globals);
-            Console.WriteLine(res.__str__());
+            Console.WriteLine(res.__repr__());
         }
     }
 }

@@ -53,13 +53,13 @@ namespace Ava
 
         public static DObj keys(DObj o)
         {
-            if (o is TypeObject_v1 t)
+            if (o is DModule t)
             {
-                if (t.methods == null)
+                if (t.fields == null)
                 {
                     return MK.Tuple(new DObj[0]);
                 }
-                return MK.Tuple(t.methods.Keys.Select(x => MK.String(x)).ToArray());
+                return MK.Tuple(t.fields.Keys.Select(x => MK.String(x)).ToArray());
             }
             if (o is DDict d)
             {
@@ -96,15 +96,7 @@ namespace Ava
         public Dictionary<string, DObj> InitGlobals()
         {
             G?.Clear();
-            DInt.SetupType();
-            DFloat.SetupType();
-            DList.SetupType();
-            DDict.SetupType();
-            DString.SetupType();
 
-            DInt.classobject.methods["__call__"] = MK.FuncN("int", IntType.__call__);
-            DFloat.classobject.methods["__call__"] = MK.FuncN("float", FloatType.__call__);
-            DString.classobject.methods["__call__"] = MK.FuncN("str", StrType.__call__);
             G = new Dictionary<string, DObj>
             {
                 {"log", MK.FuncN("log", log)},
@@ -113,11 +105,13 @@ namespace Ava
                 {"assert",  MK.FuncN("assert", assert)},
                 {"keys", MK.Func1("keys", keys)},
                 {"len", MK.Func1("len", len)},
-                {"int", DInt.classobject},
-                {"float", DFloat.classobject},
-                {"str", DString.classobject},
-                {"list", DList.classobject},
-                {"dict", DDict.classobject},
+                {DInt.module_instance.name, DInt.module_instance},
+                {DFloat.module_instance.name, DFloat.module_instance},
+                {DString.module_instance.name, DString.module_instance},
+                {DList.module_instance.name, DList.module_instance},
+                {DDict.module_instance.name, DDict.module_instance},
+                {DStrDict.module_instance.name, DStrDict.module_instance},
+                {DIterable.module_instance.name, DIterable.module_instance},
                 {"isdefined", MK.Func1("isdefined", isdefined)}
 
             };

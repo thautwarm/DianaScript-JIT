@@ -55,7 +55,7 @@ end
 
 g()
 
-log(int("233"))
+log(Int.of("233"))
 
 x = time()
 
@@ -97,7 +97,7 @@ fun benchfunc(f)
     x = time()
     f()
     span = time() - x
-    log("time elapsed for " + str(f) + ":", span)
+    log("time elapsed for " + Str.of(f) + ":", span)
 end
 
 benchfunc(test2)

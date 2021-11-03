@@ -60,11 +60,6 @@ namespace Ava
                 bc = BC.LOAD_FREE;
                 op = -1 - op;
             }
-            if (bc == BC.LOAD_LOCAL_REF && op < 0)
-            {
-                bc = BC.LOAD_FREE_REF;
-                op = -1 - op;
-            }
             if (bc == BC.STORE_LOCAL && op < 0)
             {
                 bc = BC.STORE_FREE;
@@ -266,6 +261,7 @@ namespace Ava
         int Lineno { get; set; }
         int Colno { get; set; }
 
+        public bool is_stmt => false;
         public void emit_impl(MetaContext ctx);
 
         public void emit(MetaContext ctx)
@@ -294,7 +290,8 @@ namespace Ava
 
 
     public partial class Raise
-    {
+    {   
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             expr.emit(ctx);
@@ -305,6 +302,7 @@ namespace Ava
 
     public partial class SetMeta
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             ctx.useMeta = true;
@@ -315,6 +313,7 @@ namespace Ava
 
     public partial class StoreMany
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
 
@@ -553,33 +552,16 @@ namespace Ava
 
             Prime2.addFunc("-", (l, r) => l.__sub__(r));
 
-            Prime2.addFunc("*", (l, r) => l.__mul__(r)
-
-            );
-            Prime2.addFunc("**", (l, r) => l.__pow__(r)
-
-                            );
-            Prime2.addFunc("/", (l, r) => l.__truediv__(r)
-
-                            );
-            Prime2.addFunc("//", (l, r) => l.__floordiv__(r)
-
-                            );
-            Prime2.addFunc("^", (l, r) => l.__bitxor__(r)
-
-                            );
-            Prime2.addFunc("|", (l, r) => l.__bitor__(r)
-
-                            );
-            Prime2.addFunc("&", (l, r) => l.__bitand__(r)
-
-                            );
-            Prime2.addFunc("==", (l, r) => MK.Int(l.__eq__(r))
-
-                            );
-            Prime2.addFunc("!=", (l, r) => MK.Int(!l.__eq__(r))
-
-                            );
+            Prime2.addFunc("*", (l, r) => l.__mul__(r));
+            Prime2.addFunc("**", (l, r) => l.__pow__(r));
+            Prime2.addFunc("/", (l, r) => l.__truediv__(r));
+            Prime2.addFunc("//", (l, r) => l.__floordiv__(r));
+            Prime2.addFunc("%", (l, r) => l.__mod__(r));
+            Prime2.addFunc("^", (l, r) => l.__bitxor__(r));
+            Prime2.addFunc("|", (l, r) => l.__bitor__(r));
+            Prime2.addFunc("&", (l, r) => l.__bitand__(r));
+            Prime2.addFunc("==", (l, r) => MK.Int(l.__eq__(r)));
+            Prime2.addFunc("!=", (l, r) => MK.Int(!l.__eq__(r)));
             Prime2.addFunc(">", (l, r) =>
                                {
                                    return MK.Int(
@@ -642,6 +624,7 @@ namespace Ava
     }
     public partial class IBin
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             Action storeOp;
@@ -704,18 +687,6 @@ namespace Ava
 
     public partial class Load
     {
-        public void store(MetaContext ctx)
-        {
-            var lhs_ = ctx.search(n);
-            if (!lhs_.HasValue)
-            {
-                ctx.addCode(BC.LOAD_GLOBAL_REF, ctx.strIdx(n));
-            }
-            else
-            {
-                ctx.addCode(BC.LOAD_LOCAL_REF, lhs_.Value);
-            }
-        }
         public void emit_impl(MetaContext ctx)
         {
             var lhs_ = ctx.search(n);
@@ -794,6 +765,7 @@ namespace Ava
 
     public partial class While
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             // var backjump_offset = ctx.currentOffset;
@@ -815,6 +787,7 @@ namespace Ava
 
     public partial class Loop
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             var backjump_offset = ctx.currentOffset;
@@ -845,6 +818,8 @@ namespace Ava
     }
     public partial class For
     {
+
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             var PSEUDO = 0;
@@ -902,15 +877,14 @@ namespace Ava
 
             foreach (var st in suite.Skip(1))
             {
-                if (last is ExprStmt)
+                if (!last.is_stmt)
                 {
                     ctx.addCode(BC.POP);
                 }
                 st.emit(ctx);
                 last = st;
             }
-            if (last is ExprStmt) { }
-            else
+            if (last.is_stmt)
             {
                 ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
             }
@@ -920,6 +894,7 @@ namespace Ava
 
     public partial class Call
     {
+        
         public void emit_impl(MetaContext ctx)
         {
             f.emit(ctx);
@@ -1000,13 +975,6 @@ namespace Ava
 
     }
 
-    public partial class ExprStmt : ImmediateAST
-    {
-        public void emit_impl(MetaContext ctx)
-        {
-            expr.emit(ctx);
-        }
-    }
     public partial class CList
     {
         public void emit_impl(MetaContext ctx)
@@ -1042,6 +1010,18 @@ namespace Ava
                 v.emit(ctx);
             }
             ctx.addCode(BC.MK_DICT, pairs.Length);
+        }
+    }
+
+    public partial class CSet
+    {
+        public void emit_impl(MetaContext ctx)
+        {
+            foreach (var v in elts)
+            {
+                v.emit(ctx);
+            }
+            ctx.addCode(BC.MK_SET, elts.Length);
         }
     }
 
@@ -1112,6 +1092,7 @@ namespace Ava
 
     public partial class Decl
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx) { }
 
         public void __resolve_local(MetaContext ctx)
@@ -1139,6 +1120,7 @@ namespace Ava
 
     public partial class Continue
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             int operand = ctx.currentOffset + 1;
@@ -1148,6 +1130,7 @@ namespace Ava
 
     public partial class Break
     {
+        public bool is_stmt => true;
         public void emit_impl(MetaContext ctx)
         {
             int operand = ctx.currentOffset + 1;

@@ -131,6 +131,12 @@ CDict(
     (ImmediateAST, ImmediateAST)[] pairs
 )
 
+CSet(
+    int lineno,
+    int colno,
+    ImmediateAST[] elts
+)
+
 CStrDict(
     int lineno,
     int colno,
@@ -192,9 +198,3 @@ Decl(
     string[] names
 )
 
-
-ExprStmt(
-    int lineno,
-    int colno,
-    ImmediateAST expr
-)

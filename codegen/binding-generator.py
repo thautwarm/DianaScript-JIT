@@ -51,6 +51,7 @@ type2_part3 : "from" type -> just
 toptype : type2_part1 type2_part2 type2_part3 -> toptype
 
 methodname : "this" "." (CNAME|SPECIAL)   -> instmeth
+           | "this" type "." (CNAME|SPECIAL)   -> other_instmeth
            | CNAME  "." (CNAME|SPECIAL)   -> extmeth
            | CNAME                        -> clsmeth
 
@@ -118,6 +119,11 @@ class InstMethName:
     _: str
 
 @dataclass
+class OtherInstMethName:
+    _: str
+    cls: str
+
+@dataclass
 class ClassMethName:
     _: str
 
@@ -126,7 +132,7 @@ class ExtMethName:
     classname: str
     _: str
 
-MethName = ExtMethName | ClassMethName | InstMethName
+MethName = ExtMethName | ClassMethName | InstMethName | OtherInstMethName
 
 
 @dataclass
@@ -212,6 +218,10 @@ class Trans(Transformer):
         return p1
     def instmeth(self, name):
         return InstMethName(str(name))
+    
+    def other_instmeth(self, t, name):
+        return OtherInstMethName(str(name), t)
+
     def extmeth(self, srcclass, name):
         return ExtMethName(str(srcclass), str(name))
     def clsmeth(self, name):
@@ -298,7 +308,7 @@ class Codegen:
             self.indent = indent
 
     def declare(self, name: str, func):
-        self.getters.append('{ "%s", MK.FuncN("%s", %s) },\n' % (name, name, func) )
+        self.getters.append((name, lambda clsname: "MK.FuncN(\"%s\", %s)" % (clsname+"."+name, func) ))
         return self
     
     def bind_getitem(self, x: MethodDecl):
@@ -384,7 +394,9 @@ class Codegen:
                 case InstMethName(meth_name):
                     params = [TParam(TName(self.impl_type)), *x.params]
                     access_field_from_first = True
-                    meth_name
+                case OtherInstMethName(meth_name, cls):
+                    params = [TParam(cls), *x.params]
+                    access_field_from_first = True
                 case ClassMethName(meth_name):
                     field_from_class = self.impl_type
                     params = x.params
@@ -405,7 +417,7 @@ class Codegen:
                     valid_argc[-1] += 1
             self << f"if (nargs {arg_check} {valid_argc[0]})\n"
             error_msg = f"calling {self.cls_name}.{bind_name}; needs at least {arg_desc} ({','.join(map(str, valid_argc))}) arguments, got {{nargs}}."
-            self << f"  throw new TypeError(${dumps(error_msg)});\n"
+            self << f"  throw new ArgumentException(${dumps(error_msg)});\n"
 
             arguments = []
             i = -1
@@ -477,7 +489,7 @@ class Codegen:
                 try_return(check=False)
             else:
                 error_msg = f"call {self.cls_name}.{bind_name}; needs at most ({valid_argc[-1]}) arguments, got {{nargs}}."
-                self << f"throw new TypeError(${dumps(error_msg)});\n"
+                self << f"throw new ArgumentException(${dumps(error_msg)});\n"
 
         self << "}\n"
 
@@ -492,7 +504,7 @@ class Codegen:
             self << "var nargs = _args.Length;\n"
             self << "if (nargs != 0)\n"
             error_msg = f"accessing {self.cls_name}.{bind_name}; needs 0 arguments, got {{nargs}}."
-            self << f"  throw new TypeError(${dumps(error_msg)});\n"
+            self << f"  throw new ArgumentException(${dumps(error_msg)});\n"
             self << (f"var ret = "
                     f"{cls_name}.{x.methname._};\n")
             ret = 'ret';
@@ -517,7 +529,7 @@ class Codegen:
             self << "var nargs = _args.Length;\n"
             self << "if (nargs != 1)\n"
             error_msg = f"accessing {self.cls_name}.{bind_name}; needs only 1 argument, got {{nargs}}."
-            self << f"  throw new TypeError(${dumps(error_msg)});\n"
+            self << f"  throw new ArgumentException(${dumps(error_msg)});\n"
             self << f"var arg = _args[0];\n"
             self << f"var ret = {accept_arg(self.impl_type, 'arg')}.{x.methname._};\n"
             if x.ret.cast_from:
@@ -558,7 +570,9 @@ class Codegen:
         self << f"public partial class {wrap_type}\n"
         self << "{\n"
         with self.tab():
-            self << f"public static TypeObject_v1 classobject = new TypeObject_v1({dumps(bind_name)});\n"
+            self << f"public string Classname  => {dumps(bind_name)};\n"
+
+            self << "public static DModule module_instance {get; private set;}\n"
             for method in x.methods:
                     match method:
                         case MethodDecl() if method.params is None:
@@ -569,16 +583,14 @@ class Codegen:
                             self.bind_getitem(method)
                         case MethodDecl():
                             self.bind_method(method)
-
-            self << f"public static void SetupType()\n"
+            
+            self << f"static {wrap_type}()\n"
             self << "{\n"
             with self.tab():
-                self << f"classobject.methods = new System.Collections.Generic.Dictionary<string, DObj>\n"
-                self << "{\n"
-                with self.tab():
-                    for each in self.getters:
-                        self << each
-                self << "};\n"
+                self << f"module_instance = new DModule({dumps(bind_name)});\n"
+                for k, v in self.getters:
+                    self << f"module_instance.fields.Add(\"{k}\", {v(bind_name)});\n"
+                
             self << "}\n"
  
         self << "}\n"

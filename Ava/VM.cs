@@ -18,10 +18,8 @@ namespace Ava
     public enum BC
     {
         LOAD_GLOBAL,
-        LOAD_GLOBAL_REF,
         STORE_GLOBAL,
         LOAD_LOCAL,
-        LOAD_LOCAL_REF,
         STORE_LOCAL,
 
         LOAD_FREE,
@@ -29,7 +27,7 @@ namespace Ava
         STORE_FREE,
 
         STORE_ITEM,
-        LOAD_ITEM_REF,
+
         LOAD_ITEM,
         CALL_FUNC,
         CALL_PRIME2,
@@ -45,6 +43,7 @@ namespace Ava
         POP,
         MK_FUNC,
         MK_LIST,
+        MK_SET,
         MK_TUPLE,
         MK_DICT,
         NEG,
@@ -66,20 +65,20 @@ namespace Ava
     public static class ListExt
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Push<T>(this List<T> self, T o)
+        public static void Push(this List<DObj> self, DObj o)
         {
             self.Add(o);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 
-        public static T Peek<T>(this List<T> self)
+        public static DObj Peek(this List<DObj> self)
         {
             return self[self.Count - 1];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Pop<T>(this List<T> self)
+        public static DObj Pop(this List<DObj> self)
         {
             var i = self.Count - 1;
             var a = self[i];
@@ -88,7 +87,7 @@ namespace Ava
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (T, T) Pop2<T>(this List<T> self)
+        public static (DObj, DObj) Pop2(this List<DObj> self)
         {
             var i = self.Count - 1;
             var a = self[i - 1];
@@ -96,6 +95,58 @@ namespace Ava
             self.RemoveAt(i);
             self.RemoveAt(i - 1);
             return (a, b);
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public static void PopN(this List<DObj> self, List<DObj> other, int n)
+        {
+            int c = self.Count;
+            for(int i = c - n; i < c; i++)
+            {
+                other.Add(self[i]);
+            }
+            self.RemoveRange(c - n, n);
+            return;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public static void PopN(this List<DObj> self, Dictionary<DObj, DObj> other, int n)
+        {
+            int c = self.Count;
+            int start = c - n - n;
+            for(int i = start; i < c; i+=2)
+            {
+                other[self[i]] = self[i+1];
+            }
+            self.RemoveRange(start, n + n);
+            return;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public static void PopN(this List<DObj> self, Dictionary<string, DObj> other, int n)
+        {
+            int c = self.Count;
+            int start = c - n - n;
+            for(int i = start; i < c; i+=2)
+            {
+                other[(string) (DString) self[i]] = self[i+1];
+            }
+            self.RemoveRange(start, n + n);
+            return;
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public static void PopN_AsToSet(this List<DObj> self, Dictionary<DObj, DObj> other, int n)
+        {
+            int c = self.Count;
+            for(int i = c - n; i < c; i++)
+            {
+                other[self[i]] = DNone.unique;
+            }
+            self.RemoveRange(c - n, n);
+            return;
         }
     }
     public static class VM
@@ -189,30 +240,17 @@ namespace Ava
                                 var n = bytecode[offset + 1];
                                 var xs = new Dictionary<string, DObj>();
 
-                                for (int i = 0; i < n; i++)
-                                {
-                                    var v = vstack.Pop();
-                                    var k = (string)(DString)vstack.Pop();
-                                    if (!xs.ContainsKey(k))
-                                        xs[k] = v;
-                                }
-
+                                vstack.PopN(xs, n);
                                 vstack.Push(MK.StrDict(xs));
                                 offset += 2;
                                 goto head;
+
                             }
                         case (int)BC.MK_DICT:
                             {
                                 var n = bytecode[offset + 1];
                                 var xs = new Dictionary<DObj, DObj>();
-
-                                for (int i = 0; i < n; i++)
-                                {
-                                    var (k, v) = vstack.Pop2();
-                                    if (!xs.ContainsKey(k))
-                                        xs[k] = v;
-                                }
-
+                                vstack.PopN(xs, n);
                                 vstack.Push(MK.Dict(xs));
                                 offset += 2;
                                 goto head;
@@ -221,11 +259,17 @@ namespace Ava
                             {
                                 var n = bytecode[offset + 1];
                                 var xs = new List<DObj>();
-
-                                for (int i = 0; i < n; i++)
-                                    xs.Add(vstack.Pop());
-                                xs.Reverse();
+                                vstack.PopN(xs, n);
                                 vstack.Push(MK.List(xs));
+                                offset += 2;
+                                goto head;
+                            }
+                        case (int)BC.MK_SET:
+                            {
+                                var n = bytecode[offset + 1];
+                                var xs = new Dictionary<DObj, DObj>();
+                                vstack.PopN_AsToSet(xs, n);
+                                vstack.Push(MK.Dict(xs));
                                 offset += 2;
                                 goto head;
                             }
@@ -233,7 +277,6 @@ namespace Ava
                             {
                                 var n = bytecode[offset + 1];
                                 var xs = new DObj[n];
-
                                 for (int i = n - 1; i >= 0; i--)
                                     xs[i] = vstack.Pop();
                                 vstack.Push(MK.Tuple(xs));

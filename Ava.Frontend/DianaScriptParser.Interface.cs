@@ -71,6 +71,9 @@ namespace Ava.Frontend
         public static ast mkDict(CommonToken token, List<(ast, ast)> elts)
         => CDict.make(elts.ToArray(), token.Line, token.Column);
 
+        public static ast mkSet(CommonToken token, List<ast> elts)
+        => CSet.make(elts.ToArray(), token.Line, token.Column);
+
         public static ast mkStrDict(CommonToken token, List<(ast, ast)> elts)
         => CStrDict.make(elts.ToArray(), token.Line, token.Column);
 
@@ -136,10 +139,6 @@ namespace Ava.Frontend
             );
         }
 
-        public static ast mkExprStmt(ast inner)
-        {
-            return ExprStmt.make(inner, inner.Lineno, inner.Colno);
-        }
 
         public static ast mkRaise(CommonToken token, ast inner)
         {

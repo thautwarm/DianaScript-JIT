@@ -14,14 +14,11 @@ namespace Ava
 
     public static class MK
     {
-
-        //public static B unbox<A, B>(THint<B> _, A o) where B : A => (B)o;
-
         public static DObj unbox(THint<DObj> _, DObj o) => o;
-
+        public static IEnumerable<DObj> unbox(THint<IEnumerable<DObj>> _, DObj o) => o.__iter__();
         public static Ref unbox(THint<Ref> _, DObj o) => (Ref)o;
-
         public static Dictionary<DObj, DObj> unbox(THint<Dictionary<DObj, DObj>> _, DObj o) => ((DDict)o).dict;
+        public static Dictionary<string, DObj> unbox(THint<Dictionary<string, DObj>> _, DObj o) => ((DStrDict)o).dict;
         public static DObj[] unbox(THint<DObj[]> _, DObj o) => ((DTuple)o).elts;
         public static List<DObj> unbox(THint<List<DObj>> _, DObj o) => ((DList)o).elts;
 
@@ -45,7 +42,8 @@ namespace Ava
         public static DObj cast(THint<DObj> _, DObj o) => o;
         public static B cast<A, B>(THint<B> _, A o) where A : B => o;
         public static A cast<A, B>(THint<A> _, B o) where A : B => (A)o;
-        public static DObj cast<A>(THint<DObj> _, A o) => create(o);
+
+        public static DObj cast(THint<DObj> _, string s) => MK.String(s);
         public static Char[] cast(THint<Char[]> _, String s) => s.ToCharArray();
         public static String cast(THint<String> _, Char[] s) => new String(s);
         public static String cast(THint<Char> _, Char s) => new String(new[] { s });
@@ -67,6 +65,8 @@ namespace Ava
         public static A cast<A>(THint<A> _, A s) => s;
 
 
+        public static DObj create(string s) => MK.String(s);
+        public static DObj create(DObj s) => s;
         public static DObj create(int s) => Int(s);
         public static DObj create(bool s) => Int(s);
         public static DObj create(long s) => Int(s);
@@ -84,7 +84,7 @@ namespace Ava
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         static DInt CacheOrNewInt(long value)
         {
             if (value >= -128 && value < 128)
@@ -109,7 +109,9 @@ namespace Ava
 
 
         public static DObj create() => None();
-        public static DNone None() => DNone.unique;
+        public static DNone None() => DNone.unique as DNone;
+
+        public static DObj create(IEnumerable<DObj> iter) => new DIterable(iter);
 
 
 
@@ -127,7 +129,7 @@ namespace Ava
             return new DTuple { elts = dObjs };
         }
 
-        public static DObj create(object d) => new DNative { value = d };
+        
 
         public static DObj create(Dictionary<DObj, DObj> d) => Dict(d);
 
@@ -185,6 +187,11 @@ namespace Ava
         public static DTuple tuple(params DObj[] args)
         {
             return new DTuple { elts = args };
+        }
+
+        public static DNative wrap(object arg)
+        {
+            return new DNative { value = arg };
         }
     }
 }
