@@ -1555,21 +1555,21 @@ public partial class ByteASTLoader
 
     private static readonly object _loaderSync = new object();
 
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
-    {
-        var arr = new ImmediateAST[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<ImmediateAST>.val);
-        }
-        return arr;
-    }
     public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
         var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
+        }
+        return arr;
+    }
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    {
+        var arr = new ImmediateAST[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }
