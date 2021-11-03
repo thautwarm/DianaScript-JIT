@@ -19,47 +19,51 @@ You can access `DObj.Native` to access their .NET representation:
 
 ## Operators
 
-| Operator | Descrption | Supported Types | 
-|--|--| --| 
-|+| addition | `Int, Num, List(concat), Tuple(concat)` |
-|-| subtraction | `Int, Num, Dict(set difference)` |
-|*| multiplication | `Int, Num, Str(repeat)` | 
-|**| power | `Int, Num` | 
-|/|float division | `Int, Num, Dict(quotient set)` |
-|//|floor division(get integer) | `Int, Num` | 
-|%| modulo(not remainder) | `Int, Num` |
-|^| bitwise xor | `Int, Num` |
-|&| bitwise and/intersect | `Int, Num, Dict(set intersect)` |
-|\|| bitwise or/union |  `Int, Num, Dict(set union)` |
-|!=| non-equality | All |
-|==| equality | All |
-|>, <, >=, <=| inequality | `Int, Num, Tuple` |
-|in/not in| not contained | right-hand side `Dict(use key), List, Tuple` |
-| ~ | bit invert | `Int` | 
-| << | left shift | `Int`(higher bits are circular) |
-| >> | zero-fill right shift |  `Int`(discard lower bits) |
-| not in/in | check if/if not contained | any in/not in `List/Set/Tuple/String`  | 
+`**` is right-associative.
+
+
+| Operators | Descrption | Supported Types | Precedence |
+|--|--| --| -- |
+|+| addition | `Int, Num, List(concat), Tuple(concat)` | 7 |
+|-| subtraction | `Int, Num, Dict(set difference)` | 7 | 
+|*| multiplication | `Int, Num, Str(repeat)` | 8 |
+|**| power | `Int, Num` | 9 |
+|/|float division | `Int, Num, Dict(quotient set)` | 8 |
+|//|floor division(get integer) | `Int, Num` | 8 |
+|%| modulo(not remainder) | `Int, Num` | 8 |
+|^| bitwise xor | `Int, Num` | 4 |
+|&| bitwise and/intersect | `Int, Num, Dict(set intersect)` | 5 |
+|\|| bitwise or/union |  `Int, Num, Dict(set union)` | 3 |
+|!=| non-equality | All | 2 | 
+|==| equality | All | 2 | 
+|>, <, >=, <=| inequality | `Int, Num, Tuple` | 2 | 
+| ~ | bit invert | `Int` | MAX |
+| - | unary minus | `Int, Num` | MAX |
+| not | negation | any | MAX |
+| << | left shift | `Int`(higher bits are circular) | 6  |
+| >> | zero-fill right shift |  `Int`(discard lower bits) | 6 | 
+| not in/in | check if/if not contained | any in/not in `List/Set/Tuple/String`  | 2 | 
 
 ## Modules and Methods
 
 ### `Int`
 
-- `Int.get_max`: get max of int64 value
-- `Int.get_min`: get min of int64 value
-- `Int.of`: convert to `Int`, from `Str`, `Int` or `Num`
+- `Int.get_max()`: get max of int64 value
+- `Int.get_min()`: get min of int64 value
+- `Int.of(Str | Int | Num)`: convert to `Int`, from `Str`, `Int` or `Num`
 
 
 ### `Num`
 
 - `Num.get_max`: get max of float32 value
 - `Num.get_min`: get min of float32 value
-- `Num.of`: convert to `Num`, from `Str`, `Int` or `Num`
+- `Num.of(Str | Int | Num)`: convert to `Num`, from `Str`, `Int` or `Num`
 
 ### `Str`
 
 We omit the return type when it is `Str`.
 
-- `Str.of`: convert any to `Str`
+- `Str.of(any)`: convert any to `Str`
 - `Str.join(Str, Enum<any>)`
 - `Str.concat(Enum<any>)`
 - `Str.endswith(Str, Str)`
@@ -76,12 +80,12 @@ We omit the return type when it is `Str`.
 - `Str.rstrip(Str, Str?)`
      wrap of `Systen.String.TrimEnd`; when the second argument is not provided, trim right whitespaces.
 
-- `Str.lower(Str)`
-     wrap of `Systen.String.ToLowerInvariant`
+- `Str.lower(Str)`, `Str.upper(Str)`
+     wrap of `Systen.String.ToLowerInvariant/ToUpperInvariant`
 
 - `Str.contains(String): Int` : return 0 if false, or 1 if true
 
-- `Str.format(Str, any1, any2, ...)`: equivalent to `System.String.Format`.
+- `Str.format(Str, any1, any2, ...)`: equivalent to `System.String.Format` in .NET.
 
 - `Str.substr(Str, Int, Int?)`
 
@@ -94,7 +98,7 @@ We omit the return type when it is `Str`.
 
 - `Str.remove_at(Str, Int, Str)`
 
-     wrap of `Systen.String.remove`
+     wrap of `Systen.String.Remove`
 
 - `Str.index(Str, Str, Int?, Int?)`
 
@@ -103,10 +107,10 @@ We omit the return type when it is `Str`.
 
 ## Tuple
 
-- `Tuple.len(Tuple): Int`
+A `Tuple` is an `Enum`.
 
 - `Tuple.of(Enum<any>): Tuple`: convert any enumerable of diana objects to a tuple
-
+- `Tuple.len(Tuple): Int`
 - `Tuple.forkey(Tuple, function): None`
 
     ```elixir
@@ -124,6 +128,7 @@ We omit the return type when it is `Str`.
     ```
 ## List
 
+- `List.of(Enum<any>): List`: `Enum` to `List`
 - `List.push(List, any)`
 - `List.pop(List): any`
 - `List.extend(List, Enum<any>)`
@@ -167,6 +172,8 @@ We omit the return type when it is `Str`.
 
 `Dict` is also `Set`; a `Set` is a `Dict` whose values are `None`.
 
+- `Dict.of(Enum): Dict`: from an enumerable of 2-element tuple to a dictionary
+- `Dict.setOf(Enum): Dict`: construct a set from an enumerable
 - `Dict.remove(Dict, any key): None`
 - `Dict.clear(Dict)`
 - `Dict.len(Dict): int`

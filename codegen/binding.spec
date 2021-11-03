@@ -28,6 +28,8 @@ Dict DDict Dictionary<DObj, DObj> {
     IEnumerable<DObj> CollectionExts.ObjectPairs(Dictionary<DObj, DObj>) as items
     void this.ForEachIndex_(DObj) as forkey
     void this.Merge(Dictionary<DObj, DObj>) as update
+    Dictionary<DObj, DObj> CollectionExts.dictOf(IEnumerable<DObj>) as of
+    Dictionary<DObj, DObj> CollectionExts.setOf(IEnumerable<DObj>) as setOf
 }
 
 

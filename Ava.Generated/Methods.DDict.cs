@@ -172,6 +172,30 @@ public partial class DDict
     }
     throw new ArgumentException($"call Dict.update; needs at most (2) arguments, got {nargs}.");
   }
+  public static DObj bind_of(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 1)
+      throw new ArgumentException($"calling Dict.of; needs at least  (1) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<IEnumerable<DObj>>.val, _args[0]);
+    {
+      var _return = CollectionExts.dictOf(_arg0);
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call Dict.of; needs at most (1) arguments, got {nargs}.");
+  }
+  public static DObj bind_setOf(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 1)
+      throw new ArgumentException($"calling Dict.setOf; needs at least  (1) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<IEnumerable<DObj>>.val, _args[0]);
+    {
+      var _return = CollectionExts.setOf(_arg0);
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call Dict.setOf; needs at most (1) arguments, got {nargs}.");
+  }
   static DDict()
   {
     module_instance = new DModule("Dict");
@@ -188,6 +212,8 @@ public partial class DDict
     module_instance.fields.Add("items", MK.FuncN("Dict.items", bind_items));
     module_instance.fields.Add("forkey", MK.FuncN("Dict.forkey", bind_forkey));
     module_instance.fields.Add("update", MK.FuncN("Dict.update", bind_update));
+    module_instance.fields.Add("of", MK.FuncN("Dict.of", bind_of));
+    module_instance.fields.Add("setOf", MK.FuncN("Dict.setOf", bind_setOf));
   }
 }
 }

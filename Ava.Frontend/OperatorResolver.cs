@@ -45,13 +45,12 @@ namespace Ava.Frontend
 
         public static Dictionary<string, int> StandardPrecedences = new Dictionary<string, int>
         {
-            {"==", 2},
-            {"!=", 2},
+            {"==", 1},
+            {"!=", 1},
             {"<", 2},
             {">", 2},
             {"<=", 2},
             {">=", 2},
-            {"=", 2},
             {"notin", 2},
             {"in", 2},
             {"|", 3},

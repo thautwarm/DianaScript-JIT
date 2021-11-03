@@ -62,6 +62,29 @@ namespace Ava
             }
         }
 
+        public static Dictionary<DObj, DObj> dictOf(IEnumerable<DObj> pairs)
+        {
+            var res = new Dictionary<DObj, DObj>();
+            foreach(var kv in pairs)
+            {
+                var pair = kv as DTuple;
+                if (pair == null || pair.elts.Length != 2)
+                    throw new ValueError($"invalid key-value pair {kv}");
+                
+                res[pair.elts[0]] = pair.elts[1];
+            }
+            return res;
+        }
+
+        public static Dictionary<DObj, DObj> setOf(IEnumerable<DObj> elts)
+        {
+            var res = new Dictionary<DObj, DObj>();
+            foreach(var elt in elts)
+            {
+                res[elt] = DNone.unique;
+            }
+            return res;
+        }
         public static Dictionary<DObj, DObj> Intersect(this  Dictionary<DObj, DObj> self, IEnumerable<DObj> other)
         {
             var res = new Dictionary<DObj, DObj>();
