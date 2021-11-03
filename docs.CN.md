@@ -1,3 +1,84 @@
+
+## 语法Cheat Sheet
+
+```ruby
+# 这是一个注释
+x = x[1] = 3  # 连续赋值
+
+
+# 变量声明；不声明则是全局变量
+var x
+
+
+x = 0
+# 循环
+loop
+    # if .. then ... end
+    if x > 100 then
+        break
+    end
+    x += 1
+end
+
+# 以上循环等价于
+x = 0
+while x <= 100
+    x += 1
+end
+
+for i in Enum.range(20) do
+    log(i) # 当然，你可以在循环中使用break和continue
+end
+# 0
+# ...
+# 19
+
+x = [1, 2, 3] # 列表
+
+x[0] # 1
+x[1] = 3 # x == [1, 3, 3]
+
+x = (1, ) # 元组
+x > (0, 1) # 返回1
+x > (1, 1) # 返回0
+
+x = {} # 集合，同时也是值为None的字典
+x[1] = None
+log(x) # {1}
+
+x[2] = 10; log(x) # {1, 2:10}
+
+x.attr = 20 # 等价与x["attr"] = 20
+log(x) # {1, 2:10, "attr": 20}
+
+z = if 1 then 0 else 1 end # if 是表达式
+
+# 多条件
+if cond1 then
+    1
+elif cond2 then
+    2
+elif cond3 then
+    3
+else
+    4
+end
+
+
+# 函数
+fun add(x, y)
+    x + y # 不需要显式return
+end
+
+# 函数是值。函数是表达式。函数可以匿名。
+add = fun (x, y)
+    x + y # 不需要显式return
+end
+
+# 如果函数体是一个简单的表达式
+mul10 = x -> x * 10
+```
+
 ## 基础类型
 
 在C#中, DianaScript的所有对象都实现interface `DObj`。
@@ -213,4 +294,8 @@
 - `Enum.map(Enum, func): Enum`
 
 - `Enum.mapi(Enum, func): Enum` : 这个函数参数接受两个参数；其中第一个参数是整数，表示当前元素在序列中的序号.
+
+- `Enum.range(Int start, Int end, Int sep)`
+- `Enum.range(Int n)`
+
 

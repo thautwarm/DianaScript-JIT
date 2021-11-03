@@ -1,3 +1,86 @@
+## 语法Cheat Sheet
+
+```ruby
+# this is a comment
+x = x[1] = 3  # multi-target assignment
+
+
+# variable declaration.
+# if no declaration in scope, regarded as a global variable.
+var x
+
+
+x = 0
+loop
+    # if .. then ... end
+    if x > 100 then
+        break
+    end
+    x += 1
+end
+
+# above loop is equivalent to
+
+x = 0
+while x <= 100
+    x += 1
+end
+
+# for loop
+for i in Enum.range(20) do
+    log(i) # of course you can use 'break' and 'continue'
+end
+# 0
+# 1
+# ...
+# 19
+
+x = [1, 2, 3] # mutable list
+
+x[0] # 1
+x[1] = 3 # x == [1, 3, 3]
+
+x = (1, ) # tuple
+x > (0, 1) # return 1(means 'true')
+x > (1, 1) # return 0(means 'false')
+
+x = {} # set，as well as a None-value dictionary
+x[1] = None
+log(x) # {1}
+
+x[2] = 10; log(x) # {1, 2:10}
+
+x.attr = 20 # equivalent to '["attr"] = 20'
+log(x) # {1, 2:10, "attr": 20}
+
+z = if 1 then 0 else 1 end # if-expression
+
+# multi-arm if-expression
+if cond1 then
+    1
+elif cond2 then
+    2
+elif cond3 then
+    3
+else
+    4
+end
+
+
+# function
+fun add(x, y)
+    x + y # no need to explicitly return here
+end
+
+# function is a value
+add = fun (x, y)
+    x + y
+end
+
+# if your function body is an expression
+mul10 = x -> x * 10
+```
+
 ## Basic Types
 
 In C# side, every thing in DianaScript is an instance whose class interfaces `DObj`.
@@ -212,4 +295,6 @@ A `Tuple` is an `Enum`.
 - `Enum.map(Enum, func): Enum`
 
 - `Enum.mapi(Enum, func): Enum` : the function should take 2 arguements, the first of which is the integer index of the enumerable.
+- `Enum.range(Int start, Int end, Int sep)`
+- `Enum.range(Int n)`
 

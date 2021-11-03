@@ -1,46 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using Ava;
 using System;
 using System.Linq;
-using Ava;
-using Ava.Frontend;
-using Antlr4.Runtime;
-using System.IO;
 
-partial class XParser: IAntlrErrorListener<IToken>
-{
-
-    public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
-    {
-        Console.WriteLine("Error in Parser at line " + e.OffendingToken.Line + ":" + e.OffendingToken.Column + "=>" + e.StackTrace);
-    }
-}
 public static partial class MainClass
 {
     // Start is called before the first frame update
 
-    public static void ExecuteSourceFiles(string[] paths)
+    public static void ExecuteSourceFile(string path)
     {
-        var apis = new Ava.DianaScriptAPIs();
+        var apis = new DianaScriptAPIs();
         var globals = apis.InitGlobals();
-        
-        foreach(var path in paths)
-        {
-            var ast = Ava.DianaScriptAPIs.Parse(path);
-            var ctx = MetaContext.Create(path);
-            var initPos = ctx.currentPos;
-            ast.emit(ctx);
-            var (_, code) = ctx.buildCode(initPos, new string[0]);
-            // code.ShowCode();
-            VM.execute(code, new DObj[0], new DObj[0], globals);            
-        }
+        var ast = DianaScriptAPIs.Parse(path);
+        var code = DianaScriptAPIs.compileModule(ast, path);
+        VM.execute(code, globals);            
     }
     public static void Main(string[] args)
     {
 
         if (args.Length != 0)
         {
-            ExecuteSourceFiles(args);
+            args.ToList().ForEach(ExecuteSourceFile);
             return;            
         }
         var apis = new Ava.DianaScriptAPIs();

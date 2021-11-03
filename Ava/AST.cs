@@ -200,6 +200,7 @@ namespace Ava
             currentLoopContinueTarget = oldTarget;
         }
 
+        
         public ((int, int)[], CodeObject) buildCode(SourcePos initPos, string[] args, string name_str = "<main>")
         {
 

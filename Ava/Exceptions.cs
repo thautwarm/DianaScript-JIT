@@ -22,7 +22,7 @@ namespace Ava
         string get_stack_trace()
         {
             return $"at {pos.filename}:{pos.line}:{pos.col}: " + "\n" + e.Message
-            // + "\n" + e.StackTrace
+            + (Config.SHOW_DOTNET_TRACE ? ("\n" + e.StackTrace) : "")
             ;
         }
     }
@@ -52,7 +52,7 @@ namespace Ava
         }
     }
 
-    public class TypeError: Exception
+    public class TypeError : Exception
     {
         public TypeError(string s) : base(s)
         {

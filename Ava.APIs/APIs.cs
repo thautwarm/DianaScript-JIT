@@ -7,6 +7,8 @@ using Ava;
 namespace Ava
 {
 
+    using ast = ImmediateAST;
+
 #if NUNITY
     public static class Debug
     {
@@ -116,6 +118,14 @@ namespace Ava
 
             };
             return G;
+        }
+
+        public static CodeObject compileModule(ast ast, string path, string name = null)
+        {
+            name = name ?? System.IO.Path.GetFileNameWithoutExtension(path);
+            var ctx = MetaContext.Create(path);
+            ast.emit(ctx);
+            return ctx.buildCode(ctx.currentPos, new string[0], name).Item2;
         }
 
     }

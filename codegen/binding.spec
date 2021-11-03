@@ -111,6 +111,7 @@ Enum DIterable IEnumerable<DObj>
     void this.ForEach_(DObj) as foreach
     IEnumerable<DObj> this.Map(DObj) as map
     IEnumerable<DObj> this.MapI(DObj) as mapi
+    IEnumerable<DObj> CollectionExts.Range(Int64, Int64?, Int64?) as range
 }
 
 // override Equals according to "==" 

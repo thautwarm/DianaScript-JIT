@@ -211,5 +211,22 @@ namespace Ava
             }
         }
 
+
+        public static IEnumerable<DObj> Range(long start, long end, long sep = 1)
+        {
+
+            for(long i=start; i<end;i+=sep)
+            {
+                yield return MK.Int(i);
+            }
+        }
+
+        public static IEnumerable<DObj> Range(long end)
+        {
+            for(long i=0; i<end;i++)
+            {
+                yield return MK.Int(i);
+            }
+        }
     }
 }

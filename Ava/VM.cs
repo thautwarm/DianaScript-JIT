@@ -102,7 +102,7 @@ namespace Ava
         public static void PopN(this List<DObj> self, List<DObj> other, int n)
         {
             int c = self.Count;
-            for(int i = c - n; i < c; i++)
+            for (int i = c - n; i < c; i++)
             {
                 other.Add(self[i]);
             }
@@ -115,9 +115,9 @@ namespace Ava
         {
             int c = self.Count;
             int start = c - n - n;
-            for(int i = start; i < c; i+=2)
+            for (int i = start; i < c; i += 2)
             {
-                other[self[i]] = self[i+1];
+                other[self[i]] = self[i + 1];
             }
             self.RemoveRange(start, n + n);
             return;
@@ -128,9 +128,9 @@ namespace Ava
         {
             int c = self.Count;
             int start = c - n - n;
-            for(int i = start; i < c; i+=2)
+            for (int i = start; i < c; i += 2)
             {
-                other[(string) (DString) self[i]] = self[i+1];
+                other[(string)(DString)self[i]] = self[i + 1];
             }
             self.RemoveRange(start, n + n);
             return;
@@ -141,7 +141,7 @@ namespace Ava
         public static void PopN_AsToSet(this List<DObj> self, Dictionary<DObj, DObj> other, int n)
         {
             int c = self.Count;
-            for(int i = c - n; i < c; i++)
+            for (int i = c - n; i < c; i++)
             {
                 other[self[i]] = DNone.unique;
             }
@@ -152,6 +152,11 @@ namespace Ava
     public static class VM
     {
 
+        public static DObj execute(CodeObject co, Dictionary<string, DObj> nameSpace)
+        {
+            return execute(co, new DObj[0], new DObj[0], nameSpace);
+        }
+    
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DObj execute(CodeObject co, DObj[] localvars, DObj[] freevars, Dictionary<string, DObj> nameSpace)
         {
