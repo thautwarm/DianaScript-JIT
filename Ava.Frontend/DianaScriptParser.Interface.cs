@@ -56,9 +56,6 @@ namespace Ava.Frontend
         public static ast mkOGet(CommonToken token, ast ast1, ast ast2)
         => OGet.make(ast1, ast2, token.Line, token.Column);
 
-        public static ast mkOSet(CommonToken token, ast ast1, ast ast2, ast ast3)
-        => OSet.make(ast1, ast2, ast3, token.Line, token.Column);
-
         public static ast mkApp(CommonToken token, ast f, List<ast> args)
         => Call.make(f, args.ToArray(), token.Line, token.Column);
 

@@ -284,15 +284,6 @@ namespace Ava
         }
     }
 
-    public partial class Store
-    {
-        public void emit_impl(MetaContext ctx)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
     public partial class Meta
     {
         public void emit_impl(MetaContext ctx)
@@ -894,15 +885,6 @@ namespace Ava
             target.emit(ctx);
             item.emit(ctx);
             ctx.addCode(BC.LOAD_ITEM);
-        }
-    }
-
-    public partial class OSet
-
-    {
-        public void emit_impl(MetaContext ctx)
-        {
-            throw new NotImplementedException();
         }
     }
 

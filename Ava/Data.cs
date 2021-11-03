@@ -8,37 +8,6 @@ namespace Ava
 {
 
 [Serializable]
-public partial class Store : ImmediateAST
-{
-
-    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
-    int ImmediateAST.Colno { set => colno = value; get => colno; }
-
-    public void __default_resolve_local(MetaContext ctx)
-    {
-        lhs.__resolve_local(ctx);
-        rhs.__resolve_local(ctx);
-    }
-
-    public string description => "Store";
-
-    public int lineno;
-    public int colno;
-    public string lhs;
-    public ImmediateAST rhs;
-    public static Store make(
-        string lhs,
-        ImmediateAST rhs,
-        int lineno,
-        int colno
-    ) => new  Store {
-        lineno = lineno,
-        colno = colno,
-        lhs = lhs,
-        rhs = rhs,
-    };
-}
-[Serializable]
 public partial class StoreMany : ImmediateAST
 {
 
@@ -443,41 +412,6 @@ public partial class OGet : ImmediateAST
         colno = colno,
         target = target,
         item = item,
-    };
-}
-[Serializable]
-public partial class OSet : ImmediateAST
-{
-
-    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
-    int ImmediateAST.Colno { set => colno = value; get => colno; }
-
-    public void __default_resolve_local(MetaContext ctx)
-    {
-        target.__resolve_local(ctx);
-        item.__resolve_local(ctx);
-        value.__resolve_local(ctx);
-    }
-
-    public string description => "OSet";
-
-    public int lineno;
-    public int colno;
-    public ImmediateAST target;
-    public ImmediateAST item;
-    public ImmediateAST value;
-    public static OSet make(
-        ImmediateAST target,
-        ImmediateAST item,
-        ImmediateAST value,
-        int lineno,
-        int colno
-    ) => new  OSet {
-        lineno = lineno,
-        colno = colno,
-        target = target,
-        item = item,
-        value = value,
     };
 }
 [Serializable]
@@ -991,16 +925,6 @@ public partial class ByteASTLoader
         {
             case 0:
             {
-                return new Store
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    lhs = Read(THint<string>.val),
-                    rhs = Read(THint<ImmediateAST>.val),
-                };
-            }
-            case 1:
-            {
                 return new StoreMany
                 {
                     lineno = Read(THint<int>.val),
@@ -1009,7 +933,7 @@ public partial class ByteASTLoader
                     rhs = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 2:
+            case 1:
             {
                 return new Bin
                 {
@@ -1020,7 +944,7 @@ public partial class ByteASTLoader
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 3:
+            case 2:
             {
                 return new IBin
                 {
@@ -1031,7 +955,7 @@ public partial class ByteASTLoader
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 4:
+            case 3:
             {
                 return new Load
                 {
@@ -1040,7 +964,7 @@ public partial class ByteASTLoader
                     n = Read(THint<string>.val),
                 };
             }
-            case 5:
+            case 4:
             {
                 return new IfThenElse
                 {
@@ -1051,7 +975,7 @@ public partial class ByteASTLoader
                     orelse = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 6:
+            case 5:
             {
                 return new NestedIf
                 {
@@ -1061,7 +985,7 @@ public partial class ByteASTLoader
                     orelse = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 7:
+            case 6:
             {
                 return new While
                 {
@@ -1071,7 +995,7 @@ public partial class ByteASTLoader
                     then = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 8:
+            case 7:
             {
                 return new Raise
                 {
@@ -1080,7 +1004,7 @@ public partial class ByteASTLoader
                     expr = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 9:
+            case 8:
             {
                 return new Loop
                 {
@@ -1089,7 +1013,7 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 10:
+            case 9:
             {
                 return new Meta
                 {
@@ -1099,7 +1023,7 @@ public partial class ByteASTLoader
                     inner = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 11:
+            case 10:
             {
                 return new SetMeta
                 {
@@ -1109,7 +1033,7 @@ public partial class ByteASTLoader
                     filename = Read(THint<string>.val),
                 };
             }
-            case 12:
+            case 11:
             {
                 return new For
                 {
@@ -1120,7 +1044,7 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 13:
+            case 12:
             {
                 return new OGet
                 {
@@ -1130,18 +1054,7 @@ public partial class ByteASTLoader
                     item = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 14:
-            {
-                return new OSet
-                {
-                    lineno = Read(THint<int>.val),
-                    colno = Read(THint<int>.val),
-                    target = Read(THint<ImmediateAST>.val),
-                    item = Read(THint<ImmediateAST>.val),
-                    value = Read(THint<ImmediateAST>.val),
-                };
-            }
-            case 15:
+            case 13:
             {
                 return new Block
                 {
@@ -1150,7 +1063,7 @@ public partial class ByteASTLoader
                     suite = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 16:
+            case 14:
             {
                 return new Call
                 {
@@ -1160,7 +1073,7 @@ public partial class ByteASTLoader
                     args = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 17:
+            case 15:
             {
                 return new Function
                 {
@@ -1171,7 +1084,7 @@ public partial class ByteASTLoader
                     body = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 18:
+            case 16:
             {
                 return new CVal
                 {
@@ -1180,7 +1093,7 @@ public partial class ByteASTLoader
                     obj = Read(THint<DObj>.val),
                 };
             }
-            case 19:
+            case 17:
             {
                 return new CList
                 {
@@ -1189,7 +1102,7 @@ public partial class ByteASTLoader
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 20:
+            case 18:
             {
                 return new CTuple
                 {
@@ -1198,7 +1111,7 @@ public partial class ByteASTLoader
                     elts = Read(THint<ImmediateAST[]>.val),
                 };
             }
-            case 21:
+            case 19:
             {
                 return new CDict
                 {
@@ -1207,7 +1120,7 @@ public partial class ByteASTLoader
                     pairs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
                 };
             }
-            case 22:
+            case 20:
             {
                 return new CStrDict
                 {
@@ -1216,7 +1129,7 @@ public partial class ByteASTLoader
                     pairs = Read(THint<(ImmediateAST, ImmediateAST)[]>.val),
                 };
             }
-            case 23:
+            case 21:
             {
                 return new Break
                 {
@@ -1224,7 +1137,7 @@ public partial class ByteASTLoader
                     colno = Read(THint<int>.val),
                 };
             }
-            case 24:
+            case 22:
             {
                 return new Continue
                 {
@@ -1232,7 +1145,7 @@ public partial class ByteASTLoader
                     colno = Read(THint<int>.val),
                 };
             }
-            case 25:
+            case 23:
             {
                 return new Return
                 {
@@ -1241,7 +1154,7 @@ public partial class ByteASTLoader
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 26:
+            case 24:
             {
                 return new And
                 {
@@ -1251,7 +1164,7 @@ public partial class ByteASTLoader
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 27:
+            case 25:
             {
                 return new Or
                 {
@@ -1261,7 +1174,7 @@ public partial class ByteASTLoader
                     right = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 28:
+            case 26:
             {
                 return new Not
                 {
@@ -1270,7 +1183,7 @@ public partial class ByteASTLoader
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 29:
+            case 27:
             {
                 return new Neg
                 {
@@ -1279,7 +1192,7 @@ public partial class ByteASTLoader
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 30:
+            case 28:
             {
                 return new Inv
                 {
@@ -1288,7 +1201,7 @@ public partial class ByteASTLoader
                     value = Read(THint<ImmediateAST>.val),
                 };
             }
-            case 31:
+            case 29:
             {
                 return new Decl
                 {
@@ -1297,7 +1210,7 @@ public partial class ByteASTLoader
                     names = Read(THint<string[]>.val),
                 };
             }
-            case 32:
+            case 30:
             {
                 return new ExprStmt
                 {
@@ -1311,17 +1224,6 @@ public partial class ByteASTLoader
         }
         
     }
-
-
-    private Store Read(THint<Store> _) => ReadStore();
-
-    public Store ReadStore() => new Store
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        lhs = Read(THint<string>.val),
-        rhs = Read(THint<ImmediateAST>.val),
-    };
 
 
     private StoreMany Read(THint<StoreMany> _) => ReadStoreMany();
@@ -1465,18 +1367,6 @@ public partial class ByteASTLoader
         colno = Read(THint<int>.val),
         target = Read(THint<ImmediateAST>.val),
         item = Read(THint<ImmediateAST>.val),
-    };
-
-
-    private OSet Read(THint<OSet> _) => ReadOSet();
-
-    public OSet ReadOSet() => new OSet
-    {
-        lineno = Read(THint<int>.val),
-        colno = Read(THint<int>.val),
-        target = Read(THint<ImmediateAST>.val),
-        item = Read(THint<ImmediateAST>.val),
-        value = Read(THint<ImmediateAST>.val),
     };
 
 
@@ -1665,15 +1555,6 @@ public partial class ByteASTLoader
 
     private static readonly object _loaderSync = new object();
 
-    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
-    {
-        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
-        }
-        return arr;
-    }
     public string[] Read(THint<string[]> _)
     {
         var arr = new string[ReadInt()];
@@ -1689,6 +1570,15 @@ public partial class ByteASTLoader
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<ImmediateAST>.val);
+        }
+        return arr;
+    }
+    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
+    {
+        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
         }
         return arr;
     }

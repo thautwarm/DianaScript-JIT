@@ -1,8 +1,3 @@
-Store(
-    int lineno, int colno,
-    string lhs, ImmediateAST rhs)
-
-
 StoreMany(
     int lineno, int colno,
     ImmediateAST[] lhs, ImmediateAST rhs)
@@ -88,14 +83,6 @@ OGet(
     int colno,
     ImmediateAST target,
     ImmediateAST item
-)
-
-OSet(
-    int lineno,
-    int colno,
-    ImmediateAST target,
-    ImmediateAST item,
-    ImmediateAST value
 )
 
 
