@@ -38,9 +38,12 @@ namespace Ava
     {
         public CodeObject co;
         public DObj[] freevars;
-        public Dictionary<string, DObj> nameSpace;
-        public string Classname => "object";
+        static Dictionary<string, DObj> default_lookup = new Dictionary<string, DObj>();
 
+        public Dictionary<string, DObj> func_fields = default_lookup;
+
+        public Dictionary<string, DObj> nameSpace;  
+        public string Classname => "codefunc";
         public object Native => this;
         public DObjectFunc(CodeObject co, DObj[] freevars, Dictionary<string, DObj> nameSpace)
         {
@@ -67,6 +70,26 @@ namespace Ava
                 args.CopyTo(locals, 0);
             }
             return VM.execute(co, locals, freevars, nameSpace);
+        }
+
+        public DObj __get__(DObj s)
+        {
+            var attr = (string) ((DString) s);
+            if(func_fields.TryGetValue(attr, out var obj))
+            {
+                return obj;
+            }
+            throw new AttributeError($"function {co.name} has no attribute {attr}.");
+        }
+
+        public void __set__(DObj s, DObj v)
+        {
+            var attr = (string) ((DString) s);
+            if(func_fields.Count == 0)
+            {
+                func_fields = new Dictionary<string, DObj>(1);
+            }
+            func_fields[attr] = v;
         }
     }
 
