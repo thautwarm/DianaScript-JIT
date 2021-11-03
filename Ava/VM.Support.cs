@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 
 namespace Ava
@@ -69,9 +68,38 @@ namespace Ava
             }
             return VM.execute(co, locals, freevars, nameSpace);
         }
+    }
+
+    [Serializable]
+    public static class Prime2
+    {
+        static List<Func<DObj, DObj, DObj>> funcs = new List<Func<DObj, DObj, DObj>>();
+
+        static Dictionary<string, int> indices = new Dictionary<string, int>();
+
+        public static DObj callfunc2(int i, DObj l, DObj r)
+        {
+            return funcs[i](l, r);
+        }
+
+        public static int getFuncIdx(string n)
+        {
+            return indices[n];
+        }
+        public static int addFunc(string n, Func<DObj, DObj, DObj> func)
+        {
+            if (indices.TryGetValue(n, out int i))
+            {
+                return i;
+            }
+            funcs.Add(func);
+            i = funcs.Count - 1;
+            indices[n] = i;
+            return i;
+        }
 
     }
-    [Serializable]
+
     public sealed record CodeObject(
         string name,
         DObj[] consts,
