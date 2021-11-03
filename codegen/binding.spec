@@ -42,13 +42,14 @@ StrDict DStrDict Dictionary<DObj, DObj> {
     void this.ForEachIndex_(DObj) as forkey
 }
 
+"using System.Collections.Generic;"
 Str DString String {
-    String Join(String, String[] from DObj) as join
-    String Concat(String[] from DObj)  as concat
+    String Join(String, IEnumerable<String> from DObj) as join
+    String Concat(IEnumerable<String> from DObj)  as concat
     bool this.EndsWith(String) as endswith
     bool this.StartsWith(String) as startswith
     int this.Length as len
-    String this.Trim(Char[] from String) as strip
+    String this.Trim(Char[]? from String) as strip
     String this.TrimEnd(Char[]? from String) as rstrip
     String this.TrimStart(Char[]? from String) as lstrip
     String this.ToLowerInvariant() as lower

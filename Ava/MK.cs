@@ -28,14 +28,14 @@ namespace Ava
             return (arg) => f(new[] { arg }).__bool__();
         }
         public static A unbox<A>(THint<A> _, DObj a) where A : DObj => (A)a;
-        public static int unbox(THint<int> _, DObj a) => (int)a.Native;
-        public static long unbox(THint<long> _, DObj a) => (long)a.Native;
-        public static ulong unbox(THint<ulong> _, DObj a) => (ulong)a.Native;
-        public static uint unbox(THint<uint> _, DObj a) => (uint)a.Native;
-        public static byte unbox(THint<byte> _, DObj a) => (byte)a.Native;
+        public static int unbox(THint<int> _, DObj a) => (int) (DInt) a;
+        public static long unbox(THint<long> _, DObj a) => (long) (DInt) a;
+        public static ulong unbox(THint<ulong> _, DObj a) => (ulong)(DInt) a;
+        public static uint unbox(THint<uint> _, DObj a) => (uint)(DInt) a;
+        public static byte unbox(THint<byte> _, DObj a) => (byte)(DInt) a;
 
-        public static float unbox(THint<float> _, DObj a) => (float)a.Native;
-        public static string unbox(THint<string> _, DObj a) => (string)a.Native;
+        public static float unbox(THint<float> _, DObj a) => (float)(DFloat) a;
+        public static string unbox(THint<string> _, DObj a) => (string)(DString) a;
 
         public static A unbox<A, B>(THint<A> _, B o) where B : A => o;
 
@@ -50,6 +50,9 @@ namespace Ava
         public static String cast(THint<String> _, DObj a) => a.__str__();
         public static String[] cast(THint<String[]> _, DObj a) =>
             a.__iter__().Select(x => x.__str__()).ToArray();
+
+        public static IEnumerable<String> cast(THint<IEnumerable<String>> _, DObj a) =>
+            a.__iter__().Select(x => x.__str__());
 
 
         public static float cast(THint<float> _, int s) => s;

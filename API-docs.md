@@ -45,3 +45,55 @@ You can access `DObj.Native` to access their .NET representation:
 - `Int.get_max`: get max of int64 value
 - `Int.get_min`: get min of int64 value
 - `Int.of`: convert to `Int`, from `Str`, `Int` or `Num`
+
+
+### `Num`
+
+- `Num.get_max`: get max of float32 value
+- `Num.get_min`: get min of float32 value
+- `Num.of`: convert to `Num`, from `Str`, `Int` or `Num`
+
+### `Str`
+
+- `Str.of`: convert any to `Str`
+- `Str.join(Str, Enum<any>)`
+- `Str.concat(Enum<any>)`
+- `Str.endswith(Str, Str)`
+- `Str.startswith(Str, Str)`
+- `Str.len(Str): Int`
+- `Str.strip(Str, Str?)`
+
+    wrap of `Systen.String.Trim`; when the second argument is not provided, trim left and right whitespaces.
+
+- `Str.lstrip(Str, Str?)`
+    
+    wrap of `Systen.String.TrimStart`; when the second argument is not provided, trim left whitespaces.
+
+- `Str.rstrip(Str, Str?)`
+     wrap of `Systen.String.TrimEnd`; when the second argument is not provided, trim right whitespaces.
+
+- `Str.lower(Str)`
+     wrap of `Systen.String.ToLowerInvariant`
+
+- `Str.Contains(String): Int` : return 0 if false, or 1 if true
+
+- `Str.Format(Str, any1, any2, ...)`: equivalent to `System.String.Format`.
+
+- `Str.substr(Str, Int, Int?)`
+
+     wrap of `Systen.String.Substring`; **the third argument is the length** of the substring
+
+
+- `Str.insert(Str, Int, Str)`
+
+     wrap of `Systen.String.Insert`
+
+- `Str.remove(Str, Int, Str)`
+
+     wrap of `Systen.String.remove`
+
+- `Str.index(Str, Str, Int?, Int?)`
+
+    wrap of `Systen.String.IndexOf`
+
+

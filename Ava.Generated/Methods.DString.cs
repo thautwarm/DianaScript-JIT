@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 namespace Ava
 {
 public partial class DString
@@ -12,7 +12,7 @@ public partial class DString
     if (nargs != 2)
       throw new ArgumentException($"calling Str.join; needs at least  (2) arguments, got {nargs}.");
     var _arg0 = MK.unbox(THint<String>.val, _args[0]);
-    var _arg1 = MK.cast(THint<String[]>.val, MK.unbox(THint<DObj>.val, _args[1]));
+    var _arg1 = MK.cast(THint<IEnumerable<String>>.val, MK.unbox(THint<DObj>.val, _args[1]));
     {
       var _return = String.Join(_arg0,_arg1);
       return MK.create(_return);
@@ -24,7 +24,7 @@ public partial class DString
     var nargs = _args.Length;
     if (nargs != 1)
       throw new ArgumentException($"calling Str.concat; needs at least  (1) arguments, got {nargs}.");
-    var _arg0 = MK.cast(THint<String[]>.val, MK.unbox(THint<DObj>.val, _args[0]));
+    var _arg0 = MK.cast(THint<IEnumerable<String>>.val, MK.unbox(THint<DObj>.val, _args[0]));
     {
       var _return = String.Concat(_arg0);
       return MK.create(_return);
@@ -69,9 +69,14 @@ public partial class DString
   public static DObj bind_strip(DObj[] _args) // bind method 
   {
     var nargs = _args.Length;
-    if (nargs != 2)
-      throw new ArgumentException($"calling Str.strip; needs at least  (2) arguments, got {nargs}.");
+    if (nargs < 1)
+      throw new ArgumentException($"calling Str.strip; needs at least  (1,2) arguments, got {nargs}.");
     var _arg0 = MK.unbox(THint<String>.val, _args[0]);
+    if (nargs == 1)
+    {
+      var _return = _arg0.Trim();
+      return MK.create(_return);
+    }
     var _arg1 = MK.cast(THint<Char[]>.val, MK.unbox(THint<String>.val, _args[1]));
     {
       var _return = _arg0.Trim(_arg1);
