@@ -58,7 +58,7 @@ Str DString String {
     String String.Format(String, *Object) as format
     String this.Substring(Int32, Int32?) as substr
     String this.Insert(Int32, String) as insert
-    String this.Remove(Int32, Int32?) as remove
+    String this.Remove(Int32, Int32?) as remove_at
     int this.IndexOf(String, Int32?, Int32?) as index
     DObj TypeConversion.toStr(DObj) as of
 }
@@ -90,9 +90,10 @@ List DList List<DObj> {
     void this.AddRange(IEnumerable<DObj> from DObj) as extend
     void this.Insert(Int32, DObj) as insert
     void this.Remove(DObj) as remove
-    void this.Find(Predicate<DObj>) as find
+    DObj this.Pop() as pop
+    DObj this.Find(Predicate<DObj>) as find
     void this.IndexOf(DObj, Int32?) as index
-    void this.RemoveAt(Int32?) as pop
+    void this.RemoveAt(Int32) as remove_at
     void this.Sort() as sort
     DObj[] this.ToArray() as array
     void this.Clear() as clear

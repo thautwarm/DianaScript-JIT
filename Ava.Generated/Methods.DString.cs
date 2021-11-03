@@ -209,11 +209,11 @@ public partial class DString
     }
     throw new ArgumentException($"call Str.insert; needs at most (3) arguments, got {nargs}.");
   }
-  public static DObj bind_remove(DObj[] _args) // bind method 
+  public static DObj bind_remove_at(DObj[] _args) // bind method 
   {
     var nargs = _args.Length;
     if (nargs < 2)
-      throw new ArgumentException($"calling Str.remove; needs at least  (2,3) arguments, got {nargs}.");
+      throw new ArgumentException($"calling Str.remove_at; needs at least  (2,3) arguments, got {nargs}.");
     var _arg0 = MK.unbox(THint<String>.val, _args[0]);
     var _arg1 = MK.unbox(THint<Int32>.val, _args[1]);
     if (nargs == 2)
@@ -226,7 +226,7 @@ public partial class DString
       var _return = _arg0.Remove(_arg1,_arg2);
       return MK.create(_return);
     }
-    throw new ArgumentException($"call Str.remove; needs at most (3) arguments, got {nargs}.");
+    throw new ArgumentException($"call Str.remove_at; needs at most (3) arguments, got {nargs}.");
   }
   public static DObj bind_index(DObj[] _args) // bind method 
   {
@@ -282,7 +282,7 @@ public partial class DString
     module_instance.fields.Add("format", MK.FuncN("Str.format", bind_format));
     module_instance.fields.Add("substr", MK.FuncN("Str.substr", bind_substr));
     module_instance.fields.Add("insert", MK.FuncN("Str.insert", bind_insert));
-    module_instance.fields.Add("remove", MK.FuncN("Str.remove", bind_remove));
+    module_instance.fields.Add("remove_at", MK.FuncN("Str.remove_at", bind_remove_at));
     module_instance.fields.Add("index", MK.FuncN("Str.index", bind_index));
     module_instance.fields.Add("of", MK.FuncN("Str.of", bind_of));
   }

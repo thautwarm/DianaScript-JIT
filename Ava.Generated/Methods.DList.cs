@@ -59,6 +59,18 @@ public partial class DList
     }
     throw new ArgumentException($"call List.remove; needs at most (2) arguments, got {nargs}.");
   }
+  public static DObj bind_pop(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 1)
+      throw new ArgumentException($"calling List.pop; needs at least  (1) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<List<DObj>>.val, _args[0]);
+    {
+      var _return = _arg0.Pop();
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call List.pop; needs at most (1) arguments, got {nargs}.");
+  }
   public static DObj bind_find(DObj[] _args) // bind method 
   {
     var nargs = _args.Length;
@@ -67,8 +79,8 @@ public partial class DList
     var _arg0 = MK.unbox(THint<List<DObj>>.val, _args[0]);
     var _arg1 = MK.unbox(THint<Predicate<DObj>>.val, _args[1]);
     {
-      _arg0.Find(_arg1);
-      return MK.None();
+      var _return = _arg0.Find(_arg1);
+      return MK.create(_return);
     }
     throw new ArgumentException($"call List.find; needs at most (2) arguments, got {nargs}.");
   }
@@ -91,23 +103,18 @@ public partial class DList
     }
     throw new ArgumentException($"call List.index; needs at most (3) arguments, got {nargs}.");
   }
-  public static DObj bind_pop(DObj[] _args) // bind method 
+  public static DObj bind_remove_at(DObj[] _args) // bind method 
   {
     var nargs = _args.Length;
-    if (nargs < 1)
-      throw new ArgumentException($"calling List.pop; needs at least  (1,2) arguments, got {nargs}.");
+    if (nargs != 2)
+      throw new ArgumentException($"calling List.remove_at; needs at least  (2) arguments, got {nargs}.");
     var _arg0 = MK.unbox(THint<List<DObj>>.val, _args[0]);
-    if (nargs == 1)
-    {
-      _arg0.RemoveAt();
-      return MK.None();
-    }
     var _arg1 = MK.unbox(THint<Int32>.val, _args[1]);
     {
       _arg0.RemoveAt(_arg1);
       return MK.None();
     }
-    throw new ArgumentException($"call List.pop; needs at most (2) arguments, got {nargs}.");
+    throw new ArgumentException($"call List.remove_at; needs at most (2) arguments, got {nargs}.");
   }
   public static DObj bind_sort(DObj[] _args) // bind method 
   {
@@ -177,9 +184,10 @@ public partial class DList
     module_instance.fields.Add("extend", MK.FuncN("List.extend", bind_extend));
     module_instance.fields.Add("insert", MK.FuncN("List.insert", bind_insert));
     module_instance.fields.Add("remove", MK.FuncN("List.remove", bind_remove));
+    module_instance.fields.Add("pop", MK.FuncN("List.pop", bind_pop));
     module_instance.fields.Add("find", MK.FuncN("List.find", bind_find));
     module_instance.fields.Add("index", MK.FuncN("List.index", bind_index));
-    module_instance.fields.Add("pop", MK.FuncN("List.pop", bind_pop));
+    module_instance.fields.Add("remove_at", MK.FuncN("List.remove_at", bind_remove_at));
     module_instance.fields.Add("sort", MK.FuncN("List.sort", bind_sort));
     module_instance.fields.Add("array", MK.FuncN("List.array", bind_array));
     module_instance.fields.Add("clear", MK.FuncN("List.clear", bind_clear));

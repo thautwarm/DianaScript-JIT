@@ -24,8 +24,7 @@ namespace Ava
 
         public static Predicate<DObj> unbox(THint<Predicate<DObj>> _, DObj o)
         {
-            var f = ((DFunc)o).func;
-            return (arg) => f(new[] { arg }).__bool__();
+            return (arg) => o.__call__(arg).__bool__();
         }
         public static A unbox<A>(THint<A> _, DObj a) where A : DObj => (A)a;
         public static int unbox(THint<int> _, DObj a) => (int) (DInt) a;
@@ -68,8 +67,10 @@ namespace Ava
         public static A cast<A>(THint<A> _, A s) => s;
 
 
-        public static DObj create(string s) => MK.String(s);
-        public static DObj create(DObj s) => s;
+        public static DObj create(string s) =>
+            MK.String(s == null ? "" : s);
+        public static DObj create(DObj s) => 
+            s == null ? DNone.unique : s;
         public static DObj create(int s) => Int(s);
         public static DObj create(bool s) => Int(s);
         public static DObj create(long s) => Int(s);

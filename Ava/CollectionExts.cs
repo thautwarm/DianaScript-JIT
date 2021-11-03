@@ -5,6 +5,15 @@ namespace Ava
 {
     public static partial class CollectionExts
     {
+
+        public static T Pop<T>(this List<T> self)
+        {
+            int i = self.Count;
+            var r = self[i-1];
+            self.RemoveAt(i-1);
+            return r;
+        }
+
         public static List<V> ShallowCopy<V>(this List<V> self)
         {
             var res = new List<V>();
