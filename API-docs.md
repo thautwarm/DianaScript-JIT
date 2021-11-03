@@ -129,7 +129,7 @@ We omit the return type when it is `Str`.
 - `List.clear(List)`
 - `List.find(List, function)`
 
-    ```
+    ```elixir
     List.find([1, 6, 3], x -> x % 2 == 0)
     # 6
 
@@ -146,7 +146,7 @@ We omit the return type when it is `Str`.
 
 - `List.forkey(List, function)`
 
-    ```elixir
+    ```julia
     var lst
     lst = [1, 2, 3]
     List.forkey(lst, i -> func(lst[i])) # == 'Enum.foreach(lst, func)'
@@ -177,9 +177,15 @@ We omit the return type when it is `Str`.
     
     return 1 if key is found, and set the first element of argument `ref` to the value; otherwise return 0.
 
+    ```python
+    found_ref = [None]
+    Dict.search({"key": "value"} 1, found_ref) # 1
+    found_ref # ["value"]
+    ```
+
 - `Dict.subtract(Dict, Enum)`: same as `-` operator for dictionaries; set difference
 
-    ```
+    ```python
     x = {1, 2, 3}
     Dict.subtract(x, [1, 2]) # {3}
     ```
