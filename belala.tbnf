@@ -11,6 +11,6 @@ val mkMeta : (str, str, str, ast) -> ast
 
 
 stmt : "raise" expr           { mkRaise($1, $2) }
-     | "__META" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
+     | "__SETMETA" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
 
 expr : "__META" <INT> ":" <INT> ":" <INT> "in" expr { mkMeta($2.Text, $4.Text, $6.Text, $8) }

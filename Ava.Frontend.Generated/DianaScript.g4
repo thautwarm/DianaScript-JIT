@@ -30,7 +30,7 @@ stmt returns [ImmediateAST result] :
         tmp__9 = (ImmediateAST) mkRaise( tmp__7, tmp__8 ); 
         $result = tmp__9; 
       } 
-    | '__META' local__2_stmt_case1=INT_10 ':' local__4_stmt_case1=INT_10 ':' local__6_stmt_case1=INT_10 'do' local__8_stmt_case1=stmt { 
+    | '__SETMETA' local__2_stmt_case1=INT_10 ':' local__4_stmt_case1=INT_10 ':' local__6_stmt_case1=INT_10 'do' local__8_stmt_case1=stmt { 
         ImmediateAST tmp__14 ; 
         ImmediateAST tmp__13 ; 
         CommonToken tmp__12 ; 

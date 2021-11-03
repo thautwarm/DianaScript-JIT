@@ -41,9 +41,9 @@ public partial class DianaScriptParser : Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, COMMENT_1=38, 
-		SINGLE_BINOP_2=39, STR_4=40, INT_10=41, HEX_7=42, OCT_8=43, BIN_9=44, 
-		FLOAT_11=45, NAME_13=46, WS_INLINE_14=47, NEWLINE_17=48;
+		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
+		COMMENT_1=39, SINGLE_BINOP_2=40, STR_4=41, INT_10=42, HEX_7=43, OCT_8=44, 
+		BIN_9=45, FLOAT_11=46, NAME_13=47, WS_INLINE_14=48, NEWLINE_17=49;
 	public const int
 		RULE_expr = 0, RULE_stmt = 1, RULE_newline = 2, RULE_atom = 3, RULE_gen__line_wrap_expr = 4, 
 		RULE_gen__optional_newline = 5, RULE_gen__nullable_gen__seplist__L44__name = 6, 
@@ -73,17 +73,17 @@ public partial class DianaScriptParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'__META'", "':'", "'in'", "'raise'", "'do'", "'loop'", "'end'", 
-		"'while'", "'for'", "'break'", "'continue'", "'return'", "'var'", "'.'", 
-		"'['", "']'", "'('", "')'", "'{|'", "'|}'", "'{'", "'}'", "'None'", "'-'", 
-		"'~'", "'if'", "'fun'", "'->'", "','", "'else'", "'elif'", "'='", "'not'", 
-		"'and'", "'or'", "';'", "'then'"
+		null, "'__META'", "':'", "'in'", "'raise'", "'__SETMETA'", "'do'", "'loop'", 
+		"'end'", "'while'", "'for'", "'break'", "'continue'", "'return'", "'var'", 
+		"'.'", "'['", "']'", "'('", "')'", "'{|'", "'|}'", "'{'", "'}'", "'None'", 
+		"'-'", "'~'", "'if'", "'fun'", "'->'", "','", "'else'", "'elif'", "'='", 
+		"'not'", "'and'", "'or'", "';'", "'then'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, "COMMENT_1", "SINGLE_BINOP_2", "STR_4", "INT_10", "HEX_7", 
+		null, null, null, "COMMENT_1", "SINGLE_BINOP_2", "STR_4", "INT_10", "HEX_7", 
 		"OCT_8", "BIN_9", "FLOAT_11", "NAME_13", "WS_INLINE_14", "NEWLINE_17"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
@@ -186,16 +186,16 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__14:
-			case T__16:
-			case T__18:
-			case T__20:
-			case T__22:
+			case T__15:
+			case T__17:
+			case T__19:
+			case T__21:
 			case T__23:
 			case T__24:
 			case T__25:
 			case T__26:
-			case T__32:
+			case T__27:
+			case T__33:
 			case STR_4:
 			case INT_10:
 			case HEX_7:
@@ -326,13 +326,13 @@ public partial class DianaScriptParser : Parser {
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 103; Match(T__0);
+				State = 103; Match(T__4);
 				State = 104; _localctx.local__2_stmt_case1 = Match(INT_10);
 				State = 105; Match(T__1);
 				State = 106; _localctx.local__4_stmt_case1 = Match(INT_10);
 				State = 107; Match(T__1);
 				State = 108; _localctx.local__6_stmt_case1 = Match(INT_10);
-				State = 109; Match(T__4);
+				State = 109; Match(T__5);
 				State = 110; _localctx.local__8_stmt_case1 = stmt();
 				 
 				        ImmediateAST tmp__14 ; 
@@ -368,9 +368,9 @@ public partial class DianaScriptParser : Parser {
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 117; _localctx.local__1_stmt_case3 = Match(T__5);
+				State = 117; _localctx.local__1_stmt_case3 = Match(T__6);
 				State = 118; _localctx.local__2_stmt_case3 = block();
-				State = 119; Match(T__6);
+				State = 119; Match(T__7);
 				 
 				        ImmediateAST tmp__22 ; 
 				        ImmediateAST tmp__21 ; 
@@ -389,10 +389,10 @@ public partial class DianaScriptParser : Parser {
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 122; _localctx.local__1_stmt_case4 = Match(T__7);
+				State = 122; _localctx.local__1_stmt_case4 = Match(T__8);
 				State = 123; _localctx.local__2_stmt_case4 = expr();
 				State = 124; _localctx.local__3_stmt_case4 = gen__blockOf_do();
-				State = 125; Match(T__6);
+				State = 125; Match(T__7);
 				 
 				        ImmediateAST tmp__26 ; 
 				        ImmediateAST tmp__25 ; 
@@ -409,12 +409,12 @@ public partial class DianaScriptParser : Parser {
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 128; _localctx.local__1_stmt_case5 = Match(T__8);
+				State = 128; _localctx.local__1_stmt_case5 = Match(T__9);
 				State = 129; _localctx.local__2_stmt_case5 = Match(NAME_13);
 				State = 130; Match(T__2);
 				State = 131; _localctx.local__4_stmt_case5 = expr();
 				State = 132; _localctx.local__5_stmt_case5 = gen__blockOf_do();
-				State = 133; Match(T__6);
+				State = 133; Match(T__7);
 				 
 				        ImmediateAST tmp__31 ; 
 				        ImmediateAST tmp__30 ; 
@@ -433,7 +433,7 @@ public partial class DianaScriptParser : Parser {
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 136; _localctx.local__1_stmt_case6 = Match(T__9);
+				State = 136; _localctx.local__1_stmt_case6 = Match(T__10);
 				 
 				        ImmediateAST tmp__33 ; 
 				        CommonToken tmp__32 ; 
@@ -446,7 +446,7 @@ public partial class DianaScriptParser : Parser {
 			case 8:
 				EnterOuterAlt(_localctx, 8);
 				{
-				State = 138; _localctx.local__1_stmt_case7 = Match(T__10);
+				State = 138; _localctx.local__1_stmt_case7 = Match(T__11);
 				 
 				        ImmediateAST tmp__35 ; 
 				        CommonToken tmp__34 ; 
@@ -459,7 +459,7 @@ public partial class DianaScriptParser : Parser {
 			case 9:
 				EnterOuterAlt(_localctx, 9);
 				{
-				State = 140; _localctx.local__1_stmt_case8 = Match(T__11);
+				State = 140; _localctx.local__1_stmt_case8 = Match(T__12);
 				State = 141; _localctx.local__2_stmt_case8 = expr();
 				 
 				        ImmediateAST tmp__38 ; 
@@ -475,7 +475,7 @@ public partial class DianaScriptParser : Parser {
 			case 10:
 				EnterOuterAlt(_localctx, 10);
 				{
-				State = 144; _localctx.local__1_stmt_case9 = Match(T__11);
+				State = 144; _localctx.local__1_stmt_case9 = Match(T__12);
 				 
 				        ImmediateAST tmp__40 ; 
 				        CommonToken tmp__39 ; 
@@ -488,7 +488,7 @@ public partial class DianaScriptParser : Parser {
 			case 11:
 				EnterOuterAlt(_localctx, 11);
 				{
-				State = 146; _localctx.local__1_stmt_case10 = Match(T__12);
+				State = 146; _localctx.local__1_stmt_case10 = Match(T__13);
 				State = 147; _localctx.local__2_stmt_case10 = gen__seplist__L44__name(0);
 				 
 				        ImmediateAST tmp__43 ; 
@@ -763,9 +763,9 @@ public partial class DianaScriptParser : Parser {
 			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
 			case 1:
 				{
-				State = 171; _localctx.local__1_atom_case3 = Match(T__14);
+				State = 171; _localctx.local__1_atom_case3 = Match(T__15);
 				State = 172; _localctx.local__2_atom_case3 = gen__closelist__L44__expr();
-				State = 173; Match(T__15);
+				State = 173; Match(T__16);
 				 
 				        ImmediateAST tmp__65 ; 
 				        System.Collections.Generic.List<ImmediateAST> tmp__64 ; 
@@ -779,10 +779,10 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 2:
 				{
-				State = 176; _localctx.local__1_atom_case4 = Match(T__16);
+				State = 176; _localctx.local__1_atom_case4 = Match(T__17);
 				State = 177; _localctx.local__2_atom_case4 = gen__closelist__L44__expr();
 				State = 178; _localctx.local__3_atom_case4 = trailer();
-				State = 179; Match(T__17);
+				State = 179; Match(T__18);
 				 
 				        ImmediateAST tmp__69 ; 
 				        bool tmp__68 ; 
@@ -798,10 +798,10 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 3:
 				{
-				State = 182; _localctx.local__1_atom_case5 = Match(T__18);
+				State = 182; _localctx.local__1_atom_case5 = Match(T__19);
 				State = 183; _localctx.local__2_atom_case5 = gen__closelist__L44__pair();
 				State = 184; trailer();
-				State = 185; Match(T__19);
+				State = 185; Match(T__20);
 				 
 				        ImmediateAST tmp__72 ; 
 				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__71 ; 
@@ -815,10 +815,10 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 4:
 				{
-				State = 188; _localctx.local__1_atom_case6 = Match(T__20);
+				State = 188; _localctx.local__1_atom_case6 = Match(T__21);
 				State = 189; _localctx.local__2_atom_case6 = gen__closelist__L44__pair();
 				State = 190; trailer();
-				State = 191; Match(T__21);
+				State = 191; Match(T__22);
 				 
 				        ImmediateAST tmp__75 ; 
 				        System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__74 ; 
@@ -832,9 +832,9 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 5:
 				{
-				State = 194; _localctx.local__1_atom_case7 = Match(T__20);
+				State = 194; _localctx.local__1_atom_case7 = Match(T__21);
 				State = 195; _localctx.local__2_atom_case7 = gen__closelist__L44__expr();
-				State = 196; Match(T__21);
+				State = 196; Match(T__22);
 				 
 				        ImmediateAST tmp__78 ; 
 				        System.Collections.Generic.List<ImmediateAST> tmp__77 ; 
@@ -954,7 +954,7 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 12:
 				{
-				State = 211; _localctx.local__1_atom_case14 = Match(T__22);
+				State = 211; _localctx.local__1_atom_case14 = Match(T__23);
 				 
 				        ImmediateAST tmp__110 ; 
 				        DObj tmp__109 ; 
@@ -982,7 +982,7 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 14:
 				{
-				State = 215; _localctx.local__1_atom_case16 = Match(T__23);
+				State = 215; _localctx.local__1_atom_case16 = Match(T__24);
 				State = 216; _localctx.local__2_atom_case16 = atom(8);
 				 
 				        ImmediateAST tmp__116 ; 
@@ -997,7 +997,7 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 15:
 				{
-				State = 219; _localctx.local__1_atom_case17 = Match(T__24);
+				State = 219; _localctx.local__1_atom_case17 = Match(T__25);
 				State = 220; _localctx.local__2_atom_case17 = atom(7);
 				 
 				        ImmediateAST tmp__119 ; 
@@ -1012,11 +1012,11 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 16:
 				{
-				State = 223; _localctx.local__1_atom_case18 = Match(T__25);
+				State = 223; _localctx.local__1_atom_case18 = Match(T__26);
 				State = 224; _localctx.local__2_atom_case18 = expr();
 				State = 225; _localctx.local__3_atom_case18 = then();
 				State = 226; _localctx.local__4_atom_case18 = block();
-				State = 227; Match(T__6);
+				State = 227; Match(T__7);
 				 
 				        ImmediateAST tmp__125 ; 
 				        ImmediateAST tmp__124 ; 
@@ -1036,13 +1036,13 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 17:
 				{
-				State = 230; _localctx.local__1_atom_case19 = Match(T__25);
+				State = 230; _localctx.local__1_atom_case19 = Match(T__26);
 				State = 231; _localctx.local__2_atom_case19 = expr();
 				State = 232; _localctx.local__3_atom_case19 = then();
 				State = 233; _localctx.local__4_atom_case19 = block();
 				State = 234; _localctx.local__5_atom_case19 = gen__nullable_gen__list_gen__snd_elif__elifBlock();
 				State = 235; _localctx.local__6_atom_case19 = gen__optional_gen__blockOf_else();
-				State = 236; Match(T__6);
+				State = 236; Match(T__7);
 				 
 				        ImmediateAST tmp__137 ; 
 				        ImmediateAST tmp__136 ; 
@@ -1074,13 +1074,13 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 18:
 				{
-				State = 239; _localctx.local__1_atom_case20 = Match(T__26);
+				State = 239; _localctx.local__1_atom_case20 = Match(T__27);
 				State = 240; _localctx.local__2_atom_case20 = name();
-				State = 241; Match(T__16);
+				State = 241; Match(T__17);
 				State = 242; _localctx.local__4_atom_case20 = gen__nullable_gen__seplist__L44__name();
-				State = 243; Match(T__17);
+				State = 243; Match(T__18);
 				State = 244; _localctx.local__6_atom_case20 = block();
-				State = 245; Match(T__6);
+				State = 245; Match(T__7);
 				 
 				        ImmediateAST tmp__142 ; 
 				        System.Collections.Generic.List<ImmediateAST> tmp__141 ; 
@@ -1098,12 +1098,12 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 19:
 				{
-				State = 248; _localctx.local__1_atom_case21 = Match(T__26);
-				State = 249; Match(T__16);
+				State = 248; _localctx.local__1_atom_case21 = Match(T__27);
+				State = 249; Match(T__17);
 				State = 250; _localctx.local__3_atom_case21 = gen__nullable_gen__seplist__L44__name();
-				State = 251; Match(T__17);
+				State = 251; Match(T__18);
 				State = 252; _localctx.local__5_atom_case21 = block();
-				State = 253; Match(T__6);
+				State = 253; Match(T__7);
 				 
 				        ImmediateAST tmp__147 ; 
 				        System.Collections.Generic.List<ImmediateAST> tmp__146 ; 
@@ -1121,10 +1121,10 @@ public partial class DianaScriptParser : Parser {
 				break;
 			case 20:
 				{
-				State = 256; _localctx.local__1_atom_case22 = Match(T__16);
+				State = 256; _localctx.local__1_atom_case22 = Match(T__17);
 				State = 257; _localctx.local__2_atom_case22 = gen__nullable_gen__seplist__L44__name();
-				State = 258; Match(T__17);
-				State = 259; Match(T__27);
+				State = 258; Match(T__18);
+				State = 259; Match(T__28);
 				State = 260; _localctx.local__5_atom_case22 = gen__line_wrap_expr();
 				 
 				        ImmediateAST tmp__153 ; 
@@ -1146,7 +1146,7 @@ public partial class DianaScriptParser : Parser {
 			case 21:
 				{
 				State = 263; _localctx.local__1_atom_case23 = Match(NAME_13);
-				State = 264; Match(T__27);
+				State = 264; Match(T__28);
 				State = 265; _localctx.local__3_atom_case23 = gen__line_wrap_expr();
 				 
 				        ImmediateAST tmp__160 ; 
@@ -1188,10 +1188,10 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
 						State = 270;
 						if (!(Precpred(Context, 24))) throw new FailedPredicateException(this, "Precpred(Context, 24)");
-						State = 271; _localctx.local__2_atom_case0 = Match(T__13);
-						State = 272; Match(T__14);
+						State = 271; _localctx.local__2_atom_case0 = Match(T__14);
+						State = 272; Match(T__15);
 						State = 273; _localctx.local__4_atom_case0 = expr();
-						State = 274; Match(T__15);
+						State = 274; Match(T__16);
 						 
 						                  ImmediateAST tmp__51 ; 
 						                  ImmediateAST tmp__50 ; 
@@ -1212,7 +1212,7 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
 						State = 277;
 						if (!(Precpred(Context, 23))) throw new FailedPredicateException(this, "Precpred(Context, 23)");
-						State = 278; _localctx.local__2_atom_case1 = Match(T__13);
+						State = 278; _localctx.local__2_atom_case1 = Match(T__14);
 						State = 279; _localctx.local__3_atom_case1 = Match(NAME_13);
 						 
 						                  ImmediateAST tmp__58 ; 
@@ -1240,9 +1240,9 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_atom);
 						State = 281;
 						if (!(Precpred(Context, 22))) throw new FailedPredicateException(this, "Precpred(Context, 22)");
-						State = 282; _localctx.local__2_atom_case2 = Match(T__16);
+						State = 282; _localctx.local__2_atom_case2 = Match(T__17);
 						State = 283; _localctx.local__3_atom_case2 = gen__closelist__L44__expr();
-						State = 284; Match(T__17);
+						State = 284; Match(T__18);
 						 
 						                  ImmediateAST tmp__62 ; 
 						                  System.Collections.Generic.List<ImmediateAST> tmp__61 ; 
@@ -1438,7 +1438,7 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__17:
+			case T__18:
 				EnterOuterAlt(_localctx, 2);
 				{
 				 
@@ -1533,7 +1533,7 @@ public partial class DianaScriptParser : Parser {
 					PushNewRecursionContext(_localctx, _startState, RULE_gen__seplist__L44__name);
 					State = 313;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 314; Match(T__28);
+					State = 314; Match(T__29);
 					State = 315; _localctx.local__3_gen__seplist__L44__name_case1 = name();
 					 
 					                  System.Collections.Generic.List<string> tmp__169 ; 
@@ -1595,7 +1595,7 @@ public partial class DianaScriptParser : Parser {
 			State = 327;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__29:
+			case T__30:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 323; _localctx.local__1_gen__optional_gen__blockOf_else_case0 = gen__blockOf_else();
@@ -1606,7 +1606,7 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__6:
+			case T__7:
 				EnterOuterAlt(_localctx, 2);
 				{
 				 
@@ -1660,7 +1660,7 @@ public partial class DianaScriptParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 329; _localctx.local__1_gen__blockOf_else_case0 = Match(T__29);
+			State = 329; _localctx.local__1_gen__blockOf_else_case0 = Match(T__30);
 			State = 330; _localctx.local__2_gen__blockOf_else_case0 = block();
 			 
 			        ImmediateAST tmp__173 ; 
@@ -1715,7 +1715,7 @@ public partial class DianaScriptParser : Parser {
 			State = 337;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__30:
+			case T__31:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 333; _localctx.local__1_gen__nullable_gen__list_gen__snd_elif__elifBlock_case0 = gen__list_gen__snd_elif__elifBlock(0);
@@ -1726,8 +1726,8 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__6:
-			case T__29:
+			case T__7:
+			case T__30:
 				EnterOuterAlt(_localctx, 2);
 				{
 				 
@@ -1882,7 +1882,7 @@ public partial class DianaScriptParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 352; Match(T__30);
+			State = 352; Match(T__31);
 			State = 353; _localctx.local__2_gen__snd_elif__elifBlock_case0 = elifBlock();
 			 
 			        (ImmediateAST, ImmediateAST) tmp__181 ; 
@@ -2065,7 +2065,7 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__pair);
 						State = 371;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
-						State = 372; Match(T__28);
+						State = 372; Match(T__29);
 						State = 373; newline(0);
 						State = 374; _localctx.local__4_gen___closelist__L44__pair_case1 = pair();
 						 
@@ -2086,7 +2086,7 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__pair);
 						State = 377;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 378; Match(T__28);
+						State = 378; Match(T__29);
 						State = 379; _localctx.local__3_gen___closelist__L44__pair_case2 = pair();
 						 
 						                  System.Collections.Generic.List<(ImmediateAST, ImmediateAST)> tmp__189 ; 
@@ -2282,7 +2282,7 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__expr);
 						State = 402;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
-						State = 403; Match(T__28);
+						State = 403; Match(T__29);
 						State = 404; newline(0);
 						State = 405; _localctx.local__4_gen___closelist__L44__expr_case1 = expr();
 						 
@@ -2303,7 +2303,7 @@ public partial class DianaScriptParser : Parser {
 						PushNewRecursionContext(_localctx, _startState, RULE_gen___closelist__L44__expr);
 						State = 408;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 409; Match(T__28);
+						State = 409; Match(T__29);
 						State = 410; _localctx.local__3_gen___closelist__L44__expr_case2 = expr();
 						 
 						                  System.Collections.Generic.List<ImmediateAST> tmp__200 ; 
@@ -2479,18 +2479,18 @@ public partial class DianaScriptParser : Parser {
 			State = 431;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__28:
+			case T__29:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 428; Match(T__28);
+				State = 428; Match(T__29);
 				 
 				        _localctx.result =  true; 
 				      
 				}
 				break;
-			case T__17:
-			case T__19:
-			case T__21:
+			case T__18:
+			case T__20:
+			case T__22:
 				EnterOuterAlt(_localctx, 2);
 				{
 				 
@@ -2721,7 +2721,7 @@ public partial class DianaScriptParser : Parser {
 			{
 			State = 450; _localctx.local__1_ibin_case0 = lhs();
 			State = 451; _localctx.local__2_ibin_case0 = ibinop();
-			State = 452; _localctx.local__3_ibin_case0 = Match(T__31);
+			State = 452; _localctx.local__3_ibin_case0 = Match(T__32);
 			State = 453; _localctx.local__4_ibin_case0 = expr();
 			 
 			        ImmediateAST tmp__224 ; 
@@ -2789,10 +2789,10 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__23:
+			case T__24:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 458; Match(T__23);
+				State = 458; Match(T__24);
 				 
 				        string tmp__226 ; 
 				        tmp__226 = "-" ; 
@@ -2862,10 +2862,10 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__32:
+			case T__33:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 464; _localctx.local__1_binop_case1 = Match(T__32);
+				State = 464; _localctx.local__1_binop_case1 = Match(T__33);
 				State = 465; Match(T__2);
 				 
 				        object tmp__232 ; 
@@ -2893,10 +2893,10 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__23:
+			case T__24:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 469; _localctx.local__1_binop_case3 = Match(T__23);
+				State = 469; _localctx.local__1_binop_case3 = Match(T__24);
 				 
 				        object tmp__238 ; 
 				        string tmp__237 ; 
@@ -2959,10 +2959,10 @@ public partial class DianaScriptParser : Parser {
 			State = 480;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__32:
+			case T__33:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 473; _localctx.local__1_not_case0 = Match(T__32);
+				State = 473; _localctx.local__1_not_case0 = Match(T__33);
 				State = 474; _localctx.local__2_not_case0 = not();
 				 
 				        ImmediateAST tmp__241 ; 
@@ -2975,15 +2975,15 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__14:
-			case T__16:
-			case T__18:
-			case T__20:
-			case T__22:
+			case T__15:
+			case T__17:
+			case T__19:
+			case T__21:
 			case T__23:
 			case T__24:
 			case T__25:
 			case T__26:
+			case T__27:
 			case STR_4:
 			case INT_10:
 			case HEX_7:
@@ -3085,7 +3085,7 @@ public partial class DianaScriptParser : Parser {
 					PushNewRecursionContext(_localctx, _startState, RULE_and_expr);
 					State = 486;
 					if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-					State = 487; _localctx.local__2_and_expr_case0 = Match(T__33);
+					State = 487; _localctx.local__2_and_expr_case0 = Match(T__34);
 					State = 488; _localctx.local__3_and_expr_case0 = not();
 					 
 					                  ImmediateAST tmp__246 ; 
@@ -3187,7 +3187,7 @@ public partial class DianaScriptParser : Parser {
 					PushNewRecursionContext(_localctx, _startState, RULE_or_expr);
 					State = 500;
 					if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-					State = 501; _localctx.local__2_or_expr_case0 = Match(T__34);
+					State = 501; _localctx.local__2_or_expr_case0 = Match(T__35);
 					State = 502; _localctx.local__3_or_expr_case0 = and_expr(0);
 					 
 					                  ImmediateAST tmp__251 ; 
@@ -3322,23 +3322,24 @@ public partial class DianaScriptParser : Parser {
 			switch (TokenStream.LA(1)) {
 			case T__0:
 			case T__3:
-			case T__5:
-			case T__7:
+			case T__4:
+			case T__6:
 			case T__8:
 			case T__9:
 			case T__10:
 			case T__11:
 			case T__12:
-			case T__14:
-			case T__16:
-			case T__18:
-			case T__20:
-			case T__22:
+			case T__13:
+			case T__15:
+			case T__17:
+			case T__19:
+			case T__21:
 			case T__23:
 			case T__24:
 			case T__25:
 			case T__26:
-			case T__32:
+			case T__27:
+			case T__33:
 			case STR_4:
 			case INT_10:
 			case HEX_7:
@@ -3359,7 +3360,7 @@ public partial class DianaScriptParser : Parser {
 				      
 				}
 				break;
-			case T__35:
+			case T__36:
 			case NEWLINE_17:
 				{
 				State = 517; gen__or___L59__newline();
@@ -3470,10 +3471,10 @@ public partial class DianaScriptParser : Parser {
 			State = 540;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case T__35:
+			case T__36:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 535; Match(T__35);
+				State = 535; Match(T__36);
 				 
 				        int tmp__262 ; 
 				        tmp__262 = 0 ; 
@@ -3567,10 +3568,10 @@ public partial class DianaScriptParser : Parser {
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 544; _localctx.local__1_lhs_case1 = atom(0);
-				State = 545; _localctx.local__2_lhs_case1 = Match(T__13);
-				State = 546; Match(T__14);
+				State = 545; _localctx.local__2_lhs_case1 = Match(T__14);
+				State = 546; Match(T__15);
 				State = 547; _localctx.local__4_lhs_case1 = expr();
-				State = 548; Match(T__15);
+				State = 548; Match(T__16);
 				 
 				        ImmediateAST tmp__270 ; 
 				        ImmediateAST tmp__269 ; 
@@ -3588,7 +3589,7 @@ public partial class DianaScriptParser : Parser {
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 551; _localctx.local__1_lhs_case2 = atom(0);
-				State = 552; _localctx.local__2_lhs_case2 = Match(T__13);
+				State = 552; _localctx.local__2_lhs_case2 = Match(T__14);
 				State = 553; _localctx.local__3_lhs_case2 = Match(NAME_13);
 				 
 				        ImmediateAST tmp__277 ; 
@@ -3653,7 +3654,7 @@ public partial class DianaScriptParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 558; gen__optional_newline();
-			State = 559; _localctx.local__2_do_case0 = Match(T__4);
+			State = 559; _localctx.local__2_do_case0 = Match(T__5);
 			 
 			        CommonToken tmp__278 ; 
 			        tmp__278 = ( CommonToken ) _localctx.local__2_do_case0 ; 
@@ -3703,7 +3704,7 @@ public partial class DianaScriptParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 562; gen__optional_newline();
-			State = 563; _localctx.local__2_then_case0 = Match(T__36);
+			State = 563; _localctx.local__2_then_case0 = Match(T__37);
 			 
 			        CommonToken tmp__279 ; 
 			        tmp__279 = ( CommonToken ) _localctx.local__2_then_case0 ; 
@@ -3989,7 +3990,7 @@ public partial class DianaScriptParser : Parser {
 			{
 			{
 			State = 582; _localctx.local__1_lhs_seq_case1 = lhs();
-			State = 583; Match(T__31);
+			State = 583; Match(T__32);
 			 
 			        ImmediateAST tmp__294 ; 
 			        System.Collections.Generic.List<ImmediateAST> tmp__293 ; 
@@ -4015,7 +4016,7 @@ public partial class DianaScriptParser : Parser {
 					State = 586;
 					if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
 					State = 587; _localctx.local__2_lhs_seq_case0 = lhs();
-					State = 588; Match(T__31);
+					State = 588; Match(T__32);
 					 
 					                  System.Collections.Generic.List<ImmediateAST> tmp__292 ; 
 					                  ImmediateAST tmp__291 ; 
@@ -4137,23 +4138,24 @@ public partial class DianaScriptParser : Parser {
 			switch (TokenStream.LA(1)) {
 			case T__0:
 			case T__3:
-			case T__5:
-			case T__7:
+			case T__4:
+			case T__6:
 			case T__8:
 			case T__9:
 			case T__10:
 			case T__11:
 			case T__12:
-			case T__14:
-			case T__16:
-			case T__18:
-			case T__20:
-			case T__22:
+			case T__13:
+			case T__15:
+			case T__17:
+			case T__19:
+			case T__21:
 			case T__23:
 			case T__24:
 			case T__25:
 			case T__26:
-			case T__32:
+			case T__27:
+			case T__33:
 			case STR_4:
 			case INT_10:
 			case HEX_7:
@@ -4400,7 +4402,7 @@ public partial class DianaScriptParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\x32', '\x271', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\x33', '\x271', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
 		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
@@ -4554,9 +4556,9 @@ public partial class DianaScriptParser : Parser {
 		'\x3', '\x2', '\x2', '\x2', 'N', '\x247', '\x3', '\x2', '\x2', '\x2', 
 		'P', '\x256', '\x3', '\x2', '\x2', '\x2', 'R', '\x260', '\x3', '\x2', 
 		'\x2', '\x2', 'T', '\x262', '\x3', '\x2', '\x2', '\x2', 'V', 'W', '\a', 
-		'\x3', '\x2', '\x2', 'W', 'X', '\a', '+', '\x2', '\x2', 'X', 'Y', '\a', 
-		'\x4', '\x2', '\x2', 'Y', 'Z', '\a', '+', '\x2', '\x2', 'Z', '[', '\a', 
-		'\x4', '\x2', '\x2', '[', '\\', '\a', '+', '\x2', '\x2', '\\', ']', '\a', 
+		'\x3', '\x2', '\x2', 'W', 'X', '\a', ',', '\x2', '\x2', 'X', 'Y', '\a', 
+		'\x4', '\x2', '\x2', 'Y', 'Z', '\a', ',', '\x2', '\x2', 'Z', '[', '\a', 
+		'\x4', '\x2', '\x2', '[', '\\', '\a', ',', '\x2', '\x2', '\\', ']', '\a', 
 		'\x5', '\x2', '\x2', ']', '^', '\x5', '\x2', '\x2', '\x2', '^', '_', '\b', 
 		'\x2', '\x1', '\x2', '_', '\x64', '\x3', '\x2', '\x2', '\x2', '`', '\x61', 
 		'\x5', '\x38', '\x1D', '\x2', '\x61', '\x62', '\b', '\x2', '\x1', '\x2', 
@@ -4564,31 +4566,31 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x2', '\x63', '`', '\x3', '\x2', '\x2', '\x2', '\x64', '\x3', 
 		'\x3', '\x2', '\x2', '\x2', '\x65', '\x66', '\a', '\x6', '\x2', '\x2', 
 		'\x66', 'g', '\x5', '\x2', '\x2', '\x2', 'g', 'h', '\b', '\x3', '\x1', 
-		'\x2', 'h', '\x9F', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\a', '\x3', 
-		'\x2', '\x2', 'j', 'k', '\a', '+', '\x2', '\x2', 'k', 'l', '\a', '\x4', 
-		'\x2', '\x2', 'l', 'm', '\a', '+', '\x2', '\x2', 'm', 'n', '\a', '\x4', 
-		'\x2', '\x2', 'n', 'o', '\a', '+', '\x2', '\x2', 'o', 'p', '\a', '\a', 
+		'\x2', 'h', '\x9F', '\x3', '\x2', '\x2', '\x2', 'i', 'j', '\a', '\a', 
+		'\x2', '\x2', 'j', 'k', '\a', ',', '\x2', '\x2', 'k', 'l', '\a', '\x4', 
+		'\x2', '\x2', 'l', 'm', '\a', ',', '\x2', '\x2', 'm', 'n', '\a', '\x4', 
+		'\x2', '\x2', 'n', 'o', '\a', ',', '\x2', '\x2', 'o', 'p', '\a', '\b', 
 		'\x2', '\x2', 'p', 'q', '\x5', '\x4', '\x3', '\x2', 'q', 'r', '\b', '\x3', 
 		'\x1', '\x2', 'r', '\x9F', '\x3', '\x2', '\x2', '\x2', 's', 't', '\x5', 
 		'N', '(', '\x2', 't', 'u', '\x5', '\x2', '\x2', '\x2', 'u', 'v', '\b', 
 		'\x3', '\x1', '\x2', 'v', '\x9F', '\x3', '\x2', '\x2', '\x2', 'w', 'x', 
-		'\a', '\b', '\x2', '\x2', 'x', 'y', '\x5', ':', '\x1E', '\x2', 'y', 'z', 
-		'\a', '\t', '\x2', '\x2', 'z', '{', '\b', '\x3', '\x1', '\x2', '{', '\x9F', 
-		'\x3', '\x2', '\x2', '\x2', '|', '}', '\a', '\n', '\x2', '\x2', '}', '~', 
+		'\a', '\t', '\x2', '\x2', 'x', 'y', '\x5', ':', '\x1E', '\x2', 'y', 'z', 
+		'\a', '\n', '\x2', '\x2', 'z', '{', '\b', '\x3', '\x1', '\x2', '{', '\x9F', 
+		'\x3', '\x2', '\x2', '\x2', '|', '}', '\a', '\v', '\x2', '\x2', '}', '~', 
 		'\x5', '\x2', '\x2', '\x2', '~', '\x7F', '\x5', '\x46', '$', '\x2', '\x7F', 
-		'\x80', '\a', '\t', '\x2', '\x2', '\x80', '\x81', '\b', '\x3', '\x1', 
+		'\x80', '\a', '\n', '\x2', '\x2', '\x80', '\x81', '\b', '\x3', '\x1', 
 		'\x2', '\x81', '\x9F', '\x3', '\x2', '\x2', '\x2', '\x82', '\x83', '\a', 
-		'\v', '\x2', '\x2', '\x83', '\x84', '\a', '\x30', '\x2', '\x2', '\x84', 
+		'\f', '\x2', '\x2', '\x83', '\x84', '\a', '\x31', '\x2', '\x2', '\x84', 
 		'\x85', '\a', '\x5', '\x2', '\x2', '\x85', '\x86', '\x5', '\x2', '\x2', 
 		'\x2', '\x86', '\x87', '\x5', '\x46', '$', '\x2', '\x87', '\x88', '\a', 
-		'\t', '\x2', '\x2', '\x88', '\x89', '\b', '\x3', '\x1', '\x2', '\x89', 
-		'\x9F', '\x3', '\x2', '\x2', '\x2', '\x8A', '\x8B', '\a', '\f', '\x2', 
+		'\n', '\x2', '\x2', '\x88', '\x89', '\b', '\x3', '\x1', '\x2', '\x89', 
+		'\x9F', '\x3', '\x2', '\x2', '\x2', '\x8A', '\x8B', '\a', '\r', '\x2', 
 		'\x2', '\x8B', '\x9F', '\b', '\x3', '\x1', '\x2', '\x8C', '\x8D', '\a', 
-		'\r', '\x2', '\x2', '\x8D', '\x9F', '\b', '\x3', '\x1', '\x2', '\x8E', 
-		'\x8F', '\a', '\xE', '\x2', '\x2', '\x8F', '\x90', '\x5', '\x2', '\x2', 
+		'\xE', '\x2', '\x2', '\x8D', '\x9F', '\b', '\x3', '\x1', '\x2', '\x8E', 
+		'\x8F', '\a', '\xF', '\x2', '\x2', '\x8F', '\x90', '\x5', '\x2', '\x2', 
 		'\x2', '\x90', '\x91', '\b', '\x3', '\x1', '\x2', '\x91', '\x9F', '\x3', 
-		'\x2', '\x2', '\x2', '\x92', '\x93', '\a', '\xE', '\x2', '\x2', '\x93', 
-		'\x9F', '\b', '\x3', '\x1', '\x2', '\x94', '\x95', '\a', '\xF', '\x2', 
+		'\x2', '\x2', '\x2', '\x92', '\x93', '\a', '\xF', '\x2', '\x2', '\x93', 
+		'\x9F', '\b', '\x3', '\x1', '\x2', '\x94', '\x95', '\a', '\x10', '\x2', 
 		'\x2', '\x95', '\x96', '\x5', '\x10', '\t', '\x2', '\x96', '\x97', '\b', 
 		'\x3', '\x1', '\x2', '\x97', '\x9F', '\x3', '\x2', '\x2', '\x2', '\x98', 
 		'\x99', '\x5', '.', '\x18', '\x2', '\x99', '\x9A', '\b', '\x3', '\x1', 
@@ -4603,71 +4605,71 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x2', '\x2', '\x9E', '\x94', '\x3', '\x2', '\x2', '\x2', '\x9E', 
 		'\x98', '\x3', '\x2', '\x2', '\x2', '\x9E', '\x9B', '\x3', '\x2', '\x2', 
 		'\x2', '\x9F', '\x5', '\x3', '\x2', '\x2', '\x2', '\xA0', '\xA1', '\b', 
-		'\x4', '\x1', '\x2', '\xA1', '\xA2', '\a', '\x32', '\x2', '\x2', '\xA2', 
+		'\x4', '\x1', '\x2', '\xA1', '\xA2', '\a', '\x33', '\x2', '\x2', '\xA2', 
 		'\xA3', '\b', '\x4', '\x1', '\x2', '\xA3', '\xA9', '\x3', '\x2', '\x2', 
 		'\x2', '\xA4', '\xA5', '\f', '\x3', '\x2', '\x2', '\xA5', '\xA6', '\a', 
-		'\x32', '\x2', '\x2', '\xA6', '\xA8', '\b', '\x4', '\x1', '\x2', '\xA7', 
+		'\x33', '\x2', '\x2', '\xA6', '\xA8', '\b', '\x4', '\x1', '\x2', '\xA7', 
 		'\xA4', '\x3', '\x2', '\x2', '\x2', '\xA8', '\xAB', '\x3', '\x2', '\x2', 
 		'\x2', '\xA9', '\xA7', '\x3', '\x2', '\x2', '\x2', '\xA9', '\xAA', '\x3', 
 		'\x2', '\x2', '\x2', '\xAA', '\a', '\x3', '\x2', '\x2', '\x2', '\xAB', 
 		'\xA9', '\x3', '\x2', '\x2', '\x2', '\xAC', '\xAD', '\b', '\x5', '\x1', 
-		'\x2', '\xAD', '\xAE', '\a', '\x11', '\x2', '\x2', '\xAE', '\xAF', '\x5', 
-		' ', '\x11', '\x2', '\xAF', '\xB0', '\a', '\x12', '\x2', '\x2', '\xB0', 
+		'\x2', '\xAD', '\xAE', '\a', '\x12', '\x2', '\x2', '\xAE', '\xAF', '\x5', 
+		' ', '\x11', '\x2', '\xAF', '\xB0', '\a', '\x13', '\x2', '\x2', '\xB0', 
 		'\xB1', '\b', '\x5', '\x1', '\x2', '\xB1', '\x10F', '\x3', '\x2', '\x2', 
-		'\x2', '\xB2', '\xB3', '\a', '\x13', '\x2', '\x2', '\xB3', '\xB4', '\x5', 
+		'\x2', '\xB2', '\xB3', '\a', '\x14', '\x2', '\x2', '\xB3', '\xB4', '\x5', 
 		' ', '\x11', '\x2', '\xB4', '\xB5', '\x5', '(', '\x15', '\x2', '\xB5', 
-		'\xB6', '\a', '\x14', '\x2', '\x2', '\xB6', '\xB7', '\b', '\x5', '\x1', 
+		'\xB6', '\a', '\x15', '\x2', '\x2', '\xB6', '\xB7', '\b', '\x5', '\x1', 
 		'\x2', '\xB7', '\x10F', '\x3', '\x2', '\x2', '\x2', '\xB8', '\xB9', '\a', 
-		'\x15', '\x2', '\x2', '\xB9', '\xBA', '\x5', '\x1C', '\xF', '\x2', '\xBA', 
-		'\xBB', '\x5', '(', '\x15', '\x2', '\xBB', '\xBC', '\a', '\x16', '\x2', 
+		'\x16', '\x2', '\x2', '\xB9', '\xBA', '\x5', '\x1C', '\xF', '\x2', '\xBA', 
+		'\xBB', '\x5', '(', '\x15', '\x2', '\xBB', '\xBC', '\a', '\x17', '\x2', 
 		'\x2', '\xBC', '\xBD', '\b', '\x5', '\x1', '\x2', '\xBD', '\x10F', '\x3', 
-		'\x2', '\x2', '\x2', '\xBE', '\xBF', '\a', '\x17', '\x2', '\x2', '\xBF', 
+		'\x2', '\x2', '\x2', '\xBE', '\xBF', '\a', '\x18', '\x2', '\x2', '\xBF', 
 		'\xC0', '\x5', '\x1C', '\xF', '\x2', '\xC0', '\xC1', '\x5', '(', '\x15', 
-		'\x2', '\xC1', '\xC2', '\a', '\x18', '\x2', '\x2', '\xC2', '\xC3', '\b', 
+		'\x2', '\xC1', '\xC2', '\a', '\x19', '\x2', '\x2', '\xC2', '\xC3', '\b', 
 		'\x5', '\x1', '\x2', '\xC3', '\x10F', '\x3', '\x2', '\x2', '\x2', '\xC4', 
-		'\xC5', '\a', '\x17', '\x2', '\x2', '\xC5', '\xC6', '\x5', ' ', '\x11', 
-		'\x2', '\xC6', '\xC7', '\a', '\x18', '\x2', '\x2', '\xC7', '\xC8', '\b', 
+		'\xC5', '\a', '\x18', '\x2', '\x2', '\xC5', '\xC6', '\x5', ' ', '\x11', 
+		'\x2', '\xC6', '\xC7', '\a', '\x19', '\x2', '\x2', '\xC7', '\xC8', '\b', 
 		'\x5', '\x1', '\x2', '\xC8', '\x10F', '\x3', '\x2', '\x2', '\x2', '\xC9', 
-		'\xCA', '\a', '*', '\x2', '\x2', '\xCA', '\x10F', '\b', '\x5', '\x1', 
-		'\x2', '\xCB', '\xCC', '\a', '+', '\x2', '\x2', '\xCC', '\x10F', '\b', 
-		'\x5', '\x1', '\x2', '\xCD', '\xCE', '\a', ',', '\x2', '\x2', '\xCE', 
-		'\x10F', '\b', '\x5', '\x1', '\x2', '\xCF', '\xD0', '\a', '-', '\x2', 
+		'\xCA', '\a', '+', '\x2', '\x2', '\xCA', '\x10F', '\b', '\x5', '\x1', 
+		'\x2', '\xCB', '\xCC', '\a', ',', '\x2', '\x2', '\xCC', '\x10F', '\b', 
+		'\x5', '\x1', '\x2', '\xCD', '\xCE', '\a', '-', '\x2', '\x2', '\xCE', 
+		'\x10F', '\b', '\x5', '\x1', '\x2', '\xCF', '\xD0', '\a', '.', '\x2', 
 		'\x2', '\xD0', '\x10F', '\b', '\x5', '\x1', '\x2', '\xD1', '\xD2', '\a', 
-		'.', '\x2', '\x2', '\xD2', '\x10F', '\b', '\x5', '\x1', '\x2', '\xD3', 
-		'\xD4', '\a', '/', '\x2', '\x2', '\xD4', '\x10F', '\b', '\x5', '\x1', 
-		'\x2', '\xD5', '\xD6', '\a', '\x19', '\x2', '\x2', '\xD6', '\x10F', '\b', 
-		'\x5', '\x1', '\x2', '\xD7', '\xD8', '\a', '\x30', '\x2', '\x2', '\xD8', 
-		'\x10F', '\b', '\x5', '\x1', '\x2', '\xD9', '\xDA', '\a', '\x1A', '\x2', 
+		'/', '\x2', '\x2', '\xD2', '\x10F', '\b', '\x5', '\x1', '\x2', '\xD3', 
+		'\xD4', '\a', '\x30', '\x2', '\x2', '\xD4', '\x10F', '\b', '\x5', '\x1', 
+		'\x2', '\xD5', '\xD6', '\a', '\x1A', '\x2', '\x2', '\xD6', '\x10F', '\b', 
+		'\x5', '\x1', '\x2', '\xD7', '\xD8', '\a', '\x31', '\x2', '\x2', '\xD8', 
+		'\x10F', '\b', '\x5', '\x1', '\x2', '\xD9', '\xDA', '\a', '\x1B', '\x2', 
 		'\x2', '\xDA', '\xDB', '\x5', '\b', '\x5', '\n', '\xDB', '\xDC', '\b', 
 		'\x5', '\x1', '\x2', '\xDC', '\x10F', '\x3', '\x2', '\x2', '\x2', '\xDD', 
-		'\xDE', '\a', '\x1B', '\x2', '\x2', '\xDE', '\xDF', '\x5', '\b', '\x5', 
+		'\xDE', '\a', '\x1C', '\x2', '\x2', '\xDE', '\xDF', '\x5', '\b', '\x5', 
 		'\t', '\xDF', '\xE0', '\b', '\x5', '\x1', '\x2', '\xE0', '\x10F', '\x3', 
-		'\x2', '\x2', '\x2', '\xE1', '\xE2', '\a', '\x1C', '\x2', '\x2', '\xE2', 
+		'\x2', '\x2', '\x2', '\xE1', '\xE2', '\a', '\x1D', '\x2', '\x2', '\xE2', 
 		'\xE3', '\x5', '\x2', '\x2', '\x2', '\xE3', '\xE4', '\x5', '\x44', '#', 
 		'\x2', '\xE4', '\xE5', '\x5', ':', '\x1E', '\x2', '\xE5', '\xE6', '\a', 
-		'\t', '\x2', '\x2', '\xE6', '\xE7', '\b', '\x5', '\x1', '\x2', '\xE7', 
-		'\x10F', '\x3', '\x2', '\x2', '\x2', '\xE8', '\xE9', '\a', '\x1C', '\x2', 
+		'\n', '\x2', '\x2', '\xE6', '\xE7', '\b', '\x5', '\x1', '\x2', '\xE7', 
+		'\x10F', '\x3', '\x2', '\x2', '\x2', '\xE8', '\xE9', '\a', '\x1D', '\x2', 
 		'\x2', '\xE9', '\xEA', '\x5', '\x2', '\x2', '\x2', '\xEA', '\xEB', '\x5', 
 		'\x44', '#', '\x2', '\xEB', '\xEC', '\x5', ':', '\x1E', '\x2', '\xEC', 
 		'\xED', '\x5', '\x16', '\f', '\x2', '\xED', '\xEE', '\x5', '\x12', '\n', 
-		'\x2', '\xEE', '\xEF', '\a', '\t', '\x2', '\x2', '\xEF', '\xF0', '\b', 
+		'\x2', '\xEE', '\xEF', '\a', '\n', '\x2', '\x2', '\xEF', '\xF0', '\b', 
 		'\x5', '\x1', '\x2', '\xF0', '\x10F', '\x3', '\x2', '\x2', '\x2', '\xF1', 
-		'\xF2', '\a', '\x1D', '\x2', '\x2', '\xF2', '\xF3', '\x5', 'H', '%', '\x2', 
-		'\xF3', '\xF4', '\a', '\x13', '\x2', '\x2', '\xF4', '\xF5', '\x5', '\xE', 
-		'\b', '\x2', '\xF5', '\xF6', '\a', '\x14', '\x2', '\x2', '\xF6', '\xF7', 
-		'\x5', ':', '\x1E', '\x2', '\xF7', '\xF8', '\a', '\t', '\x2', '\x2', '\xF8', 
+		'\xF2', '\a', '\x1E', '\x2', '\x2', '\xF2', '\xF3', '\x5', 'H', '%', '\x2', 
+		'\xF3', '\xF4', '\a', '\x14', '\x2', '\x2', '\xF4', '\xF5', '\x5', '\xE', 
+		'\b', '\x2', '\xF5', '\xF6', '\a', '\x15', '\x2', '\x2', '\xF6', '\xF7', 
+		'\x5', ':', '\x1E', '\x2', '\xF7', '\xF8', '\a', '\n', '\x2', '\x2', '\xF8', 
 		'\xF9', '\b', '\x5', '\x1', '\x2', '\xF9', '\x10F', '\x3', '\x2', '\x2', 
-		'\x2', '\xFA', '\xFB', '\a', '\x1D', '\x2', '\x2', '\xFB', '\xFC', '\a', 
-		'\x13', '\x2', '\x2', '\xFC', '\xFD', '\x5', '\xE', '\b', '\x2', '\xFD', 
-		'\xFE', '\a', '\x14', '\x2', '\x2', '\xFE', '\xFF', '\x5', ':', '\x1E', 
-		'\x2', '\xFF', '\x100', '\a', '\t', '\x2', '\x2', '\x100', '\x101', '\b', 
+		'\x2', '\xFA', '\xFB', '\a', '\x1E', '\x2', '\x2', '\xFB', '\xFC', '\a', 
+		'\x14', '\x2', '\x2', '\xFC', '\xFD', '\x5', '\xE', '\b', '\x2', '\xFD', 
+		'\xFE', '\a', '\x15', '\x2', '\x2', '\xFE', '\xFF', '\x5', ':', '\x1E', 
+		'\x2', '\xFF', '\x100', '\a', '\n', '\x2', '\x2', '\x100', '\x101', '\b', 
 		'\x5', '\x1', '\x2', '\x101', '\x10F', '\x3', '\x2', '\x2', '\x2', '\x102', 
-		'\x103', '\a', '\x13', '\x2', '\x2', '\x103', '\x104', '\x5', '\xE', '\b', 
-		'\x2', '\x104', '\x105', '\a', '\x14', '\x2', '\x2', '\x105', '\x106', 
-		'\a', '\x1E', '\x2', '\x2', '\x106', '\x107', '\x5', '\n', '\x6', '\x2', 
+		'\x103', '\a', '\x14', '\x2', '\x2', '\x103', '\x104', '\x5', '\xE', '\b', 
+		'\x2', '\x104', '\x105', '\a', '\x15', '\x2', '\x2', '\x105', '\x106', 
+		'\a', '\x1F', '\x2', '\x2', '\x106', '\x107', '\x5', '\n', '\x6', '\x2', 
 		'\x107', '\x108', '\b', '\x5', '\x1', '\x2', '\x108', '\x10F', '\x3', 
-		'\x2', '\x2', '\x2', '\x109', '\x10A', '\a', '\x30', '\x2', '\x2', '\x10A', 
-		'\x10B', '\a', '\x1E', '\x2', '\x2', '\x10B', '\x10C', '\x5', '\n', '\x6', 
+		'\x2', '\x2', '\x2', '\x109', '\x10A', '\a', '\x31', '\x2', '\x2', '\x10A', 
+		'\x10B', '\a', '\x1F', '\x2', '\x2', '\x10B', '\x10C', '\x5', '\n', '\x6', 
 		'\x2', '\x10C', '\x10D', '\b', '\x5', '\x1', '\x2', '\x10D', '\x10F', 
 		'\x3', '\x2', '\x2', '\x2', '\x10E', '\xAC', '\x3', '\x2', '\x2', '\x2', 
 		'\x10E', '\xB2', '\x3', '\x2', '\x2', '\x2', '\x10E', '\xB8', '\x3', '\x2', 
@@ -4683,15 +4685,15 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x2', '\x10E', '\xFA', '\x3', '\x2', '\x2', '\x2', '\x10E', '\x102', 
 		'\x3', '\x2', '\x2', '\x2', '\x10E', '\x109', '\x3', '\x2', '\x2', '\x2', 
 		'\x10F', '\x123', '\x3', '\x2', '\x2', '\x2', '\x110', '\x111', '\f', 
-		'\x1A', '\x2', '\x2', '\x111', '\x112', '\a', '\x10', '\x2', '\x2', '\x112', 
-		'\x113', '\a', '\x11', '\x2', '\x2', '\x113', '\x114', '\x5', '\x2', '\x2', 
-		'\x2', '\x114', '\x115', '\a', '\x12', '\x2', '\x2', '\x115', '\x116', 
+		'\x1A', '\x2', '\x2', '\x111', '\x112', '\a', '\x11', '\x2', '\x2', '\x112', 
+		'\x113', '\a', '\x12', '\x2', '\x2', '\x113', '\x114', '\x5', '\x2', '\x2', 
+		'\x2', '\x114', '\x115', '\a', '\x13', '\x2', '\x2', '\x115', '\x116', 
 		'\b', '\x5', '\x1', '\x2', '\x116', '\x122', '\x3', '\x2', '\x2', '\x2', 
 		'\x117', '\x118', '\f', '\x19', '\x2', '\x2', '\x118', '\x119', '\a', 
-		'\x10', '\x2', '\x2', '\x119', '\x11A', '\a', '\x30', '\x2', '\x2', '\x11A', 
+		'\x11', '\x2', '\x2', '\x119', '\x11A', '\a', '\x31', '\x2', '\x2', '\x11A', 
 		'\x122', '\b', '\x5', '\x1', '\x2', '\x11B', '\x11C', '\f', '\x18', '\x2', 
-		'\x2', '\x11C', '\x11D', '\a', '\x13', '\x2', '\x2', '\x11D', '\x11E', 
-		'\x5', ' ', '\x11', '\x2', '\x11E', '\x11F', '\a', '\x14', '\x2', '\x2', 
+		'\x2', '\x11C', '\x11D', '\a', '\x14', '\x2', '\x2', '\x11D', '\x11E', 
+		'\x5', ' ', '\x11', '\x2', '\x11E', '\x11F', '\a', '\x15', '\x2', '\x2', 
 		'\x11F', '\x120', '\b', '\x5', '\x1', '\x2', '\x120', '\x122', '\x3', 
 		'\x2', '\x2', '\x2', '\x121', '\x110', '\x3', '\x2', '\x2', '\x2', '\x121', 
 		'\x117', '\x3', '\x2', '\x2', '\x2', '\x121', '\x11B', '\x3', '\x2', '\x2', 
@@ -4712,7 +4714,7 @@ public partial class DianaScriptParser : Parser {
 		'\x136', '\xF', '\x3', '\x2', '\x2', '\x2', '\x137', '\x138', '\b', '\t', 
 		'\x1', '\x2', '\x138', '\x139', '\x5', 'H', '%', '\x2', '\x139', '\x13A', 
 		'\b', '\t', '\x1', '\x2', '\x13A', '\x142', '\x3', '\x2', '\x2', '\x2', 
-		'\x13B', '\x13C', '\f', '\x3', '\x2', '\x2', '\x13C', '\x13D', '\a', '\x1F', 
+		'\x13B', '\x13C', '\f', '\x3', '\x2', '\x2', '\x13C', '\x13D', '\a', ' ', 
 		'\x2', '\x2', '\x13D', '\x13E', '\x5', 'H', '%', '\x2', '\x13E', '\x13F', 
 		'\b', '\t', '\x1', '\x2', '\x13F', '\x141', '\x3', '\x2', '\x2', '\x2', 
 		'\x140', '\x13B', '\x3', '\x2', '\x2', '\x2', '\x141', '\x144', '\x3', 
@@ -4723,7 +4725,7 @@ public partial class DianaScriptParser : Parser {
 		'\x147', '\x14A', '\x3', '\x2', '\x2', '\x2', '\x148', '\x14A', '\b', 
 		'\n', '\x1', '\x2', '\x149', '\x145', '\x3', '\x2', '\x2', '\x2', '\x149', 
 		'\x148', '\x3', '\x2', '\x2', '\x2', '\x14A', '\x13', '\x3', '\x2', '\x2', 
-		'\x2', '\x14B', '\x14C', '\a', ' ', '\x2', '\x2', '\x14C', '\x14D', '\x5', 
+		'\x2', '\x14B', '\x14C', '\a', '!', '\x2', '\x2', '\x14C', '\x14D', '\x5', 
 		':', '\x1E', '\x2', '\x14D', '\x14E', '\b', '\v', '\x1', '\x2', '\x14E', 
 		'\x15', '\x3', '\x2', '\x2', '\x2', '\x14F', '\x150', '\x5', '\x18', '\r', 
 		'\x2', '\x150', '\x151', '\b', '\f', '\x1', '\x2', '\x151', '\x154', '\x3', 
@@ -4738,7 +4740,7 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x2', '\x2', '\x15E', '\x161', '\x3', '\x2', '\x2', '\x2', '\x15F', 
 		'\x15D', '\x3', '\x2', '\x2', '\x2', '\x15F', '\x160', '\x3', '\x2', '\x2', 
 		'\x2', '\x160', '\x19', '\x3', '\x2', '\x2', '\x2', '\x161', '\x15F', 
-		'\x3', '\x2', '\x2', '\x2', '\x162', '\x163', '\a', '!', '\x2', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\x162', '\x163', '\a', '\"', '\x2', '\x2', 
 		'\x163', '\x164', '\x5', 'J', '&', '\x2', '\x164', '\x165', '\b', '\xE', 
 		'\x1', '\x2', '\x165', '\x1B', '\x3', '\x2', '\x2', '\x2', '\x166', '\x167', 
 		'\x5', '\f', '\a', '\x2', '\x167', '\x168', '\x5', '\x1E', '\x10', '\x2', 
@@ -4751,77 +4753,77 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x171', '\x172', '\f', '\a', '\x2', '\x2', '\x172', '\x173', '\x5', 
 		'\x6', '\x4', '\x2', '\x173', '\x174', '\b', '\x10', '\x1', '\x2', '\x174', 
 		'\x181', '\x3', '\x2', '\x2', '\x2', '\x175', '\x176', '\f', '\x6', '\x2', 
-		'\x2', '\x176', '\x177', '\a', '\x1F', '\x2', '\x2', '\x177', '\x178', 
-		'\x5', '\x6', '\x4', '\x2', '\x178', '\x179', '\x5', '$', '\x13', '\x2', 
-		'\x179', '\x17A', '\b', '\x10', '\x1', '\x2', '\x17A', '\x181', '\x3', 
-		'\x2', '\x2', '\x2', '\x17B', '\x17C', '\f', '\x5', '\x2', '\x2', '\x17C', 
-		'\x17D', '\a', '\x1F', '\x2', '\x2', '\x17D', '\x17E', '\x5', '$', '\x13', 
-		'\x2', '\x17E', '\x17F', '\b', '\x10', '\x1', '\x2', '\x17F', '\x181', 
-		'\x3', '\x2', '\x2', '\x2', '\x180', '\x171', '\x3', '\x2', '\x2', '\x2', 
-		'\x180', '\x175', '\x3', '\x2', '\x2', '\x2', '\x180', '\x17B', '\x3', 
-		'\x2', '\x2', '\x2', '\x181', '\x184', '\x3', '\x2', '\x2', '\x2', '\x182', 
-		'\x180', '\x3', '\x2', '\x2', '\x2', '\x182', '\x183', '\x3', '\x2', '\x2', 
-		'\x2', '\x183', '\x1F', '\x3', '\x2', '\x2', '\x2', '\x184', '\x182', 
-		'\x3', '\x2', '\x2', '\x2', '\x185', '\x186', '\x5', '\f', '\a', '\x2', 
-		'\x186', '\x187', '\x5', '\"', '\x12', '\x2', '\x187', '\x188', '\b', 
-		'\x11', '\x1', '\x2', '\x188', '!', '\x3', '\x2', '\x2', '\x2', '\x189', 
-		'\x18A', '\b', '\x12', '\x1', '\x2', '\x18A', '\x18B', '\x5', '\x2', '\x2', 
-		'\x2', '\x18B', '\x18C', '\b', '\x12', '\x1', '\x2', '\x18C', '\x18F', 
-		'\x3', '\x2', '\x2', '\x2', '\x18D', '\x18F', '\b', '\x12', '\x1', '\x2', 
-		'\x18E', '\x189', '\x3', '\x2', '\x2', '\x2', '\x18E', '\x18D', '\x3', 
-		'\x2', '\x2', '\x2', '\x18F', '\x1A1', '\x3', '\x2', '\x2', '\x2', '\x190', 
-		'\x191', '\f', '\a', '\x2', '\x2', '\x191', '\x192', '\x5', '\x6', '\x4', 
-		'\x2', '\x192', '\x193', '\b', '\x12', '\x1', '\x2', '\x193', '\x1A0', 
-		'\x3', '\x2', '\x2', '\x2', '\x194', '\x195', '\f', '\x6', '\x2', '\x2', 
-		'\x195', '\x196', '\a', '\x1F', '\x2', '\x2', '\x196', '\x197', '\x5', 
-		'\x6', '\x4', '\x2', '\x197', '\x198', '\x5', '\x2', '\x2', '\x2', '\x198', 
-		'\x199', '\b', '\x12', '\x1', '\x2', '\x199', '\x1A0', '\x3', '\x2', '\x2', 
-		'\x2', '\x19A', '\x19B', '\f', '\x5', '\x2', '\x2', '\x19B', '\x19C', 
-		'\a', '\x1F', '\x2', '\x2', '\x19C', '\x19D', '\x5', '\x2', '\x2', '\x2', 
-		'\x19D', '\x19E', '\b', '\x12', '\x1', '\x2', '\x19E', '\x1A0', '\x3', 
-		'\x2', '\x2', '\x2', '\x19F', '\x190', '\x3', '\x2', '\x2', '\x2', '\x19F', 
-		'\x194', '\x3', '\x2', '\x2', '\x2', '\x19F', '\x19A', '\x3', '\x2', '\x2', 
-		'\x2', '\x1A0', '\x1A3', '\x3', '\x2', '\x2', '\x2', '\x1A1', '\x19F', 
-		'\x3', '\x2', '\x2', '\x2', '\x1A1', '\x1A2', '\x3', '\x2', '\x2', '\x2', 
-		'\x1A2', '#', '\x3', '\x2', '\x2', '\x2', '\x1A3', '\x1A1', '\x3', '\x2', 
-		'\x2', '\x2', '\x1A4', '\x1A5', '\x5', '\x2', '\x2', '\x2', '\x1A5', '\x1A6', 
-		'\x5', '&', '\x14', '\x2', '\x1A6', '\x1A7', '\x5', '\x2', '\x2', '\x2', 
-		'\x1A7', '\x1A8', '\b', '\x13', '\x1', '\x2', '\x1A8', '%', '\x3', '\x2', 
-		'\x2', '\x2', '\x1A9', '\x1AA', '\x5', '\f', '\a', '\x2', '\x1AA', '\x1AB', 
-		'\a', '\x4', '\x2', '\x2', '\x1AB', '\x1AC', '\x5', '\f', '\a', '\x2', 
-		'\x1AC', '\x1AD', '\b', '\x14', '\x1', '\x2', '\x1AD', '\'', '\x3', '\x2', 
-		'\x2', '\x2', '\x1AE', '\x1AF', '\a', '\x1F', '\x2', '\x2', '\x1AF', '\x1B2', 
-		'\b', '\x15', '\x1', '\x2', '\x1B0', '\x1B2', '\b', '\x15', '\x1', '\x2', 
-		'\x1B1', '\x1AE', '\x3', '\x2', '\x2', '\x2', '\x1B1', '\x1B0', '\x3', 
-		'\x2', '\x2', '\x2', '\x1B2', ')', '\x3', '\x2', '\x2', '\x2', '\x1B3', 
-		'\x1B4', '\x5', ',', '\x17', '\x2', '\x1B4', '\x1B5', '\b', '\x16', '\x1', 
-		'\x2', '\x1B5', '+', '\x3', '\x2', '\x2', '\x2', '\x1B6', '\x1B7', '\b', 
-		'\x17', '\x1', '\x2', '\x1B7', '\x1B8', '\x5', '\b', '\x5', '\x2', '\x1B8', 
-		'\x1B9', '\b', '\x17', '\x1', '\x2', '\x1B9', '\x1C1', '\x3', '\x2', '\x2', 
-		'\x2', '\x1BA', '\x1BB', '\f', '\x3', '\x2', '\x2', '\x1BB', '\x1BC', 
-		'\x5', '\x32', '\x1A', '\x2', '\x1BC', '\x1BD', '\x5', '\b', '\x5', '\x2', 
-		'\x1BD', '\x1BE', '\b', '\x17', '\x1', '\x2', '\x1BE', '\x1C0', '\x3', 
-		'\x2', '\x2', '\x2', '\x1BF', '\x1BA', '\x3', '\x2', '\x2', '\x2', '\x1C0', 
-		'\x1C3', '\x3', '\x2', '\x2', '\x2', '\x1C1', '\x1BF', '\x3', '\x2', '\x2', 
-		'\x2', '\x1C1', '\x1C2', '\x3', '\x2', '\x2', '\x2', '\x1C2', '-', '\x3', 
-		'\x2', '\x2', '\x2', '\x1C3', '\x1C1', '\x3', '\x2', '\x2', '\x2', '\x1C4', 
-		'\x1C5', '\x5', '@', '!', '\x2', '\x1C5', '\x1C6', '\x5', '\x30', '\x19', 
-		'\x2', '\x1C6', '\x1C7', '\a', '\"', '\x2', '\x2', '\x1C7', '\x1C8', '\x5', 
-		'\x2', '\x2', '\x2', '\x1C8', '\x1C9', '\b', '\x18', '\x1', '\x2', '\x1C9', 
-		'/', '\x3', '\x2', '\x2', '\x2', '\x1CA', '\x1CB', '\a', ')', '\x2', '\x2', 
+		'\x2', '\x176', '\x177', '\a', ' ', '\x2', '\x2', '\x177', '\x178', '\x5', 
+		'\x6', '\x4', '\x2', '\x178', '\x179', '\x5', '$', '\x13', '\x2', '\x179', 
+		'\x17A', '\b', '\x10', '\x1', '\x2', '\x17A', '\x181', '\x3', '\x2', '\x2', 
+		'\x2', '\x17B', '\x17C', '\f', '\x5', '\x2', '\x2', '\x17C', '\x17D', 
+		'\a', ' ', '\x2', '\x2', '\x17D', '\x17E', '\x5', '$', '\x13', '\x2', 
+		'\x17E', '\x17F', '\b', '\x10', '\x1', '\x2', '\x17F', '\x181', '\x3', 
+		'\x2', '\x2', '\x2', '\x180', '\x171', '\x3', '\x2', '\x2', '\x2', '\x180', 
+		'\x175', '\x3', '\x2', '\x2', '\x2', '\x180', '\x17B', '\x3', '\x2', '\x2', 
+		'\x2', '\x181', '\x184', '\x3', '\x2', '\x2', '\x2', '\x182', '\x180', 
+		'\x3', '\x2', '\x2', '\x2', '\x182', '\x183', '\x3', '\x2', '\x2', '\x2', 
+		'\x183', '\x1F', '\x3', '\x2', '\x2', '\x2', '\x184', '\x182', '\x3', 
+		'\x2', '\x2', '\x2', '\x185', '\x186', '\x5', '\f', '\a', '\x2', '\x186', 
+		'\x187', '\x5', '\"', '\x12', '\x2', '\x187', '\x188', '\b', '\x11', '\x1', 
+		'\x2', '\x188', '!', '\x3', '\x2', '\x2', '\x2', '\x189', '\x18A', '\b', 
+		'\x12', '\x1', '\x2', '\x18A', '\x18B', '\x5', '\x2', '\x2', '\x2', '\x18B', 
+		'\x18C', '\b', '\x12', '\x1', '\x2', '\x18C', '\x18F', '\x3', '\x2', '\x2', 
+		'\x2', '\x18D', '\x18F', '\b', '\x12', '\x1', '\x2', '\x18E', '\x189', 
+		'\x3', '\x2', '\x2', '\x2', '\x18E', '\x18D', '\x3', '\x2', '\x2', '\x2', 
+		'\x18F', '\x1A1', '\x3', '\x2', '\x2', '\x2', '\x190', '\x191', '\f', 
+		'\a', '\x2', '\x2', '\x191', '\x192', '\x5', '\x6', '\x4', '\x2', '\x192', 
+		'\x193', '\b', '\x12', '\x1', '\x2', '\x193', '\x1A0', '\x3', '\x2', '\x2', 
+		'\x2', '\x194', '\x195', '\f', '\x6', '\x2', '\x2', '\x195', '\x196', 
+		'\a', ' ', '\x2', '\x2', '\x196', '\x197', '\x5', '\x6', '\x4', '\x2', 
+		'\x197', '\x198', '\x5', '\x2', '\x2', '\x2', '\x198', '\x199', '\b', 
+		'\x12', '\x1', '\x2', '\x199', '\x1A0', '\x3', '\x2', '\x2', '\x2', '\x19A', 
+		'\x19B', '\f', '\x5', '\x2', '\x2', '\x19B', '\x19C', '\a', ' ', '\x2', 
+		'\x2', '\x19C', '\x19D', '\x5', '\x2', '\x2', '\x2', '\x19D', '\x19E', 
+		'\b', '\x12', '\x1', '\x2', '\x19E', '\x1A0', '\x3', '\x2', '\x2', '\x2', 
+		'\x19F', '\x190', '\x3', '\x2', '\x2', '\x2', '\x19F', '\x194', '\x3', 
+		'\x2', '\x2', '\x2', '\x19F', '\x19A', '\x3', '\x2', '\x2', '\x2', '\x1A0', 
+		'\x1A3', '\x3', '\x2', '\x2', '\x2', '\x1A1', '\x19F', '\x3', '\x2', '\x2', 
+		'\x2', '\x1A1', '\x1A2', '\x3', '\x2', '\x2', '\x2', '\x1A2', '#', '\x3', 
+		'\x2', '\x2', '\x2', '\x1A3', '\x1A1', '\x3', '\x2', '\x2', '\x2', '\x1A4', 
+		'\x1A5', '\x5', '\x2', '\x2', '\x2', '\x1A5', '\x1A6', '\x5', '&', '\x14', 
+		'\x2', '\x1A6', '\x1A7', '\x5', '\x2', '\x2', '\x2', '\x1A7', '\x1A8', 
+		'\b', '\x13', '\x1', '\x2', '\x1A8', '%', '\x3', '\x2', '\x2', '\x2', 
+		'\x1A9', '\x1AA', '\x5', '\f', '\a', '\x2', '\x1AA', '\x1AB', '\a', '\x4', 
+		'\x2', '\x2', '\x1AB', '\x1AC', '\x5', '\f', '\a', '\x2', '\x1AC', '\x1AD', 
+		'\b', '\x14', '\x1', '\x2', '\x1AD', '\'', '\x3', '\x2', '\x2', '\x2', 
+		'\x1AE', '\x1AF', '\a', ' ', '\x2', '\x2', '\x1AF', '\x1B2', '\b', '\x15', 
+		'\x1', '\x2', '\x1B0', '\x1B2', '\b', '\x15', '\x1', '\x2', '\x1B1', '\x1AE', 
+		'\x3', '\x2', '\x2', '\x2', '\x1B1', '\x1B0', '\x3', '\x2', '\x2', '\x2', 
+		'\x1B2', ')', '\x3', '\x2', '\x2', '\x2', '\x1B3', '\x1B4', '\x5', ',', 
+		'\x17', '\x2', '\x1B4', '\x1B5', '\b', '\x16', '\x1', '\x2', '\x1B5', 
+		'+', '\x3', '\x2', '\x2', '\x2', '\x1B6', '\x1B7', '\b', '\x17', '\x1', 
+		'\x2', '\x1B7', '\x1B8', '\x5', '\b', '\x5', '\x2', '\x1B8', '\x1B9', 
+		'\b', '\x17', '\x1', '\x2', '\x1B9', '\x1C1', '\x3', '\x2', '\x2', '\x2', 
+		'\x1BA', '\x1BB', '\f', '\x3', '\x2', '\x2', '\x1BB', '\x1BC', '\x5', 
+		'\x32', '\x1A', '\x2', '\x1BC', '\x1BD', '\x5', '\b', '\x5', '\x2', '\x1BD', 
+		'\x1BE', '\b', '\x17', '\x1', '\x2', '\x1BE', '\x1C0', '\x3', '\x2', '\x2', 
+		'\x2', '\x1BF', '\x1BA', '\x3', '\x2', '\x2', '\x2', '\x1C0', '\x1C3', 
+		'\x3', '\x2', '\x2', '\x2', '\x1C1', '\x1BF', '\x3', '\x2', '\x2', '\x2', 
+		'\x1C1', '\x1C2', '\x3', '\x2', '\x2', '\x2', '\x1C2', '-', '\x3', '\x2', 
+		'\x2', '\x2', '\x1C3', '\x1C1', '\x3', '\x2', '\x2', '\x2', '\x1C4', '\x1C5', 
+		'\x5', '@', '!', '\x2', '\x1C5', '\x1C6', '\x5', '\x30', '\x19', '\x2', 
+		'\x1C6', '\x1C7', '\a', '#', '\x2', '\x2', '\x1C7', '\x1C8', '\x5', '\x2', 
+		'\x2', '\x2', '\x1C8', '\x1C9', '\b', '\x18', '\x1', '\x2', '\x1C9', '/', 
+		'\x3', '\x2', '\x2', '\x2', '\x1CA', '\x1CB', '\a', '*', '\x2', '\x2', 
 		'\x1CB', '\x1CF', '\b', '\x19', '\x1', '\x2', '\x1CC', '\x1CD', '\a', 
-		'\x1A', '\x2', '\x2', '\x1CD', '\x1CF', '\b', '\x19', '\x1', '\x2', '\x1CE', 
+		'\x1B', '\x2', '\x2', '\x1CD', '\x1CF', '\b', '\x19', '\x1', '\x2', '\x1CE', 
 		'\x1CA', '\x3', '\x2', '\x2', '\x2', '\x1CE', '\x1CC', '\x3', '\x2', '\x2', 
 		'\x2', '\x1CF', '\x31', '\x3', '\x2', '\x2', '\x2', '\x1D0', '\x1D1', 
-		'\a', ')', '\x2', '\x2', '\x1D1', '\x1DA', '\b', '\x1A', '\x1', '\x2', 
-		'\x1D2', '\x1D3', '\a', '#', '\x2', '\x2', '\x1D3', '\x1D4', '\a', '\x5', 
+		'\a', '*', '\x2', '\x2', '\x1D1', '\x1DA', '\b', '\x1A', '\x1', '\x2', 
+		'\x1D2', '\x1D3', '\a', '$', '\x2', '\x2', '\x1D3', '\x1D4', '\a', '\x5', 
 		'\x2', '\x2', '\x1D4', '\x1DA', '\b', '\x1A', '\x1', '\x2', '\x1D5', '\x1D6', 
 		'\a', '\x5', '\x2', '\x2', '\x1D6', '\x1DA', '\b', '\x1A', '\x1', '\x2', 
-		'\x1D7', '\x1D8', '\a', '\x1A', '\x2', '\x2', '\x1D8', '\x1DA', '\b', 
+		'\x1D7', '\x1D8', '\a', '\x1B', '\x2', '\x2', '\x1D8', '\x1DA', '\b', 
 		'\x1A', '\x1', '\x2', '\x1D9', '\x1D0', '\x3', '\x2', '\x2', '\x2', '\x1D9', 
 		'\x1D2', '\x3', '\x2', '\x2', '\x2', '\x1D9', '\x1D5', '\x3', '\x2', '\x2', 
 		'\x2', '\x1D9', '\x1D7', '\x3', '\x2', '\x2', '\x2', '\x1DA', '\x33', 
-		'\x3', '\x2', '\x2', '\x2', '\x1DB', '\x1DC', '\a', '#', '\x2', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\x1DB', '\x1DC', '\a', '$', '\x2', '\x2', 
 		'\x1DC', '\x1DD', '\x5', '\x34', '\x1B', '\x2', '\x1DD', '\x1DE', '\b', 
 		'\x1B', '\x1', '\x2', '\x1DE', '\x1E3', '\x3', '\x2', '\x2', '\x2', '\x1DF', 
 		'\x1E0', '\x5', '*', '\x16', '\x2', '\x1E0', '\x1E1', '\b', '\x1B', '\x1', 
@@ -4831,7 +4833,7 @@ public partial class DianaScriptParser : Parser {
 		'\x1', '\x2', '\x1E5', '\x1E6', '\x5', '\x34', '\x1B', '\x2', '\x1E6', 
 		'\x1E7', '\b', '\x1C', '\x1', '\x2', '\x1E7', '\x1EF', '\x3', '\x2', '\x2', 
 		'\x2', '\x1E8', '\x1E9', '\f', '\x4', '\x2', '\x2', '\x1E9', '\x1EA', 
-		'\a', '$', '\x2', '\x2', '\x1EA', '\x1EB', '\x5', '\x34', '\x1B', '\x2', 
+		'\a', '%', '\x2', '\x2', '\x1EA', '\x1EB', '\x5', '\x34', '\x1B', '\x2', 
 		'\x1EB', '\x1EC', '\b', '\x1C', '\x1', '\x2', '\x1EC', '\x1EE', '\x3', 
 		'\x2', '\x2', '\x2', '\x1ED', '\x1E8', '\x3', '\x2', '\x2', '\x2', '\x1EE', 
 		'\x1F1', '\x3', '\x2', '\x2', '\x2', '\x1EF', '\x1ED', '\x3', '\x2', '\x2', 
@@ -4840,7 +4842,7 @@ public partial class DianaScriptParser : Parser {
 		'\x1F2', '\x1F3', '\b', '\x1D', '\x1', '\x2', '\x1F3', '\x1F4', '\x5', 
 		'\x36', '\x1C', '\x2', '\x1F4', '\x1F5', '\b', '\x1D', '\x1', '\x2', '\x1F5', 
 		'\x1FD', '\x3', '\x2', '\x2', '\x2', '\x1F6', '\x1F7', '\f', '\x4', '\x2', 
-		'\x2', '\x1F7', '\x1F8', '\a', '%', '\x2', '\x2', '\x1F8', '\x1F9', '\x5', 
+		'\x2', '\x1F7', '\x1F8', '\a', '&', '\x2', '\x2', '\x1F8', '\x1F9', '\x5', 
 		'\x36', '\x1C', '\x2', '\x1F9', '\x1FA', '\b', '\x1D', '\x1', '\x2', '\x1FA', 
 		'\x1FC', '\x3', '\x2', '\x2', '\x2', '\x1FB', '\x1F6', '\x3', '\x2', '\x2', 
 		'\x2', '\x1FC', '\x1FF', '\x3', '\x2', '\x2', '\x2', '\x1FD', '\x1FB', 
@@ -4864,40 +4866,40 @@ public partial class DianaScriptParser : Parser {
 		'\x2', '\x2', '\x2', '\x216', '\x214', '\x3', '\x2', '\x2', '\x2', '\x216', 
 		'\x217', '\x3', '\x2', '\x2', '\x2', '\x217', '=', '\x3', '\x2', '\x2', 
 		'\x2', '\x218', '\x216', '\x3', '\x2', '\x2', '\x2', '\x219', '\x21A', 
-		'\a', '&', '\x2', '\x2', '\x21A', '\x21F', '\b', ' ', '\x1', '\x2', '\x21B', 
+		'\a', '\'', '\x2', '\x2', '\x21A', '\x21F', '\b', ' ', '\x1', '\x2', '\x21B', 
 		'\x21C', '\x5', '\x6', '\x4', '\x2', '\x21C', '\x21D', '\b', ' ', '\x1', 
 		'\x2', '\x21D', '\x21F', '\x3', '\x2', '\x2', '\x2', '\x21E', '\x219', 
 		'\x3', '\x2', '\x2', '\x2', '\x21E', '\x21B', '\x3', '\x2', '\x2', '\x2', 
-		'\x21F', '?', '\x3', '\x2', '\x2', '\x2', '\x220', '\x221', '\a', '\x30', 
+		'\x21F', '?', '\x3', '\x2', '\x2', '\x2', '\x220', '\x221', '\a', '\x31', 
 		'\x2', '\x2', '\x221', '\x22F', '\b', '!', '\x1', '\x2', '\x222', '\x223', 
-		'\x5', '\b', '\x5', '\x2', '\x223', '\x224', '\a', '\x10', '\x2', '\x2', 
-		'\x224', '\x225', '\a', '\x11', '\x2', '\x2', '\x225', '\x226', '\x5', 
-		'\x2', '\x2', '\x2', '\x226', '\x227', '\a', '\x12', '\x2', '\x2', '\x227', 
+		'\x5', '\b', '\x5', '\x2', '\x223', '\x224', '\a', '\x11', '\x2', '\x2', 
+		'\x224', '\x225', '\a', '\x12', '\x2', '\x2', '\x225', '\x226', '\x5', 
+		'\x2', '\x2', '\x2', '\x226', '\x227', '\a', '\x13', '\x2', '\x2', '\x227', 
 		'\x228', '\b', '!', '\x1', '\x2', '\x228', '\x22F', '\x3', '\x2', '\x2', 
 		'\x2', '\x229', '\x22A', '\x5', '\b', '\x5', '\x2', '\x22A', '\x22B', 
-		'\a', '\x10', '\x2', '\x2', '\x22B', '\x22C', '\a', '\x30', '\x2', '\x2', 
+		'\a', '\x11', '\x2', '\x2', '\x22B', '\x22C', '\a', '\x31', '\x2', '\x2', 
 		'\x22C', '\x22D', '\b', '!', '\x1', '\x2', '\x22D', '\x22F', '\x3', '\x2', 
 		'\x2', '\x2', '\x22E', '\x220', '\x3', '\x2', '\x2', '\x2', '\x22E', '\x222', 
 		'\x3', '\x2', '\x2', '\x2', '\x22E', '\x229', '\x3', '\x2', '\x2', '\x2', 
 		'\x22F', '\x41', '\x3', '\x2', '\x2', '\x2', '\x230', '\x231', '\x5', 
-		'\f', '\a', '\x2', '\x231', '\x232', '\a', '\a', '\x2', '\x2', '\x232', 
+		'\f', '\a', '\x2', '\x231', '\x232', '\a', '\b', '\x2', '\x2', '\x232', 
 		'\x233', '\b', '\"', '\x1', '\x2', '\x233', '\x43', '\x3', '\x2', '\x2', 
 		'\x2', '\x234', '\x235', '\x5', '\f', '\a', '\x2', '\x235', '\x236', '\a', 
-		'\'', '\x2', '\x2', '\x236', '\x237', '\b', '#', '\x1', '\x2', '\x237', 
+		'(', '\x2', '\x2', '\x236', '\x237', '\b', '#', '\x1', '\x2', '\x237', 
 		'\x45', '\x3', '\x2', '\x2', '\x2', '\x238', '\x239', '\x5', '\x42', '\"', 
 		'\x2', '\x239', '\x23A', '\x5', ':', '\x1E', '\x2', '\x23A', '\x23B', 
 		'\b', '$', '\x1', '\x2', '\x23B', 'G', '\x3', '\x2', '\x2', '\x2', '\x23C', 
-		'\x23D', '\a', '\x30', '\x2', '\x2', '\x23D', '\x23E', '\b', '%', '\x1', 
+		'\x23D', '\a', '\x31', '\x2', '\x2', '\x23D', '\x23E', '\b', '%', '\x1', 
 		'\x2', '\x23E', 'I', '\x3', '\x2', '\x2', '\x2', '\x23F', '\x240', '\x5', 
 		'\x2', '\x2', '\x2', '\x240', '\x241', '\x5', 'L', '\'', '\x2', '\x241', 
 		'\x242', '\b', '&', '\x1', '\x2', '\x242', 'K', '\x3', '\x2', '\x2', '\x2', 
 		'\x243', '\x244', '\x5', '\x44', '#', '\x2', '\x244', '\x245', '\x5', 
 		':', '\x1E', '\x2', '\x245', '\x246', '\b', '\'', '\x1', '\x2', '\x246', 
 		'M', '\x3', '\x2', '\x2', '\x2', '\x247', '\x248', '\b', '(', '\x1', '\x2', 
-		'\x248', '\x249', '\x5', '@', '!', '\x2', '\x249', '\x24A', '\a', '\"', 
+		'\x248', '\x249', '\x5', '@', '!', '\x2', '\x249', '\x24A', '\a', '#', 
 		'\x2', '\x2', '\x24A', '\x24B', '\b', '(', '\x1', '\x2', '\x24B', '\x253', 
 		'\x3', '\x2', '\x2', '\x2', '\x24C', '\x24D', '\f', '\x4', '\x2', '\x2', 
-		'\x24D', '\x24E', '\x5', '@', '!', '\x2', '\x24E', '\x24F', '\a', '\"', 
+		'\x24D', '\x24E', '\x5', '@', '!', '\x2', '\x24E', '\x24F', '\a', '#', 
 		'\x2', '\x2', '\x24F', '\x250', '\b', '(', '\x1', '\x2', '\x250', '\x252', 
 		'\x3', '\x2', '\x2', '\x2', '\x251', '\x24C', '\x3', '\x2', '\x2', '\x2', 
 		'\x252', '\x255', '\x3', '\x2', '\x2', '\x2', '\x253', '\x251', '\x3', 
