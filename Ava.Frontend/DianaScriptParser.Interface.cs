@@ -74,6 +74,9 @@ namespace Ava.Frontend
         public static ast mkSet(CommonToken token, List<ast> elts)
         => CSet.make(elts.ToArray(), token.Line, token.Column);
 
+        public static ast mkSetMeta(CommonToken token, string idx, string filename)
+        => SetMeta.make(int.Parse(idx), unesc(filename), token.Line, token.Column);
+
         public static ast mkStrDict(CommonToken token, List<(ast, ast)> elts)
         => CStrDict.make(elts.ToArray(), token.Line, token.Column);
 

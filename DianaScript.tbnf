@@ -13,7 +13,6 @@ val to_obj : forall 'a. ('a) -> object
 val unesc : (str) -> str
 val null : forall 'a. 'a
 val mkOGet: (token, ast, ast) -> ast
-val mkOSet: (token, ast, ast, ast) -> ast
 val mkVal: (token, DObj) -> ast
 val mkApp: (token, ast, list[ast]) -> ast
 val mkList: (token, list[ast]) -> ast

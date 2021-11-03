@@ -8,9 +8,11 @@ val mkWorkflow: (token, str, str, list[(int, int, str, list[ast])]) -> ast
 val mkLet : (token, str, ast) -> ast
 val mkRaise: (token, ast) -> ast
 val mkMeta : (str, str, str, ast) -> ast
+val mkSetMeta: (token, str, str) -> ast
 
 
-stmt : "raise" expr           { mkRaise($1, $2) }
-     | "__SETMETA" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
+stmt : "raise" expr                                 { mkRaise($1, $2) }
+     | "__SETMETA" <INT> <STR>                      { mkSetMeta($1, $2.Text, $3.Text) }
+     | "__META" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
 
 expr : "__META" <INT> ":" <INT> ":" <INT> "in" expr { mkMeta($2.Text, $4.Text, $6.Text, $8) }
