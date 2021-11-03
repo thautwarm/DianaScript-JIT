@@ -1,3 +1,5 @@
+Powered by [Typed BNF](https://github.com/thautwarm/typed-bnf).
+
 ## diana script
 
 [![EN DOC](https://img.shields.io/badge/docs-v0.1-green.svg?style=flat)](https://github.com/thautwarm/DianaScript/blob/master/docs.md) [![CN DOC](https://img.shields.io/badge/文档-v0.1-green.svg?style=flat)](https://github.com/thautwarm/DianaScript/blob/master/docs-CN.md)
