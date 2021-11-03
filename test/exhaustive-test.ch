@@ -279,4 +279,4 @@ fun test_closure(x, z, k)
     end
 end
 
-log(test_closure(1, 2, 3)(4))
+ log(test_closure(1, 2, 3)(4))

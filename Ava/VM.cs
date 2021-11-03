@@ -418,7 +418,7 @@ namespace Ava
                                     var j = offset + 2 + i + i;
                                     var from = bytecode[j];
                                     var to = bytecode[j + 1];
-                                    freevars[to] = loadvar(from);
+                                    sub_freevars[to] = loadvar(from);
                                 }
                                 vstack.Push(new DObjectFunc(code, sub_freevars, nameSpace));
                                 offset += 2 + n + n;
