@@ -14,7 +14,7 @@ Diana Script features at
 2. simplicity(see docs for the concise cheat sheet)
 3. easy [.NET interops](#dotnet-interops)
 
-Diana Script is ~0.5 fast as CPython(~2.5 fast than Jint), and expected to be **thread-safe**.
+Diana Script is as 0.5x fast as CPython(>2.5x faster than Jint), and expected to be **thread-safe**.
 
 ## Integration within Your Project(available to Unity env)
 
