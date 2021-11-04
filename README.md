@@ -28,8 +28,8 @@ public static class YourApi
         var globals = apis.InitGlobals();
 
         var ast = DianaScriptAPIs.Parse(path);
-        var code = DianaScriptAPIs.compileModule(ast, path);
-        VM.execute(code, globals);            
+        var exec = DianaScriptAPIs.compileModule(ast, path);
+        exec(globals);
     }
 }
 ```
