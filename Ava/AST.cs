@@ -219,7 +219,7 @@ namespace Ava
         }
     }
 
-    public struct __please_inline_it
+    public class __please_inline_it
     {
         public SourcePos pos;
         public string kind;
@@ -259,6 +259,7 @@ namespace Ava
         {
             public CPS func;
 
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
             public DObj Invoke(ExecContext ctx)
             {
                 var exp = func(ctx);
@@ -293,7 +294,7 @@ namespace Ava
     {
 
 
-        public struct __call_global_store_op
+        public class __call_global_store_op
         {
             public string name;
             public CPS func;
@@ -311,12 +312,13 @@ namespace Ava
             }
         }
 
-        public struct __call_local_store_op
+        public class __call_local_store_op
         {
             public int localidx;
             public CPS func;
             public Func<DObj, DObj, DObj> op;
 
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var lhs = ctx.loadLocal(localidx);
@@ -329,7 +331,7 @@ namespace Ava
             }
         }
 
-        public struct __call_free_store_op
+        public class __call_free_store_op
         {
             public int freeidx;
             public CPS func;
@@ -347,7 +349,7 @@ namespace Ava
             }
         }
 
-        public struct __call_item_store_op
+        public class __call_item_store_op
         {
             public int localidx;
             public CPS subject;
@@ -376,37 +378,45 @@ namespace Ava
 
             }
         }
-        public struct __call_global_store
+        public class __call_global_store
         {
             public string name;
             public CPS func;
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
+                if (ctx.CONT != 0)
+                    return r;
                 ctx.ns[name] = r;
                 return r;
             }
         }
 
-        public struct __call_local_store
+        public class __call_local_store
         {
             public int localidx;
             public CPS func;
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
+                if (ctx.CONT != 0)
+                    return r;
                 ctx.localvars[localidx] = r;
                 return r;
             }
         }
 
-        public struct __call_free_store
+        public class __call_free_store
         {
             public int freeidx;
             public CPS func;
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
+                if (ctx.CONT != 0)
+                    return r;
                 ctx.freevars[freeidx] = r;
                 return r;
             }
@@ -603,11 +613,13 @@ namespace Ava
 
     public partial class Bin
     {
-        public struct __binary_call
+        public class __binary_call
         {
             public CPS left;
             public CPS right;
             public Func<DObj, DObj, DObj> op;
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
             public DObj Invoke(ExecContext ctx)
             {
                 var l = left(ctx);
@@ -631,12 +643,14 @@ namespace Ava
         public struct __call_load_local
         {
             public int localidx;
+            int __pad;
             public DObj Invoke(ExecContext ctx) => ctx.loadLocal(localidx);
         }
 
         public struct __call_load_free
         {
             public int freeidx;
+            int __pad;
             public DObj Invoke(ExecContext ctx) => ctx.loadFree(freeidx);
         }
 
@@ -667,7 +681,7 @@ namespace Ava
 
     public partial class IfThenElse
     {
-        public struct __call_if
+        public class __call_if
         {
             public CPS cond;
             public CPS then;
@@ -697,7 +711,7 @@ namespace Ava
 
     public partial class NestedIf
     {
-        public struct __call_if
+        public class __call_if
         {
             public (CPS, CPS)[] elifs;
             public CPS orelse; // can be null
@@ -735,7 +749,7 @@ namespace Ava
     public partial class While
     {
 
-        public struct __call_while
+        public class __call_while
         {
             public CPS cond;
             public CPS body; // can be null
@@ -833,7 +847,7 @@ namespace Ava
 
     public partial class For
     {
-        public struct __for_local
+        public class __for_local
         {
             public int localidx;
             public CPS iter;
@@ -872,7 +886,7 @@ namespace Ava
             }
         }
 
-        public struct __for_free
+        public class __for_free
         {
             public int freeidx;
             public CPS iter;
@@ -910,7 +924,7 @@ namespace Ava
                 return DNone.unique;
             }
         }
-        public struct __for_global
+        public class __for_global
         {
             public string name;
             public CPS iter;
@@ -980,7 +994,7 @@ namespace Ava
 
     public partial class OGet
     {
-        public struct __get
+        public class __get
         {
             public CPS subject;
             public CPS item;
@@ -1034,7 +1048,7 @@ namespace Ava
     public partial class Call
     {
 
-        public struct __call
+        public class __call
         {
             public CPS func;
             public CPS[] args;
@@ -1117,7 +1131,7 @@ namespace Ava
 
         static (EncodedVar, EncodedVar)[] emptyFreeTrans = new (EncodedVar, EncodedVar)[0];
         static DObj[] emptyFreeVars = new DObj[0];
-        public struct __mk_func
+        public class __mk_func
         {
             public Action<ExecContext, DObj> nameBinder;
             public (EncodedVar, EncodedVar)[] freetrans;
@@ -1380,7 +1394,7 @@ namespace Ava
     public partial class And
     {
 
-        public struct __build_and
+        public class __build_and
         {
             public CPS left;
             public CPS right;
@@ -1406,7 +1420,7 @@ namespace Ava
 
     public partial class Or
     {
-        public struct __build_or
+        public class __build_or
         {
             public CPS left;
             public CPS right;

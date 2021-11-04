@@ -20,12 +20,12 @@ namespace Ava
         static DObj[] emptyObjArray = new DObj[0];
         public static DObj ExecTopLevel(CPS cps, NameSpace ns, CodeObject co)
         {
-            return cps(new ExecContext(0, emptyObjArray, emptyObjArray, ns, co));
+            return cps(new ExecContext(emptyObjArray, emptyObjArray, ns, co));
         }
 
-        public ExecContext(int CONT, DObj[] localvars, DObj[] freevars, NameSpace ns, CodeObject co)
+        public ExecContext(DObj[] localvars, DObj[] freevars, NameSpace ns, CodeObject co)
         {
-            this.CONT = CONT;
+            this.CONT = 0;
             this.localvars = localvars;
             this.freevars = freevars;
             this.ns = ns;

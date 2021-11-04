@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using int_t = System.Int64;
 using uint_t = System.UInt64;
 
@@ -28,6 +29,7 @@ namespace Ava
         public static Exception unsupported_ops(DObj lhs, string op, DObj rhs) =>
             new InvalidOperationException($"'unsupported operation: '{lhs.Classname}' {op} '{rhs.Classname}'.");
 
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static DObj int_t_add(DInt self, DObj other)
         {
             switch (other)
@@ -50,6 +52,7 @@ namespace Ava
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public static DObj int_t_sub(DInt self, DObj other)
         {
             switch (other)
