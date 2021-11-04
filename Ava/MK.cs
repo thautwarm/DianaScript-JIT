@@ -86,6 +86,8 @@ namespace Ava
             {
                 cache_integers[i + 128] = new DInt { value = i };
             }
+            Zero = CacheOrNewInt(0);
+            One = CacheOrNewInt(1);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
@@ -97,6 +99,9 @@ namespace Ava
             }
             return new DInt { value = value };
         }
+
+        public static DInt Zero;
+        public static DInt One;
         public static DInt Int(int i) => CacheOrNewInt(i);
         public static DInt Int(bool i) => CacheOrNewInt(i ? 1 : 0 );
         public static DInt Int(long i) => CacheOrNewInt(i);

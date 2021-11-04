@@ -44,6 +44,9 @@ namespace Ava
 
         public (ImmediateAST, ImmediateAST) Read(THint<(ImmediateAST, ImmediateAST)> _) =>
             (ReadImmediateAST(), ReadImmediateAST());
+        
+        public (ImmediateAST, string) Read(THint<(ImmediateAST, string)> _) =>
+            (ReadImmediateAST(), ReadStr());
 
         public (int, int) Read(THint<(int, int)> _)
         {

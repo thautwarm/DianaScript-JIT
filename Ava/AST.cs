@@ -6,22 +6,19 @@ using System.Runtime.CompilerServices;
 
 namespace Ava
 {
-    using static VMExts;
     using EncodedVar = System.Int32;
-
-
-    public static partial class CollectionExts
+    using NameSpace = Dictionary<string, DObj>;
+    using ast = ImmediateAST;
+    using CPS = Func<ExecContext, DObj>;
+    public enum CONT
     {
-        public static Dictionary<K, V> ShallowCopy<K, V>(this Dictionary<K, V> self)
-        {
-            var res = new Dictionary<K, V>();
-            foreach (var kv in self)
-            {
-                res[kv.Key] = kv.Value;
-            }
-            return res;
-        }
+        NORMAL = 0,
+        RETURN = 1,
+        BREAK = 2,
+        CONT = 3
+
     }
+
     public record MetaContext
     {
         public int nlocal = 0;
@@ -33,47 +30,13 @@ namespace Ava
         public string filename;
         public Dictionary<DObj, int> consts;
         public Dictionary<string, int> strings;
-        public List<int> bytecode;
+        public SourcePos currentPos;
 
-        public List<(int, SourcePos)> sourcePos;
 
 
         // no need to init
         public List<int> currentLoopBreakOperands;
         public int currentLoopContinueTarget = -1;
-
-
-        public void addCode(params int[] codes)
-        {
-            bytecode.AddRange(codes);
-        }
-
-        public void addCode(BC bc)
-        {
-            bytecode.Add((int)bc);
-        }
-
-        public void addCode(BC bc, int op)
-        {
-            if (bc == BC.LOAD_LOCAL && op < 0)
-            {
-                bc = BC.LOAD_FREE;
-                op = -1 - op;
-            }
-            if (bc == BC.STORE_LOCAL && op < 0)
-            {
-                bc = BC.STORE_FREE;
-                op = -1 - op;
-            }
-            bytecode.Add((int)bc);
-            bytecode.Add(op);
-        }
-        public void setCode(int offset, int v)
-        {
-            bytecode[offset] = v;
-        }
-
-        public int currentOffset => bytecode.Count;
 
         public int strIdx(string s)
         {
@@ -98,9 +61,8 @@ namespace Ava
                 ctx = new Dictionary<string, EncodedVar>(),
                 useMeta = useMeta,
                 parent = null,
-                bytecode = new List<int>(),
                 filename = filename,
-                sourcePos = new List<(int, SourcePos)>(),
+                currentPos = new SourcePos(0, 0, filename),
                 nlocal = 0,
                 consts = new Dictionary<DObj, int>(),
                 strings = new Dictionary<string, int>(),
@@ -109,8 +71,7 @@ namespace Ava
             };
         }
 
-        public SourcePos currentPos =>
-            sourcePos.Count == 0 ? new SourcePos(0, 0, filename) : sourcePos[sourcePos.Count - 1].Item2;
+
         public static MetaContext Create(MetaContext p, Dictionary<string, EncodedVar> ctx)
         {
             return new MetaContext
@@ -119,9 +80,8 @@ namespace Ava
                 ctx = ctx,
                 useMeta = p.useMeta,
                 parent = p,
-                bytecode = new List<int>(),
                 filename = p.filename,
-                sourcePos = new List<(int, SourcePos)> { (0, p.currentPos) },
+                currentPos = p.currentPos,
                 nlocal = ctx.Count,
                 consts = new Dictionary<DObj, int>(),
                 strings = new Dictionary<string, int>(),
@@ -168,43 +128,8 @@ namespace Ava
             return i;
         }
 
-        internal void addLoopBreak(int operand)
+        public ((int, int)[], CodeObject) jitCode(SourcePos initPos, string[] args, string name_str = "<main>")
         {
-            if (currentLoopBreakOperands == null)
-            {
-                throw new InvalidOperationException("break not allowed outside loop");
-            }
-            currentLoopBreakOperands.Add(operand);
-        }
-
-        internal void addLoopContinue(int operand)
-        {
-            if (currentLoopContinueTarget == -1)
-                throw new InvalidOperationException("continue not allowed outside loop");
-            addCode(BC.GOTO, currentLoopContinueTarget);
-        }
-
-
-        internal void enterLoop(Action f)
-        {
-            var oldTarget = currentLoopContinueTarget;
-            var oldOps = currentLoopBreakOperands;
-            currentLoopContinueTarget = currentOffset;
-            currentLoopBreakOperands = new List<int>();
-            f();
-            foreach (var op in currentLoopBreakOperands)
-            {
-                setCode(op, currentOffset);
-            }
-            currentLoopBreakOperands = oldOps;
-            currentLoopContinueTarget = oldTarget;
-        }
-
-        
-        public ((int, int)[], CodeObject) buildCode(SourcePos initPos, string[] args, string name_str = "<main>")
-        {
-
-
             var _free = freevars.OrderBy(x => x.Value.Item2).ToArray();
 
             var freenames = _free.Select(x => x.Key).ToArray();
@@ -226,9 +151,8 @@ namespace Ava
                             .OrderBy(x => x.Value)
                             .Select(x => x.Key).ToArray();
 
-
             var code = new CodeObject(
-                name: name_str, consts: consts_, bytecode: bytecode.ToArray(), strings: strings_, localnames: localnames_, sourcePos: sourcePos.ToArray(), narg: narg, nlocal: nlocal, freenames: freenames, pos: currentPos);
+                name: name_str, consts: consts_, strings: strings_, localnames: localnames_, narg: narg, nlocal: nlocal, freenames: freenames, pos: initPos);
 
             return (freetrans, code);
         }
@@ -253,6 +177,14 @@ namespace Ava
                 a2.__resolve_local(ctx);
             }
         }
+
+        public static void __resolve_local(this (ImmediateAST, string)[] self, MetaContext ctx)
+        {
+            foreach (var (a1, a2) in self)
+            {
+                a1.__resolve_local(ctx);
+            }
+        }
     }
 
 
@@ -262,120 +194,336 @@ namespace Ava
         int Lineno { get; set; }
         int Colno { get; set; }
 
-        public bool is_stmt => false;
-        public void emit_impl(MetaContext ctx);
 
-        public void emit(MetaContext ctx)
-        {
-            if (!ctx.useMeta)
-            {
-                new SourcePos(Lineno, Colno, ctx.filename).visit(ctx);
-            }
-            emit_impl(ctx);
-        }
 
         public void __default_resolve_local(MetaContext ctx);
         public void __resolve_local(MetaContext ctx)
         {
             __default_resolve_local(ctx);
         }
+
+        public CPS jit_impl(MetaContext ctx);
+
+        public CPS jit(MetaContext ctx)
+        {
+            if (!ctx.useMeta)
+            {
+                new SourcePos(Lineno, Colno, ctx.filename).visit(ctx);
+            }
+
+            var pos = ctx.currentPos;
+            var cps = jit_impl(ctx);
+            if (cps == null)
+                return cps;
+            return new __please_inline_it { call = cps, kind = description, pos = pos }.Invoke;
+        }
+    }
+
+    public struct __please_inline_it
+    {
+        public SourcePos pos;
+        public string kind;
+        public CPS call;
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public DObj Invoke(ExecContext ctx)
+        {
+            try
+            {
+                return call(ctx);
+            }
+            catch (Exception e)
+            {
+                throw new LocatedError(e, kind, pos);
+            }
+        }
     }
 
     public partial class Meta
     {
-        public bool is_stmt => inner.is_stmt;
-        public void emit_impl(MetaContext ctx)
+
+        public CPS jit_impl(MetaContext ctx)
         {
-            new SourcePos(lineno, colno, ctx.filenames[filename_idx]).visit(ctx);
-            inner.emit(ctx);
+            ctx.currentPos = new SourcePos(lineno, colno, ctx.filenames[this.filename_idx]);
+            return inner.jit(ctx);
         }
     }
 
 
     public partial class Raise
-    {   
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+    {
+
+
+        public struct __call
         {
-            expr.emit(ctx);
-            ctx.addCode(BC.RAISE);
+            public CPS func;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var exp = func(ctx);
+                if (ctx.CONT != 0)
+                    return exp;
+                throw new Exception(exp.__str__());
+            }
+
+        }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            var func = expr.jit(ctx);
+
+            return new __call { func = func }.Invoke;
         }
     }
 
 
     public partial class SetMeta
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+        public CPS jit_impl(MetaContext ctx)
         {
             ctx.useMeta = true;
-            ctx.filenames[idx] = filename;
+            ctx.filenames[this.idx] = this.filename;
+            return null;
         }
     }
 
 
     public partial class StoreMany
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+
+
+        public struct __call_global_store_op
+        {
+            public string name;
+            public CPS func;
+            public Func<DObj, DObj, DObj> op;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var lhs = ctx.loadGlobal(name);
+                var rhs = func(ctx);
+                if (ctx.CONT != 0)
+                    return rhs;
+                var value = op(lhs, rhs);
+                ctx.ns[name] = value;
+                return value;
+            }
+        }
+
+        public struct __call_local_store_op
+        {
+            public int localidx;
+            public CPS func;
+            public Func<DObj, DObj, DObj> op;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var lhs = ctx.loadLocal(localidx);
+                var rhs = func(ctx);
+                if (ctx.CONT != 0)
+                    return rhs;
+                var value = op(lhs, rhs);
+                ctx.localvars[localidx] = value;
+                return value;
+            }
+        }
+
+        public struct __call_free_store_op
+        {
+            public int freeidx;
+            public CPS func;
+            public Func<DObj, DObj, DObj> op;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var lhs = ctx.loadFree(freeidx);
+                var rhs = func(ctx);
+                if (ctx.CONT != 0)
+                    return rhs;
+                var value = op(lhs, rhs);
+                ctx.freevars[freeidx] = value;
+                return value;
+            }
+        }
+
+        public struct __call_item_store_op
+        {
+            public int localidx;
+            public CPS subject;
+            public CPS item;
+            public CPS value;
+            public Func<DObj, DObj, DObj> op;
+
+            public SourcePos sourcePos;
+            public DObj Invoke(ExecContext ctx)
+            {
+
+                var val_subject = subject(ctx);
+                if (ctx.CONT != 0)
+                    return val_subject;
+                var val_item = item(ctx);
+                if (ctx.CONT != 0)
+                    return val_item;
+                var rhs = value(ctx);
+                if (ctx.CONT != 0)
+                    return rhs;
+
+                var lhs = val_subject.__get__(val_item);
+                var ret = op(lhs, rhs);
+                val_subject.__set__(val_item, ret);
+                return ret;
+
+            }
+        }
+        public struct __call_global_store
+        {
+            public string name;
+            public CPS func;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var r = func(ctx);
+                ctx.ns[name] = r;
+                return r;
+            }
+        }
+
+        public struct __call_local_store
+        {
+            public int localidx;
+            public CPS func;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var r = func(ctx);
+                ctx.localvars[localidx] = r;
+                return r;
+            }
+        }
+
+        public struct __call_free_store
+        {
+            public int freeidx;
+            public CPS func;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var r = func(ctx);
+                ctx.freevars[freeidx] = r;
+                return r;
+            }
+        }
+
+        public class __call_item_store
+        {
+            public int localidx;
+            public CPS subject;
+
+            public CPS item;
+
+            public CPS value;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_subject = subject(ctx);
+                if (ctx.CONT != 0)
+                    return val_subject;
+                var val_item = item(ctx);
+                if (ctx.CONT != 0)
+                    return val_item;
+                var val_val = value(ctx);
+                if (ctx.CONT != 0)
+                    return val_val;
+                val_subject.__set__(val_item, val_val);
+                return val_val;
+            }
+        }
+
+        public CPS jit_impl(MetaContext ctx)
         {
 
-            var insts = new Stack<(BC, int)>();
+            List<Func<CPS, CPS>> transform = new List<Func<CPS, CPS>>();
             for (int i = 0; i < lhs.Length; i++)
             {
                 switch (lhs[i])
                 {
-                    case Load var:
-                        var n_ = ctx.search(var.n);
-                        if (n_.HasValue)
-                            insts.Push((BC.STORE_LOCAL, n_.Value));
-                        else
-                            insts.Push((BC.STORE_GLOBAL, ctx.strIdx(var.n)));
-                        break;
-                    case OGet get:
-                        get.target.emit(ctx);
-                        get.item.emit(ctx);
-                        insts.Push((BC.STORE_ITEM, 0));
-                        break;
-                    default:
-                        throw new NotFiniteNumberException();
+                    case (Load load, null):
+                        {
+                            var n_ = ctx.search(load.n);
+                            if (!n_.HasValue)
+                            {
+                                transform.Add(cps => new __call_global_store { name = load.n, func = cps }.Invoke);
+                            }
+                            else if (n_.Value >= 0)
+                                transform.Add(cps => new __call_local_store { localidx = n_.Value, func = cps }.Invoke);
+                            else
+                                transform.Add(cps => new __call_free_store { freeidx = -n_.Value - 1, func = cps }.Invoke);
+                            break;
+                        }
+                    case (Load load, var op_str):
+                        {
+                            var pos = ctx.currentPos;
+                            var n_ = ctx.search(load.n);
+                            var op = Prime2.getFunc(op_str);
+                            if (!n_.HasValue)
+                            {
+                                transform.Add(cps => new __call_global_store_op
+                                {
+                                    name = load.n,
+                                    func = cps,
+                                    op = op
+                                }.Invoke);
+                            }
+                            else if (n_.Value >= 0)
+                                transform.Add(cps => new __call_local_store_op
+                                {
+                                    localidx = n_.Value,
+                                    func = cps,
+                                    op = op
+                                }.Invoke);
+                            else //  (n_.Value < 0)
+                                transform.Add(cps => new __call_free_store_op
+                                {
+                                    freeidx = -n_.Value - 1,
+                                    func = cps,
+                                    op = op
+                                }.Invoke);
+                            break;
+                        }
+
+                    case (OGet oget, null):
+                        {
+                            var subject = oget.target.jit(ctx);
+                            var item = oget.item.jit(ctx);
+                            transform.Add(cps => new __call_item_store { subject = subject, item = item, value = cps }.Invoke);
+                            break;
+                        }
+                    case (OGet oget, var op_str):
+                        {
+                            var pos = ctx.currentPos;
+                            var op = Prime2.getFunc(op_str);
+                            var subject = oget.target.jit(ctx);
+                            var item = oget.item.jit(ctx);
+                            transform.Add(cps => new __call_item_store_op
+                            {
+                                subject = subject,
+                                item = item,
+                                value = cps,
+                                op = op
+                            }.Invoke);
+                            break;
+                        }
                 }
             }
 
-            rhs.emit_impl(ctx);
-            BC a;
-            int b;
-            for (int i = 0; i < lhs.Length - 2; i++)
-            {
-                ctx.addCode(BC.DUP);
-                (a, b) = insts.Pop();
-                if (a == BC.STORE_ITEM)
-                {
-                    ctx.addCode(a);
-                }
-                else
-                {
-                    ctx.addCode(a, b);
-                }
-            }
-            (a, b) = insts.Pop();
-            if (a == BC.STORE_ITEM)
-            {
-                ctx.addCode(a);
-            }
-            else
-            {
-                ctx.addCode(a, b);
-            }
+            var value = rhs.jit(ctx);
+            return transform.ReduceRight(value, (r, e) => e(r));
         }
+
+
     }
 
 
-    
+
     public partial class Bin
     {
-
-
         static Bin()
         {
             Prime2.addFunc("+", (l, r) => l.__add__(r));
@@ -452,228 +600,375 @@ namespace Ava
 
         }
     }
-    public partial class IBin
-    {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
-        {
-            Action storeOp;
-            switch (left)
-            {
-                case Load var:
-                    var n_ = ctx.search(var.n);
-                    if (n_.HasValue)
-                    {
-                        ctx.addCode(BC.LOAD_LOCAL, n_.Value);
-                        storeOp = () => ctx.addCode(BC.STORE_LOCAL, n_.Value);
-                    }
-                    else
-                    {
-                        ctx.addCode(BC.LOAD_GLOBAL, ctx.strIdx(var.n));
-                        storeOp = () => ctx.addCode(BC.STORE_GLOBAL, ctx.strIdx(var.n));
-                    }
-                    break;
-                case OGet get:
-                    get.target.emit(ctx);
-                    get.item.emit(ctx);
-                    ctx.addCode(BC.DUP2);
-                    ctx.addCode(BC.LOAD_ITEM);
-                    storeOp = () => ctx.addCode(BC.STORE_ITEM);
-                    break;
-                default:
-                    throw new NotFiniteNumberException();
-            }
-            right.emit_impl(ctx);
-            ctx.addCode(BC.CALL_PRIME2, Prime2.getFuncIdx(op));
-            storeOp();
-        }
-
-    }
 
     public partial class Bin
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __binary_call
         {
-            left.emit_impl(ctx);
-            right.emit_impl(ctx);
-            if (op == "+")
+            public CPS left;
+            public CPS right;
+            public Func<DObj, DObj, DObj> op;
+            public DObj Invoke(ExecContext ctx)
             {
-                ctx.addCode(BC.BADD);
-            }
-            else if (op == "-")
-            {
-                ctx.addCode(BC.BSUB);
-            }
-            else if (op == "<")
-            {
-                ctx.addCode(BC.BLT);
-            }
-            else
-            {
-                ctx.addCode(BC.CALL_PRIME2, Prime2.getFuncIdx(op));
+                var l = left(ctx);
+                if (ctx.CONT != 0)
+                    return l;
+                var r = right(ctx);
+                if (ctx.CONT != 0)
+                    return r;
+                return op(l, r);
             }
         }
+        public CPS jit_impl(MetaContext ctx) =>
+            new __binary_call { left = left.jit(ctx), right = right.jit(ctx), op = Prime2.getFunc(op) }.Invoke;
+
+
     }
 
     public partial class Load
     {
-        public void emit_impl(MetaContext ctx)
+
+        public struct __call_load_local
+        {
+            public int localidx;
+            public DObj Invoke(ExecContext ctx) => ctx.loadLocal(localidx);
+        }
+
+        public struct __call_load_free
+        {
+            public int freeidx;
+            public DObj Invoke(ExecContext ctx) => ctx.loadFree(freeidx);
+        }
+
+        public struct __call_load_global
+        {
+            public string name;
+            public DObj Invoke(ExecContext ctx) => ctx.loadGlobal(name);
+        }
+
+        public CPS jit_impl(MetaContext ctx)
         {
             var lhs_ = ctx.search(n);
             if (!lhs_.HasValue)
             {
-                ctx.addCode(BC.LOAD_GLOBAL, ctx.strIdx(n));
+                return new __call_load_global { name = n }.Invoke;
+            }
+            else if (lhs_.Value >= 0)
+            {
+                return new __call_load_local { localidx = lhs_.Value }.Invoke;
             }
             else
             {
-                ctx.addCode(BC.LOAD_LOCAL, lhs_.Value);
+                return new __call_load_free { freeidx = -lhs_.Value - 1 }.Invoke;
             }
         }
+
     }
 
     public partial class IfThenElse
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __call_if
         {
-            cond.emit(ctx);
+            public CPS cond;
+            public CPS then;
+            public CPS orelse;
 
-            var else_operand = ctx.currentOffset + 1;
-            ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
-
-            then.emit(ctx);
-
-            var succ_operand = ctx.currentOffset + 1;
-            ctx.addCode(BC.GOTO, PSEUDO);
-
-            ctx.setCode(else_operand, ctx.currentOffset);
-            orelse.emit(ctx);
-
-            ctx.setCode(succ_operand, ctx.currentOffset);
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_cond = cond(ctx);
+                if (ctx.CONT != 0)
+                    return val_cond;
+                if (val_cond.__bool__())
+                {
+                    return then(ctx);
+                }
+                else
+                    return orelse(ctx);
+            }
         }
+        public CPS jit_impl(MetaContext ctx)
+        {
+            return new __call_if { cond = cond.jit(ctx), then = then.jit(ctx), orelse = orelse.jit(ctx) }.Invoke;
+        }
+
     }
 
 
     public partial class NestedIf
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __call_if
         {
+            public (CPS, CPS)[] elifs;
+            public CPS orelse; // can be null
 
-            var PSEUDO = 0;
-
-            var end_label_operands = new List<int>();
-            Action<int> backset = (_) => { };
-            foreach (var (cond, body) in elifs)
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
             {
-                backset(ctx.currentOffset);
-
-                cond.emit(ctx);
-
-                var next_label_op = ctx.currentOffset + 1;
-                ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
-
-                body.emit(ctx);
-
-                end_label_operands.Add(ctx.currentOffset + 1);
-                ctx.addCode(BC.GOTO, PSEUDO);
-
-                backset = (i) => ctx.setCode(next_label_op, i);
-            }
-
-            backset(ctx.currentOffset);
-            if (orelse != null)
-                orelse.emit(ctx);
-            else
-                ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
-
-            int end_label = ctx.currentOffset;
-            foreach (var op in end_label_operands)
-            {
-                ctx.setCode(op, end_label);
+                foreach (var (cond, then) in elifs)
+                {
+                    var val_cond = cond(ctx);
+                    if (ctx.CONT != 0)
+                        return val_cond;
+                    if (val_cond.__bool__())
+                        return then(ctx);
+                }
+                if (orelse == null)
+                    return DNone.unique;
+                return orelse(ctx);
             }
         }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            (CPS, CPS) ap((ast cond, ast then) arg)
+            {
+                return (arg.cond.jit(ctx), arg.then.jit(ctx));
+            }
+
+            return new __call_if { elifs = elifs.Select(ap).ToArray(), orelse = orelse?.jit(ctx) }.Invoke;
+        }
+
+
     }
 
     public partial class While
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+
+        public struct __call_while
         {
-            // var backjump_offset = ctx.currentOffset;
-            ctx.enterLoop(() =>
+            public CPS cond;
+            public CPS body; // can be null
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
             {
-                cond.emit(ctx);
 
-                var end_label = ctx.currentOffset + 1;
-                ctx.addCode(BC.GOTO_IF_NOT, PSEUDO);
+                while (true)
+                {
+                    var val_cond = cond(ctx);
+                    if (ctx.CONT != 0)
+                    {
+                        return val_cond;
+                    }
+                    if (!val_cond.__bool__())
+                        break;
 
-                then.emit(ctx);
-                ctx.addCode(BC.POP);
-                ctx.addCode(BC.GOTO, ctx.currentLoopContinueTarget);
-                ctx.setCode(end_label, ctx.currentOffset);
-            });
+                    var val_body = body(ctx);
+                    if (ctx.CONT == 0)
+                        continue;
+
+                    if (ctx.CONT == (int)CONT.CONT)
+                    {
+                        ctx.CONT = 0;
+                        continue;
+                    }
+
+                    if (ctx.CONT == (int)CONT.BREAK)
+                    {
+                        ctx.CONT = 0;
+                        break;
+                    }
+
+                    // if (ctx.CONT == (int) CONT.RETURN)
+                    return val_body;
+                }
+                return DNone.unique;
+            }
         }
+        public CPS jit_impl(MetaContext ctx)
+        {
+            return new __call_while { cond = cond.jit(ctx), body = then.jit(ctx) }.Invoke;
+        }
+
+
     }
 
 
     public partial class Loop
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
-        {
-            var backjump_offset = ctx.currentOffset;
-            ctx.enterLoop(() =>
-            {
-                body.emit(ctx);
-                ctx.addCode(BC.POP);
-                ctx.addCode(BC.GOTO, backjump_offset);
-            });
-        }
-    }
 
-
-    public record DEnum(IEnumerator<DObj> iter) : DObj
-    {
-        public object Native => iter;
-        public string Classname => throw new NotImplementedException();
-        public DObj __next__()
+        public struct __call_loop
         {
-            if (iter.MoveNext())
+            public CPS body; // can be null
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
             {
-                return iter.Current;
+
+                while (true)
+                {
+
+                    var val_body = body(ctx);
+                    if (ctx.CONT == 0)
+                        continue;
+
+                    if (ctx.CONT == (int)CONT.CONT)
+                    {
+                        ctx.CONT = 0;
+                        continue;
+                    }
+
+                    if (ctx.CONT == (int)CONT.BREAK)
+                    {
+                        ctx.CONT = 0;
+                        break;
+                    }
+
+                    // if (ctx.CONT == (int) CONT.RETURN)
+                    return val_body;
+                }
+                return DNone.unique;
             }
-            return null;
+        }
+        public CPS jit_impl(MetaContext ctx)
+        {
+            return new __call_loop { body = body.jit(ctx) }.Invoke;
         }
 
 
     }
+
+
+
     public partial class For
     {
-
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+        public struct __for_local
         {
-            var PSEUDO = 0;
-            iter.emit(ctx);
+            public int localidx;
+            public CPS iter;
+            public CPS body; // can be null
 
-            ctx.addCode(BC.FOR);
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_iter = iter(ctx);
+                if (ctx.CONT != 0)
+                    return val_iter;
 
-            ctx.enterLoop(() =>
-           {
-               var end_label = ctx.currentOffset + 1;
-               ctx.addCode(BC.GET_NEXT, PSEUDO);
-               var lhs = ctx.search(target);
-               if (!lhs.HasValue)
-                   ctx.addCode(BC.STORE_GLOBAL, ctx.strIdx(target));
-               else
-                   ctx.addCode(BC.STORE_LOCAL, lhs.Value);
+                foreach (var e in val_iter.__iter__())
+                {
+                    ctx.localvars[localidx] = e;
+                    var val_body = body(ctx);
+                    if (ctx.CONT == 0)
+                        continue;
 
-               body.emit(ctx);
-               ctx.addCode(BC.POP);
+                    if (ctx.CONT == (int)CONT.CONT)
+                    {
+                        ctx.CONT = 0;
+                        continue;
+                    }
 
-               ctx.addCode(BC.GOTO, ctx.currentLoopContinueTarget);
-               ctx.setCode(end_label, ctx.currentOffset);
-           });
+                    if (ctx.CONT == (int)CONT.BREAK)
+                    {
+                        ctx.CONT = 0;
+                        break;
+                    }
+
+                    // if (ctx.CONT == (int) CONT.RETURN)
+                    return val_body;
+                }
+                return DNone.unique;
+            }
         }
+
+        public struct __for_free
+        {
+            public int freeidx;
+            public CPS iter;
+            public CPS body; // can be null
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_iter = iter(ctx);
+                if (ctx.CONT != 0)
+                    return val_iter;
+
+                foreach (var e in val_iter.__iter__())
+                {
+                    ctx.freevars[freeidx] = e;
+                    var val_body = body(ctx);
+                    if (ctx.CONT == 0)
+                        continue;
+
+                    if (ctx.CONT == (int)CONT.CONT)
+                    {
+                        ctx.CONT = 0;
+                        continue;
+                    }
+
+                    if (ctx.CONT == (int)CONT.BREAK)
+                    {
+                        ctx.CONT = 0;
+                        break;
+                    }
+
+                    // if (ctx.CONT == (int) CONT.RETURN)
+                    return val_body;
+                }
+                return DNone.unique;
+            }
+        }
+        public struct __for_global
+        {
+            public string name;
+            public CPS iter;
+            public CPS body; // can be null
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_iter = iter(ctx);
+                if (ctx.CONT != 0)
+                    return val_iter;
+
+                foreach (var e in val_iter.__iter__())
+                {
+                    ctx.ns[name] = e;
+                    var val_body = body(ctx);
+                    if (ctx.CONT == 0)
+                        continue;
+
+                    if (ctx.CONT == (int)CONT.CONT)
+                    {
+                        ctx.CONT = 0;
+                        continue;
+                    }
+
+                    if (ctx.CONT == (int)CONT.BREAK)
+                    {
+                        ctx.CONT = 0;
+                        break;
+                    }
+
+                    // if (ctx.CONT == (int) CONT.RETURN)
+                    return val_body;
+                }
+                return DNone.unique;
+            }
+        }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            var cps_iter = iter.jit(ctx);
+            var lhs = ctx.search(target);
+
+            if (!lhs.HasValue)
+            {
+                return new __for_global { name = target, iter = cps_iter, body = body.jit(ctx) }.Invoke;
+            }
+            else if (lhs.Value >= 0)
+            {
+                return new __for_local { localidx = lhs.Value, iter = cps_iter, body = body.jit(ctx) }.Invoke;
+            }
+            else
+            {
+                return new __for_free { freeidx = -lhs.Value - 1, iter = cps_iter, body = body.jit(ctx) }.Invoke;
+            }
+        }
+
+
 
         public void __resolve_local(MetaContext ctx)
         {
@@ -685,54 +980,133 @@ namespace Ava
 
     public partial class OGet
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __get
         {
-            target.emit(ctx);
-            item.emit(ctx);
-            ctx.addCode(BC.LOAD_ITEM);
+            public CPS subject;
+            public CPS item;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_subject = subject(ctx);
+                if (ctx.CONT != 0)
+                    return val_subject;
+                var val_item = item(ctx);
+                if (ctx.CONT != 0)
+                    return val_item;
+                return val_subject.__get__(val_item);
+            }
         }
+        public CPS jit_impl(MetaContext ctx) => new __get { subject = target.jit(ctx), item = item.jit(ctx) }.Invoke;
+
     }
 
     public partial class Block
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __block
         {
-            if (suite.Length == 0)
-            {
-                ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
-                return;
-            }
-            suite[0].emit(ctx);
-            var last = suite[0];
+            public CPS[] suite;
 
-            foreach (var st in suite.Skip(1))
+            public DObj Invoke(ExecContext ctx)
             {
-                if (!last.is_stmt)
+                DObj ret = DNone.unique;
+                for (int i = 0; i < suite.Length; i++)
                 {
-                    ctx.addCode(BC.POP);
+                    ret = suite[i](ctx);
+                    if (ctx.CONT != 0)
+                        return ret;
                 }
-                st.emit(ctx);
-                last = st;
-            }
-            if (last.is_stmt)
-            {
-                ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
+                return ret;
             }
         }
+        public CPS jit_impl(MetaContext ctx) =>
+            new __block
+            {
+                suite = suite
+                    .Select(x => x.jit(ctx))
+                    .Where(x => x != null)
+                    .ToArray()
+            }.Invoke;
+
+
     }
 
 
     public partial class Call
     {
-        
-        public void emit_impl(MetaContext ctx)
+
+        public struct __call
         {
-            f.emit(ctx);
+            public CPS func;
+            public CPS[] args;
 
-            foreach (var arg in args)
-                arg.emit(ctx);
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
 
-            ctx.addCode(BC.CALL_FUNC, args.Length);
+                var funcval = func(ctx);
+                if (ctx.CONT != 0)
+                    return funcval;
+                var argvals = new DObj[args.Length];
+                for (int i = 0; i < args.Length; i++)
+                {
+                    argvals[i] = args[i](ctx);
+                    if (ctx.CONT != 0)
+                        return argvals[i];
+                }
+                return funcval.__call__(argvals);
+            }
+        }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __call
+            {
+                func = f.jit(ctx),
+                args = args.Select(x => x.jit(ctx)).ToArray()
+            }.Invoke;
+
+    }
+
+    public struct LocalNameBinder
+    {
+        int localidx;
+
+        public LocalNameBinder(int localidx)
+        {
+            this.localidx = localidx;
+        }
+
+        public void Invoke(ExecContext ctx, DObj v)
+        {
+            ctx.localvars[localidx] = v;
+        }
+    }
+
+    public struct GlobalNameBinder
+    {
+        string name;
+
+        public GlobalNameBinder(string name)
+        {
+            this.name = name;
+        }
+        public void Invoke(ExecContext ctx, DObj v)
+        {
+            ctx.ns[name] = v;
+        }
+    }
+
+
+    public struct FreeNameBinder
+    {
+        int freeidx;
+
+        public FreeNameBinder(int freeidx)
+        {
+            this.freeidx = freeidx;
+        }
+        public void Invoke(ExecContext ctx, DObj v)
+        {
+            ctx.freevars[freeidx] = v;
         }
     }
 
@@ -741,12 +1115,36 @@ namespace Ava
     {
         public void __resolve_local(MetaContext ctx) { }
 
-        public void emit_impl(MetaContext ctx)
+        static (EncodedVar, EncodedVar)[] emptyFreeTrans = new (EncodedVar, EncodedVar)[0];
+        static DObj[] emptyFreeVars = new DObj[0];
+        public struct __mk_func
         {
+            public Action<ExecContext, DObj> nameBinder;
+            public (EncodedVar, EncodedVar)[] freetrans;
+            public CodeObject co;
+            public CPS body;
 
-            var name_i = ctx.search(name);
+            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            public DObj Invoke(ExecContext ctx)
+            {
+                var freevars = emptyFreeVars;
+                if (freetrans.Length != 0)
+                {
+                    freevars = new DObj[freetrans.Length];
+                    foreach (var (from, to) in freetrans)
+                    {
+                        freevars[to] = from >= 0 ? ctx.localvars[from] : ctx.freevars[-from - 1];
+                    }
+                }
+                var func = new DStaticFunc { ns = ctx.ns, freevars = freevars, co = co, body = body };
+                nameBinder?.Invoke(ctx, func);
+                return func;
+            }
+        }
+        public CPS jit_impl(MetaContext ctx)
+        {
+            var name_ind = ctx.search(name);
             var name_str = name;
-
             var subctx_dict = new Dictionary<string, int>();
             var subctx = MetaContext.Create(ctx, subctx_dict);
 
@@ -755,8 +1153,12 @@ namespace Ava
                 if (subctx_dict.ContainsKey(args[i]))
                 {
                     // TODO: track and position compile time exceptions.
-                    throw new NameError(
-                        $"duplicate argument {args[i]} for function '{name}' at line {lineno}, column {colno}.");
+
+                    throw new LocatedError(
+                        new NameError(
+                        $"duplicate argument {args[i]} for function '{name}'"),
+                        "compiling",
+                        ctx.currentPos);
                 }
 
                 subctx_dict[args[i]] = i;
@@ -765,166 +1167,339 @@ namespace Ava
             subctx.nlocal = args.Length;
             var currentPos = ctx.currentPos;
             body.__resolve_local(subctx);
-            body.emit(subctx);
+
+            var cps_body = body.jit(subctx);
 
             var bind_scope = true;
+
             if (name_str == "")
             {
                 name_str = "<lambda>";
                 bind_scope = false;
-
             }
 
-            var (freetrans, code) = subctx.buildCode(currentPos, args, name_str);
+            Action<ExecContext, DObj> nameBinder =
+                !(bind_scope)
+                ? null
+                : !(name_ind.HasValue)
+                  ? new GlobalNameBinder(name_str).Invoke
+                  : (name_ind.Value >= 0)
+                    ? new LocalNameBinder(name_ind.Value).Invoke
+                    : new FreeNameBinder(-name_ind.Value - 1).Invoke
+                    ;
 
-            var operand = ctx.objIdx(code);
+            var (freetrans, code) = subctx.jitCode(currentPos, args, name_str);
 
-            ctx.addCode(BC.PUSHCONST, operand);
-            ctx.addCode(BC.MK_FUNC, freetrans.Length);
-            foreach (var (from, to) in freetrans)
+            return new __mk_func
             {
-                ctx.addCode(from, to);
-            }
-            if (bind_scope)
-            {
-                ctx.addCode(BC.DUP);
-                if (!name_i.HasValue)
-                    ctx.addCode(BC.STORE_GLOBAL, ctx.strIdx(name_str));
-                else
-                    ctx.addCode(BC.STORE_LOCAL, name_i.Value);
-            }
+                nameBinder = nameBinder,
+                body = cps_body,
+                freetrans = freetrans,
+                co = code
+            }.Invoke;
+
         }
+
     }
 
     public partial class CVal
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __val_load_i
         {
-            ctx.addCode(BC.PUSHCONST, ctx.objIdx(obj));
+            public DInt i;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                return i;
+            }
+        }
+
+        public struct __val_load_none
+        {
+            public DObj Invoke(ExecContext ctx)
+            {
+                return DNone.unique;
+            }
+        }
+
+        public struct __val_load_f
+        {
+            public DFloat f;
+            public DObj Invoke(ExecContext ctx)
+            {
+                return f;
+            }
+        }
+
+        public struct __val_load_s
+        {
+            public DString s;
+            public DObj Invoke(ExecContext ctx)
+            {
+                return s;
+            }
+        }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            switch (obj)
+            {
+                case DInt i: return new __val_load_i { i = i }.Invoke;
+                case DFloat f: return new __val_load_f { f = f }.Invoke;
+                case DString s: return new __val_load_s { s = s }.Invoke;
+                case DNone: return new __val_load_none { }.Invoke;
+                default:
+                    throw new TypeError($"unknown constant object {obj.__repr__()}");
+            }
         }
 
     }
 
     public partial class CList
     {
-        public void emit_impl(MetaContext ctx)
+
+        public struct __build_list
         {
-            foreach (var elt in elts)
+            public CPS[] elts;
+
+            public DObj Invoke(ExecContext ctx)
             {
-                elt.emit(ctx);
+                var ret = new List<DObj>();
+                for (int i = 0; i < elts.Length; i++)
+                {
+                    var elt = elts[i](ctx);
+                    if (ctx.CONT != 0)
+                        return elt;
+                    ret.Add(elt);
+                }
+                return MK.List(ret);
             }
-            ctx.addCode(BC.MK_LIST, elts.Length);
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_list
+            {
+                elts = elts.Select(x => x.jit(ctx)).ToArray()
+            }.Invoke;
 
     }
 
     public partial class CTuple
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_tuple
         {
-            foreach (var elt in elts)
+            public CPS[] elts;
+
+            public DObj Invoke(ExecContext ctx)
             {
-                elt.emit(ctx);
+                var ret = new DObj[elts.Length];
+                for (int i = 0; i < elts.Length; i++)
+                {
+                    var elt = elts[i](ctx);
+                    if (ctx.CONT != 0)
+                        return elt;
+                    ret[i] = elt;
+                }
+                return MK.Tuple(ret);
             }
-            ctx.addCode(BC.MK_TUPLE, elts.Length);
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_tuple
+            {
+                elts = elts.Select(x => x.jit(ctx)).ToArray()
+            }.Invoke;
+
+
     }
 
     public partial class CDict
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_dict
         {
-            foreach (var (k, v) in pairs)
+            public (CPS, CPS)[] pairs;
+
+            public DObj Invoke(ExecContext ctx)
             {
-                k.emit(ctx);
-                v.emit(ctx);
+                var ret = new Dictionary<DObj, DObj>();
+                for (int i = 0; i < pairs.Length; i++)
+                {
+                    var (key, value) = pairs[i];
+                    var val_key = key(ctx);
+                    if (ctx.CONT != 0)
+                        return val_key;
+                    var val_value = value(ctx);
+                    if (ctx.CONT != 0)
+                        return val_value;
+                    ret[val_key] = val_value;
+                }
+                return MK.Dict(ret);
             }
-            ctx.addCode(BC.MK_DICT, pairs.Length);
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_dict
+            {
+                pairs = pairs.Select(x => (x.Item1.jit(ctx), x.Item2.jit(ctx))).ToArray()
+            }.Invoke;
+
+
     }
 
     public partial class CSet
     {
-        public void emit_impl(MetaContext ctx)
+
+        public struct __build_set
         {
-            foreach (var v in elts)
+            public CPS[] elts;
+
+            public DObj Invoke(ExecContext ctx)
             {
-                v.emit(ctx);
+                var ret = new Dictionary<DObj, DObj>();
+                for (int i = 0; i < elts.Length; i++)
+                {
+                    var elt = elts[i](ctx);
+                    if (ctx.CONT != 0)
+                        return elt;
+                    ret[elt] = DNone.unique;
+                }
+                return MK.Dict(ret);
             }
-            ctx.addCode(BC.MK_SET, elts.Length);
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_set
+            {
+                elts = elts.Select(x => x.jit(ctx)).ToArray()
+            }.Invoke;
+
+
     }
 
-    public partial class CStrDict
-    {
-        public void emit_impl(MetaContext ctx)
-        {
-            foreach (var (k, v) in pairs)
-            {
-                k.emit(ctx);
-                v.emit(ctx);
-            }
-            ctx.addCode(BC.MK_STRDICT, pairs.Length);
-        }
-    }
 
     public partial class And
     {
-        public void emit_impl(MetaContext ctx)
+
+        public struct __build_and
         {
-            left.emit(ctx);
-            var jump_operand = ctx.currentOffset + 1;
-            ctx.addCode(BC.GOTO_IF_NOT_AND_NO_POP, PSEUDO);
-            right.emit(ctx);
-            ctx.setCode(jump_operand, ctx.currentOffset);
+            public CPS left;
+            public CPS right;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_left = left(ctx);
+                if (ctx.CONT != 0 || !val_left.__bool__())
+                    return val_left;
+                return right(ctx);
+            }
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_and
+            {
+                left = left.jit(ctx),
+                right = right.jit(ctx)
+            }.Invoke;
+
+
     }
 
     public partial class Or
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_or
         {
-            left.emit(ctx);
-            var jump_operand = ctx.currentOffset + 1;
-            ctx.addCode(BC.GOTO_IF_AND_NO_POP, PSEUDO);
-            right.emit(ctx);
-            ctx.setCode(jump_operand, ctx.currentOffset);
+            public CPS left;
+            public CPS right;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_left = left(ctx);
+                if ((ctx.CONT != 0) || val_left.__bool__())
+                    return val_left;
+                return right(ctx);
+            }
         }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            return new __build_or
+            {
+                left = left.jit(ctx),
+                right = right.jit(ctx)
+            }.Invoke;
+        }
+
     }
 
 
     public partial class Not
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_not
         {
-            value.emit(ctx);
-            ctx.addCode(BC.NOT);
+            public CPS inner;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val = inner(ctx);
+                if (ctx.CONT != 0)
+                    return val;
+                return val.__bool__() ? MK.Zero : MK.One;
+            }
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_not
+            {
+                inner = value.jit(ctx)
+            }.Invoke;
+
     }
 
     public partial class Neg
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_neg
         {
-            value.emit(ctx);
-            ctx.addCode(BC.NEG);
+            public CPS inner;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val = inner(ctx);
+                if (ctx.CONT != 0)
+                    return val;
+                return val.__neg__();
+            }
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_neg
+            {
+                inner = value.jit(ctx)
+            }.Invoke;
+
     }
 
     public partial class Inv
     {
-        public void emit_impl(MetaContext ctx)
+        public struct __build_inv
         {
-            value.emit(ctx);
-            ctx.addCode(BC.INV);
+            public CPS inner;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val = inner(ctx);
+                if (ctx.CONT != 0)
+                    return val;
+                return val.__inv__();
+            }
         }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __build_inv
+            {
+                inner = value.jit(ctx)
+            }.Invoke;
+
     }
 
     public partial class Decl
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx) { }
-
         public void __resolve_local(MetaContext ctx)
         {
             foreach (var name in names)
@@ -932,39 +1507,73 @@ namespace Ava
                 ctx.enter(name);
             }
         }
+
+        public CPS jit_impl(MetaContext _) => null;
     }
 
     public partial class Return
     {
-        public void emit_impl(MetaContext ctx)
-        {
-            if (value != null)
-                value.emit(ctx);
-            else
-                ctx.addCode(BC.PUSHCONST, ctx.objIdx(MK.None()));
 
-            ctx.addCode(BC.RETURN);
+        public struct __return_some
+        {
+            public CPS inner;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val = inner(ctx);
+                if (ctx.CONT == 0)
+                {
+                    ctx.CONT = (int)CONT.RETURN;
+                }
+                return val;
+            }
         }
+
+        public struct __return_none
+        {
+            public DObj Invoke(ExecContext ctx)
+            {
+                ctx.CONT = (int)CONT.RETURN;
+                return DNone.unique;
+            }
+        }
+
+        public CPS jit_impl(MetaContext ctx) =>
+            value == null
+            ? new __return_none { }.Invoke
+            : new __return_some { inner = value.jit(ctx) }.Invoke;
+
     }
 
     public partial class Continue
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+
+        public CPS jit_impl(MetaContext ctx) =>
+            new __cont { }.Invoke;
+
+        public struct __cont
         {
-            int operand = ctx.currentOffset + 1;
-            ctx.addLoopContinue(operand);
+            public DObj Invoke(ExecContext ctx)
+            {
+
+                ctx.CONT = (int)CONT.CONT;
+                return DNone.unique;
+            }
         }
     }
 
     public partial class Break
     {
-        public bool is_stmt => true;
-        public void emit_impl(MetaContext ctx)
+        public CPS jit_impl(MetaContext ctx) =>
+            new __break { }.Invoke;
+
+        public struct __break
         {
-            int operand = ctx.currentOffset + 1;
-            ctx.addCode(BC.GOTO, PSEUDO);
-            ctx.addLoopBreak(operand);
+            public DObj Invoke(ExecContext ctx)
+            {
+
+                ctx.CONT = (int)CONT.BREAK;
+                return DNone.unique;
+            }
         }
     }
 }

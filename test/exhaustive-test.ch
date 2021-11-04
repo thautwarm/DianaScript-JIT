@@ -216,13 +216,18 @@ fun test_shortcuts()
     (True and True and print(2)) or print("(print(2) or _)")
 end
 
+
+test_shortcuts()
+
 fun bool(x)
     if x then
         return True
     else return False
     end
 end
-   
+
+log("not 1:" + (not 1))
+
 fun test_not()
     assert_and_print(not 1 == False, "not 1 == False")
     assert_and_print(bool(10) == True, "not 10 == False")

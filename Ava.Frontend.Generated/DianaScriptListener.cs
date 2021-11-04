@@ -272,16 +272,6 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitBinseq([NotNull] DianaScriptParser.BinseqContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.ibin"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterIbin([NotNull] DianaScriptParser.IbinContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.ibin"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitIbin([NotNull] DianaScriptParser.IbinContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.ibinop"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -441,6 +431,16 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitLhs_seq([NotNull] DianaScriptParser.Lhs_seqContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__optional_ibinop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__optional_ibinop([NotNull] DianaScriptParser.Gen__optional_ibinopContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__optional_ibinop"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__optional_ibinop([NotNull] DianaScriptParser.Gen__optional_ibinopContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.start"/>.
 	/// </summary>

@@ -6,6 +6,17 @@ namespace Ava
     public static partial class CollectionExts
     {
 
+
+        public static R ReduceRight<T, R>(this IEnumerable<T> seq, R init, Func<R, T, R> ap)
+        {
+            R res = init;
+            foreach(var e in seq.Reverse())
+            {
+                res = ap(res, e);
+            }
+            return res;
+        }
+    
         public static T Pop<T>(this List<T> self)
         {
             int i = self.Count;

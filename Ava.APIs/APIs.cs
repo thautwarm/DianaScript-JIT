@@ -7,6 +7,8 @@ using Ava;
 namespace Ava
 {
 
+    using NameSpace = Dictionary<string, DObj>;
+    using CPS = Func<ExecContext, DObj>;
     using ast = ImmediateAST;
 
 #if NUNITY
@@ -119,12 +121,13 @@ namespace Ava
             return ns;
         }
 
-        public static CodeObject compileModule(ast ast, string path, string name = null)
+        public static Func<NameSpace, DObj> compileModule(ast ast, string path, string name = null)
         {
             name = name ?? System.IO.Path.GetFileNameWithoutExtension(path);
             var ctx = MetaContext.Create(path);
-            ast.emit(ctx);
-            return ctx.buildCode(ctx.currentPos, new string[0], name).Item2;
+            var cps = ast.jit_impl(ctx);
+            var co = ctx.jitCode(ctx.currentPos, new string[0], name).Item2;
+            return ns => ExecContext.ExecTopLevel(cps, ns, co);
         }
 
     }

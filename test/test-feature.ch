@@ -51,7 +51,7 @@ assert(z == [None])
 assert(not isdefined("_"))
 
 
-log({| "a" : 5 |})
+log({"a" : 5 })
 
 log(Num.of("1.2"))
 log(typeof(Num.of(12)) == "Num")

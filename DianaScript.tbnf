@@ -19,7 +19,6 @@ val mkList: (token, list[ast]) -> ast
 val mkTuple: (token, list[ast], bool) -> ast
 val mkDict: (token, list[(ast, ast)]) -> ast
 val mkSet: (token, list[ast]) -> ast
-val mkStrDict: (token, list[(ast, ast)]) -> ast
 val mkVar: (token, str) -> ast
 val mkDecl: (token, list[str]) -> ast
 val mkInv: (token, ast) -> ast
@@ -28,8 +27,7 @@ val mkNot: (token, ast) -> ast
 val mkAnd: (token, ast, ast) -> ast
 val mkOr: (token, ast, ast) -> ast
 val mkIfThen: (token, ast, ast) -> ast
-val mkStoreMany: (list[ast], ast) -> ast
-val mkIBin: (token, ast, str, ast) -> ast
+val mkStoreMany: (list[(ast, str)], ast) -> ast
 val mkNestedIf: (token, list[(ast, ast)], ast) -> ast
 val mkPipeline: (list[ast]) -> ast
 val mkFunc: (token, str, list[str], list[ast]) -> ast
@@ -81,8 +79,8 @@ nullable[seq] : seq { $1 }
 optional[a] : a { $1 }
             |   { null }
 
-lhs_seq : lhs_seq lhs "=" { append($1, $2)  }
-        | lhs "=" { [$1]  }
+lhs_seq : lhs_seq lhs optional[ibinop] "=" { append($1, ($2, $3))  }
+        | lhs optional[ibinop] "=" { [($1, $2)]  }
 
 elifBlock : expr blockOf[then] { ($1, $2) }
 
@@ -102,7 +100,6 @@ stmt :
     | "return" expr   { mkReturn($1, $2) }
     | "return"        { mkReturn($1, null) }
     | "var" seplist[",", name] { mkDecl($1, $2) }
-    | ibin            { $1 }
     | expr            { $1 }
 
 
@@ -130,7 +127,7 @@ filter[keep, discard] :
 expr : or_expr { $1 }
 
 or_expr : or_expr "or" and_expr
-            { mkAnd($2, $1, $3)  }
+            { mkOr($2, $1, $3)  }
          | and_expr { $1 }
 
 and_expr : and_expr "and" not
@@ -150,8 +147,6 @@ binop : <SINGLE_BINOP> { mkop($1, $1.Text) }
 ibinop : <SINGLE_BINOP>  { $1.Text }
        | "-"             { "-" }
 
-ibin  : lhs ibinop "=" expr { mkIBin($3, $1, $2, $4) }
-
 binseq  : atom    { append(empty(), to_obj($1)) }
         | binseq binop atom   {
            append($1, $2);
@@ -170,8 +165,6 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
      | atom "(" closelist[",", expr] ")" { mkApp($2, $1, $3) }
      | "[" closelist[",", expr] "]" { mkList($1, $2) }
      | "(" closelist[",", expr] trailer ")" { mkTuple($1, $2, $3) }
-     | "{|" closelist[",", pair] trailer "|}" { mkStrDict($1, $2) }
-     
      | "{" closelist[",", pair] trailer "}" { mkDict($1, $2) }
      | "{" closelist[",", expr] "}" { mkSet($1, $2) }
      | <STR> { mkVal($1, mkstr(unesc($1.Text))) }

@@ -1,6 +1,6 @@
 StoreMany(
     int lineno, int colno,
-    ImmediateAST[] lhs, ImmediateAST rhs)
+    (ImmediateAST, string)[] lhs, ImmediateAST rhs)
 
 Bin(
     int lineno,
@@ -9,12 +9,6 @@ Bin(
     string op,
     ImmediateAST right)
 
-IBin(
-    int lineno,
-    int colno,
-    ImmediateAST left,
-    string op,
-    ImmediateAST right)
 
 Load(
     int lineno,
@@ -135,12 +129,6 @@ CSet(
     int lineno,
     int colno,
     ImmediateAST[] elts
-)
-
-CStrDict(
-    int lineno,
-    int colno,
-    (ImmediateAST, ImmediateAST)[] pairs
 )
 
 Break(

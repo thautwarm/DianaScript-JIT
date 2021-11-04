@@ -325,18 +325,6 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBinseq([NotNull] DianaScriptParser.BinseqContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="DianaScriptParser.ibin"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIbin([NotNull] DianaScriptParser.IbinContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="DianaScriptParser.ibin"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIbin([NotNull] DianaScriptParser.IbinContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.ibinop"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -528,6 +516,18 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitLhs_seq([NotNull] DianaScriptParser.Lhs_seqContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__optional_ibinop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGen__optional_ibinop([NotNull] DianaScriptParser.Gen__optional_ibinopContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__optional_ibinop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGen__optional_ibinop([NotNull] DianaScriptParser.Gen__optional_ibinopContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.start"/>.
 	/// <para>The default implementation does nothing.</para>

@@ -11,9 +11,9 @@ public static partial class MainClass
         var apis = new DianaScriptAPIs();
         var globals = apis.InitGlobals();
         var ast = DianaScriptAPIs.Parse(path);
-        var code = DianaScriptAPIs.compileModule(ast, path);
+        var runner = DianaScriptAPIs.compileModule(ast, path);
         // code.ShowCode();
-        VM.execute(code, globals);            
+        runner(globals);            
     }
     public static void Main(string[] args)
     {
@@ -32,10 +32,8 @@ public static partial class MainClass
             var ast = Ava.DianaScriptAPIs.Parse(input, "repl");
             var ctx = MetaContext.Create("repl");
             var initPos = ctx.currentPos;
-            ast.emit(ctx);
-            var (_, code) = ctx.buildCode(initPos, new string[0]);
-            // code.ShowCode();
-            var res = VM.execute(code, new DObj[0], new DObj[0], globals);
+            var runner = DianaScriptAPIs.compileModule(ast, "repl", "repl");
+            var res = runner(globals);
             Console.WriteLine(res.__repr__());
         }
     }

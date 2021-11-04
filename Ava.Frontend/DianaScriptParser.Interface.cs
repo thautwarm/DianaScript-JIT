@@ -77,8 +77,8 @@ namespace Ava.Frontend
         public static ast mkSetMeta(CommonToken token, string idx, string filename)
         => SetMeta.make(int.Parse(idx), unesc(filename), token.Line, token.Column);
 
-        public static ast mkStrDict(CommonToken token, List<(ast, ast)> elts)
-        => CStrDict.make(elts.ToArray(), token.Line, token.Column);
+        // public static ast mkStrDict(CommonToken token, List<(ast, ast)> elts)
+        // => CStrDict.make(elts.ToArray(), token.Line, token.Column);
 
         public static ast mkMeta(string idx, string l, string c, ast inner)
         => Meta.make(int.Parse(idx), inner, int.Parse(l), int.Parse(c));
@@ -89,8 +89,8 @@ namespace Ava.Frontend
         public static ast mkVal(CommonToken token, DObj o)
         => CVal.make(o, token.Line, token.Column);
 
-        public static ast mkIBin(CommonToken token, ImmediateAST target, string op, ImmediateAST value)
-        => IBin.make(target, op, value, token.Line, token.Column);
+        // public static ast mkIBin(CommonToken token, ImmediateAST target, string op, ImmediateAST value)
+        // => IBin.make(target, op, value, token.Line, token.Column);
 
         public static ast mkInv(CommonToken token, ast ast)
         => Inv.make(ast, token.Line, token.Column);
@@ -173,10 +173,10 @@ namespace Ava.Frontend
             return new Operator<(int lineno, int colno, string opname)>(opname, (token.Line, token.Column, opname));
         }
 
-        public static ast mkStoreMany(List<ast> lhs, ast value)
+        public static ast mkStoreMany(List<(ast, string)> lhs, ast value)
         {
             if (lhs.Count == 0) return value;
-            return StoreMany.make(lhs.ToArray(), value, lhs[0].Lineno, lhs[0].Colno);
+            return StoreMany.make(lhs.ToArray(), value, lhs[0].Item1.Lineno, lhs[0].Item1.Colno);
         }
 
         public static ast mkReturn(CommonToken token, ast v)
