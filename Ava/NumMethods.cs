@@ -34,8 +34,8 @@ namespace Ava
         {
             switch (other)
             {
-                case DFloat v: return MK.Float(self.value + v.value);
                 case DInt v: return MK.Int(self.value + v.value);
+                case DFloat v: return MK.Float(self.value + v.value);
                 default:
                     throw unsupported_ops(self, "+", other);
             }

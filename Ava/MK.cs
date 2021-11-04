@@ -77,14 +77,14 @@ namespace Ava
         public static DObj create(ulong s) => Int(s);
         public static DObj create(uint s) => Int(s);
 
-
-        static DInt[] cache_integers = new DInt[256];
+        const int CACHE_BOUND = 32;
+        static DInt[] cache_integers = new DInt[CACHE_BOUND * 2];
 
         static MK()
         {
-            for (var i = -128; i < 128; i++)
+            for (var i = -CACHE_BOUND; i < CACHE_BOUND; i++)
             {
-                cache_integers[i + 128] = new DInt { value = i };
+                cache_integers[i + CACHE_BOUND] = new DInt { value = i };
             }
             Zero = CacheOrNewInt(0);
             One = CacheOrNewInt(1);
@@ -93,9 +93,9 @@ namespace Ava
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         static DInt CacheOrNewInt(long value)
         {
-            if (value >= -128 && value < 128)
+            if (value >= -CACHE_BOUND && value < CACHE_BOUND)
             {
-                return cache_integers[value + 128];
+                return cache_integers[value + CACHE_BOUND];
             }
             return new DInt { value = value };
         }
