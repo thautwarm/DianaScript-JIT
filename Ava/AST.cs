@@ -125,7 +125,7 @@ namespace Ava
                 nlocal = ctx.Count,
                 consts = new Dictionary<DObj, int>(),
                 strings = new Dictionary<string, int>(),
-                filenames = new Dictionary<int, string>(),
+                filenames = p.filenames,
                 freevars = new Dictionary<string, (int, int)>(),
             };
         }
@@ -929,7 +929,6 @@ namespace Ava
         {
             foreach (var name in names)
             {
-                Console.WriteLine(name);
                 ctx.enter(name);
             }
         }
