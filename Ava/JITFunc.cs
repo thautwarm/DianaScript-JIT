@@ -10,7 +10,7 @@ namespace Ava
     {
         public NameSpace ns;
         public DObj[] freevars;
-        public CodeObject co;
+        public Metadata co;
         public CPS body;
 
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]

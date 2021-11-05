@@ -284,4 +284,19 @@ fun test_closure(x, z, k)
     end
 end
 
- log(test_closure(1, 2, 3)(4))
+assert_and_print(test_closure(1, 2, 3)(4) == 122, "test closure capture")
+
+a = [1, 2, 3]
+b = List.copy(a)
+
+b.[0] = 5
+assert_and_print(a == [1, 2, 3], "test shallow copy 1")
+assert_and_print(b == [5, 2, 3], "test shallow copy 2")
+
+
+a = {1: 1, 2: 2, 3: 3}
+b = Dict.copy(a)
+
+b.[1] = 5
+assert_and_print(a == {1: 1, 2: 2, 3: 3}, "test shallow copy 3")
+assert_and_print(b == {1: 5, 2: 2, 3: 3}, "test shallow copy 4")

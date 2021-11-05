@@ -196,6 +196,18 @@ public partial class DDict
     }
     throw new ArgumentException($"call Dict.setOf; needs at most (1) arguments, got {nargs}.");
   }
+  public static DObj bind_copy(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 1)
+      throw new ArgumentException($"calling Dict.copy; needs at least  (1) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<Dictionary<DObj, DObj>>.val, _args[0]);
+    {
+      var _return = _arg0.ShallowCopy();
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call Dict.copy; needs at most (1) arguments, got {nargs}.");
+  }
   static DDict()
   {
     module_instance = new DModule("Dict");
@@ -214,6 +226,7 @@ public partial class DDict
     module_instance.fields.Add("update", MK.FuncN("Dict.update", bind_update));
     module_instance.fields.Add("of", MK.FuncN("Dict.of", bind_of));
     module_instance.fields.Add("setOf", MK.FuncN("Dict.setOf", bind_setOf));
+    module_instance.fields.Add("copy", MK.FuncN("Dict.copy", bind_copy));
   }
 }
 }

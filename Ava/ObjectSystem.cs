@@ -164,7 +164,7 @@ namespace Ava
 
         public DObj __mul__(DObj a)
         {
-            var i = (int) (DInt) a;
+            var i = (int)(DInt)a;
             if (value.Length == 1)
                 return MK.String(new String(value[0], i));
             return MK.String(string.Concat(Enumerable.Repeat(value, i)));
@@ -248,12 +248,12 @@ namespace Ava
 
         public DObj __truediv__(DObj func)
         {
-            
+
             var res = new Dictionary<DObj, DObj>();
-            foreach(var elt in __iter__())
+            foreach (var elt in __iter__())
             {
                 var group_key = func.__call1__(elt);
-                if(res.TryGetValue(group_key, out var group))
+                if (res.TryGetValue(group_key, out var group))
                 {
                     (group as DList).elts.Add(elt);
                     continue;
@@ -267,65 +267,6 @@ namespace Ava
             return MK.Dict(res);
         }
     }
-
-    public sealed partial class DStrDict : DObj
-    {
-
-        public object Native => dict;
-        public int __len__() => dict.Count;
-
-        public string __str__()
-        {
-            return "{|" + String.Join(", ", dict.Select(x =>
-                $"{x.Key}: {x.Value.__repr__()}")) + "|}";
-        }
-
-
-        public Dictionary<string, DObj> dict;
-
-
-        public bool __bool__()
-        {
-            return dict.Count != 0;
-        }
-
-
-        public bool __eq__(DObj o)
-        {
-            return (o is DStrDict a) && a.dict.Count == dict.Count && !dict.Except(a.dict).Any();
-        }
-
-        public DObj __get__(DObj s)
-        {
-            return dict[(string)(DString)s];
-        }
-
-
-        public void __set__(DObj s, DObj value)
-        {
-            dict[(string)(DString)s] = value;
-        }
-
-        public bool Equals(DObj other)
-        {
-            return this.__eq__(other);
-        }
-
-
-        public bool __contains__(DObj a)
-        {
-            return dict.ContainsKey((string)(DString)a);
-        }
-
-        public IEnumerable<DObj> __iter__()
-        {
-            foreach (var obj in dict)
-            {
-                yield return MK.String(obj.Key);
-            }
-        }
-    }
-
 
     public sealed partial class DTuple : DObj
     {
@@ -401,9 +342,9 @@ namespace Ava
         }
         public DObj __add__(DObj a)
         {
-            
+
             return MK.Tuple(elts.Concat(a.__iter__()).ToArray());
-            
+
             throw new NotFiniteNumberException();
         }
 

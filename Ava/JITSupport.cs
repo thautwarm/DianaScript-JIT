@@ -9,21 +9,22 @@ namespace Ava
 
     using NameSpace = Dictionary<string, DObj>;
     using CPS = Func<ExecContext, DObj>;
+
     public class ExecContext
     {
         public int CONT;
         public DObj[] localvars;
         public DObj[] freevars;
         public NameSpace ns;
-        public CodeObject co;
+        public Metadata co;
 
         static DObj[] emptyObjArray = new DObj[0];
-        public static DObj ExecTopLevel(CPS cps, NameSpace ns, CodeObject co)
+        public static DObj ExecTopLevel(CPS cps, NameSpace ns, Metadata co)
         {
             return cps(new ExecContext(emptyObjArray, emptyObjArray, ns, co));
         }
 
-        public ExecContext(DObj[] localvars, DObj[] freevars, NameSpace ns, CodeObject co)
+        public ExecContext(DObj[] localvars, DObj[] freevars, NameSpace ns, Metadata co)
         {
             this.CONT = 0;
             this.localvars = localvars;
@@ -65,19 +66,6 @@ namespace Ava
         }
     }
 
-    public static partial class CollectionExts
-    {
-        public static Dictionary<K, V> ShallowCopy<K, V>(this Dictionary<K, V> self)
-        {
-            var res = new Dictionary<K, V>();
-            foreach (var kv in self)
-            {
-                res[kv.Key] = kv.Value;
-            }
-            return res;
-        }
-    }
-
     [Serializable]
     [ImmutableObject(true)]
     public class SourcePos
@@ -100,7 +88,6 @@ namespace Ava
         }
     }
 
-    [Serializable]
     public static class Prime2
     {
         static List<Func<DObj, DObj, DObj>> funcs = new List<Func<DObj, DObj, DObj>>();
@@ -135,26 +122,24 @@ namespace Ava
 
     }
 
-    public sealed record CodeObject(
-        string name,
-        DObj[] consts,
-        string[] strings,
-        string[] localnames,
-        string[] freenames,
-        SourcePos pos,
+    [Serializable]
+    public sealed record Metadata(
         int narg,
-        int nlocal
+        int nlocal,
+        SourcePos pos,
+        string name,
+        string[] localnames,
+        string[] freenames
         ) : DObj
     {
         public object Native => this;
-
         public string Classname => "code";
 
         public string __str__() => $"<codeobj {name}>";
 
         public bool __eq__(DObj o)
         {
-            return (o is CodeObject code) && code == this;
+            return (o is Metadata code) && code == this;
         }
     }
 }

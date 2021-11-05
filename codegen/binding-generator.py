@@ -555,7 +555,6 @@ class Codegen:
     def bind_class(self, x: ClassBind):
         bind_name = x.bindname
         self.getters = []
-        # TODO use bind_name instead of cls_name
         self.bind_name = self.cls_name = bind_name
         type_struct = f"d{x.bindname}"
         wrap_type = x.clswraptype

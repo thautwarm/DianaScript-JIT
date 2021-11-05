@@ -28,32 +28,8 @@ namespace Ava
         public MetaContext parent = null;
         public Dictionary<int, string> filenames;
         public string filename;
-        public Dictionary<DObj, int> consts;
-        public Dictionary<string, int> strings;
         public SourcePos currentPos;
 
-
-
-        // no need to init
-        public List<int> currentLoopBreakOperands;
-        public int currentLoopContinueTarget = -1;
-
-        public int strIdx(string s)
-        {
-            if (strings.TryGetValue(s, out int i))
-                return i;
-            i = strings.Count;
-            strings[s] = i;
-            return i;
-        }
-        public int objIdx(DObj s)
-        {
-            if (consts.TryGetValue(s, out var i))
-                return i;
-            i = consts.Count;
-            consts[s] = i;
-            return i;
-        }
         public static MetaContext Create(string filename, bool useMeta = false)
         {
             return new MetaContext
@@ -64,8 +40,6 @@ namespace Ava
                 filename = filename,
                 currentPos = new SourcePos(0, 0, filename),
                 nlocal = 0,
-                consts = new Dictionary<DObj, int>(),
-                strings = new Dictionary<string, int>(),
                 filenames = new Dictionary<int, string>(),
                 freevars = new Dictionary<string, (int, int)>(),
             };
@@ -83,8 +57,6 @@ namespace Ava
                 filename = p.filename,
                 currentPos = p.currentPos,
                 nlocal = ctx.Count,
-                consts = new Dictionary<DObj, int>(),
-                strings = new Dictionary<string, int>(),
                 filenames = p.filenames,
                 freevars = new Dictionary<string, (int, int)>(),
             };
@@ -128,7 +100,7 @@ namespace Ava
             return i;
         }
 
-        public ((int, int)[], CodeObject) jitCode(SourcePos initPos, string[] args, string name_str = "<main>")
+        public ((int, int)[], Metadata) jitCode(SourcePos initPos, string[] args, string name_str = "<main>")
         {
             var _free = freevars.OrderBy(x => x.Value.Item2).ToArray();
 
@@ -138,21 +110,13 @@ namespace Ava
 
             var narg = args.Length;
             var argstrs = args.Select(x => x).ToArray();
-            var consts_ = consts
-                            .ToList()
-                            .OrderBy(x => x.Value)
-                            .Select(x => x.Key).ToArray();
-            var strings_ = strings
-                            .ToList()
-                            .OrderBy(x => x.Value)
-                            .Select(x => x.Key).ToArray();
             var localnames_ = ctx
                             .ToList()
                             .OrderBy(x => x.Value)
                             .Select(x => x.Key).ToArray();
 
-            var code = new CodeObject(
-                name: name_str, consts: consts_, strings: strings_, localnames: localnames_, narg: narg, nlocal: nlocal, freenames: freenames, pos: initPos);
+            var code = new Metadata(
+                name: name_str, localnames: localnames_, narg: narg, nlocal: nlocal, freenames: freenames, pos: initPos);
 
             return (freetrans, code);
         }
@@ -194,6 +158,7 @@ namespace Ava
         int Lineno { get; set; }
         int Colno { get; set; }
 
+        bool is_call => false;
 
 
         public void __default_resolve_local(MetaContext ctx);
@@ -215,10 +180,15 @@ namespace Ava
             var cps = jit_impl(ctx);
             if (cps == null)
                 return cps;
-            return new __please_inline_it { call = cps, kind = description, pos = pos }.Invoke;
+            // TODO: allow command line options to show very informative stacktraces?
+            if (is_call)
+                return new __please_inline_it { call = cps, kind = description, pos = pos }.Invoke;
+            else
+                return cps;
         }
     }
 
+    [Serializable]
     public class __please_inline_it
     {
         public SourcePos pos;
@@ -253,9 +223,8 @@ namespace Ava
 
     public partial class Raise
     {
-
-
-        public struct __call
+        [Serializable]
+        public class __call
         {
             public CPS func;
 
@@ -292,8 +261,10 @@ namespace Ava
 
     public partial class StoreMany
     {
+        public bool is_call => lhs.Any(new Func<(ast ast, string op), bool>(
+            x => x.ast is OGet || x.op != null));
 
-
+        [Serializable]
         public class __call_global_store_op
         {
             public string name;
@@ -312,6 +283,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_local_store_op
         {
             public int localidx;
@@ -331,6 +303,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_free_store_op
         {
             public int freeidx;
@@ -349,6 +322,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_item_store_op
         {
             public int localidx;
@@ -357,7 +331,6 @@ namespace Ava
             public CPS value;
             public Func<DObj, DObj, DObj> op;
 
-            public SourcePos sourcePos;
             public DObj Invoke(ExecContext ctx)
             {
 
@@ -378,6 +351,7 @@ namespace Ava
 
             }
         }
+        [Serializable]
         public class __call_global_store
         {
             public string name;
@@ -392,6 +366,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_local_store
         {
             public int localidx;
@@ -408,6 +383,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_free_store
         {
             public int freeidx;
@@ -422,6 +398,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __call_item_store
         {
             public int localidx;
@@ -534,6 +511,7 @@ namespace Ava
 
     public partial class Bin
     {
+        bool is_call => true;
         static Bin()
         {
             Prime2.addFunc("+", (l, r) => l.__add__(r));
@@ -613,6 +591,7 @@ namespace Ava
 
     public partial class Bin
     {
+        [Serializable]
         public class __binary_call
         {
             public CPS left;
@@ -639,22 +618,24 @@ namespace Ava
 
     public partial class Load
     {
-
-        public struct __call_load_local
+        // TODO: command line options to avoid this in optimized mode
+        public bool is_call => true;
+        [Serializable]
+        public class __call_load_local
         {
             public int localidx;
-            int __pad;
             public DObj Invoke(ExecContext ctx) => ctx.loadLocal(localidx);
         }
 
-        public struct __call_load_free
+        [Serializable]
+        public class __call_load_free
         {
             public int freeidx;
-            int __pad;
             public DObj Invoke(ExecContext ctx) => ctx.loadFree(freeidx);
         }
 
-        public struct __call_load_global
+        [Serializable]
+        public class __call_load_global
         {
             public string name;
             public DObj Invoke(ExecContext ctx) => ctx.loadGlobal(name);
@@ -681,6 +662,7 @@ namespace Ava
 
     public partial class IfThenElse
     {
+        [Serializable]
         public class __call_if
         {
             public CPS cond;
@@ -711,6 +693,7 @@ namespace Ava
 
     public partial class NestedIf
     {
+        [Serializable]
         public class __call_if
         {
             public (CPS, CPS)[] elifs;
@@ -749,6 +732,7 @@ namespace Ava
     public partial class While
     {
 
+        [Serializable]
         public class __call_while
         {
             public CPS cond;
@@ -802,7 +786,8 @@ namespace Ava
     public partial class Loop
     {
 
-        public struct __call_loop
+        [Serializable]
+        public class __call_loop
         {
             public CPS body; // can be null
 
@@ -847,6 +832,7 @@ namespace Ava
 
     public partial class For
     {
+        [Serializable]
         public class __for_local
         {
             public int localidx;
@@ -886,6 +872,7 @@ namespace Ava
             }
         }
 
+        [Serializable]
         public class __for_free
         {
             public int freeidx;
@@ -924,6 +911,7 @@ namespace Ava
                 return DNone.unique;
             }
         }
+        [Serializable]
         public class __for_global
         {
             public string name;
@@ -994,6 +982,7 @@ namespace Ava
 
     public partial class OGet
     {
+        [Serializable]
         public class __get
         {
             public CPS subject;
@@ -1016,7 +1005,8 @@ namespace Ava
 
     public partial class Block
     {
-        public struct __block
+        [Serializable]
+        public class __block
         {
             public CPS[] suite;
 
@@ -1047,7 +1037,9 @@ namespace Ava
 
     public partial class Call
     {
+        bool is_call => true;
 
+        [Serializable]
         public class __call
         {
             public CPS func;
@@ -1131,11 +1123,12 @@ namespace Ava
 
         static (EncodedVar, EncodedVar)[] emptyFreeTrans = new (EncodedVar, EncodedVar)[0];
         static DObj[] emptyFreeVars = new DObj[0];
+        [Serializable]
         public class __mk_func
         {
             public Action<ExecContext, DObj> nameBinder;
             public (EncodedVar, EncodedVar)[] freetrans;
-            public CodeObject co;
+            public Metadata co;
             public CPS body;
 
             [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -1166,8 +1159,6 @@ namespace Ava
             {
                 if (subctx_dict.ContainsKey(args[i]))
                 {
-                    // TODO: track and position compile time exceptions.
-
                     throw new LocatedError(
                         new NameError(
                         $"duplicate argument {args[i]} for function '{name}'"),
@@ -1218,7 +1209,8 @@ namespace Ava
 
     public partial class CVal
     {
-        public struct __val_load_i
+        [Serializable]
+        public class __val_load_i
         {
             public DInt i;
 
@@ -1228,7 +1220,8 @@ namespace Ava
             }
         }
 
-        public struct __val_load_none
+        [Serializable]
+        public class __val_load_none
         {
             public DObj Invoke(ExecContext ctx)
             {
@@ -1236,7 +1229,8 @@ namespace Ava
             }
         }
 
-        public struct __val_load_f
+        [Serializable]
+        public class __val_load_f
         {
             public DFloat f;
             public DObj Invoke(ExecContext ctx)
@@ -1245,7 +1239,8 @@ namespace Ava
             }
         }
 
-        public struct __val_load_s
+        [Serializable]
+        public class __val_load_s
         {
             public DString s;
             public DObj Invoke(ExecContext ctx)
@@ -1272,7 +1267,8 @@ namespace Ava
     public partial class CList
     {
 
-        public struct __build_list
+        [Serializable]
+        public class __build_list
         {
             public CPS[] elts;
 
@@ -1300,7 +1296,8 @@ namespace Ava
 
     public partial class CTuple
     {
-        public struct __build_tuple
+        [Serializable]
+        public class __build_tuple
         {
             public CPS[] elts;
 
@@ -1329,7 +1326,8 @@ namespace Ava
 
     public partial class CDict
     {
-        public struct __build_dict
+        [Serializable]
+        public class __build_dict
         {
             public (CPS, CPS)[] pairs;
 
@@ -1363,7 +1361,8 @@ namespace Ava
     public partial class CSet
     {
 
-        public struct __build_set
+        [Serializable]
+        public class __build_set
         {
             public CPS[] elts;
 
@@ -1394,6 +1393,7 @@ namespace Ava
     public partial class And
     {
 
+        [Serializable]
         public class __build_and
         {
             public CPS left;
@@ -1420,6 +1420,7 @@ namespace Ava
 
     public partial class Or
     {
+        [Serializable]
         public class __build_or
         {
             public CPS left;
@@ -1448,7 +1449,8 @@ namespace Ava
 
     public partial class Not
     {
-        public struct __build_not
+        [Serializable]
+        public class __build_not
         {
             public CPS inner;
             public DObj Invoke(ExecContext ctx)
@@ -1470,7 +1472,8 @@ namespace Ava
 
     public partial class Neg
     {
-        public struct __build_neg
+        [Serializable]
+        public class __build_neg
         {
             public CPS inner;
             public DObj Invoke(ExecContext ctx)
@@ -1492,7 +1495,8 @@ namespace Ava
 
     public partial class Inv
     {
-        public struct __build_inv
+        [Serializable]
+        public class __build_inv
         {
             public CPS inner;
             public DObj Invoke(ExecContext ctx)
@@ -1528,7 +1532,8 @@ namespace Ava
     public partial class Return
     {
 
-        public struct __return_some
+        [Serializable]
+        public class __return_some
         {
             public CPS inner;
             public DObj Invoke(ExecContext ctx)
@@ -1542,7 +1547,8 @@ namespace Ava
             }
         }
 
-        public struct __return_none
+        [Serializable]
+        public class __return_none
         {
             public DObj Invoke(ExecContext ctx)
             {
@@ -1564,7 +1570,8 @@ namespace Ava
         public CPS jit_impl(MetaContext ctx) =>
             new __cont { }.Invoke;
 
-        public struct __cont
+        [Serializable]
+        public class __cont
         {
             public DObj Invoke(ExecContext ctx)
             {
@@ -1580,7 +1587,8 @@ namespace Ava
         public CPS jit_impl(MetaContext ctx) =>
             new __break { }.Invoke;
 
-        public struct __break
+        [Serializable]
+        public class __break
         {
             public DObj Invoke(ExecContext ctx)
             {

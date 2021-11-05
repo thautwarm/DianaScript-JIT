@@ -25,21 +25,19 @@ namespace Ava
             return r;
         }
 
-        public static List<V> ShallowCopy<V>(this List<V> self)
+        public static Dictionary<K, V> ShallowCopy<K, V>(this Dictionary<K, V> self)
         {
-            var res = new List<V>();
-            foreach (var kv in self)
-            {
-                res.Add(kv);
-            }
-            return res;
+            return new Dictionary<K, V>(self);
         }
 
         public static V[] ShallowCopy<V>(this V[] self)
         {
-            var res = new V[self.Length];
-            self.CopyTo(res, 0);
-            return res;
+            return self.Clone() as V[];
+        }
+
+        public static List<V> ShallowCopy<V>(this List<V> self)
+        {
+            return new List<V>(self);
         }
 
         public static void AddAsSet(this Dictionary<DObj, DObj> self, DObj o)

@@ -107,7 +107,6 @@ namespace Ava
                 {DString.module_instance.name, DString.module_instance},
                 {DList.module_instance.name, DList.module_instance},
                 {DDict.module_instance.name, DDict.module_instance},
-                {DStrDict.module_instance.name, DStrDict.module_instance},
                 {DIterable.module_instance.name, DIterable.module_instance},
             };
 

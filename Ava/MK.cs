@@ -18,7 +18,6 @@ namespace Ava
         public static IEnumerable<DObj> unbox(THint<IEnumerable<DObj>> _, DObj o) => o.__iter__();
         public static Ref unbox(THint<Ref> _, DObj o) => (Ref)o;
         public static Dictionary<DObj, DObj> unbox(THint<Dictionary<DObj, DObj>> _, DObj o) => ((DDict)o).dict;
-        public static Dictionary<string, DObj> unbox(THint<Dictionary<string, DObj>> _, DObj o) => ((DStrDict)o).dict;
         public static DObj[] unbox(THint<DObj[]> _, DObj o) => ((DTuple)o).elts;
         public static List<DObj> unbox(THint<List<DObj>> _, DObj o) => ((DList)o).elts;
 
@@ -27,14 +26,14 @@ namespace Ava
             return (arg) => o.__call__(arg).__bool__();
         }
         public static A unbox<A>(THint<A> _, DObj a) where A : DObj => (A)a;
-        public static int unbox(THint<int> _, DObj a) => (int) (DInt) a;
-        public static long unbox(THint<long> _, DObj a) => (long) (DInt) a;
-        public static ulong unbox(THint<ulong> _, DObj a) => (ulong)(DInt) a;
-        public static uint unbox(THint<uint> _, DObj a) => (uint)(DInt) a;
-        public static byte unbox(THint<byte> _, DObj a) => (byte)(DInt) a;
+        public static int unbox(THint<int> _, DObj a) => (int)(DInt)a;
+        public static long unbox(THint<long> _, DObj a) => (long)(DInt)a;
+        public static ulong unbox(THint<ulong> _, DObj a) => (ulong)(DInt)a;
+        public static uint unbox(THint<uint> _, DObj a) => (uint)(DInt)a;
+        public static byte unbox(THint<byte> _, DObj a) => (byte)(DInt)a;
 
-        public static float unbox(THint<float> _, DObj a) => (float)(DFloat) a;
-        public static string unbox(THint<string> _, DObj a) => (string)(DString) a;
+        public static float unbox(THint<float> _, DObj a) => (float)(DFloat)a;
+        public static string unbox(THint<string> _, DObj a) => (string)(DString)a;
 
         public static A unbox<A, B>(THint<A> _, B o) where B : A => o;
 
@@ -69,7 +68,7 @@ namespace Ava
 
         public static DObj create(string s) =>
             MK.String(s == null ? "" : s);
-        public static DObj create(DObj s) => 
+        public static DObj create(DObj s) =>
             s == null ? DNone.unique : s;
         public static DObj create(int s) => Int(s);
         public static DObj create(bool s) => Int(s);
@@ -103,7 +102,7 @@ namespace Ava
         public static DInt Zero;
         public static DInt One;
         public static DInt Int(int i) => CacheOrNewInt(i);
-        public static DInt Int(bool i) => CacheOrNewInt(i ? 1 : 0 );
+        public static DInt Int(bool i) => CacheOrNewInt(i ? 1 : 0);
         public static DInt Int(long i) => CacheOrNewInt(i);
         public static DInt Int(ulong i) => CacheOrNewInt((int_t)i);
         public static DInt Int(uint i) => CacheOrNewInt((int_t)i);
@@ -138,7 +137,7 @@ namespace Ava
             return new DTuple { elts = dObjs };
         }
 
-        
+
 
         public static DObj create(Dictionary<DObj, DObj> d) => Dict(d);
 
@@ -146,13 +145,6 @@ namespace Ava
         {
             return new DDict { dict = dObjs };
         }
-
-        public static DObj StrDict(Dictionary<string, DObj> dObjs)
-        {
-            return new DStrDict { dict = dObjs };
-        }
-
-        public static DObj create(Dictionary<string, DObj> d) => StrDict(d);
 
         public static DFunc Func0(string name, Func<DObj> f)
         {

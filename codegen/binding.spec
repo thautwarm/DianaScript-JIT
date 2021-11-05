@@ -30,19 +30,7 @@ Dict DDict Dictionary<DObj, DObj> {
     void this.Merge(Dictionary<DObj, DObj>) as update
     Dictionary<DObj, DObj> CollectionExts.dictOf(IEnumerable<DObj>) as of
     Dictionary<DObj, DObj> CollectionExts.setOf(IEnumerable<DObj>) as setOf
-}
-
-
-"using System.Linq;"
-"using System.Collections.Generic;"
-StrDict DStrDict Dictionary<DObj, DObj> {
-    void this.Remove(DObj) as remove
-    void this.Clear() as clear
-    int this.Count as len
-    void this.ContainsKey(DObj) as contains
-    bool this.TryGetValue(DObj, out DObj) as search
-    IEnumerable<DObj> CollectionExts.ObjectPairs(Dictionary<string, DObj>) as items
-    void this.ForEachIndex_(DObj) as forkey
+    Dictionary<DObj, DObj> this.ShallowCopy() as copy
 }
 
 "using System.Collections.Generic;"
@@ -102,6 +90,7 @@ List DList List<DObj> {
     void this.Clear() as clear
     List<DObj> this IEnumerable<DObj> .ToList() as of
     void this.ForEachIndex_(DObj) as forkey
+    List<DObj> this.ShallowCopy() as copy
 }
 
 "using System.Linq;"

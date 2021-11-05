@@ -177,6 +177,18 @@ public partial class DList
     }
     throw new ArgumentException($"call List.forkey; needs at most (2) arguments, got {nargs}.");
   }
+  public static DObj bind_copy(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 1)
+      throw new ArgumentException($"calling List.copy; needs at least  (1) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<List<DObj>>.val, _args[0]);
+    {
+      var _return = _arg0.ShallowCopy();
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call List.copy; needs at most (1) arguments, got {nargs}.");
+  }
   static DList()
   {
     module_instance = new DModule("List");
@@ -193,6 +205,7 @@ public partial class DList
     module_instance.fields.Add("clear", MK.FuncN("List.clear", bind_clear));
     module_instance.fields.Add("of", MK.FuncN("List.of", bind_of));
     module_instance.fields.Add("forkey", MK.FuncN("List.forkey", bind_forkey));
+    module_instance.fields.Add("copy", MK.FuncN("List.copy", bind_copy));
   }
 }
 }
