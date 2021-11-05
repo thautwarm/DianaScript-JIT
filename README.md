@@ -19,7 +19,7 @@ Diana Script is as 0.5x fast as CPython(>2.5x faster than Jint), and expected to
 ## Integration within Your Project(available to Unity env)
 
 ```C#
-using Ava;
+using Diana;
 public static class YourApi
 {
     public static void ExecFromPath(string path)
@@ -75,7 +75,7 @@ public void Do(DObj diana_object)
 
 
 ```C#
-using Ava;
+using Diana;
 public record DMyClass(MyOwnClass o): DObj
 {
     public object Native => o;

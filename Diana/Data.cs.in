@@ -1,0 +1,107 @@
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+
+
+namespace Diana
+{
+
+{% for defi in defs %}
+[Serializable]
+public partial class {{defi.name}} : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        {% for field in defi if field.name not in ("lineno", "colno") %}
+        {{field.name}}.__resolve_local(ctx);
+        {% endfor %}
+    }
+
+    public string description => "{{defi.name}}";
+
+{% for field in defi %}
+    public {{field.type | NET}} {{field.name}};
+{% endfor %}
+    public static {{defi.name}} make(
+{% for field in defi if field.name not in ("lineno", "colno") %}
+        {{field.type | NET}} {{field.name}},
+{% endfor %}
+        int lineno,
+        int colno
+    ) => new  {{defi.name}} {
+{% for field in defi %}
+        {{field.name}} = {{field.name}},
+{% endfor %}
+    };
+}
+{% endfor %}
+
+public partial class ByteASTLoader
+{
+    
+    private ImmediateAST Read(THint<ImmediateAST> _) => ReadImmediateAST();
+
+    public ImmediateAST ReadImmediateAST()
+    {
+        var code = (int) ReadTag();
+        switch (code)
+        {
+        {% for defi in defs %}
+            case {{defi.tag}}:
+            {
+                return new {{defi.name}}
+                {
+            {% for field in defi %}
+                {% if isinstance(field.type, TArr) %}
+                    {% do ARR_TYPES.add(field.type.eltype) %}
+                    {{field.name}} = Read(THint<{{field.type | NET }}>.val),
+                {%else %}
+                    {{field.name}} = Read(THint<{{field.type | NET }}>.val),
+                {% endif %}
+            {% endfor %}
+                };
+            }
+        {% endfor %}
+            default:
+                throw new InvalidDataException($"invalid code {code}");
+        }
+        
+    }
+
+    {% for defi in defs %}
+
+    private {{defi.name}} Read(THint<{{ defi.name }}> _) => Read{{defi.name}}();
+
+    public {{defi.name}} Read{{ defi.name }}() => new {{ defi.name }}
+    {
+        {% for field in defi %}
+        {% if isinstance(field.type, TArr) %}
+            {% do ARR_TYPES.add(field.type.eltype) %}
+        {% endif %}
+        {{field.name}} = Read(THint<{{field.type|NET}}>.val),
+        {% endfor %}
+    };
+
+    {% endfor %}
+
+    private static readonly object _loaderSync = new object();
+
+    {% for type in ARR_TYPES %}
+    public {{ type | NET }}[] Read(THint<{{type | NET}}[]> _)
+    {
+        var arr = new {{type | NET }}[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<{{type | NET }}>.val);
+        }
+        return arr;
+    }
+    {% endfor %}
+
+} // loader class
+} // aworld

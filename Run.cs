@@ -1,4 +1,4 @@
-using Ava;
+using Diana;
 using System;
 using System.Linq;
 
@@ -23,13 +23,13 @@ public static partial class MainClass
             args.ToList().ForEach(ExecuteSourceFile);
             return;            
         }
-        var apis = new Ava.DianaScriptAPIs();
+        var apis = new Diana.DianaScriptAPIs();
         var globals = apis.InitGlobals();
         while (true)
         {
             Console.Write("> ");
             String input = Console.ReadLine(); ;
-            var ast = Ava.DianaScriptAPIs.Parse(input, "repl");
+            var ast = Diana.DianaScriptAPIs.Parse(input, "repl");
             var ctx = MetaContext.Create("repl");
             var initPos = ctx.currentPos;
             var runner = DianaScriptAPIs.compileModule(ast, "repl", "repl");

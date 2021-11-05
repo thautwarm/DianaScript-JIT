@@ -564,7 +564,7 @@ class Codegen:
 
         self << "using System;" << "\n"
         self <<  x.emit << "\n"
-        self << "namespace Ava\n"
+        self << "namespace Diana\n"
         self << "{\n"
         self << f"public partial class {wrap_type}\n"
         self << "{\n"
@@ -597,7 +597,7 @@ class Codegen:
 
 cg = Codegen()
 
-root = Path(__file__).parent.parent / "Ava.Generated"
+root = Path(__file__).parent.parent / "Diana.Generated"
 root.mkdir(exist_ok=True)
 for cls in ast:
     cls: ClassBind

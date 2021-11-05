@@ -12,4 +12,4 @@ python codegen/MsgPackGen.py
 
 python codegen/binding-generator.py
 
-tbnf belala.tbnf csharp --outdir Ava.Frontend.Generated --mod DianaScript  && antlr4 Ava.Frontend.Generated/DianaScript.g4 -package Ava.Frontend
+tbnf DianaScript.Extended.tbnf csharp --outdir Diana.Frontend.Generated --mod DianaScript  && antlr4 Diana.Frontend.Generated/DianaScript.g4 -package Diana.Frontend
