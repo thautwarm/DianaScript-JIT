@@ -89,6 +89,9 @@ namespace Diana.Frontend
         public static ast mkVal(CommonToken token, DObj o)
         => CVal.make(o, token.Line, token.Column);
 
+        public static ast mkSymbol(CommonToken token, string name)
+        => Symbol.make(name, token.Line, token.Column);
+
         // public static ast mkIBin(CommonToken token, ImmediateAST target, string op, ImmediateAST value)
         // => IBin.make(target, op, value, token.Line, token.Column);
 

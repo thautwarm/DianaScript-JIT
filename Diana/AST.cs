@@ -1117,6 +1117,18 @@ namespace Diana
     }
 
 
+    
+    public partial class Symbol
+    {
+        public class __mk_istr
+        {
+            public InternString s;
+
+            public DObj Invoke(ExecContext ctx) => s;
+        }
+        public CPS jit_impl(MetaContext s) => new __mk_istr { s = name.toIntern() }.Invoke;
+    }
+
     public partial class Function
     {
         public void __resolve_local(MetaContext ctx) { }
@@ -1274,7 +1286,7 @@ namespace Diana
 
             public DObj Invoke(ExecContext ctx)
             {
-                var ret = new List<DObj>();
+                var ret = new List<DObj>(elts.Length);
                 for (int i = 0; i < elts.Length; i++)
                 {
                     var elt = elts[i](ctx);
@@ -1333,7 +1345,7 @@ namespace Diana
 
             public DObj Invoke(ExecContext ctx)
             {
-                var ret = new Dictionary<DObj, DObj>();
+                var ret = new Dictionary<DObj, DObj>(pairs.Length);
                 for (int i = 0; i < pairs.Length; i++)
                 {
                     var (key, value) = pairs[i];
@@ -1368,7 +1380,7 @@ namespace Diana
 
             public DObj Invoke(ExecContext ctx)
             {
-                var ret = new Dictionary<DObj, DObj>();
+                var ret = new Dictionary<DObj, DObj>(elts.Length);
                 for (int i = 0; i < elts.Length; i++)
                 {
                     var elt = elts[i](ctx);

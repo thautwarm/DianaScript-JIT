@@ -186,3 +186,8 @@ Decl(
     string[] names
 )
 
+Symbol(
+    int lineno,
+    int colno,
+    string name
+)

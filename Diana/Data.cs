@@ -850,6 +850,33 @@ public partial class Decl : ImmediateAST
         names = names,
     };
 }
+[Serializable]
+public partial class Symbol : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        name.__resolve_local(ctx);
+    }
+
+    public string description => "Symbol";
+
+    public int lineno;
+    public int colno;
+    public string name;
+    public static Symbol make(
+        string name,
+        int lineno,
+        int colno
+    ) => new  Symbol {
+        lineno = lineno,
+        colno = colno,
+        name = name,
+    };
+}
 
 public partial class ByteASTLoader
 {
@@ -1135,6 +1162,15 @@ public partial class ByteASTLoader
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
                     names = Read(THint<string[]>.val),
+                };
+            }
+            case 29:
+            {
+                return new Symbol
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    name = Read(THint<string>.val),
                 };
             }
             default:
@@ -1449,17 +1485,18 @@ public partial class ByteASTLoader
     };
 
 
+    private Symbol Read(THint<Symbol> _) => ReadSymbol();
+
+    public Symbol ReadSymbol() => new Symbol
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        name = Read(THint<string>.val),
+    };
+
+
     private static readonly object _loaderSync = new object();
 
-    public (ImmediateAST, string)[] Read(THint<(ImmediateAST, string)[]> _)
-    {
-        var arr = new (ImmediateAST, string)[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(ImmediateAST, string)>.val);
-        }
-        return arr;
-    }
     public string[] Read(THint<string[]> _)
     {
         var arr = new string[ReadInt()];
@@ -1469,21 +1506,30 @@ public partial class ByteASTLoader
         }
         return arr;
     }
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
-    {
-        var arr = new ImmediateAST[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<ImmediateAST>.val);
-        }
-        return arr;
-    }
     public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
         var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
+        }
+        return arr;
+    }
+    public (ImmediateAST, string)[] Read(THint<(ImmediateAST, string)[]> _)
+    {
+        var arr = new (ImmediateAST, string)[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(ImmediateAST, string)>.val);
+        }
+        return arr;
+    }
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    {
+        var arr = new ImmediateAST[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }

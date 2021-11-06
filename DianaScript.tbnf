@@ -38,6 +38,7 @@ val mkBlock: (token, list[ast]) -> ast
 val mkContinue: (token) -> ast
 val mkBreak: (token) -> ast
 val mkReturn: (token, ast) -> ast
+val mkSymbol: (token, str) -> ast
 val mkint: (str, int) -> DObj
 val mkfloat: (str) -> DObj
 val mkstr: (str) -> DObj
@@ -162,6 +163,8 @@ blockOf[a] : a block { mkBlock($1, $2) }
 pair : expr line_wrap[":"] expr  { ($1, $3) }
 atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
      | atom "." <NAME>        { mkOGet($2, $1, mkVal($3, mkstr($3.Text))) }
+     | ":" <NAME>             { mkSymbol($2, $2.Text) }
+     | ":" <STR>              { mkSymbol($2, unesc($2.Text)) }
      | atom "(" closelist[",", expr] ")" { mkApp($2, $1, $3) }
      | "[" closelist[",", expr] "]" { mkList($1, $2) }
      | "(" closelist[",", expr] trailer ")" { mkTuple($1, $2, $3) }
