@@ -101,6 +101,7 @@ Enum DIterable IEnumerable<DObj>
     IEnumerable<DObj> this.Map(DObj) as map
     IEnumerable<DObj> this.MapI(DObj) as mapi
     IEnumerable<DObj> CollectionExts.Range(Int64, Int64?, Int64?) as range
+    IEnumerable<DObj> Enumerable.Repeat(DObj, Int32) as rep
 }
 
 // override Equals according to "==" 

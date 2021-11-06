@@ -69,6 +69,19 @@ public partial class DIterable
     }
     throw new ArgumentException($"call Enum.range; needs at most (3) arguments, got {nargs}.");
   }
+  public static DObj bind_rep(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 2)
+      throw new ArgumentException($"calling Enum.rep; needs at least  (2) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<DObj>.val, _args[0]);
+    var _arg1 = MK.unbox(THint<Int32>.val, _args[1]);
+    {
+      var _return = Enumerable.Repeat(_arg0,_arg1);
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call Enum.rep; needs at most (2) arguments, got {nargs}.");
+  }
   static DIterable()
   {
     module_instance = new DModule("Enum");
@@ -76,6 +89,7 @@ public partial class DIterable
     module_instance.fields.Add("map", MK.FuncN("Enum.map", bind_map));
     module_instance.fields.Add("mapi", MK.FuncN("Enum.mapi", bind_mapi));
     module_instance.fields.Add("range", MK.FuncN("Enum.range", bind_range));
+    module_instance.fields.Add("rep", MK.FuncN("Enum.rep", bind_rep));
   }
 }
 }

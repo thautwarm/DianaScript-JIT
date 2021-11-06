@@ -1,0 +1,26 @@
+fun Op(op, val)
+    {"op": op, "val": val}
+end
+
+
+fun Tape()
+    self = {"tape": [0], "pos": 0}
+
+    self.get = fun ()
+        self.tape.[self.pos]
+    end
+    self.inc = fun (x)
+        self.tape.[self.pos] += x
+    end
+    self.move = fun (x)
+        self.pos += x
+        while self.pos >= len(self.tape) do
+            List.extend(
+                self.tape,
+                Enum.rep(0, len(self.tape)))
+        end
+    end
+    self
+end
+
+t = Tape()

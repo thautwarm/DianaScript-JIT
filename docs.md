@@ -22,7 +22,7 @@ end
 # above loop is equivalent to
 
 x = 0
-while x <= 100
+while x <= 100 do
     x += 1
 end
 
