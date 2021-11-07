@@ -158,7 +158,7 @@ namespace Diana
         int Lineno { get; set; }
         int Colno { get; set; }
 
-        bool is_call => false;
+        public bool is_call => false;
 
 
         public void __default_resolve_local(MetaContext ctx);
@@ -511,7 +511,7 @@ namespace Diana
 
     public partial class Bin
     {
-        bool is_call => true;
+        public bool is_call => true;
         static Bin()
         {
             Prime2.addFunc("+", (l, r) => l.__add__(r));
@@ -1037,7 +1037,7 @@ namespace Diana
 
     public partial class Call
     {
-        bool is_call => true;
+        public bool is_call => true;
 
         [Serializable]
         public class __call
