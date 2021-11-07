@@ -83,8 +83,8 @@ log("aaa")
 
 
 fun test2()
-    var localvariable, x
-    x = 0
+    var localvariable
+    var x = 0
     for localvariable in Enum.range(10000000) do
         x += 1
     # while localvariable < 10000000 do
@@ -95,8 +95,8 @@ end
 
 
 fun benchfunc(f)
-    var x, r
-    x = time()
+    var x
+    var x = time()
     r = f()
     span = time() - x
     log("time elapsed for " + Str.of(f) + ":", span, "result:" + r)

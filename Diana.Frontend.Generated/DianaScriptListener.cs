@@ -452,6 +452,56 @@ public interface IDianaScriptListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitGen__filter_stmt__gen__or___L59__newline([NotNull] DianaScriptParser.Gen__filter_stmt__gen__or___L59__newlineContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.lhs3"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLhs3([NotNull] DianaScriptParser.Lhs3Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.lhs3"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLhs3([NotNull] DianaScriptParser.Lhs3Context context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLhs2([NotNull] DianaScriptParser.Lhs2Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLhs2([NotNull] DianaScriptParser.Lhs2Context context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__closelist__L44__gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__closelist__L44__gen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen__closelist__L44__gen__or_lhs3__lhs2Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__closelist__L44__gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__closelist__L44__gen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen__closelist__L44__gen__or_lhs3__lhs2Context context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen___closelist__L44__gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen___closelist__L44__gen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen___closelist__L44__gen__or_lhs3__lhs2Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen___closelist__L44__gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen___closelist__L44__gen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen___closelist__L44__gen__or_lhs3__lhs2Context context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen__or_lhs3__lhs2Context context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__or_lhs3__lhs2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGen__or_lhs3__lhs2([NotNull] DianaScriptParser.Gen__or_lhs3__lhs2Context context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.lhs"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

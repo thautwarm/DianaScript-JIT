@@ -112,7 +112,6 @@ gset(3)
 assert_and_print(gget() == 3, "test cell: get 3")
 
 
-
 builder = {
     "start": fun ()
         log("started!")
@@ -144,3 +143,24 @@ builder as bb {
     yield 1
     yield bb
 }
+
+(a, b, (c, d, (e, ))) = (1, 2, (3, 4, (5, )))
+
+assert_and_print(a == 1 and b == 2 and c == 3 and d == 4 and e == 5, "global_unpack")
+
+var x = 1
+
+fun ()
+    var a, b, c, d, e
+    (a, b, (c, d, (e, ))) = (1, 2, (3, 4, (5, )))
+    assert_and_print(a == 1 and b == 2 and c == 3 and d == 4 and e == 5, "local_unpack")
+end()
+
+
+uuuuuu = "a"
+
+fun ()
+    var uuuuuu  = "b"
+end
+
+assert_and_print(uuuuuu == "a", "not polluted")

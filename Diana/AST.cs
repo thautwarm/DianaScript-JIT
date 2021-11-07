@@ -30,6 +30,21 @@ namespace Diana
         public string filename;
         public SourcePos currentPos;
 
+        public Action<ExecContext, DObj> bind(string name)
+        {
+
+            var ind = search(name);
+            Action<ExecContext, DObj> binder =
+                !(ind.HasValue)
+                  ? new GlobalNameBinder(name).Invoke
+                  : (ind.Value >= 0)
+                    ? new LocalNameBinder(ind.Value).Invoke
+                    : new FreeNameBinder(-ind.Value - 1).Invoke
+                    ;
+            return binder;
+        }
+
+
         public static MetaContext Create(string filename, bool useMeta = false)
         {
             return new MetaContext
@@ -261,8 +276,27 @@ namespace Diana
 
     public partial class StoreMany
     {
-        public bool is_call => lhs.Any(new Func<(ast ast, string op), bool>(
-            x => x.ast is OGet || x.op != null));
+        public bool is_call
+        {
+            get
+            {
+
+                bool Visit(ast node)
+                {
+                    switch (node)
+                    {
+                        case OGet: return true;
+                        case CTuple tuple: return tuple.elts.Any(Visit);
+                        case Decl:
+                        case Load: return false;
+                        default:
+                            throw new InvalidProgramException($"unknown LHS AST type {node.GetType().Name}.");
+                    }
+                }
+                return lhs.Any(new Func<(ast ast, string op), bool>(
+                        x => x.ast is OGet || x.op != null || x.ast is CTuple tp && tp.elts.Any(Visit)));
+            }
+        }
 
         [Serializable]
         public class __call_global_store_op
@@ -401,6 +435,21 @@ namespace Diana
             }
         }
 
+
+        [Serializable]
+        public class __call_tuple_store
+        {
+            public TupleNameBinder binder;
+            public CPS value;
+
+            public DObj Invoke(ExecContext ctx)
+            {
+                var val_subject = value(ctx);
+                binder.Invoke(ctx, val_subject);
+                return val_subject;
+            }
+        }
+
         [Serializable]
         public class __call_item_store
         {
@@ -426,6 +475,20 @@ namespace Diana
             }
         }
 
+        public static Action<ExecContext, DObj> generic_bind(MetaContext ctx, ast lhs)
+        {
+            switch (lhs)
+            {
+                case Load load:
+                    return ctx.bind(load.n);
+                case Decl decl:
+                    return ctx.bind(decl.names[0]);
+                case CTuple tp:
+                    return new TupleNameBinder { elts = tp.elts.Select(x => generic_bind(ctx, x)).ToArray() }.Invoke;
+                default:
+                    throw new InvalidProgramException($"unknown LHS AST type {lhs.GetType().Name}.");
+            }
+        }
         public CPS jit_impl(MetaContext ctx)
         {
 
@@ -434,6 +497,25 @@ namespace Diana
             {
                 switch (lhs[i])
                 {
+                    case (Decl decl, null):
+                        {
+                            var n_ = ctx.search(decl.names[0]);
+                            if (!n_.HasValue)
+                            {
+                                transform.Add(cps => new __call_global_store { name = decl.names[0], func = cps }.Invoke);
+                            }
+                            else if (n_.Value >= 0)
+                                transform.Add(cps => new __call_local_store { localidx = n_.Value, func = cps }.Invoke);
+                            else
+                                transform.Add(cps => new __call_free_store { freeidx = -n_.Value - 1, func = cps }.Invoke);
+                            break;
+                        }
+                    case (CTuple tp, null):
+                        {
+                            var namebinder = new TupleNameBinder {elts= tp.elts.Select(x => generic_bind(ctx, x)).ToArray()};
+                            transform.Add( cps => new __call_tuple_store { binder = namebinder, value = cps }.Invoke);
+                            break;
+                        }
                     case (Load load, null):
                         {
                             var n_ = ctx.search(load.n);
@@ -1076,7 +1158,30 @@ namespace Diana
 
     }
 
-    public struct LocalNameBinder
+    public class TupleNameBinder
+    {
+        public Action<ExecContext, DObj>[] elts;
+
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        public void Invoke(ExecContext ctx, DObj v)
+        {
+
+            var enumerator = v.__iter__().GetEnumerator();
+            for (int i = 0; i < elts.Length; i++)
+            {
+                if (!enumerator.MoveNext())
+                    throw new IndexOutOfRangeException($"expect {elts.Length}, got {i}.");
+                elts[i](ctx, enumerator.Current);
+            }
+            if (enumerator.MoveNext())
+            {
+                int j = elts.Length + 1;
+                if (!enumerator.MoveNext())
+                    throw new IndexOutOfRangeException($"more than {elts.Length} elements.");
+            }
+        }
+    }
+    public class LocalNameBinder
     {
         int localidx;
 
@@ -1092,7 +1197,7 @@ namespace Diana
         }
     }
 
-    public struct GlobalNameBinder
+    public class GlobalNameBinder
     {
         string name;
 
@@ -1108,7 +1213,7 @@ namespace Diana
     }
 
 
-    public struct FreeNameBinder
+    public class FreeNameBinder
     {
         int freeidx;
 
@@ -1677,7 +1782,7 @@ namespace Diana
 
 
     public partial class Workflow
-    {   
+    {
         public void __resolve_local(MetaContext ctx)
         {
             if (bindname != "")
@@ -1686,7 +1791,7 @@ namespace Diana
             }
             builder.__resolve_local(ctx);
             options.__resolve_local(ctx);
-            
+
         }
         public bool is_call => true;
         public class __workflow
@@ -1701,7 +1806,7 @@ namespace Diana
                     return builder_obj;
                 DString s = MK.String("start");
                 var self = builder_obj.__get__(s).__call__();
-                if(binder != null)
+                if (binder != null)
                     binder(ctx, self);
                 foreach (var work in works)
                 {
@@ -1724,7 +1829,7 @@ namespace Diana
             Action<ExecContext, DObj> binder = null;
             if (bindname != "")
             {
-                var ind = ctx.search(bindname);    
+                var ind = ctx.search(bindname);
                 binder =
                   !(ind.HasValue)
                   ? new GlobalNameBinder(bindname).Invoke
@@ -1751,7 +1856,7 @@ namespace Diana
                 })
                 .ToArray();
 
-            return new __workflow { binder=binder, works = works, builder = builder.jit(ctx) }.Invoke;
+            return new __workflow { binder = binder, works = works, builder = builder.jit(ctx) }.Invoke;
         }
 
     }

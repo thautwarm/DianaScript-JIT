@@ -82,6 +82,8 @@ optional[a] : a { $1 }
 
 lhs_seq : lhs_seq lhs optional[ibinop] "=" { append($1, ($2, $3))  }
         | lhs optional[ibinop] "=" { [($1, $2)]  }
+        | lhs2 "=" { [($1, null)] }
+        | lhs_seq lhs2 "=" { append($1, ($2, null))  }
 
 elifBlock : expr blockOf[then] { ($1, $2) }
 
@@ -89,14 +91,14 @@ snd[a, b] : a b { $2 }
 
 name : <NAME> { $1.Text }
 stmt :
-    lhs_seq expr { mkStoreMany($1, $2)  }
+    "var" seplist[",", name] { mkDecl($1, $2) }
+    | lhs_seq expr { mkStoreMany($1, $2)  }
     | "loop" block "end"
         { mkLoop($1, mkBlock($1, $2))  }
     | "while" expr blockOf[do] "end"
         { mkWhile($1, $2, $3) }
     | "for" <NAME> "in" expr blockOf[do] "end"
         { mkFor($1, $2.Text, $4, $5) }
-    | "var" seplist[",", name] { mkDecl($1, $2) }
     | expr            { $1 }
 
 
@@ -111,6 +113,14 @@ lhs : <NAME>  { mkVar($1, $1.Text) }
         { mkOGet($2, $1, $4) }
     | atom "." <NAME>
         { mkOGet($2, $1, mkVal($3, mkstr($3.Text))) }
+
+or[a, b] : a { $1 }
+         | b { $1 }
+
+lhs2 : "(" closelist[",", or[lhs3, lhs2]] trailer ")" { mkTuple($1, $2, $3) }
+     | "var" <NAME> { mkDecl($1, [$2.Text]) }
+
+lhs3 : <NAME>  { mkVar($1, $1.Text) }
 
 block : filter[stmt, or_[";", newline]] { $1 }
 
@@ -228,4 +238,3 @@ newline : <NEWLINE> { $1 }
 <CR> : "\r"
 <LF> : "\n"
 <NEWLINE>: (CR? LF)+ (WS_INLINE | (CR? LF))*
-
