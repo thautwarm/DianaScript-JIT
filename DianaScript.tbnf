@@ -127,15 +127,15 @@ filter[keep, discard] :
 
 expr : or_expr { $1 }
 
-or_expr : or_expr "or" and_expr
+or_expr : or_expr  line_wrap["or"] and_expr
             { mkOr($2, $1, $3)  }
          | and_expr { $1 }
 
-and_expr : and_expr "and" not
+and_expr : and_expr line_wrap["and"] not
             { mkAnd($2, $1, $3)  }
          | not { $1 }
 
-not : "not" not { mkNot($1, $2) }
+not : line_wrap["not"] not { mkNot($1, $2) }
     | bin       { $1 }
 
 

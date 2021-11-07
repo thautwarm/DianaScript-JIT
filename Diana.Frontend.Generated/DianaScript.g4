@@ -799,11 +799,11 @@ binop returns [object result] :
       } 
 ; 
 not returns [ImmediateAST result] :
-      local__1_not_case0='not' local__2_not_case0=not { 
+      local__1_not_case0=gen__line_wrap_not local__2_not_case0=not { 
         ImmediateAST tmp__248 ; 
         ImmediateAST tmp__247 ; 
         CommonToken tmp__246 ; 
-        tmp__246 = ( CommonToken ) _localctx.local__1_not_case0 ; 
+        tmp__246 = ( CommonToken ) _localctx.local__1_not_case0.result ; 
         tmp__247 = ( ImmediateAST ) _localctx.local__2_not_case0.result ; 
         tmp__248 = (ImmediateAST) mkNot( tmp__246, tmp__247 ); 
         $result = tmp__248; 
@@ -814,215 +814,236 @@ not returns [ImmediateAST result] :
         $result = tmp__249; 
       } 
 ; 
+gen__line_wrap_not returns [CommonToken result] :
+      gen__optional_newline local__2_gen__line_wrap_not_case0='not' gen__optional_newline { 
+        CommonToken tmp__250 ; 
+        tmp__250 = ( CommonToken ) _localctx.local__2_gen__line_wrap_not_case0 ; 
+        $result = tmp__250; 
+      } 
+; 
 and_expr returns [ImmediateAST result] :
-      local__1_and_expr_case0=and_expr local__2_and_expr_case0='and' local__3_and_expr_case0=not { 
+      local__1_and_expr_case0=and_expr local__2_and_expr_case0=gen__line_wrap_and local__3_and_expr_case0=not { 
+        ImmediateAST tmp__254 ; 
         ImmediateAST tmp__253 ; 
         ImmediateAST tmp__252 ; 
-        ImmediateAST tmp__251 ; 
-        CommonToken tmp__250 ; 
-        tmp__250 = ( CommonToken ) _localctx.local__2_and_expr_case0 ; 
-        tmp__251 = ( ImmediateAST ) _localctx.local__1_and_expr_case0.result ; 
-        tmp__252 = ( ImmediateAST ) _localctx.local__3_and_expr_case0.result ; 
-        tmp__253 = (ImmediateAST) mkAnd( tmp__250, tmp__251, tmp__252 ); 
-        $result = tmp__253; 
+        CommonToken tmp__251 ; 
+        tmp__251 = ( CommonToken ) _localctx.local__2_and_expr_case0.result ; 
+        tmp__252 = ( ImmediateAST ) _localctx.local__1_and_expr_case0.result ; 
+        tmp__253 = ( ImmediateAST ) _localctx.local__3_and_expr_case0.result ; 
+        tmp__254 = (ImmediateAST) mkAnd( tmp__251, tmp__252, tmp__253 ); 
+        $result = tmp__254; 
       } 
     | local__1_and_expr_case1=not { 
-        ImmediateAST tmp__254 ; 
-        tmp__254 = ( ImmediateAST ) _localctx.local__1_and_expr_case1.result ; 
-        $result = tmp__254; 
+        ImmediateAST tmp__255 ; 
+        tmp__255 = ( ImmediateAST ) _localctx.local__1_and_expr_case1.result ; 
+        $result = tmp__255; 
+      } 
+; 
+gen__line_wrap_and returns [CommonToken result] :
+      gen__optional_newline local__2_gen__line_wrap_and_case0='and' gen__optional_newline { 
+        CommonToken tmp__256 ; 
+        tmp__256 = ( CommonToken ) _localctx.local__2_gen__line_wrap_and_case0 ; 
+        $result = tmp__256; 
       } 
 ; 
 or_expr returns [ImmediateAST result] :
-      local__1_or_expr_case0=or_expr local__2_or_expr_case0='or' local__3_or_expr_case0=and_expr { 
+      local__1_or_expr_case0=or_expr local__2_or_expr_case0=gen__line_wrap_or local__3_or_expr_case0=and_expr { 
+        ImmediateAST tmp__260 ; 
+        ImmediateAST tmp__259 ; 
         ImmediateAST tmp__258 ; 
-        ImmediateAST tmp__257 ; 
-        ImmediateAST tmp__256 ; 
-        CommonToken tmp__255 ; 
-        tmp__255 = ( CommonToken ) _localctx.local__2_or_expr_case0 ; 
-        tmp__256 = ( ImmediateAST ) _localctx.local__1_or_expr_case0.result ; 
-        tmp__257 = ( ImmediateAST ) _localctx.local__3_or_expr_case0.result ; 
-        tmp__258 = (ImmediateAST) mkOr( tmp__255, tmp__256, tmp__257 ); 
-        $result = tmp__258; 
+        CommonToken tmp__257 ; 
+        tmp__257 = ( CommonToken ) _localctx.local__2_or_expr_case0.result ; 
+        tmp__258 = ( ImmediateAST ) _localctx.local__1_or_expr_case0.result ; 
+        tmp__259 = ( ImmediateAST ) _localctx.local__3_or_expr_case0.result ; 
+        tmp__260 = (ImmediateAST) mkOr( tmp__257, tmp__258, tmp__259 ); 
+        $result = tmp__260; 
       } 
     | local__1_or_expr_case1=and_expr { 
-        ImmediateAST tmp__259 ; 
-        tmp__259 = ( ImmediateAST ) _localctx.local__1_or_expr_case1.result ; 
-        $result = tmp__259; 
+        ImmediateAST tmp__261 ; 
+        tmp__261 = ( ImmediateAST ) _localctx.local__1_or_expr_case1.result ; 
+        $result = tmp__261; 
+      } 
+; 
+gen__line_wrap_or returns [CommonToken result] :
+      gen__optional_newline local__2_gen__line_wrap_or_case0='or' gen__optional_newline { 
+        CommonToken tmp__262 ; 
+        tmp__262 = ( CommonToken ) _localctx.local__2_gen__line_wrap_or_case0 ; 
+        $result = tmp__262; 
       } 
 ; 
 block returns [System.Collections.Generic.List<ImmediateAST> result] :
       local__1_block_case0=gen__filter_stmt__gen__or___L59__newline { 
-        System.Collections.Generic.List<ImmediateAST> tmp__260 ; 
-        tmp__260 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_block_case0.result ; 
-        $result = tmp__260; 
+        System.Collections.Generic.List<ImmediateAST> tmp__263 ; 
+        tmp__263 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_block_case0.result ; 
+        $result = tmp__263; 
       } 
 ; 
 gen__filter_stmt__gen__or___L59__newline returns [System.Collections.Generic.List<ImmediateAST> result] :
       local__1_gen__filter_stmt__gen__or___L59__newline_case0=gen__filter_stmt__gen__or___L59__newline local__2_gen__filter_stmt__gen__or___L59__newline_case0=stmt { 
-        System.Collections.Generic.List<ImmediateAST> tmp__263 ; 
-        ImmediateAST tmp__262 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__261 ; 
-        tmp__261 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case0.result ; 
-        tmp__262 = ( ImmediateAST ) _localctx.local__2_gen__filter_stmt__gen__or___L59__newline_case0.result ; 
-        tmp__263 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__261, tmp__262 ); 
-        $result = tmp__263; 
+        System.Collections.Generic.List<ImmediateAST> tmp__266 ; 
+        ImmediateAST tmp__265 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__264 ; 
+        tmp__264 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case0.result ; 
+        tmp__265 = ( ImmediateAST ) _localctx.local__2_gen__filter_stmt__gen__or___L59__newline_case0.result ; 
+        tmp__266 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__264, tmp__265 ); 
+        $result = tmp__266; 
       } 
     | local__1_gen__filter_stmt__gen__or___L59__newline_case1=gen__filter_stmt__gen__or___L59__newline gen__or___L59__newline { 
-        System.Collections.Generic.List<ImmediateAST> tmp__264 ; 
-        tmp__264 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case1.result ; 
-        $result = tmp__264; 
-      } 
-    | local__1_gen__filter_stmt__gen__or___L59__newline_case2=stmt { 
         System.Collections.Generic.List<ImmediateAST> tmp__267 ; 
-        ImmediateAST tmp__266 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__265 ; 
-        tmp__265 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
-        tmp__266 = ( ImmediateAST ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case2.result ; 
-        tmp__267 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__265, tmp__266 ); 
+        tmp__267 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case1.result ; 
         $result = tmp__267; 
       } 
-    | gen__or___L59__newline { 
+    | local__1_gen__filter_stmt__gen__or___L59__newline_case2=stmt { 
+        System.Collections.Generic.List<ImmediateAST> tmp__270 ; 
+        ImmediateAST tmp__269 ; 
         System.Collections.Generic.List<ImmediateAST> tmp__268 ; 
         tmp__268 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
-        $result = tmp__268; 
+        tmp__269 = ( ImmediateAST ) _localctx.local__1_gen__filter_stmt__gen__or___L59__newline_case2.result ; 
+        tmp__270 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__268, tmp__269 ); 
+        $result = tmp__270; 
+      } 
+    | gen__or___L59__newline { 
+        System.Collections.Generic.List<ImmediateAST> tmp__271 ; 
+        tmp__271 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+        $result = tmp__271; 
       } 
 ; 
 gen__or___L59__newline returns [int result] :
       ';' { 
-        int tmp__269 ; 
-        tmp__269 = 0 ; 
-        $result = tmp__269; 
+        int tmp__272 ; 
+        tmp__272 = 0 ; 
+        $result = tmp__272; 
       } 
     | newline { 
-        int tmp__270 ; 
-        tmp__270 = 0 ; 
-        $result = tmp__270; 
+        int tmp__273 ; 
+        tmp__273 = 0 ; 
+        $result = tmp__273; 
       } 
 ; 
 lhs returns [ImmediateAST result] :
       local__1_lhs_case0=NAME_13 { 
-        ImmediateAST tmp__273 ; 
-        CommonToken tmp__272 ; 
-        CommonToken tmp__271 ; 
-        tmp__271 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
-        tmp__272 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
-        tmp__273 = (ImmediateAST) mkVar( tmp__271, tmp__272.Text ); 
-        $result = tmp__273; 
+        ImmediateAST tmp__276 ; 
+        CommonToken tmp__275 ; 
+        CommonToken tmp__274 ; 
+        tmp__274 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
+        tmp__275 = ( CommonToken ) _localctx.local__1_lhs_case0 ; 
+        tmp__276 = (ImmediateAST) mkVar( tmp__274, tmp__275.Text ); 
+        $result = tmp__276; 
       } 
     | local__1_lhs_case1=atom local__2_lhs_case1='.' '[' local__4_lhs_case1=expr ']' { 
-        ImmediateAST tmp__277 ; 
-        ImmediateAST tmp__276 ; 
-        ImmediateAST tmp__275 ; 
-        CommonToken tmp__274 ; 
-        tmp__274 = ( CommonToken ) _localctx.local__2_lhs_case1 ; 
-        tmp__275 = ( ImmediateAST ) _localctx.local__1_lhs_case1.result ; 
-        tmp__276 = ( ImmediateAST ) _localctx.local__4_lhs_case1.result ; 
-        tmp__277 = (ImmediateAST) mkOGet( tmp__274, tmp__275, tmp__276 ); 
-        $result = tmp__277; 
+        ImmediateAST tmp__280 ; 
+        ImmediateAST tmp__279 ; 
+        ImmediateAST tmp__278 ; 
+        CommonToken tmp__277 ; 
+        tmp__277 = ( CommonToken ) _localctx.local__2_lhs_case1 ; 
+        tmp__278 = ( ImmediateAST ) _localctx.local__1_lhs_case1.result ; 
+        tmp__279 = ( ImmediateAST ) _localctx.local__4_lhs_case1.result ; 
+        tmp__280 = (ImmediateAST) mkOGet( tmp__277, tmp__278, tmp__279 ); 
+        $result = tmp__280; 
       } 
     | local__1_lhs_case2=atom local__2_lhs_case2='.' local__3_lhs_case2=NAME_13 { 
-        ImmediateAST tmp__284 ; 
-        ImmediateAST tmp__283 ; 
-        DObj tmp__282 ; 
+        ImmediateAST tmp__287 ; 
+        ImmediateAST tmp__286 ; 
+        DObj tmp__285 ; 
+        CommonToken tmp__284 ; 
+        CommonToken tmp__283 ; 
+        ImmediateAST tmp__282 ; 
         CommonToken tmp__281 ; 
-        CommonToken tmp__280 ; 
-        ImmediateAST tmp__279 ; 
-        CommonToken tmp__278 ; 
-        tmp__278 = ( CommonToken ) _localctx.local__2_lhs_case2 ; 
-        tmp__279 = ( ImmediateAST ) _localctx.local__1_lhs_case2.result ; 
-        tmp__280 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
-        tmp__281 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
-        tmp__282 = (DObj) mkstr( tmp__281.Text ); 
-        tmp__283 = (ImmediateAST) mkVal( tmp__280, tmp__282 ); 
-        tmp__284 = (ImmediateAST) mkOGet( tmp__278, tmp__279, tmp__283 ); 
-        $result = tmp__284; 
+        tmp__281 = ( CommonToken ) _localctx.local__2_lhs_case2 ; 
+        tmp__282 = ( ImmediateAST ) _localctx.local__1_lhs_case2.result ; 
+        tmp__283 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
+        tmp__284 = ( CommonToken ) _localctx.local__3_lhs_case2 ; 
+        tmp__285 = (DObj) mkstr( tmp__284.Text ); 
+        tmp__286 = (ImmediateAST) mkVal( tmp__283, tmp__285 ); 
+        tmp__287 = (ImmediateAST) mkOGet( tmp__281, tmp__282, tmp__286 ); 
+        $result = tmp__287; 
       } 
 ; 
 do returns [CommonToken result] :
       gen__optional_newline local__2_do_case0='do' { 
-        CommonToken tmp__285 ; 
-        tmp__285 = ( CommonToken ) _localctx.local__2_do_case0 ; 
-        $result = tmp__285; 
+        CommonToken tmp__288 ; 
+        tmp__288 = ( CommonToken ) _localctx.local__2_do_case0 ; 
+        $result = tmp__288; 
       } 
 ; 
 then returns [CommonToken result] :
       gen__optional_newline local__2_then_case0='then' { 
-        CommonToken tmp__286 ; 
-        tmp__286 = ( CommonToken ) _localctx.local__2_then_case0 ; 
-        $result = tmp__286; 
+        CommonToken tmp__289 ; 
+        tmp__289 = ( CommonToken ) _localctx.local__2_then_case0 ; 
+        $result = tmp__289; 
       } 
 ; 
 gen__blockOf_do returns [ImmediateAST result] :
       local__1_gen__blockOf_do_case0=do local__2_gen__blockOf_do_case0=block { 
-        ImmediateAST tmp__289 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__288 ; 
-        CommonToken tmp__287 ; 
-        tmp__287 = ( CommonToken ) _localctx.local__1_gen__blockOf_do_case0.result ; 
-        tmp__288 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_do_case0.result ; 
-        tmp__289 = (ImmediateAST) mkBlock( tmp__287, tmp__288 ); 
-        $result = tmp__289; 
+        ImmediateAST tmp__292 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__291 ; 
+        CommonToken tmp__290 ; 
+        tmp__290 = ( CommonToken ) _localctx.local__1_gen__blockOf_do_case0.result ; 
+        tmp__291 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_do_case0.result ; 
+        tmp__292 = (ImmediateAST) mkBlock( tmp__290, tmp__291 ); 
+        $result = tmp__292; 
       } 
 ; 
 name returns [string result] :
       local__1_name_case0=NAME_13 { 
-        CommonToken tmp__290 ; 
-        tmp__290 = ( CommonToken ) _localctx.local__1_name_case0 ; 
-        $result = tmp__290.Text; 
+        CommonToken tmp__293 ; 
+        tmp__293 = ( CommonToken ) _localctx.local__1_name_case0 ; 
+        $result = tmp__293.Text; 
       } 
 ; 
 elifBlock returns [(ImmediateAST, ImmediateAST) result] :
       local__1_elifBlock_case0=expr local__2_elifBlock_case0=gen__blockOf_then { 
-        ImmediateAST tmp__293 ; 
-        ImmediateAST tmp__292 ; 
-        (ImmediateAST, ImmediateAST) tmp__291 ; 
-        tmp__292 = ( ImmediateAST ) _localctx.local__1_elifBlock_case0.result ; 
-        tmp__293 = ( ImmediateAST ) _localctx.local__2_elifBlock_case0.result ; 
-        tmp__291 = ( tmp__292 , tmp__293 ); 
-        $result = tmp__291; 
+        ImmediateAST tmp__296 ; 
+        ImmediateAST tmp__295 ; 
+        (ImmediateAST, ImmediateAST) tmp__294 ; 
+        tmp__295 = ( ImmediateAST ) _localctx.local__1_elifBlock_case0.result ; 
+        tmp__296 = ( ImmediateAST ) _localctx.local__2_elifBlock_case0.result ; 
+        tmp__294 = ( tmp__295 , tmp__296 ); 
+        $result = tmp__294; 
       } 
 ; 
 gen__blockOf_then returns [ImmediateAST result] :
       local__1_gen__blockOf_then_case0=then local__2_gen__blockOf_then_case0=block { 
-        ImmediateAST tmp__296 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__295 ; 
-        CommonToken tmp__294 ; 
-        tmp__294 = ( CommonToken ) _localctx.local__1_gen__blockOf_then_case0.result ; 
-        tmp__295 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_then_case0.result ; 
-        tmp__296 = (ImmediateAST) mkBlock( tmp__294, tmp__295 ); 
-        $result = tmp__296; 
+        ImmediateAST tmp__299 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__298 ; 
+        CommonToken tmp__297 ; 
+        tmp__297 = ( CommonToken ) _localctx.local__1_gen__blockOf_then_case0.result ; 
+        tmp__298 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_gen__blockOf_then_case0.result ; 
+        tmp__299 = (ImmediateAST) mkBlock( tmp__297, tmp__298 ); 
+        $result = tmp__299; 
       } 
 ; 
 lhs_seq returns [System.Collections.Generic.List<(ImmediateAST, string)> result] :
       local__1_lhs_seq_case0=lhs_seq local__2_lhs_seq_case0=lhs local__3_lhs_seq_case0=gen__optional_ibinop '=' { 
-        System.Collections.Generic.List<(ImmediateAST, string)> tmp__301 ; 
-        string tmp__300 ; 
-        ImmediateAST tmp__299 ; 
-        (ImmediateAST, string) tmp__298 ; 
-        System.Collections.Generic.List<(ImmediateAST, string)> tmp__297 ; 
-        tmp__297 = ( System.Collections.Generic.List<(ImmediateAST, string)> ) _localctx.local__1_lhs_seq_case0.result ; 
-        tmp__299 = ( ImmediateAST ) _localctx.local__2_lhs_seq_case0.result ; 
-        tmp__300 = ( string ) _localctx.local__3_lhs_seq_case0.result ; 
-        tmp__298 = ( tmp__299 , tmp__300 ); 
-        tmp__301 = (System.Collections.Generic.List<(ImmediateAST, string)>) append<(ImmediateAST, string)>( tmp__297, tmp__298 ); 
-        $result = tmp__301; 
+        System.Collections.Generic.List<(ImmediateAST, string)> tmp__304 ; 
+        string tmp__303 ; 
+        ImmediateAST tmp__302 ; 
+        (ImmediateAST, string) tmp__301 ; 
+        System.Collections.Generic.List<(ImmediateAST, string)> tmp__300 ; 
+        tmp__300 = ( System.Collections.Generic.List<(ImmediateAST, string)> ) _localctx.local__1_lhs_seq_case0.result ; 
+        tmp__302 = ( ImmediateAST ) _localctx.local__2_lhs_seq_case0.result ; 
+        tmp__303 = ( string ) _localctx.local__3_lhs_seq_case0.result ; 
+        tmp__301 = ( tmp__302 , tmp__303 ); 
+        tmp__304 = (System.Collections.Generic.List<(ImmediateAST, string)>) append<(ImmediateAST, string)>( tmp__300, tmp__301 ); 
+        $result = tmp__304; 
       } 
     | local__1_lhs_seq_case1=lhs local__2_lhs_seq_case1=gen__optional_ibinop '=' { 
-        string tmp__305 ; 
-        ImmediateAST tmp__304 ; 
-        (ImmediateAST, string) tmp__303 ; 
-        System.Collections.Generic.List<(ImmediateAST, string)> tmp__302 ; 
-        tmp__304 = ( ImmediateAST ) _localctx.local__1_lhs_seq_case1.result ; 
-        tmp__305 = ( string ) _localctx.local__2_lhs_seq_case1.result ; 
-        tmp__303 = ( tmp__304 , tmp__305 ); 
-        tmp__302 = new System.Collections.Generic.List<(ImmediateAST, string)> { tmp__303 }; 
-        $result = tmp__302; 
+        string tmp__308 ; 
+        ImmediateAST tmp__307 ; 
+        (ImmediateAST, string) tmp__306 ; 
+        System.Collections.Generic.List<(ImmediateAST, string)> tmp__305 ; 
+        tmp__307 = ( ImmediateAST ) _localctx.local__1_lhs_seq_case1.result ; 
+        tmp__308 = ( string ) _localctx.local__2_lhs_seq_case1.result ; 
+        tmp__306 = ( tmp__307 , tmp__308 ); 
+        tmp__305 = new System.Collections.Generic.List<(ImmediateAST, string)> { tmp__306 }; 
+        $result = tmp__305; 
       } 
 ; 
 gen__optional_ibinop returns [string result] :
       local__1_gen__optional_ibinop_case0=ibinop { 
-        string tmp__306 ; 
-        tmp__306 = ( string ) _localctx.local__1_gen__optional_ibinop_case0.result ; 
-        $result = tmp__306; 
+        string tmp__309 ; 
+        tmp__309 = ( string ) _localctx.local__1_gen__optional_ibinop_case0.result ; 
+        $result = tmp__309; 
       } 
     | { 
         $result = null; 
@@ -1030,39 +1051,39 @@ gen__optional_ibinop returns [string result] :
 ; 
 start returns [System.Collections.Generic.List<ImmediateAST> result] :
       gen__optional_newline local__2_start_case0=gen__nullable_gen__seplist_newline__stmt gen__optional_newline EOF { 
-        System.Collections.Generic.List<ImmediateAST> tmp__307 ; 
-        tmp__307 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_start_case0.result ; 
-        $result = tmp__307; 
+        System.Collections.Generic.List<ImmediateAST> tmp__310 ; 
+        tmp__310 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__2_start_case0.result ; 
+        $result = tmp__310; 
       } 
 ; 
 gen__nullable_gen__seplist_newline__stmt returns [System.Collections.Generic.List<ImmediateAST> result] :
       local__1_gen__nullable_gen__seplist_newline__stmt_case0=gen__seplist_newline__stmt { 
-        System.Collections.Generic.List<ImmediateAST> tmp__308 ; 
-        tmp__308 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__nullable_gen__seplist_newline__stmt_case0.result ; 
-        $result = tmp__308; 
+        System.Collections.Generic.List<ImmediateAST> tmp__311 ; 
+        tmp__311 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__nullable_gen__seplist_newline__stmt_case0.result ; 
+        $result = tmp__311; 
       } 
     | { 
-        System.Collections.Generic.List<ImmediateAST> tmp__309 ; 
-        tmp__309 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
-        $result = tmp__309; 
+        System.Collections.Generic.List<ImmediateAST> tmp__312 ; 
+        tmp__312 = (System.Collections.Generic.List<ImmediateAST>) empty<ImmediateAST>(  ); 
+        $result = tmp__312; 
       } 
 ; 
 gen__seplist_newline__stmt returns [System.Collections.Generic.List<ImmediateAST> result] :
       local__1_gen__seplist_newline__stmt_case0=stmt { 
-        ImmediateAST tmp__311 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__310 ; 
-        tmp__311 = ( ImmediateAST ) _localctx.local__1_gen__seplist_newline__stmt_case0.result ; 
-        tmp__310 = new System.Collections.Generic.List<ImmediateAST> { tmp__311 }; 
-        $result = tmp__310; 
+        ImmediateAST tmp__314 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__313 ; 
+        tmp__314 = ( ImmediateAST ) _localctx.local__1_gen__seplist_newline__stmt_case0.result ; 
+        tmp__313 = new System.Collections.Generic.List<ImmediateAST> { tmp__314 }; 
+        $result = tmp__313; 
       } 
     | local__1_gen__seplist_newline__stmt_case1=gen__seplist_newline__stmt newline local__3_gen__seplist_newline__stmt_case1=stmt { 
-        System.Collections.Generic.List<ImmediateAST> tmp__314 ; 
-        ImmediateAST tmp__313 ; 
-        System.Collections.Generic.List<ImmediateAST> tmp__312 ; 
-        tmp__312 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__seplist_newline__stmt_case1.result ; 
-        tmp__313 = ( ImmediateAST ) _localctx.local__3_gen__seplist_newline__stmt_case1.result ; 
-        tmp__314 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__312, tmp__313 ); 
-        $result = tmp__314; 
+        System.Collections.Generic.List<ImmediateAST> tmp__317 ; 
+        ImmediateAST tmp__316 ; 
+        System.Collections.Generic.List<ImmediateAST> tmp__315 ; 
+        tmp__315 = ( System.Collections.Generic.List<ImmediateAST> ) _localctx.local__1_gen__seplist_newline__stmt_case1.result ; 
+        tmp__316 = ( ImmediateAST ) _localctx.local__3_gen__seplist_newline__stmt_case1.result ; 
+        tmp__317 = (System.Collections.Generic.List<ImmediateAST>) append<ImmediateAST>( tmp__315, tmp__316 ); 
+        $result = tmp__317; 
       } 
 ; 
 

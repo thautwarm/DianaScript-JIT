@@ -361,6 +361,18 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNot([NotNull] DianaScriptParser.NotContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_not"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGen__line_wrap_not([NotNull] DianaScriptParser.Gen__line_wrap_notContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_not"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGen__line_wrap_not([NotNull] DianaScriptParser.Gen__line_wrap_notContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.and_expr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -373,6 +385,18 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAnd_expr([NotNull] DianaScriptParser.And_exprContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_and"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGen__line_wrap_and([NotNull] DianaScriptParser.Gen__line_wrap_andContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_and"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGen__line_wrap_and([NotNull] DianaScriptParser.Gen__line_wrap_andContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.or_expr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -384,6 +408,18 @@ public partial class DianaScriptBaseListener : IDianaScriptListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOr_expr([NotNull] DianaScriptParser.Or_exprContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_or"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGen__line_wrap_or([NotNull] DianaScriptParser.Gen__line_wrap_orContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="DianaScriptParser.gen__line_wrap_or"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGen__line_wrap_or([NotNull] DianaScriptParser.Gen__line_wrap_orContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="DianaScriptParser.block"/>.
 	/// <para>The default implementation does nothing.</para>

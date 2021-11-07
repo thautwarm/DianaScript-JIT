@@ -75,3 +75,9 @@ assert(☆ == 1)
 
 ☆☆ = 2
 assert(☆☆ != 1)
+
+log(1
+and 2, "'and' operator line continuation")
+
+log(1
+or 2, "'or' operator line continuation")

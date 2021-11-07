@@ -1,1 +1,1 @@
-dotnet run test/*.ch
+dotnet run test/*.diana
