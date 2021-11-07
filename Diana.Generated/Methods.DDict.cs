@@ -95,6 +95,19 @@ public partial class DDict
     }
     throw new ArgumentException($"call Dict.union; needs at most (2) arguments, got {nargs}.");
   }
+  public static DObj bind_union_dict(DObj[] _args) // bind method 
+  {
+    var nargs = _args.Length;
+    if (nargs != 2)
+      throw new ArgumentException($"calling Dict.union_dict; needs at least  (2) arguments, got {nargs}.");
+    var _arg0 = MK.unbox(THint<Dictionary<DObj, DObj>>.val, _args[0]);
+    var _arg1 = MK.unbox(THint<Dictionary<DObj, DObj>>.val, _args[1]);
+    {
+      var _return = CollectionExts.UnionDict(_arg0,_arg1);
+      return MK.create(_return);
+    }
+    throw new ArgumentException($"call Dict.union_dict; needs at most (2) arguments, got {nargs}.");
+  }
   public static DObj bind_intersect(DObj[] _args) // bind method 
   {
     var nargs = _args.Length;
@@ -218,6 +231,7 @@ public partial class DDict
     module_instance.fields.Add("search", MK.FuncN("Dict.search", bind_search));
     module_instance.fields.Add("subtract", MK.FuncN("Dict.subtract", bind_subtract));
     module_instance.fields.Add("union", MK.FuncN("Dict.union", bind_union));
+    module_instance.fields.Add("union_dict", MK.FuncN("Dict.union_dict", bind_union_dict));
     module_instance.fields.Add("intersect", MK.FuncN("Dict.intersect", bind_intersect));
     module_instance.fields.Add("add", MK.FuncN("Dict.add", bind_add));
     module_instance.fields.Add("quotient", MK.FuncN("Dict.quotient", bind_quotient));

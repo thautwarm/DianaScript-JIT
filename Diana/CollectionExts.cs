@@ -45,6 +45,17 @@ namespace Diana
             self[o] = DNone.unique;
         }
 
+
+        public static Dictionary<DObj, DObj> UnionDict(this Dictionary<DObj, DObj> self, Dictionary<DObj, DObj> other)
+        {
+            self = self.ShallowCopy();
+            foreach(var x in other)
+            {
+                self[x.Key] = x.Value;
+            }
+            return self;
+        }
+
         public static Dictionary<DObj, DObj> Union(this Dictionary<DObj, DObj> self, IEnumerable<DObj> other)
         {
             self = self.ShallowCopy();

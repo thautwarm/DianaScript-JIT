@@ -22,6 +22,7 @@ Dict DDict Dictionary<DObj, DObj> {
     bool this.TryGetValue(DObj, out DObj) as search
     bool CollectionExts.DifferenceDObj(Dictionary<DObj, DObj>, DObj) as subtract
     bool CollectionExts.Union(Dictionary<DObj, DObj>, IEnumerable<DObj>) as union
+    Dictionary<DObj, DObj> CollectionExts.UnionDict(Dictionary<DObj, DObj>, Dictionary<DObj, DObj>) as union_dict
     bool CollectionExts.Intersect(Dictionary<DObj, DObj>, IEnumerable<DObj>) as intersect
     void CollectionExts.AddAsSet(Dictionary<DObj, DObj>, DObj) as add
     bool this DDict.__truediv__(DObj) as quotient
