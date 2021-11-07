@@ -16,10 +16,8 @@ public partial class StoreMany : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(lhs != null)
-            lhs.__resolve_local(ctx);
-        if(rhs != null)
-            rhs.__resolve_local(ctx);
+        lhs?.__resolve_local(ctx);
+        rhs?.__resolve_local(ctx);
     }
 
     public string description => "StoreMany";
@@ -49,12 +47,8 @@ public partial class Bin : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(left != null)
-            left.__resolve_local(ctx);
-        if(op != null)
-            op.__resolve_local(ctx);
-        if(right != null)
-            right.__resolve_local(ctx);
+        left?.__resolve_local(ctx);
+        right?.__resolve_local(ctx);
     }
 
     public string description => "Bin";
@@ -87,8 +81,6 @@ public partial class Load : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(n != null)
-            n.__resolve_local(ctx);
     }
 
     public string description => "Load";
@@ -115,12 +107,9 @@ public partial class IfThenElse : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(cond != null)
-            cond.__resolve_local(ctx);
-        if(then != null)
-            then.__resolve_local(ctx);
-        if(orelse != null)
-            orelse.__resolve_local(ctx);
+        cond?.__resolve_local(ctx);
+        then?.__resolve_local(ctx);
+        orelse?.__resolve_local(ctx);
     }
 
     public string description => "IfThenElse";
@@ -153,10 +142,8 @@ public partial class NestedIf : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(elifs != null)
-            elifs.__resolve_local(ctx);
-        if(orelse != null)
-            orelse.__resolve_local(ctx);
+        elifs?.__resolve_local(ctx);
+        orelse?.__resolve_local(ctx);
     }
 
     public string description => "NestedIf";
@@ -186,10 +173,8 @@ public partial class While : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(cond != null)
-            cond.__resolve_local(ctx);
-        if(then != null)
-            then.__resolve_local(ctx);
+        cond?.__resolve_local(ctx);
+        then?.__resolve_local(ctx);
     }
 
     public string description => "While";
@@ -219,8 +204,7 @@ public partial class Raise : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(expr != null)
-            expr.__resolve_local(ctx);
+        expr?.__resolve_local(ctx);
     }
 
     public string description => "Raise";
@@ -247,8 +231,7 @@ public partial class Loop : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(body != null)
-            body.__resolve_local(ctx);
+        body?.__resolve_local(ctx);
     }
 
     public string description => "Loop";
@@ -275,10 +258,7 @@ public partial class Meta : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(filename_idx != null)
-            filename_idx.__resolve_local(ctx);
-        if(inner != null)
-            inner.__resolve_local(ctx);
+        inner?.__resolve_local(ctx);
     }
 
     public string description => "Meta";
@@ -308,10 +288,6 @@ public partial class SetMeta : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(idx != null)
-            idx.__resolve_local(ctx);
-        if(filename != null)
-            filename.__resolve_local(ctx);
     }
 
     public string description => "SetMeta";
@@ -341,12 +317,8 @@ public partial class For : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(target != null)
-            target.__resolve_local(ctx);
-        if(iter != null)
-            iter.__resolve_local(ctx);
-        if(body != null)
-            body.__resolve_local(ctx);
+        iter?.__resolve_local(ctx);
+        body?.__resolve_local(ctx);
     }
 
     public string description => "For";
@@ -379,10 +351,8 @@ public partial class OGet : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(target != null)
-            target.__resolve_local(ctx);
-        if(item != null)
-            item.__resolve_local(ctx);
+        target?.__resolve_local(ctx);
+        item?.__resolve_local(ctx);
     }
 
     public string description => "OGet";
@@ -412,8 +382,7 @@ public partial class Block : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(suite != null)
-            suite.__resolve_local(ctx);
+        suite?.__resolve_local(ctx);
     }
 
     public string description => "Block";
@@ -440,10 +409,8 @@ public partial class Call : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(f != null)
-            f.__resolve_local(ctx);
-        if(args != null)
-            args.__resolve_local(ctx);
+        f?.__resolve_local(ctx);
+        args?.__resolve_local(ctx);
     }
 
     public string description => "Call";
@@ -473,12 +440,8 @@ public partial class Function : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(name != null)
-            name.__resolve_local(ctx);
-        if(args != null)
-            args.__resolve_local(ctx);
-        if(body != null)
-            body.__resolve_local(ctx);
+        args?.__resolve_local(ctx);
+        body?.__resolve_local(ctx);
     }
 
     public string description => "Function";
@@ -511,8 +474,7 @@ public partial class CVal : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(obj != null)
-            obj.__resolve_local(ctx);
+        obj?.__resolve_local(ctx);
     }
 
     public string description => "CVal";
@@ -539,8 +501,7 @@ public partial class CList : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(elts != null)
-            elts.__resolve_local(ctx);
+        elts?.__resolve_local(ctx);
     }
 
     public string description => "CList";
@@ -567,8 +528,7 @@ public partial class CTuple : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(elts != null)
-            elts.__resolve_local(ctx);
+        elts?.__resolve_local(ctx);
     }
 
     public string description => "CTuple";
@@ -595,8 +555,7 @@ public partial class CDict : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(pairs != null)
-            pairs.__resolve_local(ctx);
+        pairs?.__resolve_local(ctx);
     }
 
     public string description => "CDict";
@@ -623,8 +582,7 @@ public partial class CSet : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(elts != null)
-            elts.__resolve_local(ctx);
+        elts?.__resolve_local(ctx);
     }
 
     public string description => "CSet";
@@ -697,8 +655,7 @@ public partial class Return : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(value != null)
-            value.__resolve_local(ctx);
+        value?.__resolve_local(ctx);
     }
 
     public string description => "Return";
@@ -725,10 +682,8 @@ public partial class And : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(left != null)
-            left.__resolve_local(ctx);
-        if(right != null)
-            right.__resolve_local(ctx);
+        left?.__resolve_local(ctx);
+        right?.__resolve_local(ctx);
     }
 
     public string description => "And";
@@ -758,10 +713,8 @@ public partial class Or : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(left != null)
-            left.__resolve_local(ctx);
-        if(right != null)
-            right.__resolve_local(ctx);
+        left?.__resolve_local(ctx);
+        right?.__resolve_local(ctx);
     }
 
     public string description => "Or";
@@ -791,8 +744,7 @@ public partial class Not : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(value != null)
-            value.__resolve_local(ctx);
+        value?.__resolve_local(ctx);
     }
 
     public string description => "Not";
@@ -819,8 +771,7 @@ public partial class Neg : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(value != null)
-            value.__resolve_local(ctx);
+        value?.__resolve_local(ctx);
     }
 
     public string description => "Neg";
@@ -847,8 +798,7 @@ public partial class Inv : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(value != null)
-            value.__resolve_local(ctx);
+        value?.__resolve_local(ctx);
     }
 
     public string description => "Inv";
@@ -875,8 +825,7 @@ public partial class Decl : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(names != null)
-            names.__resolve_local(ctx);
+        names?.__resolve_local(ctx);
     }
 
     public string description => "Decl";
@@ -903,8 +852,6 @@ public partial class Symbol : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        if(name != null)
-            name.__resolve_local(ctx);
     }
 
     public string description => "Symbol";
@@ -1551,6 +1498,15 @@ public partial class ByteASTLoader
         }
         return arr;
     }
+    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
+    {
+        var arr = new ImmediateAST[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<ImmediateAST>.val);
+        }
+        return arr;
+    }
     public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
     {
         var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
@@ -1566,15 +1522,6 @@ public partial class ByteASTLoader
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<(ImmediateAST, string)>.val);
-        }
-        return arr;
-    }
-    public ImmediateAST[] Read(THint<ImmediateAST[]> _)
-    {
-        var arr = new ImmediateAST[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<ImmediateAST>.val);
         }
         return arr;
     }

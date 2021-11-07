@@ -17,9 +17,8 @@ public partial class {{defi.name}} : ImmediateAST
 
     public void __default_resolve_local(MetaContext ctx)
     {
-        {% for field in defi if field.name not in ("lineno", "colno") %}
-        if({{field.name}} != null)
-            {{field.name}}.__resolve_local(ctx);
+        {% for field in defi if field.name not in ("lineno", "colno") and NET_filter(field.type) not in ("int", "string", "float") %}
+        {{field.name}}?.__resolve_local(ctx);
         {% endfor %}
     }
 
