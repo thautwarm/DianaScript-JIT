@@ -221,7 +221,7 @@ newline : <NEWLINE> { $1 }
 
 <DIGIT> : [0-9]
 <FLOAT> : INT "." INT
-<UCODE> : [a-z] | [A-Z] | "_" | [\u4e00-\u9fa5]
+<UCODE> : [a-z] | [A-Z] | "_" | [\u4e00-\u9fa5] | "\u2606"
 <NAME>  : UCODE (DIGIT | UCODE)*
 <WS_INLINE>: (" " | "\t")+
 <CR> : "\r"

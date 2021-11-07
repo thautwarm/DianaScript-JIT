@@ -1497,24 +1497,6 @@ public partial class ByteASTLoader
 
     private static readonly object _loaderSync = new object();
 
-    public string[] Read(THint<string[]> _)
-    {
-        var arr = new string[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<string>.val);
-        }
-        return arr;
-    }
-    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
-    {
-        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
-        for(var i = 0; i < arr.Length; i++)
-        {
-            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
-        }
-        return arr;
-    }
     public (ImmediateAST, string)[] Read(THint<(ImmediateAST, string)[]> _)
     {
         var arr = new (ImmediateAST, string)[ReadInt()];
@@ -1524,12 +1506,30 @@ public partial class ByteASTLoader
         }
         return arr;
     }
+    public string[] Read(THint<string[]> _)
+    {
+        var arr = new string[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<string>.val);
+        }
+        return arr;
+    }
     public ImmediateAST[] Read(THint<ImmediateAST[]> _)
     {
         var arr = new ImmediateAST[ReadInt()];
         for(var i = 0; i < arr.Length; i++)
         {
             arr[i] = Read(THint<ImmediateAST>.val);
+        }
+        return arr;
+    }
+    public (ImmediateAST, ImmediateAST)[] Read(THint<(ImmediateAST, ImmediateAST)[]> _)
+    {
+        var arr = new (ImmediateAST, ImmediateAST)[ReadInt()];
+        for(var i = 0; i < arr.Length; i++)
+        {
+            arr[i] = Read(THint<(ImmediateAST, ImmediateAST)>.val);
         }
         return arr;
     }

@@ -1078,7 +1078,7 @@ OCT_8 : '0' 'o' [\u0030-\u0037]*;
 BIN_9 : '0' 'b' [\u0030-\u0031]*;
 fragment DIGIT_6 : [\u0030-\u0039];
 FLOAT_11 : INT_10 '.' INT_10;
-fragment UCODE_12 : [\u0061-\u007A]|[\u0041-\u005A]|'_'|[\u4e00-\u9fa5];
+fragment UCODE_12 : [\u0061-\u007A]|[\u0041-\u005A]|'_'|[\u4e00-\u9fa5]|'☆';
 NAME_13 : UCODE_12 (DIGIT_6|UCODE_12)*;
 WS_INLINE_14 : (' '|'\t')+ -> skip;
 fragment CR_15 : '\r';
