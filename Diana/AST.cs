@@ -298,7 +298,7 @@ namespace Diana
                 if (ctx.CONT != 0)
                     return rhs;
                 var value = op(lhs, rhs);
-                ctx.localvars[localidx] = value;
+                ctx.localvars[localidx].obj = value;
                 return value;
             }
         }
@@ -310,6 +310,7 @@ namespace Diana
             public CPS func;
             public Func<DObj, DObj, DObj> op;
 
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var lhs = ctx.loadFree(freeidx);
@@ -317,7 +318,7 @@ namespace Diana
                 if (ctx.CONT != 0)
                     return rhs;
                 var value = op(lhs, rhs);
-                ctx.freevars[freeidx] = value;
+                ctx.freevars[freeidx].obj = value;
                 return value;
             }
         }
@@ -378,7 +379,7 @@ namespace Diana
                 var r = func(ctx);
                 if (ctx.CONT != 0)
                     return r;
-                ctx.localvars[localidx] = r;
+                ctx.localvars[localidx].obj = r;
                 return r;
             }
         }
@@ -388,12 +389,14 @@ namespace Diana
         {
             public int freeidx;
             public CPS func;
+
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]            
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
                 if (ctx.CONT != 0)
                     return r;
-                ctx.freevars[freeidx] = r;
+                ctx.freevars[freeidx].obj = r;
                 return r;
             }
         }
@@ -839,7 +842,7 @@ namespace Diana
             public CPS iter;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var val_iter = iter(ctx);
@@ -848,7 +851,7 @@ namespace Diana
 
                 foreach (var e in val_iter.__iter__())
                 {
-                    ctx.localvars[localidx] = e;
+                    ctx.localvars[localidx].obj = e;
                     var val_body = body(ctx);
                     if (ctx.CONT == 0)
                         continue;
@@ -879,7 +882,7 @@ namespace Diana
             public CPS iter;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var val_iter = iter(ctx);
@@ -888,7 +891,7 @@ namespace Diana
 
                 foreach (var e in val_iter.__iter__())
                 {
-                    ctx.freevars[freeidx] = e;
+                    ctx.freevars[freeidx].obj = e;
                     var val_body = body(ctx);
                     if (ctx.CONT == 0)
                         continue;
@@ -1081,9 +1084,10 @@ namespace Diana
             this.localidx = localidx;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public void Invoke(ExecContext ctx, DObj v)
         {
-            ctx.localvars[localidx] = v;
+            ctx.localvars[localidx].obj = v;
         }
     }
 
@@ -1095,6 +1099,7 @@ namespace Diana
         {
             this.name = name;
         }
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public void Invoke(ExecContext ctx, DObj v)
         {
             ctx.ns[name] = v;
@@ -1110,9 +1115,10 @@ namespace Diana
         {
             this.freeidx = freeidx;
         }
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public void Invoke(ExecContext ctx, DObj v)
         {
-            ctx.freevars[freeidx] = v;
+            ctx.freevars[freeidx].obj = v;
         }
     }
 
@@ -1134,7 +1140,7 @@ namespace Diana
         public void __resolve_local(MetaContext ctx) { }
 
         static (EncodedVar, EncodedVar)[] emptyFreeTrans = new (EncodedVar, EncodedVar)[0];
-        static DObj[] emptyFreeVars = new DObj[0];
+        static Variable[] emptyFreeVars = new Variable[0];
         [Serializable]
         public class __mk_func
         {
@@ -1149,7 +1155,7 @@ namespace Diana
                 var freevars = emptyFreeVars;
                 if (freetrans.Length != 0)
                 {
-                    freevars = new DObj[freetrans.Length];
+                    freevars = new Variable[freetrans.Length];
                     foreach (var (from, to) in freetrans)
                     {
                         freevars[to] = from >= 0 ? ctx.localvars[from] : ctx.freevars[-from - 1];

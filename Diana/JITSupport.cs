@@ -10,21 +10,25 @@ namespace Diana
     using NameSpace = Dictionary<string, DObj>;
     using CPS = Func<ExecContext, DObj>;
 
+    public class Variable
+    {
+        public DObj obj;
+    }
     public class ExecContext
     {
         public int CONT;
-        public DObj[] localvars;
-        public DObj[] freevars;
+        public Variable[] localvars;
+        public Variable[] freevars;
         public NameSpace ns;
         public Metadata co;
 
-        static DObj[] emptyObjArray = new DObj[0];
+        static Variable[] emptyVariableArray = new Variable[0];
         public static DObj ExecTopLevel(CPS cps, NameSpace ns, Metadata co)
         {
-            return cps(new ExecContext(emptyObjArray, emptyObjArray, ns, co));
+            return cps(new ExecContext(emptyVariableArray, emptyVariableArray, ns, co));
         }
 
-        public ExecContext(DObj[] localvars, DObj[] freevars, NameSpace ns, Metadata co)
+        public ExecContext(Variable[] localvars, Variable[] freevars, NameSpace ns, Metadata co)
         {
             this.CONT = 0;
             this.localvars = localvars;
@@ -47,7 +51,7 @@ namespace Diana
         public DObj loadLocal(int i)
         {
             DObj obj;
-            if ((obj = localvars[i]) != null)
+            if ((obj = localvars[i].obj) != null)
             {
                 return obj;
             }
@@ -58,7 +62,7 @@ namespace Diana
         public DObj loadFree(int i)
         {
             DObj obj;
-            if ((obj = freevars[i]) != null)
+            if ((obj = freevars[i].obj) != null)
             {
                 return obj;
             }

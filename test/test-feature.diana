@@ -1,3 +1,10 @@
+print = log
+fun assert_and_print(test, msg)
+     a = assert(test, msg)
+    assert(a == None)
+    print("passed: ", msg)
+end
+
 log({1: 2, "3": 4})
 log({1: 2, (1, 2): 3})
 
@@ -81,3 +88,25 @@ and 2, "'and' operator line continuation")
 
 log(1
 or 2, "'or' operator line continuation")
+
+
+fun test_cell(x)
+    fun set(v)
+        x = v
+    end
+
+    fun get()
+        x
+    end
+    (set, get)
+end
+
+gs = test_cell(1)
+gset = gs.[0]
+gget = gs.[1]
+
+assert_and_print(gget() == 1, "test cell: get 1")
+gset(2)
+assert_and_print(gget() == 2, "test cell: get 2")
+gset(3)
+assert_and_print(gget() == 3, "test cell: get 3")

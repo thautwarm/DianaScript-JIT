@@ -9,28 +9,27 @@ namespace Diana
     public partial class DStaticFunc : DObj
     {
         public NameSpace ns;
-        public DObj[] freevars;
+        public Variable[] freevars;
         public Metadata co;
         public CPS body;
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public DObj __call__(params DObj[] args)
         {
             if (args.Length < co.narg)
             {
                 throw new ArgumentException($"function {co.name} requires at least {co.narg} argument(s), got {args.Length}.");
             }
-            DObj[] localvars;
-            if (args.Length >= co.nlocal)
+            Variable[] localvars;
+            localvars = new Variable[co.nlocal];
+            for(int i = 0; i < args.Length; i++)
             {
-                localvars = args;
+                localvars[i] = new Variable { obj = args[i] };
             }
-            else
+            for(int i = args.Length; i < co.nlocal; i++)
             {
-                localvars = new DObj[co.nlocal];
-                args.CopyTo(localvars, 0);
+                localvars[i] = new Variable { obj = null };
             }
-
             var ctx = new ExecContext(localvars, freevars, ns, co);
             return body(ctx);
         }
