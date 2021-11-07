@@ -8,8 +8,6 @@ using System.Text.RegularExpressions;
 using ast = Diana.ImmediateAST;
 namespace Diana.Frontend
 {
-
-    using Option = ValueTuple<int, int, string, List<ImmediateAST>>;
     public struct Pos
     {
         public int lineno;
@@ -110,6 +108,9 @@ namespace Diana.Frontend
         public static ast mkOr(CommonToken token, ast ast1, ast ast2)
         => Or.make(ast1, ast2, token.Line, token.Column);
 
+        public static ast mkPipeline(ast head, List<ast> tail)
+        => Pipeline.make(head, tail.ToArray(), head.Lineno, head.Colno);
+
         public static DObj mkint(string s, int bit)
         {
             if (s.Length > 2)
@@ -207,6 +208,16 @@ namespace Diana.Frontend
             return For.make(target, iter, body, token.Line, token.Column);
         }
 
+        public static ast mkWorkflow(CommonToken token, string bindname, ast builder, List<ast> options)
+        {
+            return Workflow.make(bindname, builder, options.ToArray(), token.Line, token.Column);
+        }
+
+        public static ast mkOption(CommonToken token, string attr, List<ast> args)
+        {
+            return Option.make(attr, args.ToArray(), token.Line, token.Column);
+        }
+
         public static ast mkWhile(CommonToken token, ast cond, ast body)
         {
             return While.make(cond, body, token.Line, token.Column);
@@ -218,18 +229,6 @@ namespace Diana.Frontend
         //         CVal.make(MK.Int(1), token.Line, token.Column)
         //     });
         // }
-
-        public static Option mkOptionN(CommonToken token, List<ast> args)
-        {
-            return (token.Line, token.Column, token.Text, args);
-        }
-
-
-        
-        public static Option mkDoOption(ast expr)
-        {
-            return (expr.Lineno, expr.Colno, "do", new List<ast> { expr });
-        }
 
         public static ast mkDecl(CommonToken token, List<string> names)
         {

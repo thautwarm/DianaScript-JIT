@@ -390,7 +390,7 @@ namespace Diana
             public int freeidx;
             public CPS func;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]            
+            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
@@ -978,6 +978,7 @@ namespace Diana
         public void __resolve_local(MetaContext ctx)
         {
             ctx.enter(target);
+            iter.__resolve_local(ctx);
             body.__resolve_local(ctx);
         }
     }
@@ -1123,7 +1124,7 @@ namespace Diana
     }
 
 
-    
+
     public partial class Symbol
     {
         public class __mk_istr
@@ -1615,5 +1616,143 @@ namespace Diana
                 return DNone.unique;
             }
         }
+    }
+
+    public partial class Pipeline
+    {
+        public void __resolve_local(MetaContext ctx)
+        {
+            ctx.enter("_");
+        }
+
+        public CPS jit_impl(MetaContext ctx)
+        {
+            var ind = ctx.search("_");
+
+            Action<ExecContext, DObj> binder =
+                !(ind.HasValue)
+                  ? new GlobalNameBinder("_").Invoke
+                  : (ind.Value >= 0)
+                    ? new LocalNameBinder(ind.Value).Invoke
+                    : new FreeNameBinder(-ind.Value - 1).Invoke
+                    ;
+
+            return new __pipeline
+            {
+                head = head.jit(ctx),
+                tail = tail.Select(x => x.jit_impl(ctx)).ToArray(),
+                binder = binder
+            }.Invoke;
+        }
+
+        [Serializable]
+        public class __pipeline
+        {
+            public Action<ExecContext, DObj> binder;
+            public CPS head;
+            public CPS[] tail;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var o = head(ctx);
+                if (ctx.CONT != 0)
+                    return o;
+                binder(ctx, o);
+                foreach (var f in tail)
+                {
+                    o = f(ctx);
+                    if (ctx.CONT != 0)
+                        return o;
+                    binder(ctx, o);
+                }
+                return o;
+            }
+        }
+    }
+
+    public partial class Option
+    {
+        public CPS jit_impl(MetaContext _) => throw new NotImplementedException();
+
+    }
+
+
+    public partial class Workflow
+    {   
+        public void __resolve_local(MetaContext ctx)
+        {
+            if (bindname != "")
+            {
+                ctx.enter(bindname);
+            }
+            builder.__resolve_local(ctx);
+            options.__resolve_local(ctx);
+            
+        }
+        public bool is_call => true;
+        public class __workflow
+        {
+            public CPS builder;
+            public CPS[] works;
+            public Action<ExecContext, DObj> binder;
+            public DObj Invoke(ExecContext ctx)
+            {
+                var builder_obj = builder(ctx);
+                if (0 != ctx.CONT)
+                    return builder_obj;
+                DString s = MK.String("start");
+                var self = builder_obj.__get__(s).__call__();
+                if(binder != null)
+                    binder(ctx, self);
+                foreach (var work in works)
+                {
+                    var func = work(ctx);
+                    if (0 != ctx.CONT)
+                    {
+                        return func;
+                    }
+                    func.__call__(builder_obj, self);
+                }
+                s = MK.String("finish");
+                builder_obj.__get__(s).__call__(self);
+                return self;
+            }
+        }
+        public CPS jit_impl(MetaContext ctx)
+        {
+
+            var pos = ctx.currentPos;
+            Action<ExecContext, DObj> binder = null;
+            if (bindname != "")
+            {
+                var ind = ctx.search(bindname);    
+                binder =
+                  !(ind.HasValue)
+                  ? new GlobalNameBinder(bindname).Invoke
+                  : (ind.Value >= 0)
+                    ? new LocalNameBinder(ind.Value).Invoke
+                    : new FreeNameBinder(-ind.Value - 1).Invoke
+                    ;
+            }
+            var works = options.Select(
+                x =>
+                {
+                    var opt = ((Option)x);
+                    var pos = ctx.currentPos;
+                    var line = pos.line;
+                    var col = pos.col;
+                    var attr = CVal.make(MK.String(opt.attr), line, col);
+                    var mkfunc = Function.make("", new string[] { ".work", ".self" },
+                        Call.make(
+                            OGet.make(Load.make(".work", line, col), attr, line, col),
+                            opt.args.Prepend(Load.make(".self", line, col)).ToArray(),
+                            line, col),
+                        line, col);
+                    return mkfunc.jit_impl(ctx);
+                })
+                .ToArray();
+
+            return new __workflow { binder=binder, works = works, builder = builder.jit(ctx) }.Invoke;
+        }
+
     }
 }

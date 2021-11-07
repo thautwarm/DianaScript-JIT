@@ -9,11 +9,21 @@ val mkLet : (token, str, ast) -> ast
 val mkRaise: (token, ast) -> ast
 val mkMeta : (str, str, str, ast) -> ast
 val mkSetMeta: (token, str, str) -> ast
-
+val mkPipeline: (ast, list[ast]) -> ast
+val mkWorkflow: (token, str, ast, list[ast]) -> ast
+val mkOption: (token, str, list[ast]) -> ast
 
 stmt : "raise" expr                                 { mkRaise($1, $2) }
      | "__SETMETA" <INT> <STR>                      { mkSetMeta($1, $2.Text, $3.Text) }
      | "__META" <INT> ":" <INT> ":" <INT> "do" stmt { mkMeta($2.Text, $4.Text, $6.Text, $8) }
      | line_wrap["begin"] block line_wrap["end"]    { mkBlock($1, $2) }
 
+
+option : <NAME> nullable[seplist[",", expr]]        { mkOption($1, $1.Text, $2) }
+
 expr : "__META" <INT> ":" <INT> ":" <INT> "in" expr { mkMeta($2.Text, $4.Text, $6.Text, $8) }
+     | or_expr list[pipe]                           { mkPipeline($1, $2) }
+     | <NAME> "{" filter[option, or_[";", newline]]  "}"                { mkWorkflow($1, "", mkVar($1, $1.Text), $3) }
+     | <NAME> "as" <NAME> "{" filter[option, or_[";", newline]]  "}"    { mkWorkflow($1, $3.Text, mkVar($1, $1.Text), $5) }
+
+pipe : line_wrap["|>"] or_expr { $2 }

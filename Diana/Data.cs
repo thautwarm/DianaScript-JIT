@@ -869,6 +869,101 @@ public partial class Symbol : ImmediateAST
         name = name,
     };
 }
+[Serializable]
+public partial class Pipeline : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        head?.__resolve_local(ctx);
+        tail?.__resolve_local(ctx);
+    }
+
+    public string description => "Pipeline";
+
+    public int lineno;
+    public int colno;
+    public ImmediateAST head;
+    public ImmediateAST[] tail;
+    public static Pipeline make(
+        ImmediateAST head,
+        ImmediateAST[] tail,
+        int lineno,
+        int colno
+    ) => new  Pipeline {
+        lineno = lineno,
+        colno = colno,
+        head = head,
+        tail = tail,
+    };
+}
+[Serializable]
+public partial class Option : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        args?.__resolve_local(ctx);
+    }
+
+    public string description => "Option";
+
+    public int lineno;
+    public int colno;
+    public string attr;
+    public ImmediateAST[] args;
+    public static Option make(
+        string attr,
+        ImmediateAST[] args,
+        int lineno,
+        int colno
+    ) => new  Option {
+        lineno = lineno,
+        colno = colno,
+        attr = attr,
+        args = args,
+    };
+}
+[Serializable]
+public partial class Workflow : ImmediateAST
+{
+
+    int ImmediateAST.Lineno { set => lineno = value; get => lineno; }
+    int ImmediateAST.Colno { set => colno = value; get => colno; }
+
+    public void __default_resolve_local(MetaContext ctx)
+    {
+        builder?.__resolve_local(ctx);
+        options?.__resolve_local(ctx);
+    }
+
+    public string description => "Workflow";
+
+    public int lineno;
+    public int colno;
+    public string bindname;
+    public ImmediateAST builder;
+    public ImmediateAST[] options;
+    public static Workflow make(
+        string bindname,
+        ImmediateAST builder,
+        ImmediateAST[] options,
+        int lineno,
+        int colno
+    ) => new  Workflow {
+        lineno = lineno,
+        colno = colno,
+        bindname = bindname,
+        builder = builder,
+        options = options,
+    };
+}
 
 public partial class ByteASTLoader
 {
@@ -1163,6 +1258,37 @@ public partial class ByteASTLoader
                     lineno = Read(THint<int>.val),
                     colno = Read(THint<int>.val),
                     name = Read(THint<string>.val),
+                };
+            }
+            case 30:
+            {
+                return new Pipeline
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    head = Read(THint<ImmediateAST>.val),
+                    tail = Read(THint<ImmediateAST[]>.val),
+                };
+            }
+            case 31:
+            {
+                return new Option
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    attr = Read(THint<string>.val),
+                    args = Read(THint<ImmediateAST[]>.val),
+                };
+            }
+            case 32:
+            {
+                return new Workflow
+                {
+                    lineno = Read(THint<int>.val),
+                    colno = Read(THint<int>.val),
+                    bindname = Read(THint<string>.val),
+                    builder = Read(THint<ImmediateAST>.val),
+                    options = Read(THint<ImmediateAST[]>.val),
                 };
             }
             default:
@@ -1484,6 +1610,40 @@ public partial class ByteASTLoader
         lineno = Read(THint<int>.val),
         colno = Read(THint<int>.val),
         name = Read(THint<string>.val),
+    };
+
+
+    private Pipeline Read(THint<Pipeline> _) => ReadPipeline();
+
+    public Pipeline ReadPipeline() => new Pipeline
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        head = Read(THint<ImmediateAST>.val),
+        tail = Read(THint<ImmediateAST[]>.val),
+    };
+
+
+    private Option Read(THint<Option> _) => ReadOption();
+
+    public Option ReadOption() => new Option
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        attr = Read(THint<string>.val),
+        args = Read(THint<ImmediateAST[]>.val),
+    };
+
+
+    private Workflow Read(THint<Workflow> _) => ReadWorkflow();
+
+    public Workflow ReadWorkflow() => new Workflow
+    {
+        lineno = Read(THint<int>.val),
+        colno = Read(THint<int>.val),
+        bindname = Read(THint<string>.val),
+        builder = Read(THint<ImmediateAST>.val),
+        options = Read(THint<ImmediateAST[]>.val),
     };
 
 

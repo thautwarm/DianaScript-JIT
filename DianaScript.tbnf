@@ -96,10 +96,6 @@ stmt :
         { mkWhile($1, $2, $3) }
     | "for" <NAME> "in" expr blockOf[do] "end"
         { mkFor($1, $2.Text, $4, $5) }
-    | "break"         { mkBreak($1) }
-    | "continue"      { mkContinue($1) }
-    | "return" expr   { mkReturn($1, $2) }
-    | "return"        { mkReturn($1, null) }
     | "var" seplist[",", name] { mkDecl($1, $2) }
     | expr            { $1 }
 
@@ -202,6 +198,11 @@ atom : atom "." "[" expr "]"  { mkOGet($2, $1, $4) }
          { mkFunc($1, "", $2, [$5]) }
       | <NAME> "->" line_wrap[expr]
          { mkFunc($1, "", [$1.Text], [$3]) }
+        | "break"         { mkBreak($1) }
+        | "continue"      { mkContinue($1) }
+        | "return" expr   { mkReturn($1, $2) }
+        | "return"        { mkReturn($1, null) }
+
 
 newline : <NEWLINE> { $1 }
         | newline <NEWLINE> { $2 }

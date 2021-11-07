@@ -191,3 +191,25 @@ Symbol(
     int colno,
     string name
 )
+
+Pipeline(
+    int lineno,
+    int colno,
+    ImmediateAST head,
+    ImmediateAST[] tail
+)
+
+Option(
+    int lineno,
+    int colno,
+    string attr,
+    ImmediateAST[] args
+)
+
+Workflow(
+    int lineno,
+    int colno,
+    string bindname,
+    ImmediateAST builder,
+    ImmediateAST[] options
+)

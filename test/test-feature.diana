@@ -110,3 +110,37 @@ gset(2)
 assert_and_print(gget() == 2, "test cell: get 2")
 gset(3)
 assert_and_print(gget() == 3, "test cell: get 3")
+
+
+
+builder = {
+    "start": fun ()
+        log("started!")
+     end,
+     "do_": (self, x) -> log("do" + Str.of(x)),
+    "finish": (self) -> log("finished!")
+}
+
+builder {
+    do_ 1
+    do_ 2
+    do_ 3
+}
+
+builder = {
+    "start": fun()
+         x  = {}
+        return x
+    end,
+    "yield": (self, x) -> log("yield " + Str.of(x)),
+    "finish": (self) -> (),
+    "reason": (self) -> log("reason!")
+}
+
+
+
+builder as bb {
+    reason
+    yield 1
+    yield bb
+}
