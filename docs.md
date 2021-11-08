@@ -131,8 +131,8 @@ You can access `DObj.Native` to access their .NET representation:
 
 ### `Int`
 
-- `Int.get_max()`: get max of int64 value
-- `Int.get_min()`: get min of int64 value
+- `Int.get_max()`: get max value of int64
+- `Int.get_min()`: get min value of int64
 - `Int.of(Str | Int | Num)`: convert to `Int`, from `Str`, `Int` or `Num`
 
 
@@ -280,6 +280,7 @@ A `Tuple` is an `Enum`.
     x = {1, 2, 3}
     Dict.subtract(x, [1, 2]) # {3}
     ```
+
 - `Dict.union(Dict, Enum)`: same as `|` operator for dictionaries; set union
 
 - `Dict.intersect(Dict, Enum)`: same as `&` operator for dictionaries; set intersect

@@ -1,0 +1,186 @@
+[
+    {
+        "module": "Int",
+        "doc": "64-bit integer/C# long",
+        "methods": [
+            {
+                "name": "get_max",
+                "type": "get_max : () -> Int",
+                "doc": "get max value of int64"
+            },
+            {
+                "name": "get_min",
+                "type": "get_min : () -> Int",
+                "doc": "get min value of int64"
+            },
+            {
+                "name": "of",
+                "type": "of : (Int | Str | Num) -> Int",
+                "doc": "convert to `Int`, from `Str`, `Int` or `Num`"
+            }
+        ]
+    },
+    {
+        "module": "Num",
+        "doc": "32-bit float/C# float",
+        "methods": [
+            {
+                "name": "get_max",
+                "type": "get_max : () -> Num",
+                "doc": "get max value of float32"
+            },
+            {
+                "name": "get_min",
+                "type": "get_min : () -> Num",
+                "doc": "get min value of float32"
+            },
+            {
+                "name": "of",
+                "type": "of : (Int | Str | Num) -> Num",
+                "doc": "convert to `Num`, from `Str`, `Int` or `Num`"
+            }
+        ]
+    },
+    {
+        "module": "Str",
+        "doc": "Unicode-16 strings",
+        "methods": [
+            {
+                "name": "of",
+                "type": "of : any -> Str",
+                "doc": "convert any to `Str`"
+            },
+            {
+                "name": "join",
+                "type": "join : (Str, Enum) -> Str"
+            },
+            {
+                "name": "concat",
+                "type": "concat : (Enum) -> Str"
+            },
+            {
+                "name": "endswith",
+                "type": "endswith : (Str, Str) -> Str"
+            },
+            {
+                "name": "startswith",
+                "type": "startswith : (Str, Str) -> Str"
+            },
+            {
+                "name": "len",
+                "type": "len : (Str) -> Int"
+            },
+            {
+                "name": "strip",
+                "type": "strip : (Str, Str) -> Str"
+            },
+            {
+                "name": "lstrip",
+                "type": "lstrip : (Str, Str) -> Str"
+            },
+            {
+                "name": "rstrip",
+                "type": "rstrip : (Str, Str) -> Str"
+            },
+            {
+                "name": "lower",
+                "type": "lower : (Str) -> Str"
+            },
+            {
+                "name": "upper",
+                "type": "upper : (Str) -> Str"
+            },
+            {
+                "name": "contains",
+                "type": "contains : (Str) -> Int"
+            },
+            {
+                "name": "format",
+                "type": "format : (Str, any...) -> Str"
+            },
+            {
+                "name": "substr",
+                "type": "substr : (Str, Int start, Int len) -> Str"
+            },
+            {
+                "name": "insert",
+                "type": "insert : (Str, Int pos, Str) -> Str"
+            },
+            {
+                "name": "remove_at",
+                "type": "remove_at : (Str, Int pos, Str) -> Str"
+            },
+            {
+                "name": "index",
+                "type": "index : (Str, Str, Int? startindex=0, Int? count=1) -> Str"
+            },
+            {
+                "name": "forkey",
+                "type": "forkey : (Str, (Int key) -> any)) -> None"
+            }
+        ]
+    },
+
+    {
+        "module": "Tuple",
+        "doc": "array of Diana objects; immutable",
+        "methods":[
+            {
+                "name": "of",
+                "type": "of : (Enum) -> Tuple",
+                "doc": "convert any enumerable of diana objects to a tuple"
+            },
+            {
+                "name": "len",
+                "type": "len : (Tuple) -> Int"
+            },
+            {
+                "name": "forkey",
+                "type": "forkey : (Tuple, (Int key) -> any)) -> None"
+            }
+        ]
+    },
+    {
+        "module": "List",
+        "doc": "System.Collections.Generic<Diana object>",
+        "methods":[
+            {
+                "name": "of",
+                "type": "of : (Enum) -> List"
+            },
+            {
+                "name": "push",
+                "type": "push : (List, any) -> None"
+            },
+            {
+                "name": "pop",
+                "type": "pop : (List) -> any"
+            },
+            {
+                "name": "extend",
+                "type": "extend : (List, Enum) -> None"
+            },
+            {
+                "name": "clear",
+                "type": "clear : (List) -> None"
+            },
+            {
+                "name": "find",
+                "type": "clear : (List, (any) -> any) -> None",
+                "doc": "List.find([1, 6, 3], x -> x % 2 == 0)\n# 6\nList.find([1, 6, 3], x -> x > 20)\n# None"
+            },
+            {
+                "name": "index",
+                "type": "index : (List, any, Int?) -> Int"
+            },
+            {
+                "name": "remove_at",
+                "type": "remove_at : (List, Int) -> None"
+            },
+            {
+                "name": "forkey",
+                "type": "forkey : (List, (Int) => any) -> None"
+            }
+        ]
+    }
+]

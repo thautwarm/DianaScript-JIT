@@ -25,7 +25,7 @@ public partial class DList
     if (nargs != 2)
       throw new ArgumentException($"calling List.extend; needs at least  (2) arguments, got {nargs}.");
     var _arg0 = MK.unbox(THint<List<DObj>>.val, _args[0]);
-    var _arg1 = MK.cast(THint<IEnumerable<DObj>>.val, MK.unbox(THint<DObj>.val, _args[1]));
+    var _arg1 = MK.unbox(THint<IEnumerable<DObj>>.val, _args[1]);
     {
       _arg0.AddRange(_arg1);
       return MK.None();

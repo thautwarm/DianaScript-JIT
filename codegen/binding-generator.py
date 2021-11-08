@@ -144,6 +144,8 @@ class MethodDecl:
     is_getitem: bool = False
     is_setitem: bool = False
 
+    
+
 all_ops = (
     "+" , "-" , "*" , "/" , "%"
     , "&" , "|" , "^" , "<<" , ">>"

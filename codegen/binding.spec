@@ -79,7 +79,7 @@ Tuple DTuple DObj[] {
 "using System.Collections.Generic;"
 List DList List<DObj> {
     void this.Add(DObj) as push
-    void this.AddRange(IEnumerable<DObj> from DObj) as extend
+    void this.AddRange(IEnumerable<DObj>) as extend
     void this.Insert(Int32, DObj) as insert
     void this.Remove(DObj) as remove
     DObj this.Pop() as pop
