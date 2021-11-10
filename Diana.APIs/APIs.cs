@@ -149,6 +149,12 @@ namespace Diana
             return ExecFromPath(appPath, absPath);
         }
 
+        public void ForceCacheModule(string absPath, DModule mod)
+        {
+            var appPath = getAppPath(absPath);
+            ModuleCaches[appPath] = mod;
+        }
+
         public void LoadFromPath(string relPath)
         {
             var absPath = Path.GetFullPath(relPath);
