@@ -4,11 +4,26 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.IO;
+
+#if !NUNITY
+using UnityEngine;
+#endif
+
 namespace Diana
 {
 
     using NameSpace = Dictionary<string, DObj>;
     using ast = ImmediateAST;
+
+#if NUNITY
+    public static class Debug
+    {
+        public static void Log(string s)
+        {
+            Console.WriteLine(s);
+        }
+    }
+#endif
 
 
     public static class ModularDianaExts
@@ -48,32 +63,22 @@ namespace Diana
 #endif
 
         public string ApplicationPath;
-        static List<Action> main_calls;
+        static List<Action> init_calls;
         public Dictionary<string, DModule> ModuleCaches;
 
         public ModularDiana(string path = null)
         {
             ApplicationPath = path ?? Environment.CurrentDirectory;
             ModuleCaches = new Dictionary<string, DModule>();
-            main_calls = new List<Action>();
+            init_calls = new List<Action>();
         }
 
 
         public void Exec(string path)
         {
             LoadFromPath(path);
-            main_calls.ForEach(runmain => runmain());
-            main_calls.Clear();
-        }
-
-        static DObj poly_div(DObj l, DObj r)
-        {
-            var i = l as DInt;
-            if (i == null)
-            {
-                return l.__truediv__(r);
-            }
-            return l.__floordiv__(r);
+            init_calls.ForEach(runinit => runinit());
+            init_calls.Clear();
         }
 
         DModule ExecFromPath(string appPath, string path)
@@ -89,11 +94,11 @@ namespace Diana
             var exec = DianaScriptAPIs.compileModule(ast, path);
             exec(globals);
 
-            var main = globals.GetValue("x_main");
-            if (main is DStaticFunc f)
+            var init = globals.GetValue("init");
+            if (init is DStaticFunc f)
             {
 
-                main_calls.Add(() => f.__call__(DNone.unique));
+                init_calls.Add(() => f.__call__());
             }
 
             var exports = globals.GetValue("exports");
@@ -156,18 +161,6 @@ namespace Diana
             return ExecutePathWithNewModule(absPath);
         }
     }
-
-#if NUNITY
-    public static class Debug
-    {
-        public static void Log(string s)
-        {
-            Console.WriteLine(s);
-        }
-    }
-#else
-    using UnityEngine;
-#endif
 
     public partial class DianaScriptAPIs
     {

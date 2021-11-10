@@ -1,6 +1,11 @@
 a = 1
 b = 2
 c = 3
+
+fun init()
+    log("init is called at last!")
+end
+
 exports = {
     "a" : a,
     "b" : b
