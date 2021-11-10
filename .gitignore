@@ -6,7 +6,7 @@
 # generated ran code and antlr files
 *.tokens
 *.interp
-*.ran
+.antlr/
 
 # generated Python code
 codegen/*_raw.py
