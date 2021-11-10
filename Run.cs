@@ -5,25 +5,26 @@ using System.Linq;
 public static partial class MainClass
 {
     // Start is called before the first frame update
-
-    public static void ExecuteSourceFile(string path)
-    {
-        var apis = new DianaScriptAPIs();
-        var globals = apis.InitGlobals();
-        var ast = DianaScriptAPIs.Parse(path);
-        var runner = DianaScriptAPIs.compileModule(ast, path);
-        // code.ShowCode();
-        runner(globals);            
-    }
+     
     public static void Main(string[] args)
     {
+
+        Diana.ModularDiana modularDiana = new Diana.ModularDiana();
+
+        void ExecuteSourceFile(string path)
+        {
+            modularDiana.Exec(path);
+        }
+
 
         if (args.Length != 0)
         {
             args.ToList().ForEach(ExecuteSourceFile);
             return;            
         }
+
         var apis = new Diana.DianaScriptAPIs();
+        
         var globals = apis.InitGlobals();
         while (true)
         {

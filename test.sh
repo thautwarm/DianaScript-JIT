@@ -1,1 +1,1 @@
-dotnet run test/*.diana
+dotnet run test/main.diana

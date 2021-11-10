@@ -1,0 +1,9 @@
+require("./simple-bench.diana")
+require("./exhaustive-test.diana")
+require("./testmeta.diana")
+require("./test-feature.diana")
+require("./testmeta.diana")
+require("./bf.diana")
+
+TestExports = require("./test-exports.diana")
+assert(("c" not in keys(TestExports)) == 1)
