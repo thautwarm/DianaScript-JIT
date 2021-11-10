@@ -119,6 +119,7 @@ namespace Diana
             mod.SetValue("__path__", MK.String(appPath));
             mod.SetValue("module", mod);
             mod.SetValue("require", MK.Func1("require", x => Require(mod, (string)(DString)x)));
+            ModuleCaches[appPath] = mod;
         }
 
         string AbsRelativePath(string relativeToAbs, string absPath)
@@ -142,16 +143,19 @@ namespace Diana
 
         DModule ExecutePathWithNewModule(string absPath)
         {
-            var appPath = getAppPath(absPath);
+            var appPath = 
+                absPath.EndsWith(".diana")
+                ? getAppPath(absPath)
+                : absPath + ".diana"
+                ;
             if (ModuleCaches.TryGetValue(appPath, out var value))
                 return value;
             var content = File.ReadAllText(absPath);
             return ExecFromPath(appPath, absPath);
         }
 
-        public void ForceCacheModule(string absPath, DModule mod)
+        public void ForceCacheModule(string appPath, DModule mod)
         {
-            var appPath = getAppPath(absPath);
             ModuleCaches[appPath] = mod;
         }
 
@@ -163,7 +167,10 @@ namespace Diana
 
         DModule Require(DModule oldEngine, string relPath)
         {
-            var absPath = resolveAbsPathFromCurrent(oldEngine, relPath);
+            var absPath =
+                relPath.EndsWith(".diana")
+                ? resolveAbsPathFromCurrent(oldEngine, relPath)
+                : relPath;
             return ExecutePathWithNewModule(absPath);
         }
     }

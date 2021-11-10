@@ -7,3 +7,6 @@ require("./bf.diana")
 
 TestExports = require("./test-exports.diana")
 assert(("c" not in keys(TestExports)) == 1)
+
+TestExports2 = require("test/test-exports")
+assert(TestExports2 == TestExports)
