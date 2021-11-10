@@ -211,7 +211,9 @@ namespace Diana
         public CPS call;
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+        [MethodImpl(MethodImplOptionsCompat.AggressiveInlining | MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
         public DObj Invoke(ExecContext ctx)
         {
             try
@@ -243,7 +245,9 @@ namespace Diana
         {
             public CPS func;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var exp = func(ctx);
@@ -324,7 +328,9 @@ namespace Diana
             public CPS func;
             public Func<DObj, DObj, DObj> op;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var lhs = ctx.loadLocal(localidx);
@@ -344,7 +350,9 @@ namespace Diana
             public CPS func;
             public Func<DObj, DObj, DObj> op;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var lhs = ctx.loadFree(freeidx);
@@ -407,7 +415,9 @@ namespace Diana
             public int localidx;
             public CPS func;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
@@ -424,7 +434,9 @@ namespace Diana
             public int freeidx;
             public CPS func;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var r = func(ctx);
@@ -512,8 +524,8 @@ namespace Diana
                         }
                     case (CTuple tp, null):
                         {
-                            var namebinder = new TupleNameBinder {elts= tp.elts.Select(x => generic_bind(ctx, x)).ToArray()};
-                            transform.Add( cps => new __call_tuple_store { binder = namebinder, value = cps }.Invoke);
+                            var namebinder = new TupleNameBinder { elts = tp.elts.Select(x => generic_bind(ctx, x)).ToArray() };
+                            transform.Add(cps => new __call_tuple_store { binder = namebinder, value = cps }.Invoke);
                             break;
                         }
                     case (Load load, null):
@@ -683,7 +695,9 @@ namespace Diana
             public CPS right;
             public Func<DObj, DObj, DObj> op;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var l = left(ctx);
@@ -754,7 +768,9 @@ namespace Diana
             public CPS then;
             public CPS orelse;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var val_cond = cond(ctx);
@@ -784,7 +800,9 @@ namespace Diana
             public (CPS, CPS)[] elifs;
             public CPS orelse; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 foreach (var (cond, then) in elifs)
@@ -823,7 +841,9 @@ namespace Diana
             public CPS cond;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
 
@@ -876,7 +896,9 @@ namespace Diana
         {
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
 
@@ -924,7 +946,9 @@ namespace Diana
             public CPS iter;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var val_iter = iter(ctx);
@@ -964,7 +988,9 @@ namespace Diana
             public CPS iter;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var val_iter = iter(ctx);
@@ -1003,7 +1029,9 @@ namespace Diana
             public CPS iter;
             public CPS body; // can be null
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var val_iter = iter(ctx);
@@ -1131,7 +1159,9 @@ namespace Diana
             public CPS func;
             public CPS[] args;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
 
@@ -1162,7 +1192,9 @@ namespace Diana
     {
         public Action<ExecContext, DObj>[] elts;
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
         public void Invoke(ExecContext ctx, DObj v)
         {
 
@@ -1190,7 +1222,9 @@ namespace Diana
             this.localidx = localidx;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
         public void Invoke(ExecContext ctx, DObj v)
         {
             ctx.localvars[localidx].obj = v;
@@ -1205,7 +1239,9 @@ namespace Diana
         {
             this.name = name;
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
         public void Invoke(ExecContext ctx, DObj v)
         {
             ctx.ns[name] = v;
@@ -1221,7 +1257,9 @@ namespace Diana
         {
             this.freeidx = freeidx;
         }
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+#if NUNITY
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
+#endif
         public void Invoke(ExecContext ctx, DObj v)
         {
             ctx.freevars[freeidx].obj = v;
@@ -1255,7 +1293,9 @@ namespace Diana
             public Metadata co;
             public CPS body;
 
-            [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#if NUNITY
+            [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization)]
+#endif
             public DObj Invoke(ExecContext ctx)
             {
                 var freevars = emptyFreeVars;
