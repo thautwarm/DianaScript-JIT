@@ -120,11 +120,10 @@
             }
         ]
     },
-
     {
         "module": "Tuple",
         "doc": "array of Diana objects; immutable",
-        "methods":[
+        "methods": [
             {
                 "name": "of",
                 "type": "of : (Enum) -> Tuple",
@@ -143,7 +142,7 @@
     {
         "module": "List",
         "doc": "System.Collections.Generic<Diana object>",
-        "methods":[
+        "methods": [
             {
                 "name": "of",
                 "type": "of : (Enum) -> List"
@@ -180,6 +179,65 @@
             {
                 "name": "forkey",
                 "type": "forkey : (List, (Int) => any) -> None"
+            },
+            {
+                "name": "copy"
+            }
+        ]
+    },
+    {
+        "module": "Dict",
+        "doc": "module for Dictionaries and sets; when converting `Dict` to an enumerable, you get `Dict` keys.",
+        "methods": [
+            {
+                "name": "of",
+                "type": "of : (Enum<(any, any)>) -> Dict"
+            },
+            {
+                "name": "setOf",
+                "type": "setOf : Enum<(any)> -> Dict"
+            },
+            {
+                "name": "remove",
+                "type": "remove : (Dict, key) -> None"
+            },
+            {
+                "name": "contains"
+            },
+            {
+                "name": "union"
+            },
+            {
+                "name": "intersect"
+            },
+            {
+                "name": "update"
+            },
+            {
+                "name": "forkey"
+            },
+            {
+                "name": "copy"
+            }
+        ]
+    },
+    {
+        "module": "Enum",
+        "doc": "Enumerables",
+        "methods": [
+            {
+                "name": "foreach"
+            },
+            {
+                "name": "map"
+            },
+            {
+                "name": "mapi",
+                "doc": "the function should take 2 arguements, the first of which is the integer index of the enumerable."
+            },
+            {
+                "name": "range",
+                "type": "range : (Int start, Int end, Int sep = 1) -> Enum"
             }
         ]
     }
