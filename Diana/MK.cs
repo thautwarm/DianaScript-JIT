@@ -89,7 +89,7 @@ namespace Diana
             One = CacheOrNewInt(1);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveInlining | MethodImplOptionsCompat.AggressiveOptimization)]
         static DInt CacheOrNewInt(long value)
         {
             if (value >= -CACHE_BOUND && value < CACHE_BOUND)

@@ -4,5 +4,6 @@ namespace Diana
     {
 
         public static bool SHOW_DOTNET_TRACE = true;
+
     }
 }

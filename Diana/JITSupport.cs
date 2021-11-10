@@ -37,7 +37,7 @@ namespace Diana
             this.co = co;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveInlining | MethodImplOptionsCompat.AggressiveOptimization)]
         public DObj loadGlobal(string n)
         {
             if (ns.TryGetValue(n, out var obj))
@@ -47,7 +47,7 @@ namespace Diana
             throw new NameError("global", n);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveInlining | MethodImplOptionsCompat.AggressiveOptimization)]
         public DObj loadLocal(int i)
         {
             DObj obj;
@@ -58,7 +58,7 @@ namespace Diana
             throw new NameError("local", co.localnames[i]);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveInlining | MethodImplOptionsCompat.AggressiveOptimization)]
         public DObj loadFree(int i)
         {
             DObj obj;

@@ -13,7 +13,7 @@ namespace Diana
         public Metadata co;
         public CPS body;
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
         public DObj __call__(params DObj[] args)
         {
             if (args.Length < co.narg)

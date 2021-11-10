@@ -29,7 +29,7 @@ namespace Diana
         public static Exception unsupported_ops(DObj lhs, string op, DObj rhs) =>
             new InvalidOperationException($"'unsupported operation: '{lhs.Classname}' {op} '{rhs.Classname}'.");
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
         public static DObj int_t_add(DInt self, DObj other)
         {
             switch (other)
@@ -52,7 +52,7 @@ namespace Diana
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptionsCompat.AggressiveOptimization | MethodImplOptionsCompat.AggressiveInlining)]
         public static DObj int_t_sub(DInt self, DObj other)
         {
             switch (other)
