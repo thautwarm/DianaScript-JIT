@@ -150,7 +150,6 @@ namespace Diana
                 ;
             if (ModuleCaches.TryGetValue(appPath, out var value))
                 return value;
-            var content = File.ReadAllText(absPath);
             return ExecFromPath(appPath, absPath);
         }
 
