@@ -464,6 +464,67 @@ namespace Diana
         }
     }
 
+    public sealed partial class DFunc0 : DObj
+    {
+        public string __str__() => name;
+
+        public object Native => func;
+
+        public Func<DObj> func;
+
+        public string name;
+
+
+        public DObj __call__(params DObj[] args) => func();
+
+        public DObj __call0__() => func();
+
+        public bool __eq__(DObj o)
+        {
+            return ReferenceEquals(this, o);
+        }
+
+
+        public bool Equals(DObj other)
+        {
+            return __eq__(other);
+        }
+    }
+
+    public sealed partial class DFunc1 : DObj
+    {
+        public string __str__() => name;
+
+        public object Native => func;
+
+        public Func<DObj, DObj> func;
+
+        public string name;
+
+
+        public DObj __call__(params DObj[] args)
+        {
+            if (args.Length < 1)
+            {
+                throw new ArgumentException($"function {name} requires at least 1 argument, got {args.Length}.");
+            }
+            return func(args[0]);
+        }
+
+        public DObj __call1__(DObj o) => func(o);
+
+        public bool __eq__(DObj o)
+        {
+            return ReferenceEquals(this, o);
+        }
+
+
+        public bool Equals(DObj other)
+        {
+            return __eq__(other);
+        }
+    }
+
     public static class TypeConversion
     {
         public static DObj toFloat(DObj x)

@@ -4,7 +4,7 @@
     <TargetFramework>net5</TargetFramework>
     <OutputType>Exe</OutputType>
     <Optimize>true</Optimize>
-    <DefineConstants>NUNITY;MY_DEBUG</DefineConstants>
+    <DefineConstants>NUNITY;MY_DEBUG;CODEGEN</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

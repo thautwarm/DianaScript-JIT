@@ -102,7 +102,7 @@ namespace Diana
         public static DInt Zero;
         public static DInt One;
         public static DInt Int(int i) => CacheOrNewInt(i);
-        public static DInt Int(bool i) => CacheOrNewInt(i ? 1 : 0);
+        public static DInt Int(bool i) => i ? One : Zero;
         public static DInt Int(long i) => CacheOrNewInt(i);
         public static DInt Int(ulong i) => CacheOrNewInt((int_t)i);
         public static DInt Int(uint i) => CacheOrNewInt((int_t)i);
@@ -137,8 +137,6 @@ namespace Diana
             return new DTuple { elts = dObjs };
         }
 
-
-
         public static DObj create(Dictionary<DObj, DObj> d) => Dict(d);
 
         public static DObj Dict(Dictionary<DObj, DObj> dObjs)
@@ -146,26 +144,15 @@ namespace Diana
             return new DDict { dict = dObjs };
         }
 
-        public static DFunc Func0(string name, Func<DObj> f)
+        public static DFunc0 Func0(string name, Func<DObj> f)
         {
-            DObj call(DObj[] _)
-            {
-                return f();
-            }
-
-            return new DFunc { func = call, name = name };
+            
+            return new DFunc0 { func = f, name = name };
         }
 
-        public static DFunc Func1(string name, Func<DObj, DObj> f)
+        public static DFunc1 Func1(string name, Func<DObj, DObj> f)
         {
-            DObj call(DObj[] args)
-            {
-                if (args.Length < 1)
-                    throw new ArgumentException($"{name} requires more than 1 arguments.");
-                return f(args[0]);
-            }
-
-            return new DFunc { func = call, name = name };
+            return new DFunc1 { func = f, name = name };
         }
 
         public static DFunc Func2(string name, Func<DObj, DObj, DObj> f)

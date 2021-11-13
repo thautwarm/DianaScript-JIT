@@ -1,6 +1,7 @@
 using Diana;
 using System;
 using System.Linq;
+using System.Reflection;
 
 public static partial class MainClass
 {
@@ -9,6 +10,7 @@ public static partial class MainClass
     public static void Main(string[] args)
     {
 
+        // new Diana.Metagen.Metagen(Assembly.GetExecutingAssembly(), "Diana", "Diana.APIs/Generated");
         Diana.ModularDiana modularDiana = new Diana.ModularDiana();
 
         void ExecuteSourceFile(string path)
