@@ -36,14 +36,14 @@ namespace Diana.Metagen
                 Path.Combine(Application.dataPath, outDir);
 #endif
 
-#if CODEGEN || UNITY_EDITOR
+#if CODEGEN
     CheckCache();
 #endif
         
         }
 
 
-#if CODEGEN || UNITY_EDITOR
+#if CODEGEN
         string search_converter(Type from, Type to)
         {
             if (from == to)

@@ -184,7 +184,7 @@ namespace Diana
 
         public CPS jit_impl(MetaContext ctx);
 
-        public CPS jit(MetaContext ctx)
+        public CPS jit(MetaContext ctx, bool forcePos = false)
         {
             if (!ctx.useMeta)
             {
@@ -196,7 +196,7 @@ namespace Diana
             if (cps == null)
                 return cps;
             // TODO: allow command line options to show very informative stacktraces?
-            if (is_call)
+            if (is_call || forcePos)
                 return new __please_inline_it { call = cps, kind = description, pos = pos }.Invoke;
             else
                 return cps;
@@ -1140,7 +1140,7 @@ namespace Diana
             new __block
             {
                 suite = suite
-                    .Select(x => x.jit(ctx))
+                    .Select(x => x.jit(ctx, forcePos: true))
                     .Where(x => x != null)
                     .ToArray()
             }.Invoke;

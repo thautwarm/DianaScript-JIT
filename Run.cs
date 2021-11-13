@@ -1,8 +1,8 @@
+#if NUNITY
 using Diana;
 using System;
 using System.Linq;
 using System.Reflection;
-
 public static partial class MainClass
 {
     // Start is called before the first frame update
@@ -41,3 +41,4 @@ public static partial class MainClass
         }
     }
 }
+#endif
